@@ -1,0 +1,32 @@
+name: Update Swagger Spec
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for upstream swagger updates
+        run: make update-swagger
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: chore: update swagger spec
+          title: 'chore: update swagger spec'
+          body: |
+            Automated update triggered by the scheduled workflow.
+          branch: chore/update-swagger
+          delete-branch: true

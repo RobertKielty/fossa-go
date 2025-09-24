@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.28.61
+API version: 4.30.21
 Contact: support@fossa.com
 */
 
@@ -24,6 +24,8 @@ type GetOrganizationLicensingIssueSettings200Response struct {
 	ProjectDefaultLicensingIssueScanningEnabled *bool `json:"projectDefaultLicensingIssueScanningEnabled,omitempty"`
 	ProjectDefaultLicensingStatusCheckEnabled *bool `json:"projectDefaultLicensingStatusCheckEnabled,omitempty"`
 	ProjectDefaultStatusCheckFilterLicensing *int32 `json:"projectDefaultStatusCheckFilterLicensing,omitempty"`
+	// Enable or disable snippet licensing issue scanning by default for projects in the organization
+	ProjectDefaultSnippetLicensingIssueScanningEnabled *bool `json:"projectDefaultSnippetLicensingIssueScanningEnabled,omitempty"`
 }
 
 // NewGetOrganizationLicensingIssueSettings200Response instantiates a new GetOrganizationLicensingIssueSettings200Response object
@@ -171,6 +173,38 @@ func (o *GetOrganizationLicensingIssueSettings200Response) SetProjectDefaultStat
 	o.ProjectDefaultStatusCheckFilterLicensing = &v
 }
 
+// GetProjectDefaultSnippetLicensingIssueScanningEnabled returns the ProjectDefaultSnippetLicensingIssueScanningEnabled field value if set, zero value otherwise.
+func (o *GetOrganizationLicensingIssueSettings200Response) GetProjectDefaultSnippetLicensingIssueScanningEnabled() bool {
+	if o == nil || IsNil(o.ProjectDefaultSnippetLicensingIssueScanningEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.ProjectDefaultSnippetLicensingIssueScanningEnabled
+}
+
+// GetProjectDefaultSnippetLicensingIssueScanningEnabledOk returns a tuple with the ProjectDefaultSnippetLicensingIssueScanningEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetOrganizationLicensingIssueSettings200Response) GetProjectDefaultSnippetLicensingIssueScanningEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.ProjectDefaultSnippetLicensingIssueScanningEnabled) {
+		return nil, false
+	}
+	return o.ProjectDefaultSnippetLicensingIssueScanningEnabled, true
+}
+
+// HasProjectDefaultSnippetLicensingIssueScanningEnabled returns a boolean if a field has been set.
+func (o *GetOrganizationLicensingIssueSettings200Response) HasProjectDefaultSnippetLicensingIssueScanningEnabled() bool {
+	if o != nil && !IsNil(o.ProjectDefaultSnippetLicensingIssueScanningEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetProjectDefaultSnippetLicensingIssueScanningEnabled gets a reference to the given bool and assigns it to the ProjectDefaultSnippetLicensingIssueScanningEnabled field.
+func (o *GetOrganizationLicensingIssueSettings200Response) SetProjectDefaultSnippetLicensingIssueScanningEnabled(v bool) {
+	o.ProjectDefaultSnippetLicensingIssueScanningEnabled = &v
+}
+
 func (o GetOrganizationLicensingIssueSettings200Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -192,6 +226,9 @@ func (o GetOrganizationLicensingIssueSettings200Response) ToMap() (map[string]in
 	}
 	if !IsNil(o.ProjectDefaultStatusCheckFilterLicensing) {
 		toSerialize["projectDefaultStatusCheckFilterLicensing"] = o.ProjectDefaultStatusCheckFilterLicensing
+	}
+	if !IsNil(o.ProjectDefaultSnippetLicensingIssueScanningEnabled) {
+		toSerialize["projectDefaultSnippetLicensingIssueScanningEnabled"] = o.ProjectDefaultSnippetLicensingIssueScanningEnabled
 	}
 	return toSerialize, nil
 }

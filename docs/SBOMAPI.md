@@ -4,9 +4,9 @@ All URIs are relative to *https://app.fossa.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateShareRequest**](SBOMAPI.md#CreateShareRequest) | **Post** /api/v1/share-requests | 
-[**GetLinkedOrganizations**](SBOMAPI.md#GetLinkedOrganizations) | **Get** /api/v1/shared-organizations | 
-[**GetShareRequests**](SBOMAPI.md#GetShareRequests) | **Get** /api/v1/share-requests | 
+[**CreateShareRequest**](SBOMAPI.md#CreateShareRequest) | **Post** /v1/share-requests | 
+[**GetLinkedOrganizations**](SBOMAPI.md#GetLinkedOrganizations) | **Get** /v1/shared-organizations | 
+[**GetShareRequests**](SBOMAPI.md#GetShareRequests) | **Get** /v1/share-requests | 
 
 
 

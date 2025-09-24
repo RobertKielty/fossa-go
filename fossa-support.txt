@@ -1,0 +1,1724 @@
+Cloud Native Computing Foundation Mail	Robert Kielty <robert.kielty@cncf.io>
+FOSSA REST api client/definition
+15 messages
+Robert Kielty <robert.kielty@cncf.io>	Mon, May 26, 2025 at 10:43 AM
+To: Support <support@fossa.com>
+Hi Support Team,
+
+Can I get a Swagger File/Open API definition file of the FOSSA API sent to me?
+
+I am copy/pasting pages from the likes of 
+
+https://docs.fossa.com/reference/getallusers
+
+and feeding it to ChatGPT to generate types to interact with the API.
+
+I would also accept/test a golang client if one existed (I searched the GH org couldn't find one)
+
+I'd be happy to generate a go client, if you could provide me with an API definition!
+
+Many thanks,
+Robert Kielty 
+CNCF 
+
+FOSSA Technical Support <support@fossa.com>	Mon, May 26, 2025 at 10:43 AM
+To: robert.kielty@cncf.io
+Re: TKT-13330
+
+
+Hello there,
+
+Thanks for reaching out to FOSSA. Our support staff will review your request and respond to you shortly. In the meantime, could you please provide some additional information in order to facilitate our engineers in resolving your problem? You can respond to this email with the information.
+
+- Can you please provide a description of what you're trying to accomplish?
+- If this is a bug, can you please provide:
+- A description of the expected behavior
+- A description of what's happening instead
+- Reproduction steps
+- Any relevant information/files (ie package.json, go.mod, requirements.txt)
+- Some additional steps you can take to provide more info if necessary:
+- Run fossa analyze --debug and provide the outputted fossa.debug.json.gz file (it will output info to your screen, but should also create the file in your working directory)
+- Run fossa list-targets (particularly important if you're struggling to get all or part of your project to be scanned by the CLI tool)
+
+One of our support engineers will reach out to you as soon as possible to help you resolve your problems.
+Thank you for using FOSSA, and please don't hesitate to reach out with any additional questions you may have.
+
+FOSSA Technical Support <support@fossa.com>	Tue, May 27, 2025 at 12:13 AM
+To: robert.kielty@cncf.io
+Re: TKT-13330
+
+Hi Robert,
+
+I'll speak to my team to get this for you.
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 26 May 2025 09:43:51 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+Subject: FOSSA REST api client/definition
+
+Re: TKT-13330
+
+
+Hello there,
+
+Thanks for reaching out to FOSSA. Our support staff will review your request and respond to you shortly. In the meantime, could you please provide some additional information in order to facilitate our engineers in resolving your problem? You can respond to this email with the information.
+
+- Can you please provide a description of what you're trying to accomplish?
+- If this is a bug, can you please provide:
+- A description of the expected behavior
+- A description of what's happening instead
+- Reproduction steps
+- Any relevant information/files (ie package.json, go.mod, requirements.txt)
+- Some additional steps you can take to provide more info if necessary:
+- Run fossa analyze --debug and provide the outputted fossa.debug.json.gz file (it will output info to your screen, but should also create the file in your working directory)
+- Run fossa list-targets (particularly important if you're struggling to get all or part of your project to be scanned by the CLI tool)
+
+One of our support engineers will reach out to you as soon as possible to help you resolve your problems.
+Thank you for using FOSSA, and please don't hesitate to reach out with any additional questions you may have.
+
+Date: Mon, 26 May 2025 09:43:50 GMT
+From: robert.kielty@cncf.io
+To: support@fossa.com
+Subject: FOSSA REST api client/definition
+
+Hi Support Team,
+
+Can I get a Swagger File/Open API definition file of the FOSSA API sent to me?
+
+I am copy/pasting pages from the likes of 
+
+https://docs.fossa.com/reference/getallusers
+
+and feeding it to ChatGPT to generate types to interact with the API.
+
+I would also accept/test a golang client if one existed (I searched the GH org couldn't find one)
+
+I'd be happy to generate a go client, if you could provide me with an API definition!
+
+Many thanks,
+Robert Kielty 
+CNCF 
+
+To unsubscribe from this group and stop receiving emails from it, send an email to support+unsubscribe@fossa.com.
+FOSSA Technical Support <support@fossa.com>	Wed, May 28, 2025 at 8:50 PM
+To: robert.kielty@cncf.io
+Re: TKT-13330
+
+Hi Robert,
+
+Does this work for your needs?
+
+https://app.fossa.com/api/api-docs/swagger.json
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 26 May 2025 23:13:06 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+
+Re: TKT-13330
+
+Hi Robert,
+
+I'll speak to my team to get this for you.
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 26 May 2025 09:43:51 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+Subject: FOSSA REST api client/definition
+
+Re: TKT-13330
+
+
+Hello there,
+
+Thanks for reaching out to FOSSA. Our support staff will review your request and respond to you shortly. In the meantime, could you please provide some additional information in order to facilitate our engineers in resolving your problem? You can respond to this email with the information.
+
+- Can you please provide a description of what you're trying to accomplish?
+- If this is a bug, can you please provide:
+- A description of the expected behavior
+- A description of what's happening instead
+- Reproduction steps
+- Any relevant information/files (ie package.json, go.mod, requirements.txt)
+- Some additional steps you can take to provide more info if necessary:
+- Run fossa analyze --debug and provide the outputted fossa.debug.json.gz file (it will output info to your screen, but should also create the file in your working directory)
+- Run fossa list-targets (particularly important if you're struggling to get all or part of your project to be scanned by the CLI tool)
+
+One of our support engineers will reach out to you as soon as possible to help you resolve your problems.
+Thank you for using FOSSA, and please don't hesitate to reach out with any additional questions you may have.
+
+Date: Mon, 26 May 2025 09:43:50 GMT
+From: robert.kielty@cncf.io
+To: support@fossa.com
+Subject: FOSSA REST api client/definition
+
+Hi Support Team,
+
+Can I get a Swagger File/Open API definition file of the FOSSA API sent to me?
+
+I am copy/pasting pages from the likes of 
+
+https://docs.fossa.com/reference/getallusers
+
+and feeding it to ChatGPT to generate types to interact with the API.
+
+I would also accept/test a golang client if one existed (I searched the GH org couldn't find one)
+
+I'd be happy to generate a go client, if you could provide me with an API definition!
+
+Many thanks,
+Robert Kielty 
+CNCF 
+
+To unsubscribe from this group and stop receiving emails from it, send an email to support+unsubscribe@fossa.com.
+FOSSA Technical Support <support@fossa.com>	Fri, May 30, 2025 at 8:50 PM
+To: robert.kielty@cncf.io
+Re: TKT-13330
+
+
+Hey robert.kielty@cncf.io! We have not heard back from you in a few days on this ticket and thus will motion toward closing it out soon.
+It is currently scheduled to be automatically closed in the next 72 hours.
+If you respond before then, this ticket will remain open.
+If you have any more questions or need additional help, feel free to reach out to us!
+Best Regards,
+FOSSA Technical Support
+
+FOSSA Technical Support <support@fossa.com>	Mon, Jun 2, 2025 at 8:50 PM
+To: robert.kielty@cncf.io
+Re: TKT-13330
+
+
+Hey robert.kielty@cncf.io! As previously explained, this ticket has been automatically closed since we haven’t heard from you in the last 72 hours.
+If you’re still experiencing issues or have any questions, please don’t hesitate to reopen this ticket. We will be glad to resume assisting you!
+Thank you for your understanding.
+Best Regards,
+FOSSA Technical Support.
+
+FOSSA Technical Support <support@fossa.com>	Mon, Jun 2, 2025 at 8:50 PM
+To: robert.kielty@cncf.io
+Re: TKT-13330
+
+
+TKT-13330 FOSSA REST api client/definition has been closed.
+
+Robert Kielty <robert.kielty@cncf.io>	Tue, Jun 10, 2025 at 6:57 AM
+Draft To: FOSSA Technical Support <support@fossa.com>
+
+
+
+
+
+
+On Tue, May 27, 2025 at 12:13 AM FOSSA Technical Support <support@fossa.com> wrote:
+Re: TKT-13330
+
+Hi Robert,
+
+I'll speak to my team to get this for you.
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 26 May 2025 09:43:51 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+Subject: FOSSA REST api client/definition
+
+Re: TKT-13330
+
+
+Hello there,
+
+Thanks for reaching out to FOSSA. Our support staff will review your request and respond to you shortly. In the meantime, could you please provide some additional information in order to facilitate our engineers in resolving your problem? You can respond to this email with the information.
+
+- Can you please provide a description of what you're trying to accomplish?
+- If this is a bug, can you please provide:
+- A description of the expected behavior
+- A description of what's happening instead
+- Reproduction steps
+- Any relevant information/files (ie package.json, go.mod, requirements.txt)
+- Some additional steps you can take to provide more info if necessary:
+- Run fossa analyze --debug and provide the outputted fossa.debug.json.gz file (it will output info to your screen, but should also create the file in your working directory)
+- Run fossa list-targets (particularly important if you're struggling to get all or part of your project to be scanned by the CLI tool)
+
+One of our support engineers will reach out to you as soon as possible to help you resolve your problems.
+Thank you for using FOSSA, and please don't hesitate to reach out with any additional questions you may have.
+
+Date: Mon, 26 May 2025 09:43:50 GMT
+From: robert.kielty@cncf.io
+To: support@fossa.com
+Subject: FOSSA REST api client/definition
+
+Hi Support Team,
+
+Can I get a Swagger File/Open API definition file of the FOSSA API sent to me?
+
+I am copy/pasting pages from the likes of 
+
+https://docs.fossa.com/reference/getallusers
+
+and feeding it to ChatGPT to generate types to interact with the API.
+
+I would also accept/test a golang client if one existed (I searched the GH org couldn't find one)
+
+I'd be happy to generate a go client, if you could provide me with an API definition!
+
+Many thanks,
+Robert Kielty 
+CNCF 
+
+To unsubscribe from this group and stop receiving emails from it, send an email to support+unsubscribe@fossa.com.
+Robert Kielty <robert.kielty@cncf.io>	Tue, Jun 10, 2025 at 7:21 AM
+To: FOSSA Technical Support <support@fossa.com>
+Hi Sara, (this response was in my drafts all this time, apols for the late response!)
+
+https://app.fossa.com/api/api-docs/swagger.json
+
+I will use this Swagger file to generate a golang client.
+
+One thing I want to track is pending invitations.
+
+As far as I can see, there is no invitation endpoint, but there is an audit log. 
+
+I will experiment with the audit endpoint this morning to see if I can retrieve invitations that have been sent out.
+
+I may have further questions!
+
+Thanks so much for your awesome-as-always support!
+
+Rob
+
+
+On Wed 28 May 2025, 20:50 FOSSA Technical Support, <support@fossa.com> wrote:
+Re: TKT-13330
+
+Hi Robert,
+
+Does this work for your needs?
+
+https://app.fossa.com/api/api-docs/swagger.json
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 26 May 2025 23:13:06 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+
+Re: TKT-13330
+
+Hi Robert,
+
+I'll speak to my team to get this for you.
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 26 May 2025 09:43:51 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+Subject: FOSSA REST api client/definition
+
+Re: TKT-13330
+
+
+Hello there,
+
+Thanks for reaching out to FOSSA. Our support staff will review your request and respond to you shortly. In the meantime, could you please provide some additional information in order to facilitate our engineers in resolving your problem? You can respond to this email with the information.
+
+- Can you please provide a description of what you're trying to accomplish?
+- If this is a bug, can you please provide:
+- A description of the expected behavior
+- A description of what's happening instead
+- Reproduction steps
+- Any relevant information/files (ie package.json, go.mod, requirements.txt)
+- Some additional steps you can take to provide more info if necessary:
+- Run fossa analyze --debug and provide the outputted fossa.debug.json.gz file (it will output info to your screen, but should also create the file in your working directory)
+- Run fossa list-targets (particularly important if you're struggling to get all or part of your project to be scanned by the CLI tool)
+
+One of our support engineers will reach out to you as soon as possible to help you resolve your problems.
+Thank you for using FOSSA, and please don't hesitate to reach out with any additional questions you may have.
+
+Date: Mon, 26 May 2025 09:43:50 GMT
+From: robert.kielty@cncf.io
+To: support@fossa.com
+Subject: FOSSA REST api client/definition
+
+Hi Support Team,
+
+Can I get a Swagger File/Open API definition file of the FOSSA API sent to me?
+
+I am copy/pasting pages from the likes of 
+
+https://docs.fossa.com/reference/getallusers
+
+and feeding it to ChatGPT to generate types to interact with the API.
+
+I would also accept/test a golang client if one existed (I searched the GH org couldn't find one)
+
+I'd be happy to generate a go client, if you could provide me with an API definition!
+
+Many thanks,
+Robert Kielty 
+CNCF 
+
+To unsubscribe from this group and stop receiving emails from it, send an email to support+unsubscribe@fossa.com.
+FOSSA Technical Support <support@fossa.com>	Tue, Jun 10, 2025 at 7:21 AM
+To: robert.kielty@cncf.io
+Re: TKT-13330
+
+
+TKT-13330 FOSSA REST api client/definition has been reopened.
+
+FOSSA Technical Support <support@fossa.com>	Wed, Jun 11, 2025 at 6:58 PM
+To: robert.kielty@cncf.io
+Re: TKT-13330
+
+Hi Robert,
+
+Great to hear you'll be using the Swagger file to generate your Go client!
+
+Regarding your question about tracking pending invitations - good news! There actually is a dedicated invitation endpoint that should be exactly what you need:
+
+Primary Endpoint for Pending Invitations:
+
+- GET /api/user-invitations - Retrieves all active (non-expired) user invitations for an organization
+
+Additional Invitation-Related Endpoints:
+
+- POST /api/organizations/:id/invite - Create new invitations (single or bulk)
+
+- DELETE /api/user-invitations/:email - Remove a pending invitation
+
+- GET /api/organizations/:id/pending-sso-domains - For SSO domain verification invitations
+
+Key Details:
+
+- The /api/user-invitations endpoint returns all pending invitations that haven't expired (48-hour timeout)
+
+- Requires proper user invitation permissions
+
+- Returns invitation details including email, who created it, and timestamps
+
+- Much cleaner than parsing audit logs!
+
+These endpoints should give you direct access to pending invitation data without needing to experiment with the audit endpoint. The Swagger file should have all the request/response schemas for these endpoints.
+
+Let me know if you have any questions about the invitation endpoints or run into any issues while implementing them in your Go client!
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Tue, 10 Jun 2025 06:21:20 GMT
+From: Convergence Bot
+
+TKT-13330 FOSSA REST api client/definition has been reopened.
+
+Date: Tue, 10 Jun 2025 06:21:17 GMT
+From: robert.kielty@cncf.io
+To: support@fossa.com
+Subject: Re: FOSSA REST api client/definition
+
+Hi Sara, (this response was in my drafts all this time, apols for the late response!)
+
+https://app.fossa.com/api/api-docs/swagger.json
+
+I will use this Swagger file to generate a golang client.
+
+One thing I want to track is pending invitations.
+
+As far as I can see, there is no invitation endpoint, but there is an audit log. 
+
+I will experiment with the audit endpoint this morning to see if I can retrieve invitations that have been sent out.
+
+I may have further questions!
+
+Thanks so much for your awesome-as-always support!
+
+Rob
+
+
+On Wed 28 May 2025, 20:50 FOSSA Technical Support, <support@fossa.com> wrote:
+Re: TKT-13330
+
+Hi Robert,
+
+Does this work for your needs?
+
+https://app.fossa.com/api/api-docs/swagger.json
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 26 May 2025 23:13:06 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+
+Re: TKT-13330
+
+Hi Robert,
+
+I'll speak to my team to get this for you.
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 26 May 2025 09:43:51 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+Subject: FOSSA REST api client/definition
+
+Re: TKT-13330
+
+
+Hello there,
+
+Thanks for reaching out to FOSSA. Our support staff will review your request and respond to you shortly. In the meantime, could you please provide some additional information in order to facilitate our engineers in resolving your problem? You can respond to this email with the information.
+
+- Can you please provide a description of what you're trying to accomplish?
+- If this is a bug, can you please provide:
+- A description of the expected behavior
+- A description of what's happening instead
+- Reproduction steps
+- Any relevant information/files (ie package.json, go.mod, requirements.txt)
+- Some additional steps you can take to provide more info if necessary:
+- Run fossa analyze --debug and provide the outputted fossa.debug.json.gz file (it will output info to your screen, but should also create the file in your working directory)
+- Run fossa list-targets (particularly important if you're struggling to get all or part of your project to be scanned by the CLI tool)
+
+One of our support engineers will reach out to you as soon as possible to help you resolve your problems.
+Thank you for using FOSSA, and please don't hesitate to reach out with any additional questions you may have.
+
+Date: Mon, 26 May 2025 09:43:50 GMT
+From: robert.kielty@cncf.io
+To: support@fossa.com
+Subject: FOSSA REST api client/definition
+
+Hi Support Team,
+
+
+Can I get a Swagger File/Open API definition file of the FOSSA API sent to me?
+
+
+I am copy/pasting pages from the likes of 
+
+
+https://docs.fossa.com/reference/getallusers
+
+and feeding it to ChatGPT to generate types to interact with the API.
+
+
+I would also accept/test a golang client if one existed (I searched the GH org couldn't find one)
+
+
+I'd be happy to generate a go client, if you could provide me with an API definition!
+
+
+Many thanks,
+Robert Kielty 
+
+CNCF 
+
+
+To unsubscribe from this group and stop receiving emails from it, send an email to
+support+unsubscribe@fossa.com
+.
+
+To unsubscribe from this group and stop receiving emails from it, send an email to support+unsubscribe@fossa.com.
+FOSSA Technical Support <support@fossa.com>	Fri, Jun 13, 2025 at 6:58 PM
+To: robert.kielty@cncf.io
+Re: TKT-13330
+
+
+Hey robert.kielty@cncf.io! We have not heard back from you in a few days on this ticket and thus will motion toward closing it out soon.
+It is currently scheduled to be automatically closed in the next 72 hours.
+If you respond before then, this ticket will remain open.
+If you have any more questions or need additional help, feel free to reach out to us!
+Best Regards,
+FOSSA Technical Support
+
+FOSSA Technical Support <support@fossa.com>	Tue, Jun 24, 2025 at 3:16 PM
+To: robert.kielty@cncf.io
+Re: TKT-13330
+
+Hi Robert,
+
+Thank you for the detailed feedback about the swagger.json file issues you've encountered while working on your Go client for CNCF.
+
+I've escalated your findings to our engineering team as these are product-level issues that require their attention:
+
+- The field name conflicts (\_id vs id) in entities like MavenRepository and MavenServer
+
+- The missing user invitation endpoints in the swagger documentation
+
+- The type inconsistencies you and others have identified
+
+These are legitimate swagger.json defects that are blocking standard code generation tools like openapi-generator-cli, and they need to be addressed at the product level.
+
+I'll keep you updated as soon as I hear back from engineering on the timeline for these fixes. In the meantime, I understand you're hand-coding the Go client as a workaround.
+
+Thanks for your patience and for providing such clear feedback to help us improve our API documentation.
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 23 Jun 2025 12:20:48 GMT
+From: robert.kielty@cncf.io
+
+Hi Sara,
+
+ 
+
+I had to take a break from generating a Go client from the swagger.json file, there were just too many errors in the swagger file too many “_id” and “id” field name clashes which confused the generator I was using.
+
+ 
+
+I am hand-coding a Go client for now, and that is working.
+
+ 
+
+But I cannot find the user-invitation endpoints you referred to earlier in the swagger file. (they are not present in REST API reference docs either)
+
+ 
+
+I will try calling them regardless and let you know how I get on, but if would be great if you could ask the product team to publish those invitation endpoints so they appear in the docs and the swaggerfile.
+
+ 
+
+Also, on the online REST API reference documentation, the https://docs.fossa.com/reference/getallteams endpoint can be found under the Users menu and note the Teams menu, that was confusing :)
+
+ 
+
+See attached screenshot
+
+ 
+
+It is worth noting that I am looking at version 3.2 of the docs (and presumably the swagger file?)
+
+If the user-invitations endpoints are not yet released, would it be possible to get early access?
+
+Date: Mon, 16 Jun 2025 09:20:27 GMT
+From: robert.kielty@cncf.io
+
+I was mid-edit when I submitted that last update :) It’s not perfect, but probably good enough.
+
+I will do more work on this now and let you know how I get on.
+
+Date: Mon, 16 Jun 2025 09:16:27 GMT
+From: robert.kielty@cncf.io
+
+As always, I appreciate your support. That’s great news on the UserInvitations endpoints. That will be super useful for my work in the CNCF. Please let the product team know that I am delighted by that news.
+
+ 
+
+I have been working on generating the go client over on over the past week
+
+https://github.com/RobertKielty/fossa-go
+
+ 
+
+I have a Makefile to generate go code and perform releases.
+
+https://github.com/RobertKielty/fossa-go/blob/main/Makefile
+
+ 
+
+I see errors when validating the Swagger file and building the generated code.
+
+ 
+
+I am using openapitools/openapi-generator-cli for the first time; it seems to be an actively maintained tool designed to work with v3 Swagger files. https://openapi-generator.tech/docs/installation/#docker If you know of better tools, I will look at using them.
+
+ 
+
+Entries in the swagger file confuse the generator, causing it to create code that the go compiler cannot compile.
+
+ 
+
+What would be the best way for me to provide feedback to your product development team?
+
+ 
+
+I could log issues on my repo, and we could discuss them there? But if there is a preferred way do let me know.
+
+ 
+
+An issue I have found is that there are near duplicate field names like _id and id.
+
+```MavenRepository:
+
+  properties:
+
+   _id:
+
+    description: UUID of the Maven repo (For FOSSA internal usage)
+
+    type: number
+
+   id:
+
+    description: User configured ID (corresponds with a Maven Server if credentials
+
+     are necessary)
+
+    type: string
+
+   url:
+
+    description: URL of the Maven Repository
+
+    type: string
+
+ MavenServer:
+
+  properties:
+
+   _id:
+
+    description: UUID of the Maven Server (For FOSSA internal usage)
+
+    type: number
+
+   id:
+
+    description: User configured ID (corresponds with a Maven Repository)
+
+    type: string
+
+ 
+
+openapi-generator-cli ignores the underscore prefix on the first id, for this case renaming the id to UUID might be a good fix, pending review
+
+ 
+
+generate-go: install-openapi-generator-cli report-fossa-version
+
+@echo "🚀  Generating Go client for version $(FOSSA_API_VERSION)…"
+
+docker run --rm \\
+
+  -u $$(id -u):$$(id -g) \\
+
+  -v "$$&lbrace;PWD&rbrace;:/local" \\
+  -e JAVA_OPTS=“-Dlog.level=warn” \
+
+  openapitools/openapi-generator-cli generate \\
+
+  &nbsp; -i $(FOSSA_SWAGGER_REF) \\
+
+  &nbsp; -g go \\
+
+  &nbsp; --additional-properties=structPrefix=true,packageName=fossa,packageVersion=$(FOSSA_MOD_VERSION) \\
+
+  &nbsp; --git-user-id=RobertKielty \\
+
+  &nbsp; --git-repo-id=fossa-go
+Date: Mon, 16 Jun 2025 08:41:22 GMT
+From: robert.kielty@cncf.io
+
+Thanks so much Sara!
+
+Date: Fri, 13 Jun 2025 17:58:34 GMT
+From: RevBot_Notifier
+
+Hey robert.kielty@cncf.io! We have not heard back from you in a few days on this ticket and thus will motion toward closing it out soon.
+It is currently scheduled to be automatically closed in the next 72 hours.
+If you respond before then, this ticket will remain open.
+If you have any more questions or need additional help, feel free to reach out to us!
+Best Regards,
+FOSSA Technical Support
+
+Date: Wed, 11 Jun 2025 17:58:29 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+
+Re: TKT-13330
+
+Hi Robert,
+
+Great to hear you'll be using the Swagger file to generate your Go client!
+
+Regarding your question about tracking pending invitations - good news! There actually is a dedicated invitation endpoint that should be exactly what you need:
+
+Primary Endpoint for Pending Invitations:
+
+- GET /api/user-invitations - Retrieves all active (non-expired) user invitations for an organization
+
+Additional Invitation-Related Endpoints:
+
+- POST /api/organizations/:id/invite - Create new invitations (single or bulk)
+
+- DELETE /api/user-invitations/:email - Remove a pending invitation
+
+- GET /api/organizations/:id/pending-sso-domains - For SSO domain verification invitations
+
+Key Details:
+
+- The /api/user-invitations endpoint returns all pending invitations that haven't expired (48-hour timeout)
+
+- Requires proper user invitation permissions
+
+- Returns invitation details including email, who created it, and timestamps
+
+- Much cleaner than parsing audit logs!
+
+These endpoints should give you direct access to pending invitation data without needing to experiment with the audit endpoint. The Swagger file should have all the request/response schemas for these endpoints.
+
+Let me know if you have any questions about the invitation endpoints or run into any issues while implementing them in your Go client!
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Tue, 10 Jun 2025 06:21:20 GMT
+From: Convergence Bot
+
+TKT-13330 FOSSA REST api client/definition has been reopened.
+
+Date: Tue, 10 Jun 2025 06:21:17 GMT
+From: robert.kielty@cncf.io
+To: support@fossa.com
+Subject: Re: FOSSA REST api client/definition
+
+Hi Sara, (this response was in my drafts all this time, apols for the late response!)
+
+https://app.fossa.com/api/api-docs/swagger.json
+
+I will use this Swagger file to generate a golang client.
+
+One thing I want to track is pending invitations.
+
+As far as I can see, there is no invitation endpoint, but there is an audit log. 
+
+I will experiment with the audit endpoint this morning to see if I can retrieve invitations that have been sent out.
+
+I may have further questions!
+
+Thanks so much for your awesome-as-always support!
+
+Rob
+
+
+On Wed 28 May 2025, 20:50 FOSSA Technical Support, <support@fossa.com> wrote:
+Re: TKT-13330
+
+Hi Robert,
+
+Does this work for your needs?
+
+https://app.fossa.com/api/api-docs/swagger.json
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 26 May 2025 23:13:06 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+
+Re: TKT-13330
+
+Hi Robert,
+
+I'll speak to my team to get this for you.
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 26 May 2025 09:43:51 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+Subject: FOSSA REST api client/definition
+
+Re: TKT-13330
+
+
+Hello there,
+
+Thanks for reaching out to FOSSA. Our support staff will review your request and respond to you shortly. In the meantime, could you please provide some additional information in order to facilitate our engineers in resolving your problem? You can respond to this email with the information.
+
+- Can you please provide a description of what you're trying to accomplish?
+- If this is a bug, can you please provide:
+- A description of the expected behavior
+- A description of what's happening instead
+- Reproduction steps
+- Any relevant information/files (ie package.json, go.mod, requirements.txt)
+- Some additional steps you can take to provide more info if necessary:
+- Run fossa analyze --debug and provide the outputted fossa.debug.json.gz file (it will output info to your screen, but should also create the file in your working directory)
+- Run fossa list-targets (particularly important if you're struggling to get all or part of your project to be scanned by the CLI tool)
+
+One of our support engineers will reach out to you as soon as possible to help you resolve your problems.
+Thank you for using FOSSA, and please don't hesitate to reach out with any additional questions you may have.
+
+Date: Mon, 26 May 2025 09:43:50 GMT
+From: robert.kielty@cncf.io
+To: support@fossa.com
+Subject: FOSSA REST api client/definition
+
+Hi Support Team,
+
+
+Can I get a Swagger File/Open API definition file of the FOSSA API sent to me?
+
+
+I am copy/pasting pages from the likes of 
+
+
+https://docs.fossa.com/reference/getallusers
+
+and feeding it to ChatGPT to generate types to interact with the API.
+
+
+I would also accept/test a golang client if one existed (I searched the GH org couldn't find one)
+
+
+I'd be happy to generate a go client, if you could provide me with an API definition!
+
+
+Many thanks,
+Robert Kielty 
+
+CNCF 
+
+
+To unsubscribe from this group and stop receiving emails from it, send an email to
+support+unsubscribe@fossa.com
+.
+
+To unsubscribe from this group and stop receiving emails from it, send an email to support+unsubscribe@fossa.com.
+Robert Kielty <robert.kielty@cncf.io>	Tue, Jun 24, 2025 at 10:19 PM
+To: FOSSA Technical Support <support@fossa.com>
+Thank you, Sara for your reply!
+
+I am delighted to report that I have successfully retrieved invitations using your guidance in a previous update!
+
+Next, I will check to see if I can POST to the invitation endpoint in the next few days to send out an invitation. I'll let you know how I get on.
+
+I am happy out, hand-coding, using golang, my FOSSA REST API interactions; I can easily target the small number of specific endpoints I am currently interested in. 
+
+For the future, it may well be useful to crank out a generated go-client from the swagger.json file. Long term, I would like to be able to do cross-project analytics focusing on issues reported by FOSSA so that I can advise a newer project on how a mature project handles a specific reported issue. But that is for another day.
+
+Right now,  automating the onboarding of new projects and team members is the focus.
+
+Also, I am thrilled that you took it upon yourself to head up the Early Access Developer Programme for the FOSSA REST API! 
+
+Being able to access endpoints that are not in the swagger file makes me feel special :) 
+
+Thanks again, 
+Robert
+
+
+
+
+On Tue, Jun 24, 2025 at 3:16 PM FOSSA Technical Support <support@fossa.com> wrote:
+Re: TKT-13330
+
+Hi Robert,
+
+Thank you for the detailed feedback about the swagger.json file issues you've encountered while working on your Go client for CNCF.
+
+I've escalated your findings to our engineering team as these are product-level issues that require their attention:
+
+- The field name conflicts (\_id vs id) in entities like MavenRepository and MavenServer
+
+- The missing user invitation endpoints in the swagger documentation
+
+- The type inconsistencies you and others have identified
+
+These are legitimate swagger.json defects that are blocking standard code generation tools like openapi-generator-cli, and they need to be addressed at the product level.
+
+I'll keep you updated as soon as I hear back from engineering on the timeline for these fixes. In the meantime, I understand you're hand-coding the Go client as a workaround.
+
+Thanks for your patience and for providing such clear feedback to help us improve our API documentation.
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 23 Jun 2025 12:20:48 GMT
+From: robert.kielty@cncf.io
+
+Hi Sara,
+
+ 
+
+I had to take a break from generating a Go client from the swagger.json file, there were just too many errors in the swagger file too many “_id” and “id” field name clashes which confused the generator I was using.
+
+ 
+
+I am hand-coding a Go client for now, and that is working.
+
+ 
+
+But I cannot find the user-invitation endpoints you referred to earlier in the swagger file. (they are not present in REST API reference docs either)
+
+ 
+
+I will try calling them regardless and let you know how I get on, but if would be great if you could ask the product team to publish those invitation endpoints so they appear in the docs and the swaggerfile.
+
+ 
+
+Also, on the online REST API reference documentation, the https://docs.fossa.com/reference/getallteams endpoint can be found under the Users menu and note the Teams menu, that was confusing :)
+
+ 
+
+See attached screenshot
+
+ 
+
+It is worth noting that I am looking at version 3.2 of the docs (and presumably the swagger file?)
+
+If the user-invitations endpoints are not yet released, would it be possible to get early access?
+
+Date: Mon, 16 Jun 2025 09:20:27 GMT
+From: robert.kielty@cncf.io
+
+I was mid-edit when I submitted that last update :) It’s not perfect, but probably good enough.
+
+I will do more work on this now and let you know how I get on.
+
+Date: Mon, 16 Jun 2025 09:16:27 GMT
+From: robert.kielty@cncf.io
+
+As always, I appreciate your support. That’s great news on the UserInvitations endpoints. That will be super useful for my work in the CNCF. Please let the product team know that I am delighted by that news.
+
+ 
+
+I have been working on generating the go client over on over the past week
+
+https://github.com/RobertKielty/fossa-go
+
+ 
+
+I have a Makefile to generate go code and perform releases.
+
+https://github.com/RobertKielty/fossa-go/blob/main/Makefile
+
+ 
+
+I see errors when validating the Swagger file and building the generated code.
+
+ 
+
+I am using openapitools/openapi-generator-cli for the first time; it seems to be an actively maintained tool designed to work with v3 Swagger files. https://openapi-generator.tech/docs/installation/#docker If you know of better tools, I will look at using them.
+
+ 
+
+Entries in the swagger file confuse the generator, causing it to create code that the go compiler cannot compile.
+
+ 
+
+What would be the best way for me to provide feedback to your product development team?
+
+ 
+
+I could log issues on my repo, and we could discuss them there? But if there is a preferred way do let me know.
+
+ 
+
+An issue I have found is that there are near duplicate field names like _id and id.
+
+```MavenRepository:
+
+  properties:
+
+   _id:
+
+    description: UUID of the Maven repo (For FOSSA internal usage)
+
+    type: number
+
+   id:
+
+    description: User configured ID (corresponds with a Maven Server if credentials
+
+     are necessary)
+
+    type: string
+
+   url:
+
+    description: URL of the Maven Repository
+
+    type: string
+
+ MavenServer:
+
+  properties:
+
+   _id:
+
+    description: UUID of the Maven Server (For FOSSA internal usage)
+
+    type: number
+
+   id:
+
+    description: User configured ID (corresponds with a Maven Repository)
+
+    type: string
+
+ 
+
+openapi-generator-cli ignores the underscore prefix on the first id, for this case renaming the id to UUID might be a good fix, pending review
+
+ 
+
+generate-go: install-openapi-generator-cli report-fossa-version
+
+@echo "🚀  Generating Go client for version $(FOSSA_API_VERSION)…"
+
+docker run --rm \\
+
+  -u $$(id -u):$$(id -g) \\
+
+  -v "$$&lbrace;PWD&rbrace;:/local" \\
+  -e JAVA_OPTS=“-Dlog.level=warn” \
+
+  openapitools/openapi-generator-cli generate \\
+
+  &nbsp; -i $(FOSSA_SWAGGER_REF) \\
+
+  &nbsp; -g go \\
+
+  &nbsp; --additional-properties=structPrefix=true,packageName=fossa,packageVersion=$(FOSSA_MOD_VERSION) \\
+
+  &nbsp; --git-user-id=RobertKielty \\
+
+  &nbsp; --git-repo-id=fossa-go
+Date: Mon, 16 Jun 2025 08:41:22 GMT
+From: robert.kielty@cncf.io
+
+Thanks so much Sara!
+
+Date: Fri, 13 Jun 2025 17:58:34 GMT
+From: RevBot_Notifier
+
+Hey robert.kielty@cncf.io! We have not heard back from you in a few days on this ticket and thus will motion toward closing it out soon.
+It is currently scheduled to be automatically closed in the next 72 hours.
+If you respond before then, this ticket will remain open.
+If you have any more questions or need additional help, feel free to reach out to us!
+Best Regards,
+FOSSA Technical Support
+
+Date: Wed, 11 Jun 2025 17:58:29 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+
+Re: TKT-13330
+
+Hi Robert,
+
+Great to hear you'll be using the Swagger file to generate your Go client!
+
+Regarding your question about tracking pending invitations - good news! There actually is a dedicated invitation endpoint that should be exactly what you need:
+
+Primary Endpoint for Pending Invitations:
+
+- GET /api/user-invitations - Retrieves all active (non-expired) user invitations for an organization
+
+Additional Invitation-Related Endpoints:
+
+- POST /api/organizations/:id/invite - Create new invitations (single or bulk)
+
+- DELETE /api/user-invitations/:email - Remove a pending invitation
+
+- GET /api/organizations/:id/pending-sso-domains - For SSO domain verification invitations
+
+Key Details:
+
+- The /api/user-invitations endpoint returns all pending invitations that haven't expired (48-hour timeout)
+
+- Requires proper user invitation permissions
+
+- Returns invitation details including email, who created it, and timestamps
+
+- Much cleaner than parsing audit logs!
+
+These endpoints should give you direct access to pending invitation data without needing to experiment with the audit endpoint. The Swagger file should have all the request/response schemas for these endpoints.
+
+Let me know if you have any questions about the invitation endpoints or run into any issues while implementing them in your Go client!
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Tue, 10 Jun 2025 06:21:20 GMT
+From: Convergence Bot
+
+TKT-13330 FOSSA REST api client/definition has been reopened.
+
+Date: Tue, 10 Jun 2025 06:21:17 GMT
+From: robert.kielty@cncf.io
+To: support@fossa.com
+Subject: Re: FOSSA REST api client/definition
+
+Hi Sara, (this response was in my drafts all this time, apols for the late response!)
+
+https://app.fossa.com/api/api-docs/swagger.json
+
+I will use this Swagger file to generate a golang client.
+
+One thing I want to track is pending invitations.
+
+As far as I can see, there is no invitation endpoint, but there is an audit log. 
+
+I will experiment with the audit endpoint this morning to see if I can retrieve invitations that have been sent out.
+
+I may have further questions!
+
+Thanks so much for your awesome-as-always support!
+
+Rob
+
+
+On Wed 28 May 2025, 20:50 FOSSA Technical Support, <support@fossa.com> wrote:
+Re: TKT-13330
+
+Hi Robert,
+
+Does this work for your needs?
+
+https://app.fossa.com/api/api-docs/swagger.json
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 26 May 2025 23:13:06 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+
+Re: TKT-13330
+
+Hi Robert,
+
+I'll speak to my team to get this for you.
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 26 May 2025 09:43:51 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+Subject: FOSSA REST api client/definition
+
+Re: TKT-13330
+
+
+Hello there,
+
+Thanks for reaching out to FOSSA. Our support staff will review your request and respond to you shortly. In the meantime, could you please provide some additional information in order to facilitate our engineers in resolving your problem? You can respond to this email with the information.
+
+- Can you please provide a description of what you're trying to accomplish?
+- If this is a bug, can you please provide:
+- A description of the expected behavior
+- A description of what's happening instead
+- Reproduction steps
+- Any relevant information/files (ie package.json, go.mod, requirements.txt)
+- Some additional steps you can take to provide more info if necessary:
+- Run fossa analyze --debug and provide the outputted fossa.debug.json.gz file (it will output info to your screen, but should also create the file in your working directory)
+- Run fossa list-targets (particularly important if you're struggling to get all or part of your project to be scanned by the CLI tool)
+
+One of our support engineers will reach out to you as soon as possible to help you resolve your problems.
+Thank you for using FOSSA, and please don't hesitate to reach out with any additional questions you may have.
+
+Date: Mon, 26 May 2025 09:43:50 GMT
+From: robert.kielty@cncf.io
+To: support@fossa.com
+Subject: FOSSA REST api client/definition
+
+Hi Support Team,
+
+
+Can I get a Swagger File/Open API definition file of the FOSSA API sent to me?
+
+
+I am copy/pasting pages from the likes of 
+
+
+https://docs.fossa.com/reference/getallusers
+
+and feeding it to ChatGPT to generate types to interact with the API.
+
+
+I would also accept/test a golang client if one existed (I searched the GH org couldn't find one)
+
+
+I'd be happy to generate a go client, if you could provide me with an API definition!
+
+
+Many thanks,
+Robert Kielty 
+
+CNCF 
+
+
+To unsubscribe from this group and stop receiving emails from it, send an email to
+support+unsubscribe@fossa.com
+.
+
+To unsubscribe from this group and stop receiving emails from it, send an email to support+unsubscribe@fossa.com.
+Robert Kielty <robert.kielty@cncf.io>	Fri, Jul 25, 2025 at 11:07 AM
+Draft To: FOSSA Technical Support <support@fossa.com>
+Hi Sara, 
+
+I am looking for an endpoint to create a team in FOSSA. I cannot find one in the swagger file or the API reference docs.
+
+I will try to POST to the team
+
+On Tue, Jun 24, 2025 at 10:19 PM Robert Kielty <robert.kielty@cncf.io> wrote:
+Thank you, Sara for your reply!
+
+I am delighted to report that I have successfully retrieved invitations using your guidance in a previous update!
+
+Next, I will check to see if I can POST to the invitation endpoint in the next few days to send out an invitation. I'll let you know how I get on.
+
+I am happy out, hand-coding, using golang, my FOSSA REST API interactions; I can easily target the small number of specific endpoints I am currently interested in. 
+
+For the future, it may well be useful to crank out a generated go-client from the swagger.json file. Long term, I would like to be able to do cross-project analytics focusing on issues reported by FOSSA so that I can advise a newer project on how a mature project handles a specific reported issue. But that is for another day.
+
+Right now,  automating the onboarding of new projects and team members is the focus.
+
+Also, I am thrilled that you took it upon yourself to head up the Early Access Developer Programme for the FOSSA REST API! 
+
+Being able to access endpoints that are not in the swagger file makes me feel special :) 
+
+Thanks again, 
+Robert
+
+
+
+
+On Tue, Jun 24, 2025 at 3:16 PM FOSSA Technical Support <support@fossa.com> wrote:
+Re: TKT-13330
+
+Hi Robert,
+
+Thank you for the detailed feedback about the swagger.json file issues you've encountered while working on your Go client for CNCF.
+
+I've escalated your findings to our engineering team as these are product-level issues that require their attention:
+
+- The field name conflicts (\_id vs id) in entities like MavenRepository and MavenServer
+
+- The missing user invitation endpoints in the swagger documentation
+
+- The type inconsistencies you and others have identified
+
+These are legitimate swagger.json defects that are blocking standard code generation tools like openapi-generator-cli, and they need to be addressed at the product level.
+
+I'll keep you updated as soon as I hear back from engineering on the timeline for these fixes. In the meantime, I understand you're hand-coding the Go client as a workaround.
+
+Thanks for your patience and for providing such clear feedback to help us improve our API documentation.
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 23 Jun 2025 12:20:48 GMT
+From: robert.kielty@cncf.io
+
+Hi Sara,
+
+ 
+
+I had to take a break from generating a Go client from the swagger.json file, there were just too many errors in the swagger file too many “_id” and “id” field name clashes which confused the generator I was using.
+
+ 
+
+I am hand-coding a Go client for now, and that is working.
+
+ 
+
+But I cannot find the user-invitation endpoints you referred to earlier in the swagger file. (they are not present in REST API reference docs either)
+
+ 
+
+I will try calling them regardless and let you know how I get on, but if would be great if you could ask the product team to publish those invitation endpoints so they appear in the docs and the swaggerfile.
+
+ 
+
+Also, on the online REST API reference documentation, the https://docs.fossa.com/reference/getallteams endpoint can be found under the Users menu and note the Teams menu, that was confusing :)
+
+ 
+
+See attached screenshot
+
+ 
+
+It is worth noting that I am looking at version 3.2 of the docs (and presumably the swagger file?)
+
+If the user-invitations endpoints are not yet released, would it be possible to get early access?
+
+Date: Mon, 16 Jun 2025 09:20:27 GMT
+From: robert.kielty@cncf.io
+
+I was mid-edit when I submitted that last update :) It’s not perfect, but probably good enough.
+
+I will do more work on this now and let you know how I get on.
+
+Date: Mon, 16 Jun 2025 09:16:27 GMT
+From: robert.kielty@cncf.io
+
+As always, I appreciate your support. That’s great news on the UserInvitations endpoints. That will be super useful for my work in the CNCF. Please let the product team know that I am delighted by that news.
+
+ 
+
+I have been working on generating the go client over on over the past week
+
+https://github.com/RobertKielty/fossa-go
+
+ 
+
+I have a Makefile to generate go code and perform releases.
+
+https://github.com/RobertKielty/fossa-go/blob/main/Makefile
+
+ 
+
+I see errors when validating the Swagger file and building the generated code.
+
+ 
+
+I am using openapitools/openapi-generator-cli for the first time; it seems to be an actively maintained tool designed to work with v3 Swagger files. https://openapi-generator.tech/docs/installation/#docker If you know of better tools, I will look at using them.
+
+ 
+
+Entries in the swagger file confuse the generator, causing it to create code that the go compiler cannot compile.
+
+ 
+
+What would be the best way for me to provide feedback to your product development team?
+
+ 
+
+I could log issues on my repo, and we could discuss them there? But if there is a preferred way do let me know.
+
+ 
+
+An issue I have found is that there are near duplicate field names like _id and id.
+
+```MavenRepository:
+
+  properties:
+
+   _id:
+
+    description: UUID of the Maven repo (For FOSSA internal usage)
+
+    type: number
+
+   id:
+
+    description: User configured ID (corresponds with a Maven Server if credentials
+
+     are necessary)
+
+    type: string
+
+   url:
+
+    description: URL of the Maven Repository
+
+    type: string
+
+ MavenServer:
+
+  properties:
+
+   _id:
+
+    description: UUID of the Maven Server (For FOSSA internal usage)
+
+    type: number
+
+   id:
+
+    description: User configured ID (corresponds with a Maven Repository)
+
+    type: string
+
+ 
+
+openapi-generator-cli ignores the underscore prefix on the first id, for this case renaming the id to UUID might be a good fix, pending review
+
+ 
+
+generate-go: install-openapi-generator-cli report-fossa-version
+
+@echo "🚀  Generating Go client for version $(FOSSA_API_VERSION)…"
+
+docker run --rm \\
+
+  -u $$(id -u):$$(id -g) \\
+
+  -v "$$&lbrace;PWD&rbrace;:/local" \\
+  -e JAVA_OPTS=“-Dlog.level=warn” \
+
+  openapitools/openapi-generator-cli generate \\
+
+  &nbsp; -i $(FOSSA_SWAGGER_REF) \\
+
+  &nbsp; -g go \\
+
+  &nbsp; --additional-properties=structPrefix=true,packageName=fossa,packageVersion=$(FOSSA_MOD_VERSION) \\
+
+  &nbsp; --git-user-id=RobertKielty \\
+
+  &nbsp; --git-repo-id=fossa-go
+Date: Mon, 16 Jun 2025 08:41:22 GMT
+From: robert.kielty@cncf.io
+
+Thanks so much Sara!
+
+Date: Fri, 13 Jun 2025 17:58:34 GMT
+From: RevBot_Notifier
+
+Hey robert.kielty@cncf.io! We have not heard back from you in a few days on this ticket and thus will motion toward closing it out soon.
+It is currently scheduled to be automatically closed in the next 72 hours.
+If you respond before then, this ticket will remain open.
+If you have any more questions or need additional help, feel free to reach out to us!
+Best Regards,
+FOSSA Technical Support
+
+Date: Wed, 11 Jun 2025 17:58:29 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+
+Re: TKT-13330
+
+Hi Robert,
+
+Great to hear you'll be using the Swagger file to generate your Go client!
+
+Regarding your question about tracking pending invitations - good news! There actually is a dedicated invitation endpoint that should be exactly what you need:
+
+Primary Endpoint for Pending Invitations:
+
+- GET /api/user-invitations - Retrieves all active (non-expired) user invitations for an organization
+
+Additional Invitation-Related Endpoints:
+
+- POST /api/organizations/:id/invite - Create new invitations (single or bulk)
+
+- DELETE /api/user-invitations/:email - Remove a pending invitation
+
+- GET /api/organizations/:id/pending-sso-domains - For SSO domain verification invitations
+
+Key Details:
+
+- The /api/user-invitations endpoint returns all pending invitations that haven't expired (48-hour timeout)
+
+- Requires proper user invitation permissions
+
+- Returns invitation details including email, who created it, and timestamps
+
+- Much cleaner than parsing audit logs!
+
+These endpoints should give you direct access to pending invitation data without needing to experiment with the audit endpoint. The Swagger file should have all the request/response schemas for these endpoints.
+
+Let me know if you have any questions about the invitation endpoints or run into any issues while implementing them in your Go client!
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Tue, 10 Jun 2025 06:21:20 GMT
+From: Convergence Bot
+
+TKT-13330 FOSSA REST api client/definition has been reopened.
+
+Date: Tue, 10 Jun 2025 06:21:17 GMT
+From: robert.kielty@cncf.io
+To: support@fossa.com
+Subject: Re: FOSSA REST api client/definition
+
+Hi Sara, (this response was in my drafts all this time, apols for the late response!)
+
+https://app.fossa.com/api/api-docs/swagger.json
+
+I will use this Swagger file to generate a golang client.
+
+One thing I want to track is pending invitations.
+
+As far as I can see, there is no invitation endpoint, but there is an audit log. 
+
+I will experiment with the audit endpoint this morning to see if I can retrieve invitations that have been sent out.
+
+I may have further questions!
+
+Thanks so much for your awesome-as-always support!
+
+Rob
+
+
+On Wed 28 May 2025, 20:50 FOSSA Technical Support, <support@fossa.com> wrote:
+Re: TKT-13330
+
+Hi Robert,
+
+Does this work for your needs?
+
+https://app.fossa.com/api/api-docs/swagger.json
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 26 May 2025 23:13:06 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+
+Re: TKT-13330
+
+Hi Robert,
+
+I'll speak to my team to get this for you.
+
+Thanks,
+Sara
+
+Sara Beaudet
+Sr. Support Engineer
+sara@fossa.com
+
+Date: Mon, 26 May 2025 09:43:51 GMT
+From: FOSSA Technical Support <support@fossa.com>
+To: robert.kielty@cncf.io
+Subject: FOSSA REST api client/definition
+
+Re: TKT-13330
+
+
+Hello there,
+
+Thanks for reaching out to FOSSA. Our support staff will review your request and respond to you shortly. In the meantime, could you please provide some additional information in order to facilitate our engineers in resolving your problem? You can respond to this email with the information.
+
+- Can you please provide a description of what you're trying to accomplish?
+- If this is a bug, can you please provide:
+- A description of the expected behavior
+- A description of what's happening instead
+- Reproduction steps
+- Any relevant information/files (ie package.json, go.mod, requirements.txt)
+- Some additional steps you can take to provide more info if necessary:
+- Run fossa analyze --debug and provide the outputted fossa.debug.json.gz file (it will output info to your screen, but should also create the file in your working directory)
+- Run fossa list-targets (particularly important if you're struggling to get all or part of your project to be scanned by the CLI tool)
+
+One of our support engineers will reach out to you as soon as possible to help you resolve your problems.
+Thank you for using FOSSA, and please don't hesitate to reach out with any additional questions you may have.
+
+Date: Mon, 26 May 2025 09:43:50 GMT
+From: robert.kielty@cncf.io
+To: support@fossa.com
+Subject: FOSSA REST api client/definition
+
+Hi Support Team,
+
+
+Can I get a Swagger File/Open API definition file of the FOSSA API sent to me?
+
+
+I am copy/pasting pages from the likes of 
+
+
+https://docs.fossa.com/reference/getallusers
+
+and feeding it to ChatGPT to generate types to interact with the API.
+
+
+I would also accept/test a golang client if one existed (I searched the GH org couldn't find one)
+
+
+I'd be happy to generate a go client, if you could provide me with an API definition!
+
+
+Many thanks,
+Robert Kielty 
+
+CNCF 
+
+
+To unsubscribe from this group and stop receiving emails from it, send an email to
+support+unsubscribe@fossa.com
+.
+
+To unsubscribe from this group and stop receiving emails from it, send an email to support+unsubscribe@fossa.com.
+make KUBECONTEXT=context-cdv2c4jfn5q image

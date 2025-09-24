@@ -12,7 +12,33 @@ FOSSA_API_VERSION := $(shell curl -s $(FOSSA_SWAGGER_REF) | jq -r .info.version)
 FOSSA_MOD_VERSION := v1.0.0
 
 all: generate-go
-.PHONY: all report-fossa-version generate-go
+.PHONY: all report-fossa-version generate-go update-swagger
+
+# check for upstream swagger updates and regenerate the client when needed
+update-swagger:
+	@remote_version="$(FOSSA_API_VERSION)"; \
+	if [ -z "$$remote_version" ] || [ "$$remote_version" = "null" ]; then \
+		echo "❌ Unable to determine upstream API version from $(FOSSA_SWAGGER_REF)"; exit 1; \
+	fi; \
+	local_version=""; \
+	if [ -f swagger.json ]; then \
+		local_version="$$(jq -r '.info.version // empty' swagger.json 2>/dev/null || true)"; \
+	fi; \
+	if [ -z "$$local_version" ] && [ -f $(API_VERSION_FILE) ]; then \
+		local_version="$$(cat $(API_VERSION_FILE) 2>/dev/null)"; \
+	fi; \
+	if [ -z "$$local_version" ]; then \
+		echo "⚠️ No local swagger version recorded; generating client for $$remote_version…"; \
+		$(MAKE) --no-print-directory generate-go; exit 0; \
+	fi; \
+	if [ "$$local_version" = "$$remote_version" ]; then \
+		echo "✅ Local API version ($$local_version) already matches upstream."; \
+	elif [ "$$remote_version" = "$$(printf '%s\n%s\n' "$$local_version" "$$remote_version" | sort -V | tail -n1)" ]; then \
+		echo "⬆️ Upstream API version $$remote_version is newer than local $$local_version; regenerating client…"; \
+		$(MAKE) --no-print-directory generate-go; \
+	else \
+		echo "ℹ️ Local API version ($$local_version) is newer than upstream ($$remote_version); no changes applied."; \
+	fi
 
 # download swagger.json, record new version
 report-fossa-version:
@@ -55,6 +81,10 @@ prepare-release:
 .PHONY: publish-release
 publish-release:
 	@echo "🚀 Publishing GitHub release $(FOSSA_MOD_VERSION) for $(FOSSA_API_VERSION)…"
+	@if ! git rev-parse --verify $(FOSSA_MOD_VERSION) >/dev/null 2>&1; then \
+		echo "❌ Tag $(FOSSA_MOD_VERSION) not found. Run 'make prepare-release' before publishing."; \
+		exit 1; \
+	fi
 	@git push origin main
 	@git push origin $(FOSSA_MOD_VERSION)
 	@gh release create $(FOSSA_MOD_VERSION) \

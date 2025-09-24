@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **ProjectDefaultLicensingIssueScanningEnabled** | Pointer to **bool** |  | [optional] 
 **ProjectDefaultLicensingStatusCheckEnabled** | Pointer to **bool** |  | [optional] 
 **ProjectDefaultStatusCheckFilterLicensing** | Pointer to **int32** |  | [optional] 
+**ProjectDefaultSnippetLicensingIssueScanningEnabled** | Pointer to **bool** | Enable or disable snippet licensing issue scanning by default for projects in the organization | [optional] 
 
 ## Methods
 
@@ -127,6 +128,31 @@ SetProjectDefaultStatusCheckFilterLicensing sets ProjectDefaultStatusCheckFilter
 `func (o *GetOrganizationLicensingIssueSettings200Response) HasProjectDefaultStatusCheckFilterLicensing() bool`
 
 HasProjectDefaultStatusCheckFilterLicensing returns a boolean if a field has been set.
+
+### GetProjectDefaultSnippetLicensingIssueScanningEnabled
+
+`func (o *GetOrganizationLicensingIssueSettings200Response) GetProjectDefaultSnippetLicensingIssueScanningEnabled() bool`
+
+GetProjectDefaultSnippetLicensingIssueScanningEnabled returns the ProjectDefaultSnippetLicensingIssueScanningEnabled field if non-nil, zero value otherwise.
+
+### GetProjectDefaultSnippetLicensingIssueScanningEnabledOk
+
+`func (o *GetOrganizationLicensingIssueSettings200Response) GetProjectDefaultSnippetLicensingIssueScanningEnabledOk() (*bool, bool)`
+
+GetProjectDefaultSnippetLicensingIssueScanningEnabledOk returns a tuple with the ProjectDefaultSnippetLicensingIssueScanningEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectDefaultSnippetLicensingIssueScanningEnabled
+
+`func (o *GetOrganizationLicensingIssueSettings200Response) SetProjectDefaultSnippetLicensingIssueScanningEnabled(v bool)`
+
+SetProjectDefaultSnippetLicensingIssueScanningEnabled sets ProjectDefaultSnippetLicensingIssueScanningEnabled field to given value.
+
+### HasProjectDefaultSnippetLicensingIssueScanningEnabled
+
+`func (o *GetOrganizationLicensingIssueSettings200Response) HasProjectDefaultSnippetLicensingIssueScanningEnabled() bool`
+
+HasProjectDefaultSnippetLicensingIssueScanningEnabled returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

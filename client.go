@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.28.61
+API version: 4.30.21
 Contact: support@fossa.com
 */
 
@@ -42,7 +42,7 @@ var (
 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
 )
 
-// APIClient manages communication with the FOSSA API API v4.28.61
+// APIClient manages communication with the FOSSA API API v4.30.21
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -51,6 +51,8 @@ type APIClient struct {
 	// API Services
 
 	AuditLogsAPI *AuditLogsAPIService
+
+	BinaryAPI *BinaryAPIService
 
 	BuildsAPI *BuildsAPIService
 
@@ -67,6 +69,8 @@ type APIClient struct {
 	IssuesAPI *IssuesAPIService
 
 	JiraIntegrationSettingsAPI *JiraIntegrationSettingsAPIService
+
+	OIDCAPI *OIDCAPIService
 
 	OrganizationLabelsAPI *OrganizationLabelsAPIService
 
@@ -89,6 +93,10 @@ type APIClient struct {
 	RolesAPI *RolesAPIService
 
 	SBOMAPI *SBOMAPIService
+
+	SnippetsAPI *SnippetsAPIService
+
+	TeamGroupsAPI *TeamGroupsAPIService
 
 	TeamsAPI *TeamsAPIService
 
@@ -114,6 +122,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.AuditLogsAPI = (*AuditLogsAPIService)(&c.common)
+	c.BinaryAPI = (*BinaryAPIService)(&c.common)
 	c.BuildsAPI = (*BuildsAPIService)(&c.common)
 	c.CLIAPI = (*CLIAPIService)(&c.common)
 	c.ComponentsAPI = (*ComponentsAPIService)(&c.common)
@@ -122,6 +131,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.IssueOverviewAPI = (*IssueOverviewAPIService)(&c.common)
 	c.IssuesAPI = (*IssuesAPIService)(&c.common)
 	c.JiraIntegrationSettingsAPI = (*JiraIntegrationSettingsAPIService)(&c.common)
+	c.OIDCAPI = (*OIDCAPIService)(&c.common)
 	c.OrganizationLabelsAPI = (*OrganizationLabelsAPIService)(&c.common)
 	c.OrganizationLimitsAPI = (*OrganizationLimitsAPIService)(&c.common)
 	c.OrganizationSettingsAPI = (*OrganizationSettingsAPIService)(&c.common)
@@ -133,6 +143,8 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.RevisionsAPI = (*RevisionsAPIService)(&c.common)
 	c.RolesAPI = (*RolesAPIService)(&c.common)
 	c.SBOMAPI = (*SBOMAPIService)(&c.common)
+	c.SnippetsAPI = (*SnippetsAPIService)(&c.common)
+	c.TeamGroupsAPI = (*TeamGroupsAPIService)(&c.common)
 	c.TeamsAPI = (*TeamsAPIService)(&c.common)
 	c.UsersAPI = (*UsersAPIService)(&c.common)
 	c.VulnerabilitiesAPI = (*VulnerabilitiesAPIService)(&c.common)

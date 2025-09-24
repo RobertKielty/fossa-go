@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.28.61
+API version: 4.30.21
 Contact: support@fossa.com
 */
 
@@ -24,6 +24,130 @@ import (
 
 // DependenciesAPIService DependenciesAPI service
 type DependenciesAPIService service
+
+type ApiGetGlobalDependencyRequest struct {
+	ctx context.Context
+	ApiService *DependenciesAPIService
+	locator string
+}
+
+func (r ApiGetGlobalDependencyRequest) Execute() (*GetGlobalDependency200Response, *http.Response, error) {
+	return r.ApiService.GetGlobalDependencyExecute(r)
+}
+
+/*
+GetGlobalDependency Method for GetGlobalDependency
+
+Get a single dependency by locator in the global scope
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The locator of the dependency to retrieve
+ @return ApiGetGlobalDependencyRequest
+*/
+func (a *DependenciesAPIService) GetGlobalDependency(ctx context.Context, locator string) ApiGetGlobalDependencyRequest {
+	return ApiGetGlobalDependencyRequest{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+	}
+}
+
+// Execute executes the request
+//  @return GetGlobalDependency200Response
+func (a *DependenciesAPIService) GetGlobalDependencyExecute(r ApiGetGlobalDependencyRequest) (*GetGlobalDependency200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetGlobalDependency200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DependenciesAPIService.GetGlobalDependency")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/dependencies/{locator}"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v GetGitHubAppInstallationUrl403Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GetGitHubAppInstallationUrl403Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
 
 type ApiGetProjectDependenciesRequest struct {
 	ctx context.Context
@@ -499,6 +623,7 @@ type ApiGetReleaseGroupDependenciesRequest struct {
 	licenses *[]string
 	fetchers *[]string
 	showIgnored *bool
+	confidence *[]string
 	rootProjects *[]string
 	page *int32
 	count *int32
@@ -555,6 +680,12 @@ func (r ApiGetReleaseGroupDependenciesRequest) Fetchers(fetchers []string) ApiGe
 // Includes ignored dependencies
 func (r ApiGetReleaseGroupDependenciesRequest) ShowIgnored(showIgnored bool) ApiGetReleaseGroupDependenciesRequest {
 	r.showIgnored = &showIgnored
+	return r
+}
+
+// Filter dependencies by confidence
+func (r ApiGetReleaseGroupDependenciesRequest) Confidence(confidence []string) ApiGetReleaseGroupDependenciesRequest {
+	r.confidence = &confidence
 	return r
 }
 
@@ -704,6 +835,17 @@ func (a *DependenciesAPIService) GetReleaseGroupDependenciesExecute(r ApiGetRele
 	}
 	if r.showIgnored != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "showIgnored", r.showIgnored, "form", "")
+	}
+	if r.confidence != nil {
+		t := *r.confidence
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "confidence[]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "confidence[]", t, "form", "multi")
+		}
 	}
 	if r.rootProjects != nil {
 		t := *r.rootProjects

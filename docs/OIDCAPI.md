@@ -1,0 +1,777 @@
+# \OIDCAPI
+
+All URIs are relative to *https://app.fossa.com/api*
+
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**CreateOIDCProvider**](OIDCAPI.md#CreateOIDCProvider) | **Post** /oidc/providers | 
+[**CreateOIDCTrustRelationship**](OIDCAPI.md#CreateOIDCTrustRelationship) | **Post** /oidc/trust-relationships | 
+[**DeleteOIDCProvider**](OIDCAPI.md#DeleteOIDCProvider) | **Delete** /oidc/providers/{id} | 
+[**DeleteOIDCTrustRelationship**](OIDCAPI.md#DeleteOIDCTrustRelationship) | **Delete** /oidc/trust-relationships/{id} | 
+[**ExchangeOIDCToken**](OIDCAPI.md#ExchangeOIDCToken) | **Post** /oidc/token-exchange | 
+[**GetOIDCProvider**](OIDCAPI.md#GetOIDCProvider) | **Get** /oidc/providers/{id} | 
+[**GetOIDCTrustRelationship**](OIDCAPI.md#GetOIDCTrustRelationship) | **Get** /oidc/trust-relationships/{id} | 
+[**ListOIDCProviders**](OIDCAPI.md#ListOIDCProviders) | **Get** /oidc/providers | 
+[**ListOIDCTrustRelationships**](OIDCAPI.md#ListOIDCTrustRelationships) | **Get** /oidc/trust-relationships | 
+[**UpdateOIDCProvider**](OIDCAPI.md#UpdateOIDCProvider) | **Put** /oidc/providers/{id} | 
+[**UpdateOIDCTrustRelationship**](OIDCAPI.md#UpdateOIDCTrustRelationship) | **Put** /oidc/trust-relationships/{id} | 
+
+
+
+## CreateOIDCProvider
+
+> ListOIDCProviders200ResponseAllOfResultsInner CreateOIDCProvider(ctx).CreateOIDCProviderRequest(createOIDCProviderRequest).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	createOIDCProviderRequest := *openapiclient.NewCreateOIDCProviderRequest("https://oidc.example.com", "org", "789") // CreateOIDCProviderRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OIDCAPI.CreateOIDCProvider(context.Background()).CreateOIDCProviderRequest(createOIDCProviderRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.CreateOIDCProvider``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateOIDCProvider`: ListOIDCProviders200ResponseAllOfResultsInner
+	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.CreateOIDCProvider`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateOIDCProviderRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createOIDCProviderRequest** | [**CreateOIDCProviderRequest**](CreateOIDCProviderRequest.md) |  | 
+
+### Return type
+
+[**ListOIDCProviders200ResponseAllOfResultsInner**](ListOIDCProviders200ResponseAllOfResultsInner.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateOIDCTrustRelationship
+
+> CreateOIDCTrustRelationship200Response CreateOIDCTrustRelationship(ctx).CreateOIDCTrustRelationshipRequest(createOIDCTrustRelationshipRequest).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	createOIDCTrustRelationshipRequest := *openapiclient.NewCreateOIDCTrustRelationshipRequest(int32(789), int32(321), []string{"Audiences_example"}, []openapiclient.CreateOIDCTrustRelationshipRequestRequiredClaimsInner{*openapiclient.NewCreateOIDCTrustRelationshipRequestRequiredClaimsInner("sub", openapiclient.createOIDCTrustRelationship_request_requiredClaims_inner_value{Bool: new(bool)})}) // CreateOIDCTrustRelationshipRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OIDCAPI.CreateOIDCTrustRelationship(context.Background()).CreateOIDCTrustRelationshipRequest(createOIDCTrustRelationshipRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.CreateOIDCTrustRelationship``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateOIDCTrustRelationship`: CreateOIDCTrustRelationship200Response
+	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.CreateOIDCTrustRelationship`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateOIDCTrustRelationshipRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createOIDCTrustRelationshipRequest** | [**CreateOIDCTrustRelationshipRequest**](CreateOIDCTrustRelationshipRequest.md) |  | 
+
+### Return type
+
+[**CreateOIDCTrustRelationship200Response**](CreateOIDCTrustRelationship200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteOIDCProvider
+
+> DeleteOIDCProvider(ctx, id).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(123) // int32 | The ID of the OIDC Provider to delete
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.OIDCAPI.DeleteOIDCProvider(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.DeleteOIDCProvider``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** | The ID of the OIDC Provider to delete | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteOIDCProviderRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteOIDCTrustRelationship
+
+> DeleteOIDCTrustRelationship(ctx, id).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(123) // int32 | The ID of the OIDC Trust Relationship to delete
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.OIDCAPI.DeleteOIDCTrustRelationship(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.DeleteOIDCTrustRelationship``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** | The ID of the OIDC Trust Relationship to delete | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteOIDCTrustRelationshipRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ExchangeOIDCToken
+
+> ExchangeOIDCToken200Response ExchangeOIDCToken(ctx).ExchangeOIDCTokenRequest(exchangeOIDCTokenRequest).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	exchangeOIDCTokenRequest := *openapiclient.NewExchangeOIDCTokenRequest(int32(123), "john.doe", "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...") // ExchangeOIDCTokenRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OIDCAPI.ExchangeOIDCToken(context.Background()).ExchangeOIDCTokenRequest(exchangeOIDCTokenRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.ExchangeOIDCToken``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ExchangeOIDCToken`: ExchangeOIDCToken200Response
+	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.ExchangeOIDCToken`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiExchangeOIDCTokenRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **exchangeOIDCTokenRequest** | [**ExchangeOIDCTokenRequest**](ExchangeOIDCTokenRequest.md) |  | 
+
+### Return type
+
+[**ExchangeOIDCToken200Response**](ExchangeOIDCToken200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetOIDCProvider
+
+> ListOIDCProviders200ResponseAllOfResultsInner GetOIDCProvider(ctx, id).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(123) // int32 | The ID of the OIDC Provider
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OIDCAPI.GetOIDCProvider(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.GetOIDCProvider``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetOIDCProvider`: ListOIDCProviders200ResponseAllOfResultsInner
+	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.GetOIDCProvider`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** | The ID of the OIDC Provider | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetOIDCProviderRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**ListOIDCProviders200ResponseAllOfResultsInner**](ListOIDCProviders200ResponseAllOfResultsInner.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetOIDCTrustRelationship
+
+> CreateOIDCTrustRelationship200Response GetOIDCTrustRelationship(ctx, id).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(123) // int32 | The ID of the OIDC Trust Relationship
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OIDCAPI.GetOIDCTrustRelationship(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.GetOIDCTrustRelationship``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetOIDCTrustRelationship`: CreateOIDCTrustRelationship200Response
+	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.GetOIDCTrustRelationship`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** | The ID of the OIDC Trust Relationship | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetOIDCTrustRelationshipRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**CreateOIDCTrustRelationship200Response**](CreateOIDCTrustRelationship200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListOIDCProviders
+
+> ListOIDCProviders200Response ListOIDCProviders(ctx).PageSize(pageSize).Prev(prev).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	pageSize := int32(20) // int32 | Number of providers to return (optional) (default to 10)
+	prev := int32(123) // int32 | ID of the last provider from the previous page for pagination (optional) (default to 0)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OIDCAPI.ListOIDCProviders(context.Background()).PageSize(pageSize).Prev(prev).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.ListOIDCProviders``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListOIDCProviders`: ListOIDCProviders200Response
+	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.ListOIDCProviders`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListOIDCProvidersRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **pageSize** | **int32** | Number of providers to return | [default to 10]
+ **prev** | **int32** | ID of the last provider from the previous page for pagination | [default to 0]
+
+### Return type
+
+[**ListOIDCProviders200Response**](ListOIDCProviders200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListOIDCTrustRelationships
+
+> ListOIDCTrustRelationships200Response ListOIDCTrustRelationships(ctx).UserId(userId).ProviderId(providerId).PageSize(pageSize).Prev(prev).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	userId := int32(789) // int32 | Filter by user ID (optional)
+	providerId := int32(321) // int32 | Filter by provider ID (optional)
+	pageSize := int32(20) // int32 | Number of trust relationships to return (optional) (default to 10)
+	prev := int32(456) // int32 | ID of the last trust relationship from the previous page for pagination (optional) (default to 0)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OIDCAPI.ListOIDCTrustRelationships(context.Background()).UserId(userId).ProviderId(providerId).PageSize(pageSize).Prev(prev).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.ListOIDCTrustRelationships``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListOIDCTrustRelationships`: ListOIDCTrustRelationships200Response
+	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.ListOIDCTrustRelationships`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListOIDCTrustRelationshipsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **userId** | **int32** | Filter by user ID | 
+ **providerId** | **int32** | Filter by provider ID | 
+ **pageSize** | **int32** | Number of trust relationships to return | [default to 10]
+ **prev** | **int32** | ID of the last trust relationship from the previous page for pagination | [default to 0]
+
+### Return type
+
+[**ListOIDCTrustRelationships200Response**](ListOIDCTrustRelationships200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateOIDCProvider
+
+> ListOIDCProviders200ResponseAllOfResultsInner UpdateOIDCProvider(ctx, id).UpdateOIDCProviderRequest(updateOIDCProviderRequest).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(123) // int32 | The ID of the OIDC Provider to update
+	updateOIDCProviderRequest := *openapiclient.NewUpdateOIDCProviderRequest([]string{"Thumbprints_example"}) // UpdateOIDCProviderRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OIDCAPI.UpdateOIDCProvider(context.Background(), id).UpdateOIDCProviderRequest(updateOIDCProviderRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.UpdateOIDCProvider``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateOIDCProvider`: ListOIDCProviders200ResponseAllOfResultsInner
+	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.UpdateOIDCProvider`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** | The ID of the OIDC Provider to update | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateOIDCProviderRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateOIDCProviderRequest** | [**UpdateOIDCProviderRequest**](UpdateOIDCProviderRequest.md) |  | 
+
+### Return type
+
+[**ListOIDCProviders200ResponseAllOfResultsInner**](ListOIDCProviders200ResponseAllOfResultsInner.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateOIDCTrustRelationship
+
+> CreateOIDCTrustRelationship200Response UpdateOIDCTrustRelationship(ctx, id).UpdateOIDCTrustRelationshipRequest(updateOIDCTrustRelationshipRequest).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(123) // int32 | The ID of the OIDC Trust Relationship to update
+	updateOIDCTrustRelationshipRequest := *openapiclient.NewUpdateOIDCTrustRelationshipRequest() // UpdateOIDCTrustRelationshipRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OIDCAPI.UpdateOIDCTrustRelationship(context.Background(), id).UpdateOIDCTrustRelationshipRequest(updateOIDCTrustRelationshipRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.UpdateOIDCTrustRelationship``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateOIDCTrustRelationship`: CreateOIDCTrustRelationship200Response
+	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.UpdateOIDCTrustRelationship`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** | The ID of the OIDC Trust Relationship to update | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateOIDCTrustRelationshipRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateOIDCTrustRelationshipRequest** | [**UpdateOIDCTrustRelationshipRequest**](UpdateOIDCTrustRelationshipRequest.md) |  | 
+
+### Return type
+
+[**CreateOIDCTrustRelationship200Response**](CreateOIDCTrustRelationship200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+

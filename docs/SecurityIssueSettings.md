@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **ProjectDefaultSecurityIssueScanningEnabled** | Pointer to **bool** |  | [optional] 
 **ProjectDefaultSecurityStatusCheckEnabled** | Pointer to **bool** |  | [optional] 
 **ProjectDefaultStatusCheckFilterVulnerability** | Pointer to **int32** |  | [optional] 
+**ProjectDefaultSnippetSecurityIssueScanningEnabled** | Pointer to **bool** | Enable or disable snippet security issue scanning by default for projects in the organization | [optional] 
 
 ## Methods
 
@@ -127,6 +128,31 @@ SetProjectDefaultStatusCheckFilterVulnerability sets ProjectDefaultStatusCheckFi
 `func (o *SecurityIssueSettings) HasProjectDefaultStatusCheckFilterVulnerability() bool`
 
 HasProjectDefaultStatusCheckFilterVulnerability returns a boolean if a field has been set.
+
+### GetProjectDefaultSnippetSecurityIssueScanningEnabled
+
+`func (o *SecurityIssueSettings) GetProjectDefaultSnippetSecurityIssueScanningEnabled() bool`
+
+GetProjectDefaultSnippetSecurityIssueScanningEnabled returns the ProjectDefaultSnippetSecurityIssueScanningEnabled field if non-nil, zero value otherwise.
+
+### GetProjectDefaultSnippetSecurityIssueScanningEnabledOk
+
+`func (o *SecurityIssueSettings) GetProjectDefaultSnippetSecurityIssueScanningEnabledOk() (*bool, bool)`
+
+GetProjectDefaultSnippetSecurityIssueScanningEnabledOk returns a tuple with the ProjectDefaultSnippetSecurityIssueScanningEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectDefaultSnippetSecurityIssueScanningEnabled
+
+`func (o *SecurityIssueSettings) SetProjectDefaultSnippetSecurityIssueScanningEnabled(v bool)`
+
+SetProjectDefaultSnippetSecurityIssueScanningEnabled sets ProjectDefaultSnippetSecurityIssueScanningEnabled field to given value.
+
+### HasProjectDefaultSnippetSecurityIssueScanningEnabled
+
+`func (o *SecurityIssueSettings) HasProjectDefaultSnippetSecurityIssueScanningEnabled() bool`
+
+HasProjectDefaultSnippetSecurityIssueScanningEnabled returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

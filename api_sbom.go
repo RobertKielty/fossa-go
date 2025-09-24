@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.28.61
+API version: 4.30.21
 Contact: support@fossa.com
 */
 
@@ -68,7 +68,7 @@ func (a *SBOMAPIService) CreateShareRequestExecute(r ApiCreateShareRequestReques
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/share-requests"
+	localVarPath := localBasePath + "/v1/share-requests"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -215,7 +215,7 @@ func (a *SBOMAPIService) GetLinkedOrganizationsExecute(r ApiGetLinkedOrganizatio
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/shared-organizations"
+	localVarPath := localBasePath + "/v1/shared-organizations"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -353,7 +353,7 @@ func (a *SBOMAPIService) GetShareRequestsExecute(r ApiGetShareRequestsRequest) (
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/share-requests"
+	localVarPath := localBasePath + "/v1/share-requests"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}

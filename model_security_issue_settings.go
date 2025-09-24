@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.28.61
+API version: 4.30.21
 Contact: support@fossa.com
 */
 
@@ -24,6 +24,8 @@ type SecurityIssueSettings struct {
 	ProjectDefaultSecurityIssueScanningEnabled *bool `json:"projectDefaultSecurityIssueScanningEnabled,omitempty"`
 	ProjectDefaultSecurityStatusCheckEnabled *bool `json:"projectDefaultSecurityStatusCheckEnabled,omitempty"`
 	ProjectDefaultStatusCheckFilterVulnerability *int32 `json:"projectDefaultStatusCheckFilterVulnerability,omitempty"`
+	// Enable or disable snippet security issue scanning by default for projects in the organization
+	ProjectDefaultSnippetSecurityIssueScanningEnabled *bool `json:"projectDefaultSnippetSecurityIssueScanningEnabled,omitempty"`
 }
 
 // NewSecurityIssueSettings instantiates a new SecurityIssueSettings object
@@ -171,6 +173,38 @@ func (o *SecurityIssueSettings) SetProjectDefaultStatusCheckFilterVulnerability(
 	o.ProjectDefaultStatusCheckFilterVulnerability = &v
 }
 
+// GetProjectDefaultSnippetSecurityIssueScanningEnabled returns the ProjectDefaultSnippetSecurityIssueScanningEnabled field value if set, zero value otherwise.
+func (o *SecurityIssueSettings) GetProjectDefaultSnippetSecurityIssueScanningEnabled() bool {
+	if o == nil || IsNil(o.ProjectDefaultSnippetSecurityIssueScanningEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.ProjectDefaultSnippetSecurityIssueScanningEnabled
+}
+
+// GetProjectDefaultSnippetSecurityIssueScanningEnabledOk returns a tuple with the ProjectDefaultSnippetSecurityIssueScanningEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SecurityIssueSettings) GetProjectDefaultSnippetSecurityIssueScanningEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.ProjectDefaultSnippetSecurityIssueScanningEnabled) {
+		return nil, false
+	}
+	return o.ProjectDefaultSnippetSecurityIssueScanningEnabled, true
+}
+
+// HasProjectDefaultSnippetSecurityIssueScanningEnabled returns a boolean if a field has been set.
+func (o *SecurityIssueSettings) HasProjectDefaultSnippetSecurityIssueScanningEnabled() bool {
+	if o != nil && !IsNil(o.ProjectDefaultSnippetSecurityIssueScanningEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetProjectDefaultSnippetSecurityIssueScanningEnabled gets a reference to the given bool and assigns it to the ProjectDefaultSnippetSecurityIssueScanningEnabled field.
+func (o *SecurityIssueSettings) SetProjectDefaultSnippetSecurityIssueScanningEnabled(v bool) {
+	o.ProjectDefaultSnippetSecurityIssueScanningEnabled = &v
+}
+
 func (o SecurityIssueSettings) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -192,6 +226,9 @@ func (o SecurityIssueSettings) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ProjectDefaultStatusCheckFilterVulnerability) {
 		toSerialize["projectDefaultStatusCheckFilterVulnerability"] = o.ProjectDefaultStatusCheckFilterVulnerability
+	}
+	if !IsNil(o.ProjectDefaultSnippetSecurityIssueScanningEnabled) {
+		toSerialize["projectDefaultSnippetSecurityIssueScanningEnabled"] = o.ProjectDefaultSnippetSecurityIssueScanningEnabled
 	}
 	return toSerialize, nil
 }
