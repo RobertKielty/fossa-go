@@ -9,7 +9,7 @@ API_VERSION_FILE  := api-version.txt
 # MOD fossa-go module verion.
 #
 FOSSA_API_VERSION := $(shell curl -s $(FOSSA_SWAGGER_REF) | jq -r .info.version)
-FOSSA_MOD_VERSION := v1.0.0
+FOSSA_MOD_VERSION := v2.0.0
 
 all: generate-go
 .PHONY: all report-fossa-version generate-go update-swagger
@@ -73,6 +73,14 @@ generate-go: install-openapi-generator-cli report-fossa-version
 .PHONY: prepare-release
 prepare-release:
 	@echo "🔖 Preparing a release of fossa-go for FOSSA's REST API version $(FOSSA_API_VERSION)…"
+	@if git rev-parse --verify $(FOSSA_MOD_VERSION) >/dev/null 2>&1; then \
+		echo "❌ Tag $(FOSSA_MOD_VERSION) already exists locally. Update FOSSA_MOD_VERSION before preparing the release."; \
+		exit 1; \
+	fi
+	@if git ls-remote --tags origin $(FOSSA_MOD_VERSION) | grep -q $(FOSSA_MOD_VERSION); then \
+		echo "❌ Tag $(FOSSA_MOD_VERSION) already exists on origin. Choose a new FOSSA_MOD_VERSION."; \
+		exit 1; \
+	fi
 	@git add .
 	@git commit -sS -m "adds fossa-go $(FOSSA_MOD_VERSION) for REST API $(FOSSA_API_VERSION)"
 	@git tag $(FOSSA_MOD_VERSION)
