@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.21
+API version: 4.30.36
 Contact: support@fossa.com
 */
 
@@ -20,6 +20,7 @@ import (
 	"strings"
 	"os"
 	"reflect"
+	"time"
 )
 
 
@@ -1335,7 +1336,7 @@ type ApiGetIssueDiffComparisonSummariesRequest struct {
 	filterProjectLabels *[]string
 	filterIdentification *[]string
 	filterSeverity *[]string
-	filterFoundAfter *string
+	filterFoundAfter *time.Time
 	filterHasFix *[]string
 	filterUpgradeDistance *[]string
 	filterExploitMaturity *[]string
@@ -1458,8 +1459,8 @@ func (r ApiGetIssueDiffComparisonSummariesRequest) FilterSeverity(filterSeverity
 	return r
 }
 
-// Include only issues found on after a given date.  Only available to premium users
-func (r ApiGetIssueDiffComparisonSummariesRequest) FilterFoundAfter(filterFoundAfter string) ApiGetIssueDiffComparisonSummariesRequest {
+// Include only issues found on after a given ISO timestamp.  Only available to premium users
+func (r ApiGetIssueDiffComparisonSummariesRequest) FilterFoundAfter(filterFoundAfter time.Time) ApiGetIssueDiffComparisonSummariesRequest {
 	r.filterFoundAfter = &filterFoundAfter
 	return r
 }
@@ -2280,7 +2281,7 @@ type ApiGetIssueStatusesRequest struct {
 	filterProjectLabels *[]string
 	filterIdentification *[]string
 	filterSeverity *[]string
-	filterFoundAfter *string
+	filterFoundAfter *time.Time
 	filterHasFix *[]string
 	filterUpgradeDistance *[]string
 	filterExploitMaturity *[]string
@@ -2408,8 +2409,8 @@ func (r ApiGetIssueStatusesRequest) FilterSeverity(filterSeverity []string) ApiG
 	return r
 }
 
-// Include only issues found on after a given date.  Only available to premium users
-func (r ApiGetIssueStatusesRequest) FilterFoundAfter(filterFoundAfter string) ApiGetIssueStatusesRequest {
+// Include only issues found on after a given ISO timestamp.  Only available to premium users
+func (r ApiGetIssueStatusesRequest) FilterFoundAfter(filterFoundAfter time.Time) ApiGetIssueStatusesRequest {
 	r.filterFoundAfter = &filterFoundAfter
 	return r
 }
@@ -2789,7 +2790,8 @@ type ApiGetIssuesRequest struct {
 	filterProjectLabels *[]string
 	filterIdentification *[]string
 	filterSeverity *[]string
-	filterFoundAfter *string
+	filterFoundBefore *time.Time
+	filterFoundAfter *time.Time
 	filterHasFix *[]string
 	filterUpgradeDistance *[]string
 	filterExploitMaturity *[]string
@@ -2945,8 +2947,14 @@ func (r ApiGetIssuesRequest) FilterSeverity(filterSeverity []string) ApiGetIssue
 	return r
 }
 
-// Include only issues found on after a given date.  Only available to premium users
-func (r ApiGetIssuesRequest) FilterFoundAfter(filterFoundAfter string) ApiGetIssuesRequest {
+// Include only issues found on before a given ISO timestamp.  Only available to premium users
+func (r ApiGetIssuesRequest) FilterFoundBefore(filterFoundBefore time.Time) ApiGetIssuesRequest {
+	r.filterFoundBefore = &filterFoundBefore
+	return r
+}
+
+// Include only issues found on after a given ISO timestamp.  Only available to premium users
+func (r ApiGetIssuesRequest) FilterFoundAfter(filterFoundAfter time.Time) ApiGetIssuesRequest {
 	r.filterFoundAfter = &filterFoundAfter
 	return r
 }
@@ -3198,6 +3206,9 @@ func (a *IssuesAPIService) GetIssuesExecute(r ApiGetIssuesRequest) (*GetIssues20
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severity][]", t, "form", "multi")
 		}
+	}
+	if r.filterFoundBefore != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[foundBefore]", r.filterFoundBefore, "form", "")
 	}
 	if r.filterFoundAfter != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[foundAfter]", r.filterFoundAfter, "form", "")
@@ -3588,7 +3599,7 @@ type ApiGetIssuesByRevisionRequest struct {
 	filterProjectLabels *[]string
 	filterIdentification *[]string
 	filterSeverity *[]string
-	filterFoundAfter *string
+	filterFoundAfter *time.Time
 	filterHasFix *[]string
 	filterUpgradeDistance *[]string
 	filterExploitMaturity *[]string
@@ -3725,8 +3736,8 @@ func (r ApiGetIssuesByRevisionRequest) FilterSeverity(filterSeverity []string) A
 	return r
 }
 
-// Include only issues found on after a given date.  Only available to premium users
-func (r ApiGetIssuesByRevisionRequest) FilterFoundAfter(filterFoundAfter string) ApiGetIssuesByRevisionRequest {
+// Include only issues found on after a given ISO timestamp.  Only available to premium users
+func (r ApiGetIssuesByRevisionRequest) FilterFoundAfter(filterFoundAfter time.Time) ApiGetIssuesByRevisionRequest {
 	r.filterFoundAfter = &filterFoundAfter
 	return r
 }
@@ -5105,7 +5116,7 @@ type ApiUpdateIssuesRequest struct {
 	filterProjectLabels *[]string
 	filterIdentification *[]string
 	filterSeverity *[]string
-	filterFoundAfter *string
+	filterFoundAfter *time.Time
 	filterHasFix *[]string
 	filterUpgradeDistance *[]string
 	filterExploitMaturity *[]string
@@ -5241,8 +5252,8 @@ func (r ApiUpdateIssuesRequest) FilterSeverity(filterSeverity []string) ApiUpdat
 	return r
 }
 
-// Include only issues found on after a given date.  Only available to premium users
-func (r ApiUpdateIssuesRequest) FilterFoundAfter(filterFoundAfter string) ApiUpdateIssuesRequest {
+// Include only issues found on after a given ISO timestamp.  Only available to premium users
+func (r ApiUpdateIssuesRequest) FilterFoundAfter(filterFoundAfter time.Time) ApiUpdateIssuesRequest {
 	r.filterFoundAfter = &filterFoundAfter
 	return r
 }

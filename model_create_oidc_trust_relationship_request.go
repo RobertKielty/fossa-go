@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.21
+API version: 4.30.36
 Contact: support@fossa.com
 */
 
@@ -13,199 +13,124 @@ package fossa
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
+	"gopkg.in/validator.v2"
 )
 
-// checks if the CreateOIDCTrustRelationshipRequest type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &CreateOIDCTrustRelationshipRequest{}
-
-// CreateOIDCTrustRelationshipRequest struct for CreateOIDCTrustRelationshipRequest
+// CreateOIDCTrustRelationshipRequest - struct for CreateOIDCTrustRelationshipRequest
 type CreateOIDCTrustRelationshipRequest struct {
-	// The ID of the user to associate with this trust relationship
-	UserId int32 `json:"userId"`
-	// The ID of the OIDC Provider to use for this trust relationship
-	ProviderId int32 `json:"providerId"`
-	// Array of valid audiences for this trust relationship (max 5)
-	Audiences []string `json:"audiences"`
-	// Array of claim objects. Must contain at least one object with claim: \"sub\". Additional objects with other claims are optional. 
-	RequiredClaims []CreateOIDCTrustRelationshipRequestRequiredClaimsInner `json:"requiredClaims"`
+	CreateOIDCTrustRelationshipRequestOneOf *CreateOIDCTrustRelationshipRequestOneOf
+	CreateOIDCTrustRelationshipRequestOneOf1 *CreateOIDCTrustRelationshipRequestOneOf1
 }
 
-type _CreateOIDCTrustRelationshipRequest CreateOIDCTrustRelationshipRequest
-
-// NewCreateOIDCTrustRelationshipRequest instantiates a new CreateOIDCTrustRelationshipRequest object
-// This constructor will assign default values to properties that have it defined,
-// and makes sure properties required by API are set, but the set of arguments
-// will change when the set of required properties is changed
-func NewCreateOIDCTrustRelationshipRequest(userId int32, providerId int32, audiences []string, requiredClaims []CreateOIDCTrustRelationshipRequestRequiredClaimsInner) *CreateOIDCTrustRelationshipRequest {
-	this := CreateOIDCTrustRelationshipRequest{}
-	this.UserId = userId
-	this.ProviderId = providerId
-	this.Audiences = audiences
-	this.RequiredClaims = requiredClaims
-	return &this
-}
-
-// NewCreateOIDCTrustRelationshipRequestWithDefaults instantiates a new CreateOIDCTrustRelationshipRequest object
-// This constructor will only assign default values to properties that have it defined,
-// but it doesn't guarantee that properties required by API are set
-func NewCreateOIDCTrustRelationshipRequestWithDefaults() *CreateOIDCTrustRelationshipRequest {
-	this := CreateOIDCTrustRelationshipRequest{}
-	return &this
-}
-
-// GetUserId returns the UserId field value
-func (o *CreateOIDCTrustRelationshipRequest) GetUserId() int32 {
-	if o == nil {
-		var ret int32
-		return ret
+// CreateOIDCTrustRelationshipRequestOneOfAsCreateOIDCTrustRelationshipRequest is a convenience function that returns CreateOIDCTrustRelationshipRequestOneOf wrapped in CreateOIDCTrustRelationshipRequest
+func CreateOIDCTrustRelationshipRequestOneOfAsCreateOIDCTrustRelationshipRequest(v *CreateOIDCTrustRelationshipRequestOneOf) CreateOIDCTrustRelationshipRequest {
+	return CreateOIDCTrustRelationshipRequest{
+		CreateOIDCTrustRelationshipRequestOneOf: v,
 	}
-
-	return o.UserId
 }
 
-// GetUserIdOk returns a tuple with the UserId field value
-// and a boolean to check if the value has been set.
-func (o *CreateOIDCTrustRelationshipRequest) GetUserIdOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
+// CreateOIDCTrustRelationshipRequestOneOf1AsCreateOIDCTrustRelationshipRequest is a convenience function that returns CreateOIDCTrustRelationshipRequestOneOf1 wrapped in CreateOIDCTrustRelationshipRequest
+func CreateOIDCTrustRelationshipRequestOneOf1AsCreateOIDCTrustRelationshipRequest(v *CreateOIDCTrustRelationshipRequestOneOf1) CreateOIDCTrustRelationshipRequest {
+	return CreateOIDCTrustRelationshipRequest{
+		CreateOIDCTrustRelationshipRequestOneOf1: v,
 	}
-	return &o.UserId, true
 }
 
-// SetUserId sets field value
-func (o *CreateOIDCTrustRelationshipRequest) SetUserId(v int32) {
-	o.UserId = v
-}
 
-// GetProviderId returns the ProviderId field value
-func (o *CreateOIDCTrustRelationshipRequest) GetProviderId() int32 {
-	if o == nil {
-		var ret int32
-		return ret
-	}
-
-	return o.ProviderId
-}
-
-// GetProviderIdOk returns a tuple with the ProviderId field value
-// and a boolean to check if the value has been set.
-func (o *CreateOIDCTrustRelationshipRequest) GetProviderIdOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.ProviderId, true
-}
-
-// SetProviderId sets field value
-func (o *CreateOIDCTrustRelationshipRequest) SetProviderId(v int32) {
-	o.ProviderId = v
-}
-
-// GetAudiences returns the Audiences field value
-func (o *CreateOIDCTrustRelationshipRequest) GetAudiences() []string {
-	if o == nil {
-		var ret []string
-		return ret
-	}
-
-	return o.Audiences
-}
-
-// GetAudiencesOk returns a tuple with the Audiences field value
-// and a boolean to check if the value has been set.
-func (o *CreateOIDCTrustRelationshipRequest) GetAudiencesOk() ([]string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.Audiences, true
-}
-
-// SetAudiences sets field value
-func (o *CreateOIDCTrustRelationshipRequest) SetAudiences(v []string) {
-	o.Audiences = v
-}
-
-// GetRequiredClaims returns the RequiredClaims field value
-func (o *CreateOIDCTrustRelationshipRequest) GetRequiredClaims() []CreateOIDCTrustRelationshipRequestRequiredClaimsInner {
-	if o == nil {
-		var ret []CreateOIDCTrustRelationshipRequestRequiredClaimsInner
-		return ret
-	}
-
-	return o.RequiredClaims
-}
-
-// GetRequiredClaimsOk returns a tuple with the RequiredClaims field value
-// and a boolean to check if the value has been set.
-func (o *CreateOIDCTrustRelationshipRequest) GetRequiredClaimsOk() ([]CreateOIDCTrustRelationshipRequestRequiredClaimsInner, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.RequiredClaims, true
-}
-
-// SetRequiredClaims sets field value
-func (o *CreateOIDCTrustRelationshipRequest) SetRequiredClaims(v []CreateOIDCTrustRelationshipRequestRequiredClaimsInner) {
-	o.RequiredClaims = v
-}
-
-func (o CreateOIDCTrustRelationshipRequest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
-func (o CreateOIDCTrustRelationshipRequest) ToMap() (map[string]interface{}, error) {
-	toSerialize := map[string]interface{}{}
-	toSerialize["userId"] = o.UserId
-	toSerialize["providerId"] = o.ProviderId
-	toSerialize["audiences"] = o.Audiences
-	toSerialize["requiredClaims"] = o.RequiredClaims
-	return toSerialize, nil
-}
-
-func (o *CreateOIDCTrustRelationshipRequest) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"userId",
-		"providerId",
-		"audiences",
-		"requiredClaims",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err;
-	}
-
-	for _, requiredProperty := range(requiredProperties) {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
+// Unmarshal JSON data into one of the pointers in the struct
+func (dst *CreateOIDCTrustRelationshipRequest) UnmarshalJSON(data []byte) error {
+	var err error
+	match := 0
+	// try to unmarshal data into CreateOIDCTrustRelationshipRequestOneOf
+	err = newStrictDecoder(data).Decode(&dst.CreateOIDCTrustRelationshipRequestOneOf)
+	if err == nil {
+		jsonCreateOIDCTrustRelationshipRequestOneOf, _ := json.Marshal(dst.CreateOIDCTrustRelationshipRequestOneOf)
+		if string(jsonCreateOIDCTrustRelationshipRequestOneOf) == "{}" { // empty struct
+			dst.CreateOIDCTrustRelationshipRequestOneOf = nil
+		} else {
+			if err = validator.Validate(dst.CreateOIDCTrustRelationshipRequestOneOf); err != nil {
+				dst.CreateOIDCTrustRelationshipRequestOneOf = nil
+			} else {
+				match++
+			}
 		}
+	} else {
+		dst.CreateOIDCTrustRelationshipRequestOneOf = nil
 	}
 
-	varCreateOIDCTrustRelationshipRequest := _CreateOIDCTrustRelationshipRequest{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varCreateOIDCTrustRelationshipRequest)
-
-	if err != nil {
-		return err
+	// try to unmarshal data into CreateOIDCTrustRelationshipRequestOneOf1
+	err = newStrictDecoder(data).Decode(&dst.CreateOIDCTrustRelationshipRequestOneOf1)
+	if err == nil {
+		jsonCreateOIDCTrustRelationshipRequestOneOf1, _ := json.Marshal(dst.CreateOIDCTrustRelationshipRequestOneOf1)
+		if string(jsonCreateOIDCTrustRelationshipRequestOneOf1) == "{}" { // empty struct
+			dst.CreateOIDCTrustRelationshipRequestOneOf1 = nil
+		} else {
+			if err = validator.Validate(dst.CreateOIDCTrustRelationshipRequestOneOf1); err != nil {
+				dst.CreateOIDCTrustRelationshipRequestOneOf1 = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.CreateOIDCTrustRelationshipRequestOneOf1 = nil
 	}
 
-	*o = CreateOIDCTrustRelationshipRequest(varCreateOIDCTrustRelationshipRequest)
+	if match > 1 { // more than 1 match
+		// reset to nil
+		dst.CreateOIDCTrustRelationshipRequestOneOf = nil
+		dst.CreateOIDCTrustRelationshipRequestOneOf1 = nil
 
-	return err
+		return fmt.Errorf("data matches more than one schema in oneOf(CreateOIDCTrustRelationshipRequest)")
+	} else if match == 1 {
+		return nil // exactly one match
+	} else { // no match
+		return fmt.Errorf("data failed to match schemas in oneOf(CreateOIDCTrustRelationshipRequest)")
+	}
+}
+
+// Marshal data from the first non-nil pointers in the struct to JSON
+func (src CreateOIDCTrustRelationshipRequest) MarshalJSON() ([]byte, error) {
+	if src.CreateOIDCTrustRelationshipRequestOneOf != nil {
+		return json.Marshal(&src.CreateOIDCTrustRelationshipRequestOneOf)
+	}
+
+	if src.CreateOIDCTrustRelationshipRequestOneOf1 != nil {
+		return json.Marshal(&src.CreateOIDCTrustRelationshipRequestOneOf1)
+	}
+
+	return nil, nil // no data in oneOf schemas
+}
+
+// Get the actual instance
+func (obj *CreateOIDCTrustRelationshipRequest) GetActualInstance() (interface{}) {
+	if obj == nil {
+		return nil
+	}
+	if obj.CreateOIDCTrustRelationshipRequestOneOf != nil {
+		return obj.CreateOIDCTrustRelationshipRequestOneOf
+	}
+
+	if obj.CreateOIDCTrustRelationshipRequestOneOf1 != nil {
+		return obj.CreateOIDCTrustRelationshipRequestOneOf1
+	}
+
+	// all schemas are nil
+	return nil
+}
+
+// Get the actual instance value
+func (obj CreateOIDCTrustRelationshipRequest) GetActualInstanceValue() (interface{}) {
+	if obj.CreateOIDCTrustRelationshipRequestOneOf != nil {
+		return *obj.CreateOIDCTrustRelationshipRequestOneOf
+	}
+
+	if obj.CreateOIDCTrustRelationshipRequestOneOf1 != nil {
+		return *obj.CreateOIDCTrustRelationshipRequestOneOf1
+	}
+
+	// all schemas are nil
+	return nil
 }
 
 type NullableCreateOIDCTrustRelationshipRequest struct {

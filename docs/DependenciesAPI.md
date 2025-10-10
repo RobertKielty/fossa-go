@@ -4,18 +4,91 @@ All URIs are relative to *https://app.fossa.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**GetCustomLicenses**](DependenciesAPI.md#GetCustomLicenses) | **Get** /v2/dependencies/custom-licenses | 
 [**GetGlobalDependency**](DependenciesAPI.md#GetGlobalDependency) | **Get** /v2/dependencies/{locator} | 
 [**GetProjectDependencies**](DependenciesAPI.md#GetProjectDependencies) | **Get** /v2/revisions/{locator}/dependencies | 
+[**GetProjectDependency**](DependenciesAPI.md#GetProjectDependency) | **Get** /v2/revisions/{locator}/dependencies/{dependencyRevisionLocator} | 
 [**GetProjectDependencyPackageManagers**](DependenciesAPI.md#GetProjectDependencyPackageManagers) | **Get** /v2/revisions/{locator}/dependencies/package-managers | 
 [**GetReleaseGroupDependencies**](DependenciesAPI.md#GetReleaseGroupDependencies) | **Get** /v2/release-groups/{projectGroupId}/releases/{projectGroupReleaseId}/dependencies | 
+[**GetReleaseGroupDependency**](DependenciesAPI.md#GetReleaseGroupDependency) | **Get** /v2/release-groups/{projectGroupId}/releases/{projectGroupReleaseId}/dependencies/{dependencyRevisionLocator} | 
 [**GetReleaseGroupDependencyPackageManagers**](DependenciesAPI.md#GetReleaseGroupDependencyPackageManagers) | **Get** /v2/release-groups/{projectGroupId}/releases/{projectGroupReleaseId}/dependencies/package-managers | 
 [**GetReleaseGroupDependencyRootProjects**](DependenciesAPI.md#GetReleaseGroupDependencyRootProjects) | **Get** /v2/release-groups/{projectGroupId}/releases/{projectGroupReleaseId}/root-projects | 
 
 
 
+## GetCustomLicenses
+
+> GetCustomLicenses200Response GetCustomLicenses(ctx).ProjectLocator(projectLocator).Page(page).Count(count).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	projectLocator := "custom+1234/my-project" // string | Optional project locator to filter results to custom licenses used within a specific project. If not provided, returns custom licenses across all projects the user has access to.  (optional)
+	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
+	count := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 20)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DependenciesAPI.GetCustomLicenses(context.Background()).ProjectLocator(projectLocator).Page(page).Count(count).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetCustomLicenses``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetCustomLicenses`: GetCustomLicenses200Response
+	fmt.Fprintf(os.Stdout, "Response from `DependenciesAPI.GetCustomLicenses`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetCustomLicensesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **projectLocator** | **string** | Optional project locator to filter results to custom licenses used within a specific project. If not provided, returns custom licenses across all projects the user has access to.  | 
+ **page** | **int32** | The specific page of data to return | [default to 1]
+ **count** | **int32** | The number of items to return in each page of results | [default to 20]
+
+### Return type
+
+[**GetCustomLicenses200Response**](GetCustomLicenses200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetGlobalDependency
 
-> GetGlobalDependency200Response GetGlobalDependency(ctx, locator).Execute()
+> GetProjectDependency200Response GetGlobalDependency(ctx, locator).Execute()
 
 
 
@@ -43,7 +116,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetGlobalDependency``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetGlobalDependency`: GetGlobalDependency200Response
+	// response from `GetGlobalDependency`: GetProjectDependency200Response
 	fmt.Fprintf(os.Stdout, "Response from `DependenciesAPI.GetGlobalDependency`: %v\n", resp)
 }
 ```
@@ -67,7 +140,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetGlobalDependency200Response**](GetGlobalDependency200Response.md)
+[**GetProjectDependency200Response**](GetProjectDependency200Response.md)
 
 ### Authorization
 
@@ -162,6 +235,79 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetProjectDependencies200Response**](GetProjectDependencies200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetProjectDependency
+
+> GetProjectDependency200Response GetProjectDependency(ctx, locator, dependencyRevisionLocator).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	locator := "locator_example" // string | The locator of the project revision
+	dependencyRevisionLocator := "dependencyRevisionLocator_example" // string | The locator of the dependency to retrieve
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DependenciesAPI.GetProjectDependency(context.Background(), locator, dependencyRevisionLocator).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetProjectDependency``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetProjectDependency`: GetProjectDependency200Response
+	fmt.Fprintf(os.Stdout, "Response from `DependenciesAPI.GetProjectDependency`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**locator** | **string** | The locator of the project revision | 
+**dependencyRevisionLocator** | **string** | The locator of the dependency to retrieve | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetProjectDependencyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**GetProjectDependency200Response**](GetProjectDependency200Response.md)
 
 ### Authorization
 
@@ -331,6 +477,82 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetProjectDependencies200Response**](GetProjectDependencies200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetReleaseGroupDependency
+
+> GetProjectDependency200Response GetReleaseGroupDependency(ctx, projectGroupId, projectGroupReleaseId, dependencyRevisionLocator).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	projectGroupId := int32(56) // int32 | The ID of the release group
+	projectGroupReleaseId := int32(56) // int32 | The ID of the release
+	dependencyRevisionLocator := "dependencyRevisionLocator_example" // string | The locator of the dependency to retrieve
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DependenciesAPI.GetReleaseGroupDependency(context.Background(), projectGroupId, projectGroupReleaseId, dependencyRevisionLocator).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetReleaseGroupDependency``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetReleaseGroupDependency`: GetProjectDependency200Response
+	fmt.Fprintf(os.Stdout, "Response from `DependenciesAPI.GetReleaseGroupDependency`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**projectGroupId** | **int32** | The ID of the release group | 
+**projectGroupReleaseId** | **int32** | The ID of the release | 
+**dependencyRevisionLocator** | **string** | The locator of the dependency to retrieve | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetReleaseGroupDependencyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+
+### Return type
+
+[**GetProjectDependency200Response**](GetProjectDependency200Response.md)
 
 ### Authorization
 

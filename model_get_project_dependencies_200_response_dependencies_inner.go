@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.21
+API version: 4.30.36
 Contact: support@fossa.com
 */
 
@@ -25,6 +25,7 @@ type GetProjectDependencies200ResponseDependenciesInner struct {
 	IsManual *bool `json:"isManual,omitempty"`
 	IsIgnored *bool `json:"isIgnored,omitempty"`
 	IsUnknown *bool `json:"isUnknown,omitempty"`
+	ConcludedLicenses *GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses `json:"concludedLicenses,omitempty"`
 	Licenses []string `json:"licenses,omitempty"`
 	DeclaredLicenses []string `json:"declaredLicenses,omitempty"`
 	Depth *int32 `json:"depth,omitempty"`
@@ -212,6 +213,38 @@ func (o *GetProjectDependencies200ResponseDependenciesInner) HasIsUnknown() bool
 // SetIsUnknown gets a reference to the given bool and assigns it to the IsUnknown field.
 func (o *GetProjectDependencies200ResponseDependenciesInner) SetIsUnknown(v bool) {
 	o.IsUnknown = &v
+}
+
+// GetConcludedLicenses returns the ConcludedLicenses field value if set, zero value otherwise.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetConcludedLicenses() GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses {
+	if o == nil || IsNil(o.ConcludedLicenses) {
+		var ret GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses
+		return ret
+	}
+	return *o.ConcludedLicenses
+}
+
+// GetConcludedLicensesOk returns a tuple with the ConcludedLicenses field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetConcludedLicensesOk() (*GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses, bool) {
+	if o == nil || IsNil(o.ConcludedLicenses) {
+		return nil, false
+	}
+	return o.ConcludedLicenses, true
+}
+
+// HasConcludedLicenses returns a boolean if a field has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) HasConcludedLicenses() bool {
+	if o != nil && !IsNil(o.ConcludedLicenses) {
+		return true
+	}
+
+	return false
+}
+
+// SetConcludedLicenses gets a reference to the given GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses and assigns it to the ConcludedLicenses field.
+func (o *GetProjectDependencies200ResponseDependenciesInner) SetConcludedLicenses(v GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses) {
+	o.ConcludedLicenses = &v
 }
 
 // GetLicenses returns the Licenses field value if set, zero value otherwise.
@@ -558,6 +591,9 @@ func (o GetProjectDependencies200ResponseDependenciesInner) ToMap() (map[string]
 	}
 	if !IsNil(o.IsUnknown) {
 		toSerialize["isUnknown"] = o.IsUnknown
+	}
+	if !IsNil(o.ConcludedLicenses) {
+		toSerialize["concludedLicenses"] = o.ConcludedLicenses
 	}
 	if !IsNil(o.Licenses) {
 		toSerialize["licenses"] = o.Licenses

@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.21
+API version: 4.30.36
 Contact: support@fossa.com
 */
 
@@ -23,6 +23,7 @@ type GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner struct 
 	Title *string `json:"title,omitempty"`
 	Revision *string `json:"revision,omitempty"`
 	Branch *string `json:"branch,omitempty"`
+	Conclusions *GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses `json:"conclusions,omitempty"`
 }
 
 // NewGetProjectDependencies200ResponseDependenciesInnerRootProjectsInner instantiates a new GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner object
@@ -138,6 +139,38 @@ func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) Se
 	o.Branch = &v
 }
 
+// GetConclusions returns the Conclusions field value if set, zero value otherwise.
+func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) GetConclusions() GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses {
+	if o == nil || IsNil(o.Conclusions) {
+		var ret GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses
+		return ret
+	}
+	return *o.Conclusions
+}
+
+// GetConclusionsOk returns a tuple with the Conclusions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) GetConclusionsOk() (*GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses, bool) {
+	if o == nil || IsNil(o.Conclusions) {
+		return nil, false
+	}
+	return o.Conclusions, true
+}
+
+// HasConclusions returns a boolean if a field has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) HasConclusions() bool {
+	if o != nil && !IsNil(o.Conclusions) {
+		return true
+	}
+
+	return false
+}
+
+// SetConclusions gets a reference to the given GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses and assigns it to the Conclusions field.
+func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) SetConclusions(v GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses) {
+	o.Conclusions = &v
+}
+
 func (o GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -156,6 +189,9 @@ func (o GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) ToM
 	}
 	if !IsNil(o.Branch) {
 		toSerialize["branch"] = o.Branch
+	}
+	if !IsNil(o.Conclusions) {
+		toSerialize["conclusions"] = o.Conclusions
 	}
 	return toSerialize, nil
 }

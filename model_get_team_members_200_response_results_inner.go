@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.21
+API version: 4.30.36
 Contact: support@fossa.com
 */
 
@@ -30,6 +30,8 @@ type GetTeamMembers200ResponseResultsInner struct {
 	Username string `json:"username"`
 	// Email of the user
 	Email string `json:"email"`
+	// Whether the user is a service account
+	IsServiceAccount *bool `json:"isServiceAccount,omitempty"`
 }
 
 type _GetTeamMembers200ResponseResultsInner GetTeamMembers200ResponseResultsInner
@@ -151,6 +153,38 @@ func (o *GetTeamMembers200ResponseResultsInner) SetEmail(v string) {
 	o.Email = v
 }
 
+// GetIsServiceAccount returns the IsServiceAccount field value if set, zero value otherwise.
+func (o *GetTeamMembers200ResponseResultsInner) GetIsServiceAccount() bool {
+	if o == nil || IsNil(o.IsServiceAccount) {
+		var ret bool
+		return ret
+	}
+	return *o.IsServiceAccount
+}
+
+// GetIsServiceAccountOk returns a tuple with the IsServiceAccount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetTeamMembers200ResponseResultsInner) GetIsServiceAccountOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsServiceAccount) {
+		return nil, false
+	}
+	return o.IsServiceAccount, true
+}
+
+// HasIsServiceAccount returns a boolean if a field has been set.
+func (o *GetTeamMembers200ResponseResultsInner) HasIsServiceAccount() bool {
+	if o != nil && !IsNil(o.IsServiceAccount) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsServiceAccount gets a reference to the given bool and assigns it to the IsServiceAccount field.
+func (o *GetTeamMembers200ResponseResultsInner) SetIsServiceAccount(v bool) {
+	o.IsServiceAccount = &v
+}
+
 func (o GetTeamMembers200ResponseResultsInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -165,6 +199,9 @@ func (o GetTeamMembers200ResponseResultsInner) ToMap() (map[string]interface{}, 
 	toSerialize["roleId"] = o.RoleId
 	toSerialize["username"] = o.Username
 	toSerialize["email"] = o.Email
+	if !IsNil(o.IsServiceAccount) {
+		toSerialize["isServiceAccount"] = o.IsServiceAccount
+	}
 	return toSerialize, nil
 }
 

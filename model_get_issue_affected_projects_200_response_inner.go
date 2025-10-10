@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.21
+API version: 4.30.36
 Contact: support@fossa.com
 */
 
@@ -36,6 +36,8 @@ type GetIssueAffectedProjects200ResponseInner struct {
 	JiraTicketURL *string `json:"jiraTicketURL,omitempty"`
 	// The type of ticket export
 	Type *string `json:"type,omitempty"`
+	// The concluded licenses for the project
+	ConcludedLicenses []string `json:"concludedLicenses,omitempty"`
 }
 
 // NewGetIssueAffectedProjects200ResponseInner instantiates a new GetIssueAffectedProjects200ResponseInner object
@@ -311,6 +313,38 @@ func (o *GetIssueAffectedProjects200ResponseInner) SetType(v string) {
 	o.Type = &v
 }
 
+// GetConcludedLicenses returns the ConcludedLicenses field value if set, zero value otherwise.
+func (o *GetIssueAffectedProjects200ResponseInner) GetConcludedLicenses() []string {
+	if o == nil || IsNil(o.ConcludedLicenses) {
+		var ret []string
+		return ret
+	}
+	return o.ConcludedLicenses
+}
+
+// GetConcludedLicensesOk returns a tuple with the ConcludedLicenses field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetIssueAffectedProjects200ResponseInner) GetConcludedLicensesOk() ([]string, bool) {
+	if o == nil || IsNil(o.ConcludedLicenses) {
+		return nil, false
+	}
+	return o.ConcludedLicenses, true
+}
+
+// HasConcludedLicenses returns a boolean if a field has been set.
+func (o *GetIssueAffectedProjects200ResponseInner) HasConcludedLicenses() bool {
+	if o != nil && !IsNil(o.ConcludedLicenses) {
+		return true
+	}
+
+	return false
+}
+
+// SetConcludedLicenses gets a reference to the given []string and assigns it to the ConcludedLicenses field.
+func (o *GetIssueAffectedProjects200ResponseInner) SetConcludedLicenses(v []string) {
+	o.ConcludedLicenses = v
+}
+
 func (o GetIssueAffectedProjects200ResponseInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -344,6 +378,9 @@ func (o GetIssueAffectedProjects200ResponseInner) ToMap() (map[string]interface{
 	}
 	if !IsNil(o.Type) {
 		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.ConcludedLicenses) {
+		toSerialize["concludedLicenses"] = o.ConcludedLicenses
 	}
 	return toSerialize, nil
 }

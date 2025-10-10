@@ -4,9 +4,76 @@ All URIs are relative to *https://app.fossa.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CreateServiceAccount**](UsersAPI.md#CreateServiceAccount) | **Post** /users/service-accounts | 
 [**GetAllUsers**](UsersAPI.md#GetAllUsers) | **Get** /users | 
 [**GetUser**](UsersAPI.md#GetUser) | **Get** /users/{id} | 
 
+
+
+## CreateServiceAccount
+
+> CreateServiceAccount201Response CreateServiceAccount(ctx).CreateServiceAccountRequest(createServiceAccountRequest).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	createServiceAccountRequest := *openapiclient.NewCreateServiceAccountRequest("api-service-prod") // CreateServiceAccountRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.CreateServiceAccount(context.Background()).CreateServiceAccountRequest(createServiceAccountRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.CreateServiceAccount``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateServiceAccount`: CreateServiceAccount201Response
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.CreateServiceAccount`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateServiceAccountRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createServiceAccountRequest** | [**CreateServiceAccountRequest**](CreateServiceAccountRequest.md) |  | 
+
+### Return type
+
+[**CreateServiceAccount201Response**](CreateServiceAccount201Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## GetAllUsers

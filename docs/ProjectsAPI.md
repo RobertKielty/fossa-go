@@ -873,7 +873,7 @@ import (
 func main() {
 	sort := "sort_example" // string | The category to order the results by and sort direction. (optional)
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
-	count := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 20)
+	count := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 10)
 	title := "title_example" // string | Filter by release group name. (optional)
 	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned release groups. (optional)
 	latestScan := int32(56) // int32 | Filter by last policy scan within N days. (optional)
@@ -905,7 +905,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **sort** | **string** | The category to order the results by and sort direction. | 
  **page** | **int32** | The specific page of data to return | [default to 1]
- **count** | **int32** | The number of items to return in each page of results | [default to 20]
+ **count** | **int32** | The number of items to return in each page of results | [default to 10]
  **title** | **string** | Filter by release group name. | 
  **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups. | 
  **latestScan** | **int32** | Filter by last policy scan within N days. | 

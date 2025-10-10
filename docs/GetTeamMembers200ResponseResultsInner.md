@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **RoleId** | **int32** | ID of the role assigned to the user in the team | 
 **Username** | **string** | Username of the user | 
 **Email** | **string** | Email of the user | 
+**IsServiceAccount** | Pointer to **bool** | Whether the user is a service account | [optional] 
 
 ## Methods
 
@@ -107,6 +108,31 @@ and a boolean to check if the value has been set.
 
 SetEmail sets Email field to given value.
 
+
+### GetIsServiceAccount
+
+`func (o *GetTeamMembers200ResponseResultsInner) GetIsServiceAccount() bool`
+
+GetIsServiceAccount returns the IsServiceAccount field if non-nil, zero value otherwise.
+
+### GetIsServiceAccountOk
+
+`func (o *GetTeamMembers200ResponseResultsInner) GetIsServiceAccountOk() (*bool, bool)`
+
+GetIsServiceAccountOk returns a tuple with the IsServiceAccount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsServiceAccount
+
+`func (o *GetTeamMembers200ResponseResultsInner) SetIsServiceAccount(v bool)`
+
+SetIsServiceAccount sets IsServiceAccount field to given value.
+
+### HasIsServiceAccount
+
+`func (o *GetTeamMembers200ResponseResultsInner) HasIsServiceAccount() bool`
+
+HasIsServiceAccount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

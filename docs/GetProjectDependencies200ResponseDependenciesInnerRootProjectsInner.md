@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Title** | Pointer to **string** |  | [optional] 
 **Revision** | Pointer to **string** |  | [optional] 
 **Branch** | Pointer to **string** |  | [optional] 
+**Conclusions** | Pointer to [**GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses**](GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses.md) |  | [optional] 
 
 ## Methods
 
@@ -101,6 +102,31 @@ SetBranch sets Branch field to given value.
 `func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) HasBranch() bool`
 
 HasBranch returns a boolean if a field has been set.
+
+### GetConclusions
+
+`func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) GetConclusions() GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses`
+
+GetConclusions returns the Conclusions field if non-nil, zero value otherwise.
+
+### GetConclusionsOk
+
+`func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) GetConclusionsOk() (*GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses, bool)`
+
+GetConclusionsOk returns a tuple with the Conclusions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConclusions
+
+`func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) SetConclusions(v GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses)`
+
+SetConclusions sets Conclusions field to given value.
+
+### HasConclusions
+
+`func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) HasConclusions() bool`
+
+HasConclusions returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -13,7 +13,6 @@ Method | HTTP request | Description
 [**GetOIDCTrustRelationship**](OIDCAPI.md#GetOIDCTrustRelationship) | **Get** /oidc/trust-relationships/{id} | 
 [**ListOIDCProviders**](OIDCAPI.md#ListOIDCProviders) | **Get** /oidc/providers | 
 [**ListOIDCTrustRelationships**](OIDCAPI.md#ListOIDCTrustRelationships) | **Get** /oidc/trust-relationships | 
-[**UpdateOIDCProvider**](OIDCAPI.md#UpdateOIDCProvider) | **Put** /oidc/providers/{id} | 
 [**UpdateOIDCTrustRelationship**](OIDCAPI.md#UpdateOIDCTrustRelationship) | **Put** /oidc/trust-relationships/{id} | 
 
 
@@ -39,7 +38,7 @@ import (
 )
 
 func main() {
-	createOIDCProviderRequest := *openapiclient.NewCreateOIDCProviderRequest("https://oidc.example.com", "org", "789") // CreateOIDCProviderRequest | 
+	createOIDCProviderRequest := openapiclient.createOIDCProvider_request{CreateOIDCProviderRequestOneOf: openapiclient.NewCreateOIDCProviderRequestOneOf("https://oidc.example.com", "team", int32(789))} // CreateOIDCProviderRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -86,7 +85,7 @@ Name | Type | Description  | Notes
 
 ## CreateOIDCTrustRelationship
 
-> CreateOIDCTrustRelationship200Response CreateOIDCTrustRelationship(ctx).CreateOIDCTrustRelationshipRequest(createOIDCTrustRelationshipRequest).Execute()
+> ListOIDCTrustRelationships200ResponseAllOfResultsInner CreateOIDCTrustRelationship(ctx).CreateOIDCTrustRelationshipRequest(createOIDCTrustRelationshipRequest).Execute()
 
 
 
@@ -105,7 +104,7 @@ import (
 )
 
 func main() {
-	createOIDCTrustRelationshipRequest := *openapiclient.NewCreateOIDCTrustRelationshipRequest(int32(789), int32(321), []string{"Audiences_example"}, []openapiclient.CreateOIDCTrustRelationshipRequestRequiredClaimsInner{*openapiclient.NewCreateOIDCTrustRelationshipRequestRequiredClaimsInner("sub", openapiclient.createOIDCTrustRelationship_request_requiredClaims_inner_value{Bool: new(bool)})}) // CreateOIDCTrustRelationshipRequest | 
+	createOIDCTrustRelationshipRequest := openapiclient.createOIDCTrustRelationship_request{CreateOIDCTrustRelationshipRequestOneOf: openapiclient.NewCreateOIDCTrustRelationshipRequestOneOf(int32(789), int32(321), "org", []string{"Audiences_example"}, []openapiclient.ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner{*openapiclient.NewListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner("sub", openapiclient.listOIDCTrustRelationships_200_response_allOf_results_inner_requiredClaims_inner_value{Bool: new(bool)})})} // CreateOIDCTrustRelationshipRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -114,7 +113,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.CreateOIDCTrustRelationship``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `CreateOIDCTrustRelationship`: CreateOIDCTrustRelationship200Response
+	// response from `CreateOIDCTrustRelationship`: ListOIDCTrustRelationships200ResponseAllOfResultsInner
 	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.CreateOIDCTrustRelationship`: %v\n", resp)
 }
 ```
@@ -134,7 +133,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateOIDCTrustRelationship200Response**](CreateOIDCTrustRelationship200Response.md)
+[**ListOIDCTrustRelationships200ResponseAllOfResultsInner**](ListOIDCTrustRelationships200ResponseAllOfResultsInner.md)
 
 ### Authorization
 
@@ -424,7 +423,7 @@ Name | Type | Description  | Notes
 
 ## GetOIDCTrustRelationship
 
-> CreateOIDCTrustRelationship200Response GetOIDCTrustRelationship(ctx, id).Execute()
+> ListOIDCTrustRelationships200ResponseAllOfResultsInner GetOIDCTrustRelationship(ctx, id).Execute()
 
 
 
@@ -452,7 +451,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.GetOIDCTrustRelationship``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetOIDCTrustRelationship`: CreateOIDCTrustRelationship200Response
+	// response from `GetOIDCTrustRelationship`: ListOIDCTrustRelationships200ResponseAllOfResultsInner
 	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.GetOIDCTrustRelationship`: %v\n", resp)
 }
 ```
@@ -476,7 +475,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateOIDCTrustRelationship200Response**](CreateOIDCTrustRelationship200Response.md)
+[**ListOIDCTrustRelationships200ResponseAllOfResultsInner**](ListOIDCTrustRelationships200ResponseAllOfResultsInner.md)
 
 ### Authorization
 
@@ -632,81 +631,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## UpdateOIDCProvider
-
-> ListOIDCProviders200ResponseAllOfResultsInner UpdateOIDCProvider(ctx, id).UpdateOIDCProviderRequest(updateOIDCProviderRequest).Execute()
-
-
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/RobertKielty/fossa-go"
-)
-
-func main() {
-	id := int32(123) // int32 | The ID of the OIDC Provider to update
-	updateOIDCProviderRequest := *openapiclient.NewUpdateOIDCProviderRequest([]string{"Thumbprints_example"}) // UpdateOIDCProviderRequest | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.OIDCAPI.UpdateOIDCProvider(context.Background(), id).UpdateOIDCProviderRequest(updateOIDCProviderRequest).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.UpdateOIDCProvider``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `UpdateOIDCProvider`: ListOIDCProviders200ResponseAllOfResultsInner
-	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.UpdateOIDCProvider`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **int32** | The ID of the OIDC Provider to update | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiUpdateOIDCProviderRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **updateOIDCProviderRequest** | [**UpdateOIDCProviderRequest**](UpdateOIDCProviderRequest.md) |  | 
-
-### Return type
-
-[**ListOIDCProviders200ResponseAllOfResultsInner**](ListOIDCProviders200ResponseAllOfResultsInner.md)
-
-### Authorization
-
-[ApiToken](../README.md#ApiToken)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## UpdateOIDCTrustRelationship
 
-> CreateOIDCTrustRelationship200Response UpdateOIDCTrustRelationship(ctx, id).UpdateOIDCTrustRelationshipRequest(updateOIDCTrustRelationshipRequest).Execute()
+> ListOIDCTrustRelationships200ResponseAllOfResultsInner UpdateOIDCTrustRelationship(ctx, id).UpdateOIDCTrustRelationshipRequest(updateOIDCTrustRelationshipRequest).Execute()
 
 
 
@@ -735,7 +662,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.UpdateOIDCTrustRelationship``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `UpdateOIDCTrustRelationship`: CreateOIDCTrustRelationship200Response
+	// response from `UpdateOIDCTrustRelationship`: ListOIDCTrustRelationships200ResponseAllOfResultsInner
 	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.UpdateOIDCTrustRelationship`: %v\n", resp)
 }
 ```
@@ -760,7 +687,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateOIDCTrustRelationship200Response**](CreateOIDCTrustRelationship200Response.md)
+[**ListOIDCTrustRelationships200ResponseAllOfResultsInner**](ListOIDCTrustRelationships200ResponseAllOfResultsInner.md)
 
 ### Authorization
 

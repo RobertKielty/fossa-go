@@ -7,9 +7,8 @@ Name | Type | Description | Notes
 **Id** | **int32** | The unique identifier of the OIDC Provider | 
 **OrganizationId** | **int32** | The ID of the organization this provider belongs to | 
 **Issuer** | **string** | The issuer URL of the OIDC Provider | 
-**Thumbprints** | **[]string** | Array of thumbprints for certificate validation | 
 **Scope** | **string** | The scope level of the OIDC Provider | 
-**ScopeId** | **string** | The ID associated with the scope | 
+**ScopeId** | **int32** | The ID associated with the scope: either the organization ID or the team ID | 
 **CreatedAt** | **time.Time** | When the OIDC Provider was created | 
 **UpdatedAt** | **time.Time** | When the OIDC Provider was last updated | 
 
@@ -17,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewListOIDCProviders200ResponseAllOfResultsInner
 
-`func NewListOIDCProviders200ResponseAllOfResultsInner(id int32, organizationId int32, issuer string, thumbprints []string, scope string, scopeId string, createdAt time.Time, updatedAt time.Time, ) *ListOIDCProviders200ResponseAllOfResultsInner`
+`func NewListOIDCProviders200ResponseAllOfResultsInner(id int32, organizationId int32, issuer string, scope string, scopeId int32, createdAt time.Time, updatedAt time.Time, ) *ListOIDCProviders200ResponseAllOfResultsInner`
 
 NewListOIDCProviders200ResponseAllOfResultsInner instantiates a new ListOIDCProviders200ResponseAllOfResultsInner object
 This constructor will assign default values to properties that have it defined,
@@ -92,26 +91,6 @@ and a boolean to check if the value has been set.
 SetIssuer sets Issuer field to given value.
 
 
-### GetThumbprints
-
-`func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetThumbprints() []string`
-
-GetThumbprints returns the Thumbprints field if non-nil, zero value otherwise.
-
-### GetThumbprintsOk
-
-`func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetThumbprintsOk() (*[]string, bool)`
-
-GetThumbprintsOk returns a tuple with the Thumbprints field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetThumbprints
-
-`func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetThumbprints(v []string)`
-
-SetThumbprints sets Thumbprints field to given value.
-
-
 ### GetScope
 
 `func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetScope() string`
@@ -134,20 +113,20 @@ SetScope sets Scope field to given value.
 
 ### GetScopeId
 
-`func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetScopeId() string`
+`func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetScopeId() int32`
 
 GetScopeId returns the ScopeId field if non-nil, zero value otherwise.
 
 ### GetScopeIdOk
 
-`func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetScopeIdOk() (*string, bool)`
+`func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetScopeIdOk() (*int32, bool)`
 
 GetScopeIdOk returns a tuple with the ScopeId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetScopeId
 
-`func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetScopeId(v string)`
+`func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetScopeId(v int32)`
 
 SetScopeId sets ScopeId field to given value.
 

@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **IsManual** | Pointer to **bool** |  | [optional] 
 **IsIgnored** | Pointer to **bool** |  | [optional] 
 **IsUnknown** | Pointer to **bool** |  | [optional] 
+**ConcludedLicenses** | Pointer to [**GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses**](GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses.md) |  | [optional] 
 **Licenses** | Pointer to **[]string** |  | [optional] 
 **DeclaredLicenses** | Pointer to **[]string** |  | [optional] 
 **Depth** | Pointer to **int32** |  | [optional] 
@@ -163,6 +164,31 @@ SetIsUnknown sets IsUnknown field to given value.
 `func (o *GetProjectDependencies200ResponseDependenciesInner) HasIsUnknown() bool`
 
 HasIsUnknown returns a boolean if a field has been set.
+
+### GetConcludedLicenses
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) GetConcludedLicenses() GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses`
+
+GetConcludedLicenses returns the ConcludedLicenses field if non-nil, zero value otherwise.
+
+### GetConcludedLicensesOk
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) GetConcludedLicensesOk() (*GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses, bool)`
+
+GetConcludedLicensesOk returns a tuple with the ConcludedLicenses field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConcludedLicenses
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) SetConcludedLicenses(v GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses)`
+
+SetConcludedLicenses sets ConcludedLicenses field to given value.
+
+### HasConcludedLicenses
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) HasConcludedLicenses() bool`
+
+HasConcludedLicenses returns a boolean if a field has been set.
 
 ### GetLicenses
 

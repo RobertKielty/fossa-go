@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.21
+API version: 4.30.36
 Contact: support@fossa.com
 */
 
@@ -13,207 +13,124 @@ package fossa
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
+	"gopkg.in/validator.v2"
 )
 
-// checks if the CreateOIDCProviderRequest type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &CreateOIDCProviderRequest{}
-
-// CreateOIDCProviderRequest struct for CreateOIDCProviderRequest
+// CreateOIDCProviderRequest - struct for CreateOIDCProviderRequest
 type CreateOIDCProviderRequest struct {
-	// The issuer URL of the OIDC Provider
-	Issuer string `json:"issuer"`
-	// Array of thumbprints for certificate validation
-	Thumbprints []string `json:"thumbprints,omitempty"`
-	// The scope level of the OIDC Provider
-	Scope string `json:"scope"`
-	// The ID associated with the scope
-	ScopeId string `json:"scopeId"`
+	CreateOIDCProviderRequestOneOf *CreateOIDCProviderRequestOneOf
+	CreateOIDCProviderRequestOneOf1 *CreateOIDCProviderRequestOneOf1
 }
 
-type _CreateOIDCProviderRequest CreateOIDCProviderRequest
-
-// NewCreateOIDCProviderRequest instantiates a new CreateOIDCProviderRequest object
-// This constructor will assign default values to properties that have it defined,
-// and makes sure properties required by API are set, but the set of arguments
-// will change when the set of required properties is changed
-func NewCreateOIDCProviderRequest(issuer string, scope string, scopeId string) *CreateOIDCProviderRequest {
-	this := CreateOIDCProviderRequest{}
-	this.Issuer = issuer
-	this.Scope = scope
-	this.ScopeId = scopeId
-	return &this
-}
-
-// NewCreateOIDCProviderRequestWithDefaults instantiates a new CreateOIDCProviderRequest object
-// This constructor will only assign default values to properties that have it defined,
-// but it doesn't guarantee that properties required by API are set
-func NewCreateOIDCProviderRequestWithDefaults() *CreateOIDCProviderRequest {
-	this := CreateOIDCProviderRequest{}
-	return &this
-}
-
-// GetIssuer returns the Issuer field value
-func (o *CreateOIDCProviderRequest) GetIssuer() string {
-	if o == nil {
-		var ret string
-		return ret
+// CreateOIDCProviderRequestOneOfAsCreateOIDCProviderRequest is a convenience function that returns CreateOIDCProviderRequestOneOf wrapped in CreateOIDCProviderRequest
+func CreateOIDCProviderRequestOneOfAsCreateOIDCProviderRequest(v *CreateOIDCProviderRequestOneOf) CreateOIDCProviderRequest {
+	return CreateOIDCProviderRequest{
+		CreateOIDCProviderRequestOneOf: v,
 	}
-
-	return o.Issuer
 }
 
-// GetIssuerOk returns a tuple with the Issuer field value
-// and a boolean to check if the value has been set.
-func (o *CreateOIDCProviderRequest) GetIssuerOk() (*string, bool) {
-	if o == nil {
-		return nil, false
+// CreateOIDCProviderRequestOneOf1AsCreateOIDCProviderRequest is a convenience function that returns CreateOIDCProviderRequestOneOf1 wrapped in CreateOIDCProviderRequest
+func CreateOIDCProviderRequestOneOf1AsCreateOIDCProviderRequest(v *CreateOIDCProviderRequestOneOf1) CreateOIDCProviderRequest {
+	return CreateOIDCProviderRequest{
+		CreateOIDCProviderRequestOneOf1: v,
 	}
-	return &o.Issuer, true
 }
 
-// SetIssuer sets field value
-func (o *CreateOIDCProviderRequest) SetIssuer(v string) {
-	o.Issuer = v
-}
 
-// GetThumbprints returns the Thumbprints field value if set, zero value otherwise.
-func (o *CreateOIDCProviderRequest) GetThumbprints() []string {
-	if o == nil || IsNil(o.Thumbprints) {
-		var ret []string
-		return ret
-	}
-	return o.Thumbprints
-}
-
-// GetThumbprintsOk returns a tuple with the Thumbprints field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateOIDCProviderRequest) GetThumbprintsOk() ([]string, bool) {
-	if o == nil || IsNil(o.Thumbprints) {
-		return nil, false
-	}
-	return o.Thumbprints, true
-}
-
-// HasThumbprints returns a boolean if a field has been set.
-func (o *CreateOIDCProviderRequest) HasThumbprints() bool {
-	if o != nil && !IsNil(o.Thumbprints) {
-		return true
-	}
-
-	return false
-}
-
-// SetThumbprints gets a reference to the given []string and assigns it to the Thumbprints field.
-func (o *CreateOIDCProviderRequest) SetThumbprints(v []string) {
-	o.Thumbprints = v
-}
-
-// GetScope returns the Scope field value
-func (o *CreateOIDCProviderRequest) GetScope() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Scope
-}
-
-// GetScopeOk returns a tuple with the Scope field value
-// and a boolean to check if the value has been set.
-func (o *CreateOIDCProviderRequest) GetScopeOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Scope, true
-}
-
-// SetScope sets field value
-func (o *CreateOIDCProviderRequest) SetScope(v string) {
-	o.Scope = v
-}
-
-// GetScopeId returns the ScopeId field value
-func (o *CreateOIDCProviderRequest) GetScopeId() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.ScopeId
-}
-
-// GetScopeIdOk returns a tuple with the ScopeId field value
-// and a boolean to check if the value has been set.
-func (o *CreateOIDCProviderRequest) GetScopeIdOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.ScopeId, true
-}
-
-// SetScopeId sets field value
-func (o *CreateOIDCProviderRequest) SetScopeId(v string) {
-	o.ScopeId = v
-}
-
-func (o CreateOIDCProviderRequest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
-func (o CreateOIDCProviderRequest) ToMap() (map[string]interface{}, error) {
-	toSerialize := map[string]interface{}{}
-	toSerialize["issuer"] = o.Issuer
-	if !IsNil(o.Thumbprints) {
-		toSerialize["thumbprints"] = o.Thumbprints
-	}
-	toSerialize["scope"] = o.Scope
-	toSerialize["scopeId"] = o.ScopeId
-	return toSerialize, nil
-}
-
-func (o *CreateOIDCProviderRequest) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"issuer",
-		"scope",
-		"scopeId",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err;
-	}
-
-	for _, requiredProperty := range(requiredProperties) {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
+// Unmarshal JSON data into one of the pointers in the struct
+func (dst *CreateOIDCProviderRequest) UnmarshalJSON(data []byte) error {
+	var err error
+	match := 0
+	// try to unmarshal data into CreateOIDCProviderRequestOneOf
+	err = newStrictDecoder(data).Decode(&dst.CreateOIDCProviderRequestOneOf)
+	if err == nil {
+		jsonCreateOIDCProviderRequestOneOf, _ := json.Marshal(dst.CreateOIDCProviderRequestOneOf)
+		if string(jsonCreateOIDCProviderRequestOneOf) == "{}" { // empty struct
+			dst.CreateOIDCProviderRequestOneOf = nil
+		} else {
+			if err = validator.Validate(dst.CreateOIDCProviderRequestOneOf); err != nil {
+				dst.CreateOIDCProviderRequestOneOf = nil
+			} else {
+				match++
+			}
 		}
+	} else {
+		dst.CreateOIDCProviderRequestOneOf = nil
 	}
 
-	varCreateOIDCProviderRequest := _CreateOIDCProviderRequest{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varCreateOIDCProviderRequest)
-
-	if err != nil {
-		return err
+	// try to unmarshal data into CreateOIDCProviderRequestOneOf1
+	err = newStrictDecoder(data).Decode(&dst.CreateOIDCProviderRequestOneOf1)
+	if err == nil {
+		jsonCreateOIDCProviderRequestOneOf1, _ := json.Marshal(dst.CreateOIDCProviderRequestOneOf1)
+		if string(jsonCreateOIDCProviderRequestOneOf1) == "{}" { // empty struct
+			dst.CreateOIDCProviderRequestOneOf1 = nil
+		} else {
+			if err = validator.Validate(dst.CreateOIDCProviderRequestOneOf1); err != nil {
+				dst.CreateOIDCProviderRequestOneOf1 = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.CreateOIDCProviderRequestOneOf1 = nil
 	}
 
-	*o = CreateOIDCProviderRequest(varCreateOIDCProviderRequest)
+	if match > 1 { // more than 1 match
+		// reset to nil
+		dst.CreateOIDCProviderRequestOneOf = nil
+		dst.CreateOIDCProviderRequestOneOf1 = nil
 
-	return err
+		return fmt.Errorf("data matches more than one schema in oneOf(CreateOIDCProviderRequest)")
+	} else if match == 1 {
+		return nil // exactly one match
+	} else { // no match
+		return fmt.Errorf("data failed to match schemas in oneOf(CreateOIDCProviderRequest)")
+	}
+}
+
+// Marshal data from the first non-nil pointers in the struct to JSON
+func (src CreateOIDCProviderRequest) MarshalJSON() ([]byte, error) {
+	if src.CreateOIDCProviderRequestOneOf != nil {
+		return json.Marshal(&src.CreateOIDCProviderRequestOneOf)
+	}
+
+	if src.CreateOIDCProviderRequestOneOf1 != nil {
+		return json.Marshal(&src.CreateOIDCProviderRequestOneOf1)
+	}
+
+	return nil, nil // no data in oneOf schemas
+}
+
+// Get the actual instance
+func (obj *CreateOIDCProviderRequest) GetActualInstance() (interface{}) {
+	if obj == nil {
+		return nil
+	}
+	if obj.CreateOIDCProviderRequestOneOf != nil {
+		return obj.CreateOIDCProviderRequestOneOf
+	}
+
+	if obj.CreateOIDCProviderRequestOneOf1 != nil {
+		return obj.CreateOIDCProviderRequestOneOf1
+	}
+
+	// all schemas are nil
+	return nil
+}
+
+// Get the actual instance value
+func (obj CreateOIDCProviderRequest) GetActualInstanceValue() (interface{}) {
+	if obj.CreateOIDCProviderRequestOneOf != nil {
+		return *obj.CreateOIDCProviderRequestOneOf
+	}
+
+	if obj.CreateOIDCProviderRequestOneOf1 != nil {
+		return *obj.CreateOIDCProviderRequestOneOf1
+	}
+
+	// all schemas are nil
+	return nil
 }
 
 type NullableCreateOIDCProviderRequest struct {

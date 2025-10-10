@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.21
+API version: 4.30.36
 Contact: support@fossa.com
 */
 
@@ -25,13 +25,205 @@ import (
 // DependenciesAPIService DependenciesAPI service
 type DependenciesAPIService service
 
+type ApiGetCustomLicensesRequest struct {
+	ctx context.Context
+	ApiService *DependenciesAPIService
+	projectLocator *string
+	page *int32
+	count *int32
+}
+
+// Optional project locator to filter results to custom licenses used within a specific project. If not provided, returns custom licenses across all projects the user has access to. 
+func (r ApiGetCustomLicensesRequest) ProjectLocator(projectLocator string) ApiGetCustomLicensesRequest {
+	r.projectLocator = &projectLocator
+	return r
+}
+
+// The specific page of data to return
+func (r ApiGetCustomLicensesRequest) Page(page int32) ApiGetCustomLicensesRequest {
+	r.page = &page
+	return r
+}
+
+// The number of items to return in each page of results
+func (r ApiGetCustomLicensesRequest) Count(count int32) ApiGetCustomLicensesRequest {
+	r.count = &count
+	return r
+}
+
+func (r ApiGetCustomLicensesRequest) Execute() (*GetCustomLicenses200Response, *http.Response, error) {
+	return r.ApiService.GetCustomLicensesExecute(r)
+}
+
+/*
+GetCustomLicenses Method for GetCustomLicenses
+
+Get custom licenses (dependency licenses that have been manually corrected) within the organization.
+This endpoint returns paginated results of custom licenses that have been created through project corrections.
+The results can be optionally filtered to a specific project using the `projectLocator` query parameter.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetCustomLicensesRequest
+*/
+func (a *DependenciesAPIService) GetCustomLicenses(ctx context.Context) ApiGetCustomLicensesRequest {
+	return ApiGetCustomLicensesRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return GetCustomLicenses200Response
+func (a *DependenciesAPIService) GetCustomLicensesExecute(r ApiGetCustomLicensesRequest) (*GetCustomLicenses200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetCustomLicenses200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DependenciesAPIService.GetCustomLicenses")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/dependencies/custom-licenses"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.projectLocator != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "projectLocator", r.projectLocator, "form", "")
+	}
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	} else {
+		var defaultValue int32 = 1
+		r.page = &defaultValue
+	}
+	if r.count != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "count", r.count, "form", "")
+	} else {
+		var defaultValue int32 = 20
+		r.count = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v GetGitHubAppInstallationUrl403Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v GetGitHubAppInstallationUrl403Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v GetGitHubAppInstallationUrl403Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GetGitHubAppInstallationUrl403Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v GetGitHubAppInstallationUrl403Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetGlobalDependencyRequest struct {
 	ctx context.Context
 	ApiService *DependenciesAPIService
 	locator string
 }
 
-func (r ApiGetGlobalDependencyRequest) Execute() (*GetGlobalDependency200Response, *http.Response, error) {
+func (r ApiGetGlobalDependencyRequest) Execute() (*GetProjectDependency200Response, *http.Response, error) {
 	return r.ApiService.GetGlobalDependencyExecute(r)
 }
 
@@ -53,13 +245,13 @@ func (a *DependenciesAPIService) GetGlobalDependency(ctx context.Context, locato
 }
 
 // Execute executes the request
-//  @return GetGlobalDependency200Response
-func (a *DependenciesAPIService) GetGlobalDependencyExecute(r ApiGetGlobalDependencyRequest) (*GetGlobalDependency200Response, *http.Response, error) {
+//  @return GetProjectDependency200Response
+func (a *DependenciesAPIService) GetGlobalDependencyExecute(r ApiGetGlobalDependencyRequest) (*GetProjectDependency200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetGlobalDependency200Response
+		localVarReturnValue  *GetProjectDependency200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DependenciesAPIService.GetGlobalDependency")
@@ -439,6 +631,134 @@ func (a *DependenciesAPIService) GetProjectDependenciesExecute(r ApiGetProjectDe
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v GetGitHubAppInstallationUrl403Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GetGitHubAppInstallationUrl403Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetProjectDependencyRequest struct {
+	ctx context.Context
+	ApiService *DependenciesAPIService
+	locator string
+	dependencyRevisionLocator string
+}
+
+func (r ApiGetProjectDependencyRequest) Execute() (*GetProjectDependency200Response, *http.Response, error) {
+	return r.ApiService.GetProjectDependencyExecute(r)
+}
+
+/*
+GetProjectDependency Method for GetProjectDependency
+
+Get a single dependency by locator for a given project revision
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The locator of the project revision
+ @param dependencyRevisionLocator The locator of the dependency to retrieve
+ @return ApiGetProjectDependencyRequest
+*/
+func (a *DependenciesAPIService) GetProjectDependency(ctx context.Context, locator string, dependencyRevisionLocator string) ApiGetProjectDependencyRequest {
+	return ApiGetProjectDependencyRequest{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+		dependencyRevisionLocator: dependencyRevisionLocator,
+	}
+}
+
+// Execute executes the request
+//  @return GetProjectDependency200Response
+func (a *DependenciesAPIService) GetProjectDependencyExecute(r ApiGetProjectDependencyRequest) (*GetProjectDependency200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetProjectDependency200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DependenciesAPIService.GetProjectDependency")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/revisions/{locator}/dependencies/{dependencyRevisionLocator}"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"dependencyRevisionLocator"+"}", url.PathEscape(parameterValueToString(r.dependencyRevisionLocator, "dependencyRevisionLocator")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
 			var v GetGitHubAppInstallationUrl403Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -921,6 +1241,138 @@ func (a *DependenciesAPIService) GetReleaseGroupDependenciesExecute(r ApiGetRele
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v GetGitHubAppInstallationUrl403Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GetGitHubAppInstallationUrl403Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetReleaseGroupDependencyRequest struct {
+	ctx context.Context
+	ApiService *DependenciesAPIService
+	projectGroupId int32
+	projectGroupReleaseId int32
+	dependencyRevisionLocator string
+}
+
+func (r ApiGetReleaseGroupDependencyRequest) Execute() (*GetProjectDependency200Response, *http.Response, error) {
+	return r.ApiService.GetReleaseGroupDependencyExecute(r)
+}
+
+/*
+GetReleaseGroupDependency Method for GetReleaseGroupDependency
+
+Get a single dependency by locator for a given release group
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectGroupId The ID of the release group
+ @param projectGroupReleaseId The ID of the release
+ @param dependencyRevisionLocator The locator of the dependency to retrieve
+ @return ApiGetReleaseGroupDependencyRequest
+*/
+func (a *DependenciesAPIService) GetReleaseGroupDependency(ctx context.Context, projectGroupId int32, projectGroupReleaseId int32, dependencyRevisionLocator string) ApiGetReleaseGroupDependencyRequest {
+	return ApiGetReleaseGroupDependencyRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectGroupId: projectGroupId,
+		projectGroupReleaseId: projectGroupReleaseId,
+		dependencyRevisionLocator: dependencyRevisionLocator,
+	}
+}
+
+// Execute executes the request
+//  @return GetProjectDependency200Response
+func (a *DependenciesAPIService) GetReleaseGroupDependencyExecute(r ApiGetReleaseGroupDependencyRequest) (*GetProjectDependency200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetProjectDependency200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DependenciesAPIService.GetReleaseGroupDependency")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/release-groups/{projectGroupId}/releases/{projectGroupReleaseId}/dependencies/{dependencyRevisionLocator}"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectGroupId"+"}", url.PathEscape(parameterValueToString(r.projectGroupId, "projectGroupId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"projectGroupReleaseId"+"}", url.PathEscape(parameterValueToString(r.projectGroupReleaseId, "projectGroupReleaseId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"dependencyRevisionLocator"+"}", url.PathEscape(parameterValueToString(r.dependencyRevisionLocator, "dependencyRevisionLocator")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
 			var v GetGitHubAppInstallationUrl403Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
