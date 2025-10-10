@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **JiraTicketId** | Pointer to **string** | Jira ticket ID | [optional] 
 **JiraTicketURL** | Pointer to **string** | Jira ticket URL | [optional] 
 **Type** | Pointer to **string** | The type of ticket export | [optional] 
+**ConcludedLicenses** | Pointer to **[]string** | The concluded licenses for the project | [optional] 
 
 ## Methods
 
@@ -231,6 +232,31 @@ SetType sets Type field to given value.
 `func (o *GetIssueAffectedProjects200ResponseInner) HasType() bool`
 
 HasType returns a boolean if a field has been set.
+
+### GetConcludedLicenses
+
+`func (o *GetIssueAffectedProjects200ResponseInner) GetConcludedLicenses() []string`
+
+GetConcludedLicenses returns the ConcludedLicenses field if non-nil, zero value otherwise.
+
+### GetConcludedLicensesOk
+
+`func (o *GetIssueAffectedProjects200ResponseInner) GetConcludedLicensesOk() (*[]string, bool)`
+
+GetConcludedLicensesOk returns a tuple with the ConcludedLicenses field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConcludedLicenses
+
+`func (o *GetIssueAffectedProjects200ResponseInner) SetConcludedLicenses(v []string)`
+
+SetConcludedLicenses sets ConcludedLicenses field to given value.
+
+### HasConcludedLicenses
+
+`func (o *GetIssueAffectedProjects200ResponseInner) HasConcludedLicenses() bool`
+
+HasConcludedLicenses returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -5,15 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Issuer** | **string** | The issuer URL of the OIDC Provider | 
-**Thumbprints** | Pointer to **[]string** | Array of thumbprints for certificate validation | [optional] 
 **Scope** | **string** | The scope level of the OIDC Provider | 
-**ScopeId** | **string** | The ID associated with the scope | 
+**ScopeId** | **int32** | The ID of the team | 
 
 ## Methods
 
 ### NewCreateOIDCProviderRequest
 
-`func NewCreateOIDCProviderRequest(issuer string, scope string, scopeId string, ) *CreateOIDCProviderRequest`
+`func NewCreateOIDCProviderRequest(issuer string, scope string, scopeId int32, ) *CreateOIDCProviderRequest`
 
 NewCreateOIDCProviderRequest instantiates a new CreateOIDCProviderRequest object
 This constructor will assign default values to properties that have it defined,
@@ -48,31 +47,6 @@ and a boolean to check if the value has been set.
 SetIssuer sets Issuer field to given value.
 
 
-### GetThumbprints
-
-`func (o *CreateOIDCProviderRequest) GetThumbprints() []string`
-
-GetThumbprints returns the Thumbprints field if non-nil, zero value otherwise.
-
-### GetThumbprintsOk
-
-`func (o *CreateOIDCProviderRequest) GetThumbprintsOk() (*[]string, bool)`
-
-GetThumbprintsOk returns a tuple with the Thumbprints field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetThumbprints
-
-`func (o *CreateOIDCProviderRequest) SetThumbprints(v []string)`
-
-SetThumbprints sets Thumbprints field to given value.
-
-### HasThumbprints
-
-`func (o *CreateOIDCProviderRequest) HasThumbprints() bool`
-
-HasThumbprints returns a boolean if a field has been set.
-
 ### GetScope
 
 `func (o *CreateOIDCProviderRequest) GetScope() string`
@@ -95,20 +69,20 @@ SetScope sets Scope field to given value.
 
 ### GetScopeId
 
-`func (o *CreateOIDCProviderRequest) GetScopeId() string`
+`func (o *CreateOIDCProviderRequest) GetScopeId() int32`
 
 GetScopeId returns the ScopeId field if non-nil, zero value otherwise.
 
 ### GetScopeIdOk
 
-`func (o *CreateOIDCProviderRequest) GetScopeIdOk() (*string, bool)`
+`func (o *CreateOIDCProviderRequest) GetScopeIdOk() (*int32, bool)`
 
 GetScopeIdOk returns a tuple with the ScopeId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetScopeId
 
-`func (o *CreateOIDCProviderRequest) SetScopeId(v string)`
+`func (o *CreateOIDCProviderRequest) SetScopeId(v int32)`
 
 SetScopeId sets ScopeId field to given value.
 

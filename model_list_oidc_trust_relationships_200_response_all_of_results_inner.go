@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.21
+API version: 4.30.36
 Contact: support@fossa.com
 */
 
@@ -33,8 +33,8 @@ type ListOIDCTrustRelationships200ResponseAllOfResultsInner struct {
 	ProviderId int32 `json:"providerId"`
 	// The scope level of the trust relationship
 	Scope *string `json:"scope,omitempty"`
-	// The ID associated with the scope
-	ScopeId *string `json:"scopeId,omitempty"`
+	// The ID associated with the scope: either the organization ID or the team ID
+	ScopeId *int32 `json:"scopeId,omitempty"`
 	// Array of valid audiences for this trust relationship (max 5)
 	Audiences []string `json:"audiences"`
 	// Array of claim objects. Must contain at least one object with claim: \"sub\". Additional objects with other claims are optional. 
@@ -201,9 +201,9 @@ func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetScope(v stri
 }
 
 // GetScopeId returns the ScopeId field value if set, zero value otherwise.
-func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetScopeId() string {
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetScopeId() int32 {
 	if o == nil || IsNil(o.ScopeId) {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.ScopeId
@@ -211,7 +211,7 @@ func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetScopeId() st
 
 // GetScopeIdOk returns a tuple with the ScopeId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetScopeIdOk() (*string, bool) {
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetScopeIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.ScopeId) {
 		return nil, false
 	}
@@ -227,8 +227,8 @@ func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) HasScopeId() bo
 	return false
 }
 
-// SetScopeId gets a reference to the given string and assigns it to the ScopeId field.
-func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetScopeId(v string) {
+// SetScopeId gets a reference to the given int32 and assigns it to the ScopeId field.
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetScopeId(v int32) {
 	o.ScopeId = &v
 }
 

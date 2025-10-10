@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**DeleteRole**](RolesAPI.md#DeleteRole) | **Delete** /roles/{id} | 
 [**GetAllPermissions**](RolesAPI.md#GetAllPermissions) | **Get** /roles/all-permissions | 
 [**GetAllRoles**](RolesAPI.md#GetAllRoles) | **Get** /roles | 
+[**GetAssignableRoles**](RolesAPI.md#GetAssignableRoles) | **Get** /roles/assignable | 
 [**UpdateRole**](RolesAPI.md#UpdateRole) | **Put** /roles/{id} | 
 
 
@@ -253,6 +254,67 @@ Other parameters are passed through a pointer to a apiGetAllRolesRequest struct 
 ### Return type
 
 [**[]GetAllRoles200ResponseInner**](GetAllRoles200ResponseInner.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetAssignableRoles
+
+> GetAssignableRoles200Response GetAssignableRoles(ctx).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.RolesAPI.GetAssignableRoles(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `RolesAPI.GetAssignableRoles``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAssignableRoles`: GetAssignableRoles200Response
+	fmt.Fprintf(os.Stdout, "Response from `RolesAPI.GetAssignableRoles`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAssignableRolesRequest struct via the builder pattern
+
+
+### Return type
+
+[**GetAssignableRoles200Response**](GetAssignableRoles200Response.md)
 
 ### Authorization
 

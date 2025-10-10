@@ -6,7 +6,7 @@ info:
     url: fossa.com
   description: OpenAPI Specification for public FOSSA APIs
   title: FOSSA API
-  version: 4.30.21
+  version: 4.30.36
 externalDocs:
   description: product documentation and product guides
   url: https://docs.fossa.com
@@ -72,6 +72,10 @@ tags:
   name: OIDC
 - description: APIs related to the Snippet Detection feature
   name: Snippets
+- description: APIs for managing license conclusions on dependencies
+  name: License Conclusions
+- description: APIs for managing policies
+  name: Policies
 paths:
   /services/github-app/installation-url:
     get:
@@ -596,14 +600,14 @@ paths:
             type: string
           type: array
         style: form
-      - description: Include only issues found on after a given date.  Only available
-          to premium users
+      - description: Include only issues found on after a given ISO timestamp.  Only
+          available to premium users
         explode: true
         in: query
         name: "filter[foundAfter]"
         required: false
         schema:
-          format: date
+          format: date-time
           type: string
         style: form
       - description: Filter by vuln fixability (when category is "vulnerability")
@@ -968,14 +972,14 @@ paths:
             type: string
           type: array
         style: form
-      - description: Include only issues found on after a given date.  Only available
-          to premium users
+      - description: Include only issues found on after a given ISO timestamp.  Only
+          available to premium users
         explode: true
         in: query
         name: "filter[foundAfter]"
         required: false
         schema:
-          format: date
+          format: date-time
           type: string
         style: form
       - description: Filter by vuln fixability (when category is "vulnerability")
@@ -2177,6 +2181,9 @@ paths:
                     jiraTicketId: TEST-123
                     jiraTicketURL: https://test.atlassian.net/browse/TEST-123
                     type: jira
+                    concludedLicenses:
+                    - MIT
+                    - Apache-2.0
               schema:
                 items:
                   $ref: "#/components/schemas/getIssueAffectedProjects_200_response_inner"
@@ -2476,14 +2483,24 @@ paths:
             type: string
           type: array
         style: form
-      - description: Include only issues found on after a given date.  Only available
-          to premium users
+      - description: Include only issues found on before a given ISO timestamp.  Only
+          available to premium users
+        explode: true
+        in: query
+        name: "filter[foundBefore]"
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: Include only issues found on after a given ISO timestamp.  Only
+          available to premium users
         explode: true
         in: query
         name: "filter[foundAfter]"
         required: false
         schema:
-          format: date
+          format: date-time
           type: string
         style: form
       - description: Filter by vuln fixability (when category is "vulnerability")
@@ -3199,14 +3216,14 @@ paths:
             type: string
           type: array
         style: form
-      - description: Include only issues found on after a given date.  Only available
-          to premium users
+      - description: Include only issues found on after a given ISO timestamp.  Only
+          available to premium users
         explode: true
         in: query
         name: "filter[foundAfter]"
         required: false
         schema:
-          format: date
+          format: date-time
           type: string
         style: form
       - description: Filter by vuln fixability (when category is "vulnerability")
@@ -3597,14 +3614,14 @@ paths:
             type: string
           type: array
         style: form
-      - description: Include only issues found on after a given date.  Only available
-          to premium users
+      - description: Include only issues found on after a given ISO timestamp.  Only
+          available to premium users
         explode: true
         in: query
         name: "filter[foundAfter]"
         required: false
         schema:
-          format: date
+          format: date-time
           type: string
         style: form
       - description: Filter by vuln fixability (when category is "vulnerability")
@@ -6250,6 +6267,68 @@ paths:
                   value:
                     message: You do not have permission to manage roles.
                     code: 2001
+              schema:
+                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
+          description: Forbidden
+        "500":
+          content:
+            application/json:
+              examples:
+                Server Error:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2009
+                    message: "Sorry, we've encountered an unexpected error. We've\
+                      \ recorded it. If you continue to see this, contact support\
+                      \ at support@fossa.com and include the unique reference code:\
+                      \ 00000000-0000-0000-0000-000000000000"
+                    name: InternalServerError
+                    httpStatusCode: 500
+              schema:
+                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
+          description: Server Error
+      security:
+      - ApiToken: []
+      tags:
+      - Roles
+  /roles/assignable:
+    get:
+      description: Get roles that can be assigned by the current user. Returns only
+        roles with equal or fewer permissions than the requesting user.
+      operationId: getAssignableRoles
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                assignableRoles:
+                  value:
+                    assignableOrgRoles:
+                    - 1
+                    - 2
+                    - 10
+                    assignableTeamRoles:
+                      "5":
+                      - 3
+                      - 4
+                      - 11
+                      "6":
+                      - 3
+                      - 4
+              schema:
+                $ref: "#/components/schemas/getAssignableRoles_200_response"
+          description: OK
+        "403":
+          content:
+            application/json:
+              examples:
+                No permission:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2005
+                    message: User does not have permission to view this resource
+                    name: ForbiddenError
+                    httpStatusCode: 403
               schema:
                 $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
           description: Forbidden
@@ -9305,8 +9384,8 @@ paths:
         name: count
         required: false
         schema:
-          default: 20
-          maximum: 1000
+          default: 10
+          maximum: 50
           minimum: 1
           type: integer
         style: form
@@ -13203,6 +13282,121 @@ paths:
       - ApiToken: []
       tags:
       - Users
+  /users/service-accounts:
+    post:
+      description: Create a new service account with specified roles and optional
+        API tokens
+      operationId: createServiceAccount
+      requestBody:
+        content:
+          application/json:
+            examples:
+              createOrgServiceAccount:
+                summary: Create service account with organization role
+                value:
+                  username: production-api-service
+                  email: prod-api@company.com
+                  fullName: Production API Service Account
+                  orgRoleId: 3
+                  hasPushOnlyApiToken: false
+                  hasFullApiToken: false
+              createTeamServiceAccount:
+                summary: Create service account with team role
+                value:
+                  username: team-ci-service
+                  fullName: Team CI Service Account
+                  team:
+                    id: 5
+                    roleId: 6
+                  hasPushOnlyApiToken: true
+                  hasFullApiToken: false
+              createWithTokens:
+                summary: Create service account with API tokens
+                value:
+                  username: automation-service
+                  email: automation@company.com
+                  fullName: Automation Service Account
+                  orgRoleId: 2
+                  hasPushOnlyApiToken: true
+                  hasFullApiToken: true
+            schema:
+              $ref: "#/components/schemas/createServiceAccount_request"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              examples:
+                serviceAccountWithTokens:
+                  value:
+                    id: 12345
+                    username: automation-service
+                    email: automation@company.com
+                    full_name: Automation Service Account
+                    fullApiToken: fossa-api-key-1234567890abcdef1234567890abcdef12345678
+                    pushOnlyApiToken: fossa-push-key-abcdef1234567890abcdef1234567890abcdef12
+              schema:
+                $ref: "#/components/schemas/createServiceAccount_201_response"
+          description: Service account created successfully
+        "400":
+          content:
+            application/json:
+              examples:
+                Bad Request Parameter/Body:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2003
+                    message: "Parse error at root.X: ..."
+                    name: BadRequestError
+                    httpStatusCode: 400
+              schema:
+                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
+          description: Bad Request
+        "403":
+          content:
+            application/json:
+              examples:
+                No permission:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2005
+                    message: User does not have permission to view this resource
+                    name: ForbiddenError
+                    httpStatusCode: 403
+              schema:
+                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                teamNotFound:
+                  value:
+                    message: Team not found.
+              schema:
+                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
+          description: Team not found
+        "500":
+          content:
+            application/json:
+              examples:
+                Server Error:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2009
+                    message: "Sorry, we've encountered an unexpected error. We've\
+                      \ recorded it. If you continue to see this, contact support\
+                      \ at support@fossa.com and include the unique reference code:\
+                      \ 00000000-0000-0000-0000-000000000000"
+                    name: InternalServerError
+                    httpStatusCode: 500
+              schema:
+                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
+          description: Server Error
+      security:
+      - ApiToken: []
+      tags:
+      - Users
   /v2/revisions/{locator}/dependencies:
     get:
       description: Get the dependencies for a given project revision
@@ -13361,13 +13555,24 @@ paths:
               examples:
                 dependencies:
                   value:
-                    count: 2
+                    total: 2
                     dependencies:
                     - locator: npm+foo$1.2.3
                       title: foo
                       isManual: false
                       isIgnored: false
                       isUnknown: false
+                      concludedLicenses:
+                        scoped:
+                          licenses:
+                          - MIT
+                          - Apache
+                          lastEditedBy: user@fossa.com
+                          updatedAt: 2025-01-01T00:00:00Z
+                        base:
+                          licenses:
+                          - MIT
+                          justification: Concluded by FOSSA
                       licenses:
                       - MIT
                       - Apache
@@ -13401,6 +13606,16 @@ paths:
                       isManual: false
                       isIgnored: false
                       isUnknown: false
+                      concludedLicenses:
+                        scoped:
+                          licenses:
+                          - null
+                          lastEditedBy: user@fossa.com
+                          updatedAt: 2025-01-01T00:00:00Z
+                        base:
+                          licenses:
+                          - MIT
+                          justification: Concluded by FOSSA
                       licenses:
                       - MIT
                       declaredLicenses:
@@ -13466,6 +13681,120 @@ paths:
               schema:
                 $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
           description: NotFound
+      security:
+      - ApiToken: []
+      tags:
+      - Dependencies
+  /v2/revisions/{locator}/dependencies/{dependencyRevisionLocator}:
+    get:
+      description: Get a single dependency by locator for a given project revision
+      operationId: getProjectDependency
+      parameters:
+      - description: The locator of the project revision
+        explode: false
+        in: path
+        name: locator
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The locator of the dependency to retrieve
+        explode: false
+        in: path
+        name: dependencyRevisionLocator
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                dependency:
+                  value:
+                    dependency:
+                      locator: npm+foo$1.2.3
+                      title: foo
+                      isManual: false
+                      isIgnored: false
+                      isUnknown: false
+                      concludedLicenses:
+                        scoped:
+                          licenses:
+                          - Apache-2.0
+                          - ISC
+                          lastEditedBy: user@fossa.com
+                          updatedAt: 2025-01-01T00:00:00Z
+                        base:
+                          licenses:
+                          - MIT
+                          justification: Concluded by FOSSA
+                      licenses:
+                      - MIT
+                      - Apache
+                      declaredLicenses:
+                      - MIT
+                      depth: 1
+                      originPaths:
+                      - package.json
+                      status:
+                        error: ""
+                        resolved: true
+                        unsupported: false
+                        analyzing: false
+                      issues:
+                      - id: 123
+                        type: policy_conflict
+                        status: active
+                        license: Apache
+                      rootProjects:
+                      - title: myproject
+                        revision: custom+123/myproject$1.2.3
+                        branch: main
+                        conclusions:
+                          scoped:
+                            licenses:
+                            - Apache-2.0
+                            - ISC
+                            lastEditedBy: user@fossa.com
+                            updatedAt: 2025-01-01T00:00:00Z
+                          base:
+                            licenses:
+                            - MIT
+                            justification: Concluded by FOSSA
+                      cpes:
+                      - cpe:2.3:a:foo:foo:1.2.3:*:*:*:*:*:*
+                      version: 1.2.3
+              schema:
+                $ref: "#/components/schemas/getProjectDependency_200_response"
+          description: OK
+        "400":
+          content:
+            application/json:
+              examples:
+                Bad Request:
+                  summary: Missing required parameters
+                  value:
+                    error: Dependency revision locator is required.
+              schema:
+                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              examples:
+                Project Revision Not Found:
+                  summary: Project revision does not exist
+                  value:
+                    error: This project revision does not exist
+                Dependency Not Found:
+                  summary: Dependency revision not found
+                  value:
+                    error: Dependency revision not found
+              schema:
+                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
+          description: Not Found
       security:
       - ApiToken: []
       tags:
@@ -13564,6 +13893,17 @@ paths:
                       isManual: false
                       isIgnored: false
                       isUnknown: false
+                      concludedLicenses:
+                        scoped:
+                          licenses:
+                          - Apache-2.0
+                          - ISC
+                          lastEditedBy: user@fossa.com
+                          updatedAt: 2025-01-01T00:00:00Z
+                        base:
+                          licenses:
+                          - MIT
+                          justification: Concluded by FOSSA
                       licenses:
                       - MIT
                       - Apache
@@ -13586,11 +13926,22 @@ paths:
                       - title: myproject
                         revision: custom+123/myproject$1.2.3
                         branch: main
+                        conclusions:
+                          scoped:
+                            licenses:
+                            - Apache-2.0
+                            - ISC
+                            lastEditedBy: user@fossa.com
+                            updatedAt: 2025-01-01T00:00:00Z
+                          base:
+                            licenses:
+                            - MIT
+                            justification: Concluded by FOSSA
                       cpes:
                       - cpe:2.3:a:foo:foo:1.2.3:*:*:*:*:*:*
                       version: 1.2.3
               schema:
-                $ref: "#/components/schemas/getGlobalDependency_200_response"
+                $ref: "#/components/schemas/getProjectDependency_200_response"
           description: OK
         "403":
           content:
@@ -13614,6 +13965,174 @@ paths:
               schema:
                 $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
           description: Not Found
+      security:
+      - ApiToken: []
+      tags:
+      - Dependencies
+  /v2/dependencies/custom-licenses:
+    get:
+      description: |
+        Get custom licenses (dependency licenses that have been manually corrected) within the organization.
+        This endpoint returns paginated results of custom licenses that have been created through project corrections.
+        The results can be optionally filtered to a specific project using the `projectLocator` query parameter.
+      operationId: getCustomLicenses
+      parameters:
+      - description: |
+          Optional project locator to filter results to custom licenses used within a specific project.
+          If not provided, returns custom licenses across all projects the user has access to.
+        example: custom+1234/my-project
+        explode: true
+        in: query
+        name: projectLocator
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The specific page of data to return
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: The number of items to return in each page of results
+        explode: true
+        in: query
+        name: count
+        required: false
+        schema:
+          default: 20
+          maximum: 1000
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                customLicenses:
+                  description: Example response showing custom licenses with pagination
+                    information
+                  summary: Custom licenses response example
+                  value:
+                    results:
+                    - dependencyProjectLocator: custom+1234/lodash
+                      dependencyRevisionLocator: custom+1234/lodash$v4.17.21
+                      projectLocator: custom+1234/my-web-app
+                      projectRevision: custom+1234/my-web-app$main-branch-abc123
+                      title: Lodash Utility Library
+                      description: "A modern JavaScript utility library delivering\
+                        \ modularity, performance & extras."
+                      url: https://lodash.com
+                      licenseTitle: Custom Commercial License for Lodash
+                      licenseId: custom-license
+                      copyright: Copyright (c) JS Foundation and other contributors
+                      text: |
+                        Custom Commercial License
+
+                        This is a custom license agreement for the use of Lodash
+                        in commercial applications.
+
+                        Permission is hereby granted to use this software under
+                        the following terms and conditions...
+                      correctedAt: 2024-03-15T10:30:00.000Z
+                    - dependencyProjectLocator: custom+1234/react
+                      dependencyRevisionLocator: custom+1234/react$18.2.0
+                      projectLocator: custom+1234/my-web-app
+                      projectRevision: custom+1234/my-web-app$main-branch-abc123
+                      title: React
+                      description: A JavaScript library for building user interfaces
+                      url: https://reactjs.org
+                      licenseTitle: Modified MIT License
+                      licenseId: custom-license
+                      copyright: "Copyright (c) Facebook, Inc. and its affiliates."
+                      text: |
+                        MIT License (Modified)
+
+                        Permission is hereby granted, free of charge, to any person obtaining a copy
+                        of this software and associated documentation files (the "Software"), to deal
+                        in the Software with additional restrictions...
+                      correctedAt: 2024-03-14T14:22:15.000Z
+                    totalCount: 25
+                    page: 1
+                    pageSize: 10
+              schema:
+                $ref: "#/components/schemas/getCustomLicenses_200_response"
+          description: Successfully retrieved custom licenses
+        "400":
+          content:
+            application/json:
+              examples:
+                Bad Request:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2003
+                    message: Invalid request
+                    name: BadRequestError
+                    httpStatusCode: 400
+              schema:
+                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              examples:
+                Bad API Token:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2010
+                    message: API token is invalid
+                    name: UnauthorizedError
+                    httpStatusCode: 401
+              schema:
+                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              examples:
+                No team Access:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2005
+                    message: You are not permitted to view this team.
+                    name: ForbiddenError
+                    httpStatusCode: 403
+              schema:
+                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                projectNotFound:
+                  summary: Project not found
+                  value:
+                    error: "Project not found for locator: custom+1234/invalid-project"
+              schema:
+                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
+          description: Project not found
+        "500":
+          content:
+            application/json:
+              examples:
+                Server Error:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2009
+                    message: "Sorry, we've encountered an unexpected error. We've\
+                      \ recorded it. If you continue to see this, contact support\
+                      \ at support@fossa.com and include the unique reference code:\
+                      \ 00000000-0000-0000-0000-000000000000"
+                    name: InternalServerError
+                    httpStatusCode: 500
+              schema:
+                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
+          description: Server Error
       security:
       - ApiToken: []
       tags:
@@ -13794,13 +14313,24 @@ paths:
               examples:
                 dependencies:
                   value:
-                    count: 2
+                    total: 2
                     dependencies:
                     - locator: npm+foo$1.2.3
                       title: foo
                       isManual: false
                       isIgnored: false
                       isUnknown: false
+                      concludedLicenses:
+                        scoped:
+                          licenses:
+                          - MIT
+                          - Apache
+                          lastEditedBy: user@fossa.com
+                          updatedAt: 2025-01-01T00:00:00Z
+                        base:
+                          licenses:
+                          - MIT
+                          justification: Concluded by FOSSA
                       licenses:
                       - MIT
                       - Apache
@@ -13834,6 +14364,16 @@ paths:
                       isManual: false
                       isIgnored: false
                       isUnknown: false
+                      concludedLicenses:
+                        scoped:
+                          licenses:
+                          - null
+                          lastEditedBy: user@fossa.com
+                          updatedAt: 2025-01-01T00:00:00Z
+                        base:
+                          licenses:
+                          - MIT
+                          justification: Concluded by FOSSA
                       licenses:
                       - MIT
                       declaredLicenses:
@@ -13899,6 +14439,128 @@ paths:
               schema:
                 $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
           description: NotFound
+      security:
+      - ApiToken: []
+      tags:
+      - Dependencies
+  /v2/release-groups/{projectGroupId}/releases/{projectGroupReleaseId}/dependencies/{dependencyRevisionLocator}:
+    get:
+      description: Get a single dependency by locator for a given release group
+      operationId: getReleaseGroupDependency
+      parameters:
+      - description: The ID of the release group
+        explode: false
+        in: path
+        name: projectGroupId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: The ID of the release
+        explode: false
+        in: path
+        name: projectGroupReleaseId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      - description: The locator of the dependency to retrieve
+        explode: false
+        in: path
+        name: dependencyRevisionLocator
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                dependency:
+                  value:
+                    dependency:
+                      locator: npm+foo$1.2.3
+                      title: foo
+                      isManual: false
+                      isIgnored: false
+                      isUnknown: false
+                      concludedLicenses:
+                        scoped:
+                          licenses:
+                          - Apache-2.0
+                          - ISC
+                          lastEditedBy: user@fossa.com
+                          updatedAt: 2025-01-01T00:00:00Z
+                        base:
+                          licenses:
+                          - MIT
+                          justification: Concluded by FOSSA
+                      licenses:
+                      - MIT
+                      - Apache
+                      declaredLicenses:
+                      - MIT
+                      depth: 1
+                      originPaths:
+                      - package.json
+                      status:
+                        error: ""
+                        resolved: true
+                        unsupported: false
+                        analyzing: false
+                      issues:
+                      - id: 123
+                        type: policy_conflict
+                        status: active
+                        license: Apache
+                      rootProjects:
+                      - title: myproject
+                        revision: custom+123/myproject$1.2.3
+                        branch: main
+                        conclusions:
+                          scoped:
+                            licenses:
+                            - Apache-2.0
+                            - ISC
+                            lastEditedBy: user@fossa.com
+                            updatedAt: 2025-01-01T00:00:00Z
+                          base:
+                            licenses:
+                            - MIT
+                            justification: Concluded by FOSSA
+                      cpes:
+                      - cpe:2.3:a:foo:foo:1.2.3:*:*:*:*:*:*
+                      version: 1.2.3
+              schema:
+                $ref: "#/components/schemas/getProjectDependency_200_response"
+          description: OK
+        "400":
+          content:
+            application/json:
+              examples:
+                Bad Request:
+                  summary: Invalid parameters
+                  value:
+                    error: "Invalid projectGroupId: NaN"
+              schema:
+                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
+          description: Bad Request
+        "404":
+          content:
+            application/json:
+              examples:
+                Release Not Found:
+                  summary: Release does not exist
+                  value:
+                    error: This release does not exist
+                Dependency Not Found:
+                  summary: Dependency revision not found
+                  value:
+                    error: Dependency revision not found
+              schema:
+                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
+          description: Not Found
       security:
       - ApiToken: []
       tags:
@@ -14011,6 +14673,17 @@ paths:
                     - title: myproject
                       revision: custom+123/myproject$1.2.3
                       branch: main
+                      conclusions:
+                        scoped:
+                          licenses:
+                          - Apache-2.0
+                          - ISC
+                          lastEditedBy: user@fossa.com
+                          updatedAt: 2025-01-01T00:00:00Z
+                        base:
+                          licenses:
+                          - MIT
+                          justification: Concluded by FOSSA
               schema:
                 $ref: "#/components/schemas/getReleaseGroupDependencyRootProjects_200_response"
           description: OK
@@ -17058,101 +17731,6 @@ paths:
       - ApiToken: []
       tags:
       - OIDC
-    put:
-      description: Update an existing OIDC Provider
-      operationId: updateOIDCProvider
-      parameters:
-      - description: The ID of the OIDC Provider to update
-        explode: false
-        in: path
-        name: id
-        required: true
-        schema:
-          example: 123
-          type: integer
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/updateOIDCProvider_request"
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/listOIDCProviders_200_response_allOf_results_inner"
-          description: Successfully updated OIDC Provider
-        "400":
-          content:
-            application/json:
-              examples:
-                Bad Request Parameter/Body:
-                  value:
-                    uuid: 00000000-0000-0000-0000-000000000000
-                    code: 2003
-                    message: "Parse error at root.X: ..."
-                    name: BadRequestError
-                    httpStatusCode: 400
-              schema:
-                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
-          description: Bad Request
-        "401":
-          content:
-            application/json:
-              examples:
-                Bad API Token:
-                  value:
-                    uuid: 00000000-0000-0000-0000-000000000000
-                    code: 2010
-                    message: API token is invalid
-                    name: UnauthorizedError
-                    httpStatusCode: 401
-              schema:
-                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
-          description: Unauthorized
-        "403":
-          content:
-            application/json:
-              examples:
-                No permission:
-                  value:
-                    uuid: 00000000-0000-0000-0000-000000000000
-                    code: 2005
-                    message: User does not have permission to view this resource
-                    name: ForbiddenError
-                    httpStatusCode: 403
-              schema:
-                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
-          description: Forbidden
-        "404":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
-          description: OIDC Provider not found
-        "500":
-          content:
-            application/json:
-              examples:
-                Server Error:
-                  value:
-                    uuid: 00000000-0000-0000-0000-000000000000
-                    code: 2009
-                    message: "Sorry, we've encountered an unexpected error. We've\
-                      \ recorded it. If you continue to see this, contact support\
-                      \ at support@fossa.com and include the unique reference code:\
-                      \ 00000000-0000-0000-0000-000000000000"
-                    name: InternalServerError
-                    httpStatusCode: 500
-              schema:
-                $ref: "#/components/schemas/getGitHubAppInstallationUrl_403_response"
-          description: Server Error
-      security:
-      - ApiToken: []
-      tags:
-      - OIDC
   /oidc/trust-relationships:
     get:
       description: List OIDC Trust Relationships with optional filtering
@@ -17270,7 +17848,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/createOIDCTrustRelationship_200_response"
+                $ref: "#/components/schemas/listOIDCTrustRelationships_200_response_allOf_results_inner"
           description: Successfully created OIDC Trust Relationship
         "400":
           content:
@@ -17439,7 +18017,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/createOIDCTrustRelationship_200_response"
+                $ref: "#/components/schemas/listOIDCTrustRelationships_200_response_allOf_results_inner"
           description: Successfully retrieved OIDC Trust Relationship
         "401":
           content:
@@ -17521,7 +18099,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/createOIDCTrustRelationship_200_response"
+                $ref: "#/components/schemas/listOIDCTrustRelationships_200_response_allOf_results_inner"
           description: Successfully updated OIDC Trust Relationship
         "400":
           content:
@@ -22161,18 +22739,6 @@ components:
         minimum: 1
         type: integer
       style: form
-    PaginationCount:
-      description: The number of items to return in each page of results
-      explode: true
-      in: query
-      name: count
-      required: false
-      schema:
-        default: 20
-        maximum: 1000
-        minimum: 1
-        type: integer
-      style: form
     ProjectTeamId:
       description: Filter by one or more team IDs. Providing "null" will return all
         unassigned projects.
@@ -23693,6 +24259,9 @@ components:
     getIssueAffectedProjects_200_response_inner:
       example:
         revisionId: revisionId
+        concludedLicenses:
+        - concludedLicenses
+        - concludedLicenses
         jiraTicketId: jiraTicketId
         jiraTicketURL: jiraTicketURL
         id: id
@@ -23727,6 +24296,11 @@ components:
           enum:
           - jira
           type: string
+        concludedLicenses:
+          description: The concluded licenses for the project
+          items:
+            type: string
+          type: array
     getIssues_200_response_issues_oneOf_inner:
       example:
         patchedVersionRanges:
@@ -24623,6 +25197,7 @@ components:
         dependencyTitle: dependencyTitle
         ignoreScope: ORGANIZATION
         dependencyProjectLocator: dependencyProjectLocator
+        createdAt: createdAt
         condition: "{}"
         policyTitle: policyTitle
         dependencyRevisionLocator: dependencyRevisionLocator
@@ -24632,6 +25207,7 @@ components:
         id: 0
         exceptionTitle: exceptionTitle
         projectTitle: projectTitle
+        updatedAt: updatedAt
       properties:
         id:
           type: integer
@@ -24680,6 +25256,10 @@ components:
           type: string
         policyTitle:
           type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
     getIssueExceptions_200_response:
       example:
         total: 5
@@ -24692,6 +25272,7 @@ components:
           dependencyTitle: dependencyTitle
           ignoreScope: ORGANIZATION
           dependencyProjectLocator: dependencyProjectLocator
+          createdAt: createdAt
           condition: "{}"
           policyTitle: policyTitle
           dependencyRevisionLocator: dependencyRevisionLocator
@@ -24701,6 +25282,7 @@ components:
           id: 0
           exceptionTitle: exceptionTitle
           projectTitle: projectTitle
+          updatedAt: updatedAt
         - packageScope: SELECTED_VERSION
           note: note
           reason: reason
@@ -24709,6 +25291,7 @@ components:
           dependencyTitle: dependencyTitle
           ignoreScope: ORGANIZATION
           dependencyProjectLocator: dependencyProjectLocator
+          createdAt: createdAt
           condition: "{}"
           policyTitle: policyTitle
           dependencyRevisionLocator: dependencyRevisionLocator
@@ -24718,6 +25301,7 @@ components:
           id: 0
           exceptionTitle: exceptionTitle
           projectTitle: projectTitle
+          updatedAt: updatedAt
       properties:
         exceptions:
           items:
@@ -26263,6 +26847,45 @@ components:
           description: Human-readable description of the permission
           example: View any project in the organization
           type: string
+    getAssignableRoles_200_response:
+      example:
+        assignableOrgRoles:
+        - 1
+        - 2
+        - 10
+        assignableTeamRoles:
+          "5":
+          - 3
+          - 4
+          - 11
+          "6":
+          - 3
+          - 4
+      properties:
+        assignableOrgRoles:
+          description: Array of role IDs that can be assigned for organization-scoped
+            roles
+          example:
+          - 1
+          - 2
+          - 10
+          items:
+            type: integer
+          type: array
+        assignableTeamRoles:
+          additionalProperties:
+            items:
+              type: integer
+          description: Object mapping team IDs to arrays of role IDs that can be assigned
+            for those teams
+          example:
+            "5":
+            - 3
+            - 4
+            - 11
+            "6":
+            - 3
+            - 4
     getAllTeams_200_response_inner_teamUsers_inner:
       example:
         roleId: 5
@@ -26441,6 +27064,7 @@ components:
         userId: 0
         email: email
         username: username
+        isServiceAccount: true
       properties:
         userId:
           description: ID of the user
@@ -26455,6 +27079,9 @@ components:
           description: Email of the user
           format: email
           type: string
+        isServiceAccount:
+          description: Whether the user is a service account
+          type: boolean
       required:
       - email
       - roleId
@@ -26470,10 +27097,12 @@ components:
           userId: 0
           email: email
           username: username
+          isServiceAccount: true
         - roleId: 6
           userId: 0
           email: email
           username: username
+          isServiceAccount: true
       properties:
         results:
           description: Array of team members
@@ -29727,6 +30356,158 @@ components:
           $ref: "#/components/schemas/getAllUsers_200_response_inner_github"
         bitbucketCloud:
           $ref: "#/components/schemas/getAllUsers_200_response_inner_bitbucketCloud"
+    createServiceAccount_request_team:
+      description: Team assignment for the service account. At least one of orgRoleId
+        or team must be provided.
+      properties:
+        id:
+          description: ID of the team to assign the service account to
+          example: 5
+          minimum: 1
+          type: integer
+        roleId:
+          description: ID of the team role to assign
+          example: 6
+          minimum: 1
+          type: integer
+      required:
+      - id
+      - roleId
+    createServiceAccount_request:
+      description: |
+        Create a new service account. You must provide at least one of the following:
+        - `orgRoleId`: Assigns an organization-level role
+        - `team`: Assigns a team-level role with specified team ID and role ID
+        - Both `orgRoleId` and `team`: Assigns both organization and team roles
+
+        Note that if assigning the service account to a team, the account making the API request must be part of that team and
+        be assigning the service account a permission that is equal to or less powerful than their own role on that team.
+      properties:
+        username:
+          description: The username for the service account
+          example: api-service-prod
+          maxLength: 255
+          minLength: 1
+          type: string
+        email:
+          description: Optional email address for the service account
+          example: api-service@company.com
+          format: email
+          maxLength: 255
+          type: string
+        fullName:
+          description: Optional full name/description for the service account
+          example: Production API Service Account
+          maxLength: 255
+          minLength: 1
+          type: string
+        orgRoleId:
+          description: ID of the organization role to assign to the service account.
+            At least one of orgRoleId or team must be provided.
+          example: 3
+          minimum: 1
+          type: integer
+        team:
+          $ref: "#/components/schemas/createServiceAccount_request_team"
+        hasPushOnlyApiToken:
+          default: false
+          description: Whether to create a push-only API token for the service account
+          example: true
+          type: boolean
+        hasFullApiToken:
+          default: false
+          description: Whether to create a full access API token for the service account
+          example: false
+          type: boolean
+      required:
+      - username
+    createServiceAccount_201_response:
+      example:
+        fullApiToken: 1234567890abcdef1234567890abcdef12345678
+        full_name: Production API Service Account
+        pushOnlyApiToken: abcdef1234567890abcdef1234567890abcdef12
+        id: 12345
+        email: api-service@company.com
+        username: api-service-prod
+      properties:
+        id:
+          description: The user id of the service account
+          example: 12345
+          type: integer
+        username:
+          description: The username of the service account
+          example: api-service-prod
+          type: string
+        email:
+          description: The email address of the service account (if provided)
+          example: api-service@company.com
+          nullable: true
+          type: string
+        full_name:
+          description: The full name/description of the service account (if provided)
+          example: Production API Service Account
+          nullable: true
+          type: string
+        fullApiToken:
+          description: The full access API token (only present if hasFullApiToken
+            was true)
+          example: 1234567890abcdef1234567890abcdef12345678
+          type: string
+        pushOnlyApiToken:
+          description: The push-only API token (only present if hasPushOnlyApiToken
+            was true)
+          example: abcdef1234567890abcdef1234567890abcdef12
+          type: string
+      required:
+      - id
+      - username
+    getProjectDependencies_200_response_dependencies_inner_concludedLicenses_scoped:
+      example:
+        licenses:
+        - licenses
+        - licenses
+        lastEditedBy: lastEditedBy
+        updatedAt: updatedAt
+      properties:
+        licenses:
+          items:
+            type: string
+          type: array
+        lastEditedBy:
+          type: string
+        updatedAt:
+          type: string
+    getProjectDependencies_200_response_dependencies_inner_concludedLicenses_base:
+      example:
+        licenses:
+        - licenses
+        - licenses
+        justification: justification
+      properties:
+        licenses:
+          items:
+            type: string
+          type: array
+        justification:
+          type: string
+    getProjectDependencies_200_response_dependencies_inner_concludedLicenses:
+      example:
+        scoped:
+          licenses:
+          - licenses
+          - licenses
+          lastEditedBy: lastEditedBy
+          updatedAt: updatedAt
+        base:
+          licenses:
+          - licenses
+          - licenses
+          justification: justification
+      properties:
+        scoped:
+          $ref: "#/components/schemas/getProjectDependencies_200_response_dependencies_inner_concludedLicenses_scoped"
+        base:
+          $ref: "#/components/schemas/getProjectDependencies_200_response_dependencies_inner_concludedLicenses_base"
     getProjectDependencies_200_response_dependencies_inner_status:
       example:
         analyzing: true
@@ -29765,6 +30546,18 @@ components:
           type: number
     getProjectDependencies_200_response_dependencies_inner_rootProjects_inner:
       example:
+        conclusions:
+          scoped:
+            licenses:
+            - licenses
+            - licenses
+            lastEditedBy: lastEditedBy
+            updatedAt: updatedAt
+          base:
+            licenses:
+            - licenses
+            - licenses
+            justification: justification
         title: title
         branch: branch
         revision: revision
@@ -29775,6 +30568,8 @@ components:
           type: string
         branch:
           type: string
+        conclusions:
+          $ref: "#/components/schemas/getProjectDependencies_200_response_dependencies_inner_concludedLicenses"
     getProjectDependencies_200_response_dependencies_inner:
       example:
         declaredLicenses:
@@ -29799,13 +30594,49 @@ components:
           status: active
         version: version
         rootProjects:
-        - title: title
+        - conclusions:
+            scoped:
+              licenses:
+              - licenses
+              - licenses
+              lastEditedBy: lastEditedBy
+              updatedAt: updatedAt
+            base:
+              licenses:
+              - licenses
+              - licenses
+              justification: justification
+          title: title
           branch: branch
           revision: revision
-        - title: title
+        - conclusions:
+            scoped:
+              licenses:
+              - licenses
+              - licenses
+              lastEditedBy: lastEditedBy
+              updatedAt: updatedAt
+            base:
+              licenses:
+              - licenses
+              - licenses
+              justification: justification
+          title: title
           branch: branch
           revision: revision
         layerDepth: 5.962133916683182
+        concludedLicenses:
+          scoped:
+            licenses:
+            - licenses
+            - licenses
+            lastEditedBy: lastEditedBy
+            updatedAt: updatedAt
+          base:
+            licenses:
+            - licenses
+            - licenses
+            justification: justification
         licenses:
         - licenses
         - licenses
@@ -29831,6 +30662,8 @@ components:
           type: boolean
         isUnknown:
           type: boolean
+        concludedLicenses:
+          $ref: "#/components/schemas/getProjectDependencies_200_response_dependencies_inner_concludedLicenses"
         licenses:
           items:
             type: string
@@ -29889,13 +30722,49 @@ components:
             status: active
           version: version
           rootProjects:
-          - title: title
+          - conclusions:
+              scoped:
+                licenses:
+                - licenses
+                - licenses
+                lastEditedBy: lastEditedBy
+                updatedAt: updatedAt
+              base:
+                licenses:
+                - licenses
+                - licenses
+                justification: justification
+            title: title
             branch: branch
             revision: revision
-          - title: title
+          - conclusions:
+              scoped:
+                licenses:
+                - licenses
+                - licenses
+                lastEditedBy: lastEditedBy
+                updatedAt: updatedAt
+              base:
+                licenses:
+                - licenses
+                - licenses
+                justification: justification
+            title: title
             branch: branch
             revision: revision
           layerDepth: 5.962133916683182
+          concludedLicenses:
+            scoped:
+              licenses:
+              - licenses
+              - licenses
+              lastEditedBy: lastEditedBy
+              updatedAt: updatedAt
+            base:
+              licenses:
+              - licenses
+              - licenses
+              justification: justification
           licenses:
           - licenses
           - licenses
@@ -29932,13 +30801,49 @@ components:
             status: active
           version: version
           rootProjects:
-          - title: title
+          - conclusions:
+              scoped:
+                licenses:
+                - licenses
+                - licenses
+                lastEditedBy: lastEditedBy
+                updatedAt: updatedAt
+              base:
+                licenses:
+                - licenses
+                - licenses
+                justification: justification
+            title: title
             branch: branch
             revision: revision
-          - title: title
+          - conclusions:
+              scoped:
+                licenses:
+                - licenses
+                - licenses
+                lastEditedBy: lastEditedBy
+                updatedAt: updatedAt
+              base:
+                licenses:
+                - licenses
+                - licenses
+                justification: justification
+            title: title
             branch: branch
             revision: revision
           layerDepth: 5.962133916683182
+          concludedLicenses:
+            scoped:
+              licenses:
+              - licenses
+              - licenses
+              lastEditedBy: lastEditedBy
+              updatedAt: updatedAt
+            base:
+              licenses:
+              - licenses
+              - licenses
+              justification: justification
           licenses:
           - licenses
           - licenses
@@ -29960,7 +30865,7 @@ components:
           type: array
         count:
           type: integer
-    getGlobalDependency_200_response:
+    getProjectDependency_200_response:
       example:
         dependency:
           declaredLicenses:
@@ -29985,13 +30890,49 @@ components:
             status: active
           version: version
           rootProjects:
-          - title: title
+          - conclusions:
+              scoped:
+                licenses:
+                - licenses
+                - licenses
+                lastEditedBy: lastEditedBy
+                updatedAt: updatedAt
+              base:
+                licenses:
+                - licenses
+                - licenses
+                justification: justification
+            title: title
             branch: branch
             revision: revision
-          - title: title
+          - conclusions:
+              scoped:
+                licenses:
+                - licenses
+                - licenses
+                lastEditedBy: lastEditedBy
+                updatedAt: updatedAt
+              base:
+                licenses:
+                - licenses
+                - licenses
+                justification: justification
+            title: title
             branch: branch
             revision: revision
           layerDepth: 5.962133916683182
+          concludedLicenses:
+            scoped:
+              licenses:
+              - licenses
+              - licenses
+              lastEditedBy: lastEditedBy
+              updatedAt: updatedAt
+            base:
+              licenses:
+              - licenses
+              - licenses
+              justification: justification
           licenses:
           - licenses
           - licenses
@@ -30009,13 +30950,188 @@ components:
       properties:
         dependency:
           $ref: "#/components/schemas/getProjectDependencies_200_response_dependencies_inner"
+    getCustomLicenses_200_response_results_inner:
+      additionalProperties: {}
+      description: |
+        A custom license represents a dependency license that has been manually corrected or overridden
+        through project corrections. This includes custom license text, copyright information, and metadata.
+      example:
+        copyright: Copyright (c) 2024 Example Corp. All rights reserved.
+        correctedAt: 2024-03-15T10:30:00.000Z
+        dependencyRevisionLocator: npm+lodash$4.17.21
+        projectRevision: custom+1234/my-project$789xyz456
+        description: A useful library for data processing
+        licenseTitle: Custom Commercial License
+        projectLocator: custom+1234/my-project
+        text: |
+          This is a proprietary license.
+
+          Permission is granted to use this software under the following conditions...
+        title: My Custom Dependency
+        licenseId: custom-license
+        url: https://github.com/example/dependency
+        dependencyProjectLocator: npm+lodash
+      properties:
+        dependencyProjectLocator:
+          description: The locator of the dependency project that this custom license
+            applies to
+          example: npm+lodash
+          type: string
+        dependencyRevisionLocator:
+          description: The specific revision locator of the dependency
+          example: npm+lodash$4.17.21
+          type: string
+        projectLocator:
+          description: The locator of the user project that contains this dependency
+          example: custom+1234/my-project
+          type: string
+        projectRevision:
+          description: The revision locator of the user project
+          example: custom+1234/my-project$789xyz456
+          type: string
+        title:
+          description: The title/name of the dependency project
+          example: My Custom Dependency
+          type: string
+        description:
+          description: Description of the dependency project
+          example: A useful library for data processing
+          type: string
+        url:
+          description: URL for the dependency project
+          example: https://github.com/example/dependency
+          type: string
+        licenseTitle:
+          description: The custom license title/name
+          example: Custom Commercial License
+          type: string
+        licenseId:
+          description: "The license identifier, always 'custom-license' for custom\
+            \ licenses"
+          enum:
+          - custom-license
+          example: custom-license
+          type: string
+        copyright:
+          description: Copyright notice for this license
+          example: Copyright (c) 2024 Example Corp. All rights reserved.
+          type: string
+        text:
+          description: The full text of the license
+          example: |
+            This is a proprietary license.
+
+            Permission is granted to use this software under the following conditions...
+          type: string
+        correctedAt:
+          description: Timestamp when the license correction was created
+          example: 2024-03-15T10:30:00.000Z
+          format: date-time
+          type: string
+      required:
+      - copyright
+      - correctedAt
+      - dependencyProjectLocator
+      - dependencyRevisionLocator
+      - description
+      - licenseId
+      - licenseTitle
+      - projectLocator
+      - projectRevision
+      - text
+      - title
+      - url
+    getCustomLicenses_200_response:
+      example:
+        pageSize: 147
+        page: 1
+        totalCount: 0
+        results:
+        - copyright: Copyright (c) 2024 Example Corp. All rights reserved.
+          correctedAt: 2024-03-15T10:30:00.000Z
+          dependencyRevisionLocator: npm+lodash$4.17.21
+          projectRevision: custom+1234/my-project$789xyz456
+          description: A useful library for data processing
+          licenseTitle: Custom Commercial License
+          projectLocator: custom+1234/my-project
+          text: |
+            This is a proprietary license.
+
+            Permission is granted to use this software under the following conditions...
+          title: My Custom Dependency
+          licenseId: custom-license
+          url: https://github.com/example/dependency
+          dependencyProjectLocator: npm+lodash
+        - copyright: Copyright (c) 2024 Example Corp. All rights reserved.
+          correctedAt: 2024-03-15T10:30:00.000Z
+          dependencyRevisionLocator: npm+lodash$4.17.21
+          projectRevision: custom+1234/my-project$789xyz456
+          description: A useful library for data processing
+          licenseTitle: Custom Commercial License
+          projectLocator: custom+1234/my-project
+          text: |
+            This is a proprietary license.
+
+            Permission is granted to use this software under the following conditions...
+          title: My Custom Dependency
+          licenseId: custom-license
+          url: https://github.com/example/dependency
+          dependencyProjectLocator: npm+lodash
+      properties:
+        results:
+          description: Array of custom license objects
+          items:
+            $ref: "#/components/schemas/getCustomLicenses_200_response_results_inner"
+          type: array
+        totalCount:
+          description: Total number of custom licenses available (across all pages)
+          minimum: 0
+          type: integer
+        page:
+          description: Current page number
+          minimum: 1
+          type: integer
+        pageSize:
+          description: Number of items per page
+          maximum: 1000
+          minimum: 1
+          type: integer
+      required:
+      - page
+      - pageSize
+      - results
+      - totalCount
     getReleaseGroupDependencyRootProjects_200_response:
       example:
         rootProjects:
-        - title: title
+        - conclusions:
+            scoped:
+              licenses:
+              - licenses
+              - licenses
+              lastEditedBy: lastEditedBy
+              updatedAt: updatedAt
+            base:
+              licenses:
+              - licenses
+              - licenses
+              justification: justification
+          title: title
           branch: branch
           revision: revision
-        - title: title
+        - conclusions:
+            scoped:
+              licenses:
+              - licenses
+              - licenses
+              lastEditedBy: lastEditedBy
+              updatedAt: updatedAt
+            base:
+              licenses:
+              - licenses
+              - licenses
+              justification: justification
+          title: title
           branch: branch
           revision: revision
       properties:
@@ -30462,12 +31578,9 @@ components:
       example:
         organizationId: 456
         createdAt: 2000-01-23T04:56:07.000+00:00
-        scopeId: "789"
+        scopeId: 789
         scope: org
         id: 123
-        thumbprints:
-        - 9e99a48a9960b14926bb7f3b02e22da2b0ab7280
-        - a031c46782e6e6c662c2c87c76da9aa62ccabd8e
         issuer: https://oidc.example.com
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
@@ -30483,26 +31596,18 @@ components:
           description: The issuer URL of the OIDC Provider
           example: https://oidc.example.com
           type: string
-        thumbprints:
-          description: Array of thumbprints for certificate validation
-          example:
-          - 9e99a48a9960b14926bb7f3b02e22da2b0ab7280
-          - a031c46782e6e6c662c2c87c76da9aa62ccabd8e
-          items:
-            type: string
-          type: array
         scope:
           description: The scope level of the OIDC Provider
           enum:
           - org
-          - project
-          - release_group
+          - team
           example: org
           type: string
         scopeId:
-          description: The ID associated with the scope
-          example: "789"
-          type: string
+          description: "The ID associated with the scope: either the organization\
+            \ ID or the team ID"
+          example: 789
+          type: integer
         createdAt:
           description: When the OIDC Provider was created
           format: date-time
@@ -30518,7 +31623,6 @@ components:
       - organizationId
       - scope
       - scopeId
-      - thumbprints
       - updatedAt
     listOIDCProviders_200_response:
       allOf:
@@ -30553,66 +31657,57 @@ components:
         results:
         - organizationId: 456
           createdAt: 2000-01-23T04:56:07.000+00:00
-          scopeId: "789"
+          scopeId: 789
           scope: org
           id: 123
-          thumbprints:
-          - 9e99a48a9960b14926bb7f3b02e22da2b0ab7280
-          - a031c46782e6e6c662c2c87c76da9aa62ccabd8e
           issuer: https://oidc.example.com
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - organizationId: 456
           createdAt: 2000-01-23T04:56:07.000+00:00
-          scopeId: "789"
+          scopeId: 789
           scope: org
           id: 123
-          thumbprints:
-          - 9e99a48a9960b14926bb7f3b02e22da2b0ab7280
-          - a031c46782e6e6c662c2c87c76da9aa62ccabd8e
           issuer: https://oidc.example.com
           updatedAt: 2000-01-23T04:56:07.000+00:00
-    createOIDCProvider_request:
+    createOIDCProvider_request_oneOf:
       properties:
         issuer:
           description: The issuer URL of the OIDC Provider
           example: https://oidc.example.com
           type: string
-        thumbprints:
-          description: Array of thumbprints for certificate validation
-          example:
-          - 9e99a48a9960b14926bb7f3b02e22da2b0ab7280
-          - a031c46782e6e6c662c2c87c76da9aa62ccabd8e
-          items:
-            type: string
-          type: array
         scope:
           description: The scope level of the OIDC Provider
           enum:
-          - org
-          - project
-          - release_group
-          example: org
+          - team
+          example: team
           type: string
         scopeId:
-          description: The ID associated with the scope
-          example: "789"
-          type: string
+          description: The ID of the team
+          example: 789
+          type: integer
       required:
       - issuer
       - scope
       - scopeId
-    updateOIDCProvider_request:
+    createOIDCProvider_request_oneOf_1:
       properties:
-        thumbprints:
-          description: Array of thumbprints for certificate validation
-          example:
-          - 9e99a48a9960b14926bb7f3b02e22da2b0ab7280
-          - a031c46782e6e6c662c2c87c76da9aa62ccabd8e
-          items:
-            type: string
-          type: array
+        issuer:
+          description: The issuer URL of the OIDC Provider
+          example: https://oidc.example.com
+          type: string
+        scope:
+          description: The scope level of the OIDC Provider
+          enum:
+          - org
+          example: org
+          type: string
       required:
-      - thumbprints
+      - issuer
+      - scope
+    createOIDCProvider_request:
+      oneOf:
+      - $ref: "#/components/schemas/createOIDCProvider_request_oneOf"
+      - $ref: "#/components/schemas/createOIDCProvider_request_oneOf_1"
     listOIDCTrustRelationships_200_response_allOf_results_inner_requiredClaims_inner_value:
       description: The claim value
       example: repo:fossas/*
@@ -30626,6 +31721,7 @@ components:
         claim:
           description: The claim type identifier
           example: sub
+          type: string
         value:
           $ref: "#/components/schemas/listOIDCTrustRelationships_200_response_allOf_results_inner_requiredClaims_inner_value"
         hasWildcards:
@@ -30637,6 +31733,7 @@ components:
             - `*` matches zero or more characters
             - `\` escapes the following character
           example: true
+          type: boolean
       required:
       - claim
       - value
@@ -30644,7 +31741,7 @@ components:
       example:
         organizationId: 456
         createdAt: 2000-01-23T04:56:07.000+00:00
-        scopeId: "654"
+        scopeId: 654
         providerId: 321
         scope: org
         audiences:
@@ -30684,14 +31781,14 @@ components:
           description: The scope level of the trust relationship
           enum:
           - org
-          - project
-          - release_group
+          - team
           example: org
           type: string
         scopeId:
-          description: The ID associated with the scope
-          example: "654"
-          type: string
+          description: "The ID associated with the scope: either the organization\
+            \ ID or the team ID"
+          example: 654
+          type: integer
         audiences:
           description: Array of valid audiences for this trust relationship (max 5)
           example:
@@ -30769,7 +31866,7 @@ components:
         results:
         - organizationId: 456
           createdAt: 2000-01-23T04:56:07.000+00:00
-          scopeId: "654"
+          scopeId: 654
           providerId: 321
           scope: org
           audiences:
@@ -30789,7 +31886,7 @@ components:
           updatedAt: 2000-01-23T04:56:07.000+00:00
         - organizationId: 456
           createdAt: 2000-01-23T04:56:07.000+00:00
-          scopeId: "654"
+          scopeId: 654
           providerId: 321
           scope: org
           audiences:
@@ -30807,34 +31904,7 @@ components:
           - claim: department
             value: engineering
           updatedAt: 2000-01-23T04:56:07.000+00:00
-    createOIDCTrustRelationship_request_requiredClaims_inner_value:
-      description: The claim value
-      example: repo:fossas/*
-      oneOf:
-      - {}
-      - {}
-      - {}
-    createOIDCTrustRelationship_request_requiredClaims_inner:
-      additionalProperties: {}
-      properties:
-        claim:
-          description: The claim type identifier
-          example: sub
-        value:
-          $ref: "#/components/schemas/createOIDCTrustRelationship_request_requiredClaims_inner_value"
-        hasWildcards:
-          default: false
-          description: |
-            Whether this claim supports wildcard matching. Defaults to false.
-            If true, then the following characters in `value` are treated as special characters:
-            - `?` matches exactly one character
-            - `*` matches zero or more characters
-            - `\` escapes the following character
-          example: true
-      required:
-      - claim
-      - value
-    createOIDCTrustRelationship_request:
+    createOIDCTrustRelationship_request_oneOf:
       properties:
         userId:
           description: The ID of the user to associate with this trust relationship
@@ -30843,6 +31913,65 @@ components:
         providerId:
           description: The ID of the OIDC Provider to use for this trust relationship
           example: 321
+          type: integer
+        scope:
+          description: The scope level of the trust relationship
+          enum:
+          - org
+          example: org
+          type: string
+        audiences:
+          description: Array of valid audiences for this trust relationship (max 5)
+          example:
+          - https://api.fossa.com
+          - fossa
+          items:
+            type: string
+          maxItems: 5
+          minItems: 1
+          type: array
+        requiredClaims:
+          description: |
+            Array of claim objects. Must contain at least one object with claim: "sub".
+            Additional objects with other claims are optional.
+          example:
+          - claim: sub
+            value: repo:fossas/*
+            hasWildcards: true
+          - claim: role
+            value: admin
+            hasWildcards: false
+          - claim: department
+            value: engineering
+          items:
+            $ref: "#/components/schemas/listOIDCTrustRelationships_200_response_allOf_results_inner_requiredClaims_inner"
+          minItems: 1
+          type: array
+      required:
+      - audiences
+      - providerId
+      - requiredClaims
+      - scope
+      - userId
+    createOIDCTrustRelationship_request_oneOf_1:
+      properties:
+        userId:
+          description: The ID of the user to associate with this trust relationship
+          example: 789
+          type: integer
+        providerId:
+          description: The ID of the OIDC Provider to use for this trust relationship
+          example: 321
+          type: integer
+        scope:
+          description: The scope level of the trust relationship
+          enum:
+          - team
+          example: team
+          type: string
+        scopeId:
+          description: The ID of the team
+          example: 654
           type: integer
         audiences:
           description: Array of valid audiences for this trust relationship (max 5)
@@ -30868,110 +31997,20 @@ components:
           - claim: department
             value: engineering
           items:
-            $ref: "#/components/schemas/createOIDCTrustRelationship_request_requiredClaims_inner"
+            $ref: "#/components/schemas/listOIDCTrustRelationships_200_response_allOf_results_inner_requiredClaims_inner"
           minItems: 1
           type: array
       required:
       - audiences
       - providerId
       - requiredClaims
+      - scope
+      - scopeId
       - userId
-    createOIDCTrustRelationship_200_response:
-      example:
-        organizationId: 456
-        createdAt: 2000-01-23T04:56:07.000+00:00
-        scopeId: "654"
-        providerId: 321
-        scope: org
-        audiences:
-        - https://app.fossa.com
-        - fossa
-        id: 123
-        userId: 789
-        requiredClaims:
-        - claim: sub
-          value: repo:fossas/*
-          hasWildcards: true
-        - claim: role
-          value: admin
-          hasWildcards: false
-        - claim: department
-          value: engineering
-        updatedAt: 2000-01-23T04:56:07.000+00:00
-      properties:
-        id:
-          description: The unique identifier of the OIDC Trust Relationship
-          example: 123
-          type: integer
-        organizationId:
-          description: The ID of the organization this trust relationship belongs
-            to
-          example: 456
-          type: integer
-        userId:
-          description: The ID of the user associated with this trust relationship
-          example: 789
-          type: integer
-        providerId:
-          description: The ID of the OIDC Provider this trust relationship uses
-          example: 321
-          type: integer
-        scope:
-          description: The scope level of the trust relationship
-          enum:
-          - org
-          - project
-          - release_group
-          example: org
-          type: string
-        scopeId:
-          description: The ID associated with the scope
-          example: "654"
-          type: string
-        audiences:
-          description: Array of valid audiences for this trust relationship (max 5)
-          example:
-          - https://app.fossa.com
-          - fossa
-          items:
-            type: string
-          maxItems: 5
-          minItems: 1
-          type: array
-        requiredClaims:
-          description: |
-            Array of claim objects. Must contain at least one object with claim: "sub".
-            Additional objects with other claims are optional.
-          example:
-          - claim: sub
-            value: repo:fossas/*
-            hasWildcards: true
-          - claim: role
-            value: admin
-            hasWildcards: false
-          - claim: department
-            value: engineering
-          items:
-            $ref: "#/components/schemas/createOIDCTrustRelationship_request_requiredClaims_inner"
-          minItems: 1
-          type: array
-        createdAt:
-          description: When the trust relationship was created
-          format: date-time
-          type: string
-        updatedAt:
-          description: When the trust relationship was last updated
-          format: date-time
-          type: string
-      required:
-      - audiences
-      - createdAt
-      - id
-      - organizationId
-      - providerId
-      - requiredClaims
-      - updatedAt
-      - userId
+    createOIDCTrustRelationship_request:
+      oneOf:
+      - $ref: "#/components/schemas/createOIDCTrustRelationship_request_oneOf"
+      - $ref: "#/components/schemas/createOIDCTrustRelationship_request_oneOf_1"
     updateOIDCTrustRelationship_request:
       properties:
         audiences:
@@ -30998,7 +32037,7 @@ components:
           - claim: department
             value: engineering
           items:
-            $ref: "#/components/schemas/createOIDCTrustRelationship_request_requiredClaims_inner"
+            $ref: "#/components/schemas/listOIDCTrustRelationships_200_response_allOf_results_inner_requiredClaims_inner"
           minItems: 1
           type: array
     exchangeOIDCToken_request:

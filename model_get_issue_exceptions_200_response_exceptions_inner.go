@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.21
+API version: 4.30.36
 Contact: support@fossa.com
 */
 
@@ -37,6 +37,8 @@ type GetIssueExceptions200ResponseExceptionsInner struct {
 	CreatedBy *string `json:"createdBy,omitempty"`
 	Reason *string `json:"reason,omitempty"`
 	PolicyTitle *string `json:"policyTitle,omitempty"`
+	CreatedAt *string `json:"createdAt,omitempty"`
+	UpdatedAt *string `json:"updatedAt,omitempty"`
 }
 
 // NewGetIssueExceptions200ResponseExceptionsInner instantiates a new GetIssueExceptions200ResponseExceptionsInner object
@@ -600,6 +602,70 @@ func (o *GetIssueExceptions200ResponseExceptionsInner) SetPolicyTitle(v string) 
 	o.PolicyTitle = &v
 }
 
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
+func (o *GetIssueExceptions200ResponseExceptionsInner) GetCreatedAt() string {
+	if o == nil || IsNil(o.CreatedAt) {
+		var ret string
+		return ret
+	}
+	return *o.CreatedAt
+}
+
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetIssueExceptions200ResponseExceptionsInner) GetCreatedAtOk() (*string, bool) {
+	if o == nil || IsNil(o.CreatedAt) {
+		return nil, false
+	}
+	return o.CreatedAt, true
+}
+
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *GetIssueExceptions200ResponseExceptionsInner) HasCreatedAt() bool {
+	if o != nil && !IsNil(o.CreatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
+func (o *GetIssueExceptions200ResponseExceptionsInner) SetCreatedAt(v string) {
+	o.CreatedAt = &v
+}
+
+// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+func (o *GetIssueExceptions200ResponseExceptionsInner) GetUpdatedAt() string {
+	if o == nil || IsNil(o.UpdatedAt) {
+		var ret string
+		return ret
+	}
+	return *o.UpdatedAt
+}
+
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetIssueExceptions200ResponseExceptionsInner) GetUpdatedAtOk() (*string, bool) {
+	if o == nil || IsNil(o.UpdatedAt) {
+		return nil, false
+	}
+	return o.UpdatedAt, true
+}
+
+// HasUpdatedAt returns a boolean if a field has been set.
+func (o *GetIssueExceptions200ResponseExceptionsInner) HasUpdatedAt() bool {
+	if o != nil && !IsNil(o.UpdatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
+func (o *GetIssueExceptions200ResponseExceptionsInner) SetUpdatedAt(v string) {
+	o.UpdatedAt = &v
+}
+
 func (o GetIssueExceptions200ResponseExceptionsInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -660,6 +726,12 @@ func (o GetIssueExceptions200ResponseExceptionsInner) ToMap() (map[string]interf
 	}
 	if !IsNil(o.PolicyTitle) {
 		toSerialize["policyTitle"] = o.PolicyTitle
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["createdAt"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updatedAt"] = o.UpdatedAt
 	}
 	return toSerialize, nil
 }

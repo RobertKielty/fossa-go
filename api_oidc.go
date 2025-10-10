@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.21
+API version: 4.30.36
 Contact: support@fossa.com
 */
 
@@ -188,7 +188,7 @@ func (r ApiCreateOIDCTrustRelationshipRequest) CreateOIDCTrustRelationshipReques
 	return r
 }
 
-func (r ApiCreateOIDCTrustRelationshipRequest) Execute() (*CreateOIDCTrustRelationship200Response, *http.Response, error) {
+func (r ApiCreateOIDCTrustRelationshipRequest) Execute() (*ListOIDCTrustRelationships200ResponseAllOfResultsInner, *http.Response, error) {
 	return r.ApiService.CreateOIDCTrustRelationshipExecute(r)
 }
 
@@ -208,13 +208,13 @@ func (a *OIDCAPIService) CreateOIDCTrustRelationship(ctx context.Context) ApiCre
 }
 
 // Execute executes the request
-//  @return CreateOIDCTrustRelationship200Response
-func (a *OIDCAPIService) CreateOIDCTrustRelationshipExecute(r ApiCreateOIDCTrustRelationshipRequest) (*CreateOIDCTrustRelationship200Response, *http.Response, error) {
+//  @return ListOIDCTrustRelationships200ResponseAllOfResultsInner
+func (a *OIDCAPIService) CreateOIDCTrustRelationshipExecute(r ApiCreateOIDCTrustRelationshipRequest) (*ListOIDCTrustRelationships200ResponseAllOfResultsInner, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *CreateOIDCTrustRelationship200Response
+		localVarReturnValue  *ListOIDCTrustRelationships200ResponseAllOfResultsInner
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OIDCAPIService.CreateOIDCTrustRelationship")
@@ -927,7 +927,7 @@ type ApiGetOIDCTrustRelationshipRequest struct {
 	id int32
 }
 
-func (r ApiGetOIDCTrustRelationshipRequest) Execute() (*CreateOIDCTrustRelationship200Response, *http.Response, error) {
+func (r ApiGetOIDCTrustRelationshipRequest) Execute() (*ListOIDCTrustRelationships200ResponseAllOfResultsInner, *http.Response, error) {
 	return r.ApiService.GetOIDCTrustRelationshipExecute(r)
 }
 
@@ -949,13 +949,13 @@ func (a *OIDCAPIService) GetOIDCTrustRelationship(ctx context.Context, id int32)
 }
 
 // Execute executes the request
-//  @return CreateOIDCTrustRelationship200Response
-func (a *OIDCAPIService) GetOIDCTrustRelationshipExecute(r ApiGetOIDCTrustRelationshipRequest) (*CreateOIDCTrustRelationship200Response, *http.Response, error) {
+//  @return ListOIDCTrustRelationships200ResponseAllOfResultsInner
+func (a *OIDCAPIService) GetOIDCTrustRelationshipExecute(r ApiGetOIDCTrustRelationshipRequest) (*ListOIDCTrustRelationships200ResponseAllOfResultsInner, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *CreateOIDCTrustRelationship200Response
+		localVarReturnValue  *ListOIDCTrustRelationships200ResponseAllOfResultsInner
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OIDCAPIService.GetOIDCTrustRelationship")
@@ -1401,174 +1401,6 @@ func (a *OIDCAPIService) ListOIDCTrustRelationshipsExecute(r ApiListOIDCTrustRel
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiUpdateOIDCProviderRequest struct {
-	ctx context.Context
-	ApiService *OIDCAPIService
-	id int32
-	updateOIDCProviderRequest *UpdateOIDCProviderRequest
-}
-
-func (r ApiUpdateOIDCProviderRequest) UpdateOIDCProviderRequest(updateOIDCProviderRequest UpdateOIDCProviderRequest) ApiUpdateOIDCProviderRequest {
-	r.updateOIDCProviderRequest = &updateOIDCProviderRequest
-	return r
-}
-
-func (r ApiUpdateOIDCProviderRequest) Execute() (*ListOIDCProviders200ResponseAllOfResultsInner, *http.Response, error) {
-	return r.ApiService.UpdateOIDCProviderExecute(r)
-}
-
-/*
-UpdateOIDCProvider Method for UpdateOIDCProvider
-
-Update an existing OIDC Provider
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id The ID of the OIDC Provider to update
- @return ApiUpdateOIDCProviderRequest
-*/
-func (a *OIDCAPIService) UpdateOIDCProvider(ctx context.Context, id int32) ApiUpdateOIDCProviderRequest {
-	return ApiUpdateOIDCProviderRequest{
-		ApiService: a,
-		ctx: ctx,
-		id: id,
-	}
-}
-
-// Execute executes the request
-//  @return ListOIDCProviders200ResponseAllOfResultsInner
-func (a *OIDCAPIService) UpdateOIDCProviderExecute(r ApiUpdateOIDCProviderRequest) (*ListOIDCProviders200ResponseAllOfResultsInner, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ListOIDCProviders200ResponseAllOfResultsInner
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OIDCAPIService.UpdateOIDCProvider")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/oidc/providers/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.updateOIDCProviderRequest == nil {
-		return localVarReturnValue, nil, reportError("updateOIDCProviderRequest is required and must be specified")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.updateOIDCProviderRequest
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiUpdateOIDCTrustRelationshipRequest struct {
 	ctx context.Context
 	ApiService *OIDCAPIService
@@ -1581,7 +1413,7 @@ func (r ApiUpdateOIDCTrustRelationshipRequest) UpdateOIDCTrustRelationshipReques
 	return r
 }
 
-func (r ApiUpdateOIDCTrustRelationshipRequest) Execute() (*CreateOIDCTrustRelationship200Response, *http.Response, error) {
+func (r ApiUpdateOIDCTrustRelationshipRequest) Execute() (*ListOIDCTrustRelationships200ResponseAllOfResultsInner, *http.Response, error) {
 	return r.ApiService.UpdateOIDCTrustRelationshipExecute(r)
 }
 
@@ -1603,13 +1435,13 @@ func (a *OIDCAPIService) UpdateOIDCTrustRelationship(ctx context.Context, id int
 }
 
 // Execute executes the request
-//  @return CreateOIDCTrustRelationship200Response
-func (a *OIDCAPIService) UpdateOIDCTrustRelationshipExecute(r ApiUpdateOIDCTrustRelationshipRequest) (*CreateOIDCTrustRelationship200Response, *http.Response, error) {
+//  @return ListOIDCTrustRelationships200ResponseAllOfResultsInner
+func (a *OIDCAPIService) UpdateOIDCTrustRelationshipExecute(r ApiUpdateOIDCTrustRelationshipRequest) (*ListOIDCTrustRelationships200ResponseAllOfResultsInner, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *CreateOIDCTrustRelationship200Response
+		localVarReturnValue  *ListOIDCTrustRelationships200ResponseAllOfResultsInner
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OIDCAPIService.UpdateOIDCTrustRelationship")

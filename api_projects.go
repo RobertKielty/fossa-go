@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.21
+API version: 4.30.36
 Contact: support@fossa.com
 */
 
@@ -2034,7 +2034,7 @@ func (a *ProjectsAPIService) GetReleaseGroupsExecute(r ApiGetReleaseGroupsReques
 	if r.count != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "count", r.count, "form", "")
 	} else {
-		var defaultValue int32 = 20
+		var defaultValue int32 = 10
 		r.count = &defaultValue
 	}
 	if r.title != nil {

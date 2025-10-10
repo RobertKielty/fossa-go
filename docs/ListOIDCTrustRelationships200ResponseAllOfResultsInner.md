@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **UserId** | **int32** | The ID of the user associated with this trust relationship | 
 **ProviderId** | **int32** | The ID of the OIDC Provider this trust relationship uses | 
 **Scope** | Pointer to **string** | The scope level of the trust relationship | [optional] 
-**ScopeId** | Pointer to **string** | The ID associated with the scope | [optional] 
+**ScopeId** | Pointer to **int32** | The ID associated with the scope: either the organization ID or the team ID | [optional] 
 **Audiences** | **[]string** | Array of valid audiences for this trust relationship (max 5) | 
 **RequiredClaims** | [**[]ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner**](ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner.md) | Array of claim objects. Must contain at least one object with claim: \&quot;sub\&quot;. Additional objects with other claims are optional.  | 
 **CreatedAt** | **time.Time** | When the trust relationship was created | 
@@ -141,20 +141,20 @@ HasScope returns a boolean if a field has been set.
 
 ### GetScopeId
 
-`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetScopeId() string`
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetScopeId() int32`
 
 GetScopeId returns the ScopeId field if non-nil, zero value otherwise.
 
 ### GetScopeIdOk
 
-`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetScopeIdOk() (*string, bool)`
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetScopeIdOk() (*int32, bool)`
 
 GetScopeIdOk returns a tuple with the ScopeId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetScopeId
 
-`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetScopeId(v string)`
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetScopeId(v int32)`
 
 SetScopeId sets ScopeId field to given value.
 

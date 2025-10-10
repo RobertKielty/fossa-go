@@ -6,14 +6,16 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **UserId** | **int32** | The ID of the user to associate with this trust relationship | 
 **ProviderId** | **int32** | The ID of the OIDC Provider to use for this trust relationship | 
+**Scope** | **string** | The scope level of the trust relationship | 
 **Audiences** | **[]string** | Array of valid audiences for this trust relationship (max 5) | 
-**RequiredClaims** | [**[]CreateOIDCTrustRelationshipRequestRequiredClaimsInner**](CreateOIDCTrustRelationshipRequestRequiredClaimsInner.md) | Array of claim objects. Must contain at least one object with claim: \&quot;sub\&quot;. Additional objects with other claims are optional.  | 
+**RequiredClaims** | [**[]ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner**](ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner.md) | Array of claim objects. Must contain at least one object with claim: \&quot;sub\&quot;. Additional objects with other claims are optional.  | 
+**ScopeId** | **int32** | The ID of the team | 
 
 ## Methods
 
 ### NewCreateOIDCTrustRelationshipRequest
 
-`func NewCreateOIDCTrustRelationshipRequest(userId int32, providerId int32, audiences []string, requiredClaims []CreateOIDCTrustRelationshipRequestRequiredClaimsInner, ) *CreateOIDCTrustRelationshipRequest`
+`func NewCreateOIDCTrustRelationshipRequest(userId int32, providerId int32, scope string, audiences []string, requiredClaims []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner, scopeId int32, ) *CreateOIDCTrustRelationshipRequest`
 
 NewCreateOIDCTrustRelationshipRequest instantiates a new CreateOIDCTrustRelationshipRequest object
 This constructor will assign default values to properties that have it defined,
@@ -68,6 +70,26 @@ and a boolean to check if the value has been set.
 SetProviderId sets ProviderId field to given value.
 
 
+### GetScope
+
+`func (o *CreateOIDCTrustRelationshipRequest) GetScope() string`
+
+GetScope returns the Scope field if non-nil, zero value otherwise.
+
+### GetScopeOk
+
+`func (o *CreateOIDCTrustRelationshipRequest) GetScopeOk() (*string, bool)`
+
+GetScopeOk returns a tuple with the Scope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetScope
+
+`func (o *CreateOIDCTrustRelationshipRequest) SetScope(v string)`
+
+SetScope sets Scope field to given value.
+
+
 ### GetAudiences
 
 `func (o *CreateOIDCTrustRelationshipRequest) GetAudiences() []string`
@@ -90,22 +112,42 @@ SetAudiences sets Audiences field to given value.
 
 ### GetRequiredClaims
 
-`func (o *CreateOIDCTrustRelationshipRequest) GetRequiredClaims() []CreateOIDCTrustRelationshipRequestRequiredClaimsInner`
+`func (o *CreateOIDCTrustRelationshipRequest) GetRequiredClaims() []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner`
 
 GetRequiredClaims returns the RequiredClaims field if non-nil, zero value otherwise.
 
 ### GetRequiredClaimsOk
 
-`func (o *CreateOIDCTrustRelationshipRequest) GetRequiredClaimsOk() (*[]CreateOIDCTrustRelationshipRequestRequiredClaimsInner, bool)`
+`func (o *CreateOIDCTrustRelationshipRequest) GetRequiredClaimsOk() (*[]ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner, bool)`
 
 GetRequiredClaimsOk returns a tuple with the RequiredClaims field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRequiredClaims
 
-`func (o *CreateOIDCTrustRelationshipRequest) SetRequiredClaims(v []CreateOIDCTrustRelationshipRequestRequiredClaimsInner)`
+`func (o *CreateOIDCTrustRelationshipRequest) SetRequiredClaims(v []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner)`
 
 SetRequiredClaims sets RequiredClaims field to given value.
+
+
+### GetScopeId
+
+`func (o *CreateOIDCTrustRelationshipRequest) GetScopeId() int32`
+
+GetScopeId returns the ScopeId field if non-nil, zero value otherwise.
+
+### GetScopeIdOk
+
+`func (o *CreateOIDCTrustRelationshipRequest) GetScopeIdOk() (*int32, bool)`
+
+GetScopeIdOk returns a tuple with the ScopeId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetScopeId
+
+`func (o *CreateOIDCTrustRelationshipRequest) SetScopeId(v int32)`
+
+SetScopeId sets ScopeId field to given value.
 
 
 

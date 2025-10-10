@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.21
+API version: 4.30.36
 Contact: support@fossa.com
 */
 
@@ -29,12 +29,10 @@ type ListOIDCProviders200ResponseAllOfResultsInner struct {
 	OrganizationId int32 `json:"organizationId"`
 	// The issuer URL of the OIDC Provider
 	Issuer string `json:"issuer"`
-	// Array of thumbprints for certificate validation
-	Thumbprints []string `json:"thumbprints"`
 	// The scope level of the OIDC Provider
 	Scope string `json:"scope"`
-	// The ID associated with the scope
-	ScopeId string `json:"scopeId"`
+	// The ID associated with the scope: either the organization ID or the team ID
+	ScopeId int32 `json:"scopeId"`
 	// When the OIDC Provider was created
 	CreatedAt time.Time `json:"createdAt"`
 	// When the OIDC Provider was last updated
@@ -47,12 +45,11 @@ type _ListOIDCProviders200ResponseAllOfResultsInner ListOIDCProviders200Response
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewListOIDCProviders200ResponseAllOfResultsInner(id int32, organizationId int32, issuer string, thumbprints []string, scope string, scopeId string, createdAt time.Time, updatedAt time.Time) *ListOIDCProviders200ResponseAllOfResultsInner {
+func NewListOIDCProviders200ResponseAllOfResultsInner(id int32, organizationId int32, issuer string, scope string, scopeId int32, createdAt time.Time, updatedAt time.Time) *ListOIDCProviders200ResponseAllOfResultsInner {
 	this := ListOIDCProviders200ResponseAllOfResultsInner{}
 	this.Id = id
 	this.OrganizationId = organizationId
 	this.Issuer = issuer
-	this.Thumbprints = thumbprints
 	this.Scope = scope
 	this.ScopeId = scopeId
 	this.CreatedAt = createdAt
@@ -140,30 +137,6 @@ func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetIssuer(v string) {
 	o.Issuer = v
 }
 
-// GetThumbprints returns the Thumbprints field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetThumbprints() []string {
-	if o == nil {
-		var ret []string
-		return ret
-	}
-
-	return o.Thumbprints
-}
-
-// GetThumbprintsOk returns a tuple with the Thumbprints field value
-// and a boolean to check if the value has been set.
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetThumbprintsOk() ([]string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.Thumbprints, true
-}
-
-// SetThumbprints sets field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetThumbprints(v []string) {
-	o.Thumbprints = v
-}
-
 // GetScope returns the Scope field value
 func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetScope() string {
 	if o == nil {
@@ -189,9 +162,9 @@ func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetScope(v string) {
 }
 
 // GetScopeId returns the ScopeId field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetScopeId() string {
+func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetScopeId() int32 {
 	if o == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 
@@ -200,7 +173,7 @@ func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetScopeId() string {
 
 // GetScopeIdOk returns a tuple with the ScopeId field value
 // and a boolean to check if the value has been set.
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetScopeIdOk() (*string, bool) {
+func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetScopeIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -208,7 +181,7 @@ func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetScopeIdOk() (*string,
 }
 
 // SetScopeId sets field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetScopeId(v string) {
+func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetScopeId(v int32) {
 	o.ScopeId = v
 }
 
@@ -273,7 +246,6 @@ func (o ListOIDCProviders200ResponseAllOfResultsInner) ToMap() (map[string]inter
 	toSerialize["id"] = o.Id
 	toSerialize["organizationId"] = o.OrganizationId
 	toSerialize["issuer"] = o.Issuer
-	toSerialize["thumbprints"] = o.Thumbprints
 	toSerialize["scope"] = o.Scope
 	toSerialize["scopeId"] = o.ScopeId
 	toSerialize["createdAt"] = o.CreatedAt
@@ -289,7 +261,6 @@ func (o *ListOIDCProviders200ResponseAllOfResultsInner) UnmarshalJSON(data []byt
 		"id",
 		"organizationId",
 		"issuer",
-		"thumbprints",
 		"scope",
 		"scopeId",
 		"createdAt",
