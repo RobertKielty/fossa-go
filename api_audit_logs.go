@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -273,7 +273,7 @@ func (a *AuditLogsAPIService) GetAuditLogsExecute(r ApiGetAuditLogsRequest) ([]G
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -545,7 +545,7 @@ func (a *AuditLogsAPIService) GetAuditLogsCountExecute(r ApiGetAuditLogsCountReq
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -665,7 +665,7 @@ func (a *AuditLogsAPIService) GetAuditLogsExportExecute(r ApiGetAuditLogsExportR
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -676,7 +676,7 @@ func (a *AuditLogsAPIService) GetAuditLogsExportExecute(r ApiGetAuditLogsExportR
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -687,7 +687,7 @@ func (a *AuditLogsAPIService) GetAuditLogsExportExecute(r ApiGetAuditLogsExportR
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

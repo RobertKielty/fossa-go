@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -179,7 +179,7 @@ func (a *BuildsAPIService) GetBuildsExecute(r ApiGetBuildsRequest) ([]GetBuilds2
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -190,7 +190,7 @@ func (a *BuildsAPIService) GetBuildsExecute(r ApiGetBuildsRequest) ([]GetBuilds2
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -369,7 +369,7 @@ func (a *BuildsAPIService) GetBuildsCountExecute(r ApiGetBuildsCountRequest) (fl
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -380,7 +380,7 @@ func (a *BuildsAPIService) GetBuildsCountExecute(r ApiGetBuildsCountRequest) (fl
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

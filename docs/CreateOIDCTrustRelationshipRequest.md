@@ -7,15 +7,15 @@ Name | Type | Description | Notes
 **UserId** | **int32** | The ID of the user to associate with this trust relationship | 
 **ProviderId** | **int32** | The ID of the OIDC Provider to use for this trust relationship | 
 **Scope** | **string** | The scope level of the trust relationship | 
-**Audiences** | **[]string** | Array of valid audiences for this trust relationship (max 5) | 
-**RequiredClaims** | [**[]ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner**](ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner.md) | Array of claim objects. Must contain at least one object with claim: \&quot;sub\&quot;. Additional objects with other claims are optional.  | 
+**Audiences** | **[]string** | Array of valid audiences for this trust relationship | 
+**RequiredClaims** | [**[]ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner**](ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner.md) | Array of claim objects. Must contain at least one object with claim: \&quot;sub\&quot;. Additional objects with other claims are optional.  | 
 **ScopeId** | **int32** | The ID of the team | 
 
 ## Methods
 
 ### NewCreateOIDCTrustRelationshipRequest
 
-`func NewCreateOIDCTrustRelationshipRequest(userId int32, providerId int32, scope string, audiences []string, requiredClaims []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner, scopeId int32, ) *CreateOIDCTrustRelationshipRequest`
+`func NewCreateOIDCTrustRelationshipRequest(userId int32, providerId int32, scope string, audiences []string, requiredClaims []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner, scopeId int32, ) *CreateOIDCTrustRelationshipRequest`
 
 NewCreateOIDCTrustRelationshipRequest instantiates a new CreateOIDCTrustRelationshipRequest object
 This constructor will assign default values to properties that have it defined,
@@ -112,20 +112,20 @@ SetAudiences sets Audiences field to given value.
 
 ### GetRequiredClaims
 
-`func (o *CreateOIDCTrustRelationshipRequest) GetRequiredClaims() []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner`
+`func (o *CreateOIDCTrustRelationshipRequest) GetRequiredClaims() []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner`
 
 GetRequiredClaims returns the RequiredClaims field if non-nil, zero value otherwise.
 
 ### GetRequiredClaimsOk
 
-`func (o *CreateOIDCTrustRelationshipRequest) GetRequiredClaimsOk() (*[]ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner, bool)`
+`func (o *CreateOIDCTrustRelationshipRequest) GetRequiredClaimsOk() (*[]ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner, bool)`
 
 GetRequiredClaimsOk returns a tuple with the RequiredClaims field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRequiredClaims
 
-`func (o *CreateOIDCTrustRelationshipRequest) SetRequiredClaims(v []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner)`
+`func (o *CreateOIDCTrustRelationshipRequest) SetRequiredClaims(v []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner)`
 
 SetRequiredClaims sets RequiredClaims field to given value.
 

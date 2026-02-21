@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 

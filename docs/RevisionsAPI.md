@@ -7,6 +7,8 @@ Method | HTTP request | Description
 [**FixPlans**](RevisionsAPI.md#FixPlans) | **Get** /revisions/{locator}/report/remediation-guidance | 
 [**GetRevisionAttributionEmail**](RevisionsAPI.md#GetRevisionAttributionEmail) | **Get** /revisions/{locator}/attribution/email | 
 [**GetRevisionAttributionJSON**](RevisionsAPI.md#GetRevisionAttributionJSON) | **Get** /revisions/{locator}/attribution/json | 
+[**GetRevisionDependencies**](RevisionsAPI.md#GetRevisionDependencies) | **Get** /revisions/{locator}/dependencies | 
+[**GetRevisionDependenciesPost**](RevisionsAPI.md#GetRevisionDependenciesPost) | **Post** /revisions/{locator}/list-dependencies | 
 [**NoticeFiles**](RevisionsAPI.md#NoticeFiles) | **Get** /revisions/{locator}/notice-files | 
 [**OriginalSbom**](RevisionsAPI.md#OriginalSbom) | **Get** /revisions/{locator}/original-sbom | 
 [**UpdateRevision**](RevisionsAPI.md#UpdateRevision) | **Patch** /revisions/{locator} | 
@@ -282,6 +284,160 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetRevisionDependencies
+
+> []GetRevisionDependenciesPost200ResponseInner GetRevisionDependencies(ctx, locator).Limit(limit).Offset(offset).IncludeIgnored(includeIgnored).IncludeHashData(includeHashData).IncludeLicenseText(includeLicenseText).IncludeLocators(includeLocators).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	locator := "custom+1234/my-project$abcd1234" // string | The URL-encoded locator of the revision
+	limit := int32(100) // int32 | Maximum number of dependencies to return (min 1, max 10000) (optional)
+	offset := int32(0) // int32 | Number of dependencies to skip for pagination (optional)
+	includeIgnored := true // bool | Whether to include ignored dependencies in the response (optional) (default to false)
+	includeHashData := true // bool | Whether to include hash and version data for dependencies (optional) (default to false)
+	includeLicenseText := true // bool | Whether to include full license text in the license information (optional) (default to false)
+	includeLocators := []string{"Inner_example"} // []string | Array of locators to filter dependencies. Only dependencies matching these locators will be returned. Note: For large lists of locators that may exceed URL length limits, use POST /api/revisions/:locator/deps instead.  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.RevisionsAPI.GetRevisionDependencies(context.Background(), locator).Limit(limit).Offset(offset).IncludeIgnored(includeIgnored).IncludeHashData(includeHashData).IncludeLicenseText(includeLicenseText).IncludeLocators(includeLocators).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `RevisionsAPI.GetRevisionDependencies``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetRevisionDependencies`: []GetRevisionDependenciesPost200ResponseInner
+	fmt.Fprintf(os.Stdout, "Response from `RevisionsAPI.GetRevisionDependencies`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**locator** | **string** | The URL-encoded locator of the revision | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetRevisionDependenciesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **limit** | **int32** | Maximum number of dependencies to return (min 1, max 10000) | 
+ **offset** | **int32** | Number of dependencies to skip for pagination | 
+ **includeIgnored** | **bool** | Whether to include ignored dependencies in the response | [default to false]
+ **includeHashData** | **bool** | Whether to include hash and version data for dependencies | [default to false]
+ **includeLicenseText** | **bool** | Whether to include full license text in the license information | [default to false]
+ **includeLocators** | **[]string** | Array of locators to filter dependencies. Only dependencies matching these locators will be returned. Note: For large lists of locators that may exceed URL length limits, use POST /api/revisions/:locator/deps instead.  | 
+
+### Return type
+
+[**[]GetRevisionDependenciesPost200ResponseInner**](GetRevisionDependenciesPost200ResponseInner.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetRevisionDependenciesPost
+
+> []GetRevisionDependenciesPost200ResponseInner GetRevisionDependenciesPost(ctx, locator).GetRevisionDependenciesPostRequest(getRevisionDependenciesPostRequest).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	locator := "custom+1234/my-project$abcd1234" // string | The URL-encoded locator of the revision
+	getRevisionDependenciesPostRequest := *openapiclient.NewGetRevisionDependenciesPostRequest() // GetRevisionDependenciesPostRequest | Query parameters for filtering and configuring the dependency response (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.RevisionsAPI.GetRevisionDependenciesPost(context.Background(), locator).GetRevisionDependenciesPostRequest(getRevisionDependenciesPostRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `RevisionsAPI.GetRevisionDependenciesPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetRevisionDependenciesPost`: []GetRevisionDependenciesPost200ResponseInner
+	fmt.Fprintf(os.Stdout, "Response from `RevisionsAPI.GetRevisionDependenciesPost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**locator** | **string** | The URL-encoded locator of the revision | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetRevisionDependenciesPostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **getRevisionDependenciesPostRequest** | [**GetRevisionDependenciesPostRequest**](GetRevisionDependenciesPostRequest.md) | Query parameters for filtering and configuring the dependency response | 
+
+### Return type
+
+[**[]GetRevisionDependenciesPost200ResponseInner**](GetRevisionDependenciesPost200ResponseInner.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -21,6 +21,7 @@ var _ MappedNullable = &GetSnippets200ResponseResultsInnerIssueCounts{}
 // GetSnippets200ResponseResultsInnerIssueCounts Issue counts by type
 type GetSnippets200ResponseResultsInnerIssueCounts struct {
 	Licensing *GetSnippets200ResponseResultsInnerIssueCountsLicensing `json:"licensing,omitempty"`
+	Security *GetSnippets200ResponseResultsInnerIssueCountsSecurity `json:"security,omitempty"`
 }
 
 // NewGetSnippets200ResponseResultsInnerIssueCounts instantiates a new GetSnippets200ResponseResultsInnerIssueCounts object
@@ -72,6 +73,38 @@ func (o *GetSnippets200ResponseResultsInnerIssueCounts) SetLicensing(v GetSnippe
 	o.Licensing = &v
 }
 
+// GetSecurity returns the Security field value if set, zero value otherwise.
+func (o *GetSnippets200ResponseResultsInnerIssueCounts) GetSecurity() GetSnippets200ResponseResultsInnerIssueCountsSecurity {
+	if o == nil || IsNil(o.Security) {
+		var ret GetSnippets200ResponseResultsInnerIssueCountsSecurity
+		return ret
+	}
+	return *o.Security
+}
+
+// GetSecurityOk returns a tuple with the Security field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetSnippets200ResponseResultsInnerIssueCounts) GetSecurityOk() (*GetSnippets200ResponseResultsInnerIssueCountsSecurity, bool) {
+	if o == nil || IsNil(o.Security) {
+		return nil, false
+	}
+	return o.Security, true
+}
+
+// HasSecurity returns a boolean if a field has been set.
+func (o *GetSnippets200ResponseResultsInnerIssueCounts) HasSecurity() bool {
+	if o != nil && !IsNil(o.Security) {
+		return true
+	}
+
+	return false
+}
+
+// SetSecurity gets a reference to the given GetSnippets200ResponseResultsInnerIssueCountsSecurity and assigns it to the Security field.
+func (o *GetSnippets200ResponseResultsInnerIssueCounts) SetSecurity(v GetSnippets200ResponseResultsInnerIssueCountsSecurity) {
+	o.Security = &v
+}
+
 func (o GetSnippets200ResponseResultsInnerIssueCounts) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -84,6 +117,9 @@ func (o GetSnippets200ResponseResultsInnerIssueCounts) ToMap() (map[string]inter
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Licensing) {
 		toSerialize["licensing"] = o.Licensing
+	}
+	if !IsNil(o.Security) {
+		toSerialize["security"] = o.Security
 	}
 	return toSerialize, nil
 }

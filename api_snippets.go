@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -25,6 +25,284 @@ import (
 // SnippetsAPIService SnippetsAPI service
 type SnippetsAPIService service
 
+type ApiGetComparedSnippetPackagesRequest struct {
+	ctx context.Context
+	ApiService *SnippetsAPIService
+	locator string
+	olderRevisionLocator string
+	status string
+	path *string
+	ids *[]string
+	packageIds *[]string
+	search *string
+	rejectionStatus *[]string
+	packageLabels *[]string
+	sort *string
+	page *int32
+	pageSize *int32
+}
+
+// The path to filter snippets by
+func (r ApiGetComparedSnippetPackagesRequest) Path(path string) ApiGetComparedSnippetPackagesRequest {
+	r.path = &path
+	return r
+}
+
+// Filter by specific snippet IDs
+func (r ApiGetComparedSnippetPackagesRequest) Ids(ids []string) ApiGetComparedSnippetPackagesRequest {
+	r.ids = &ids
+	return r
+}
+
+// Filter by specific snippet package IDs
+func (r ApiGetComparedSnippetPackagesRequest) PackageIds(packageIds []string) ApiGetComparedSnippetPackagesRequest {
+	r.packageIds = &packageIds
+	return r
+}
+
+// Search term for filtering snippets by package name
+func (r ApiGetComparedSnippetPackagesRequest) Search(search string) ApiGetComparedSnippetPackagesRequest {
+	r.search = &search
+	return r
+}
+
+// Filter by rejection status
+func (r ApiGetComparedSnippetPackagesRequest) RejectionStatus(rejectionStatus []string) ApiGetComparedSnippetPackagesRequest {
+	r.rejectionStatus = &rejectionStatus
+	return r
+}
+
+// Filter by package labels
+func (r ApiGetComparedSnippetPackagesRequest) PackageLabels(packageLabels []string) ApiGetComparedSnippetPackagesRequest {
+	r.packageLabels = &packageLabels
+	return r
+}
+
+// Sort order for results
+func (r ApiGetComparedSnippetPackagesRequest) Sort(sort string) ApiGetComparedSnippetPackagesRequest {
+	r.sort = &sort
+	return r
+}
+
+// The specific page of data to return
+func (r ApiGetComparedSnippetPackagesRequest) Page(page int32) ApiGetComparedSnippetPackagesRequest {
+	r.page = &page
+	return r
+}
+
+// The number of items to return in each page of results
+func (r ApiGetComparedSnippetPackagesRequest) PageSize(pageSize int32) ApiGetComparedSnippetPackagesRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+func (r ApiGetComparedSnippetPackagesRequest) Execute() (*GetSnippetPackages200Response, *http.Response, error) {
+	return r.ApiService.GetComparedSnippetPackagesExecute(r)
+}
+
+/*
+GetComparedSnippetPackages Get compared snippet packages between two revisions
+
+Compare snippet packages between two revisions with filtering, sorting, and pagination support.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The base revision locator
+ @param olderRevisionLocator An older revision locator from the same project
+ @param status The status of snippet packages to retrieve
+ @return ApiGetComparedSnippetPackagesRequest
+*/
+func (a *SnippetsAPIService) GetComparedSnippetPackages(ctx context.Context, locator string, olderRevisionLocator string, status string) ApiGetComparedSnippetPackagesRequest {
+	return ApiGetComparedSnippetPackagesRequest{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+		olderRevisionLocator: olderRevisionLocator,
+		status: status,
+	}
+}
+
+// Execute executes the request
+//  @return GetSnippetPackages200Response
+func (a *SnippetsAPIService) GetComparedSnippetPackagesExecute(r ApiGetComparedSnippetPackagesRequest) (*GetSnippetPackages200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetSnippetPackages200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SnippetsAPIService.GetComparedSnippetPackages")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/revisions/{locator}/snippets/compare/{olderRevisionLocator}/{status}/packages"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"olderRevisionLocator"+"}", url.PathEscape(parameterValueToString(r.olderRevisionLocator, "olderRevisionLocator")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"status"+"}", url.PathEscape(parameterValueToString(r.status, "status")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.path == nil {
+		return localVarReturnValue, nil, reportError("path is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "path", r.path, "form", "")
+	if r.ids != nil {
+		t := *r.ids
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "ids", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "ids", t, "form", "multi")
+		}
+	}
+	if r.packageIds != nil {
+		t := *r.packageIds
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "packageIds", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "packageIds", t, "form", "multi")
+		}
+	}
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
+	}
+	if r.rejectionStatus != nil {
+		t := *r.rejectionStatus
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "rejectionStatus", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "rejectionStatus", t, "form", "multi")
+		}
+	}
+	if r.packageLabels != nil {
+		t := *r.packageLabels
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", t, "form", "multi")
+		}
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	} else {
+		var defaultValue string = "matchCount_desc"
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", defaultValue, "form", "")
+		r.sort = &defaultValue
+	}
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	} else {
+		var defaultValue int32 = 1
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
+		r.page = &defaultValue
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
+	} else {
+		var defaultValue int32 = 10
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", defaultValue, "form", "")
+		r.pageSize = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetComparedSnippetPathsRequest struct {
 	ctx context.Context
 	ApiService *SnippetsAPIService
@@ -32,11 +310,46 @@ type ApiGetComparedSnippetPathsRequest struct {
 	olderRevisionLocator string
 	status string
 	path *string
+	ids *[]string
+	packageIds *[]string
+	search *string
+	rejectionStatus *[]string
+	packageLabels *[]string
 }
 
-// The path from which a single depth of files and/or directories will be returned
+// The path to filter snippets by
 func (r ApiGetComparedSnippetPathsRequest) Path(path string) ApiGetComparedSnippetPathsRequest {
 	r.path = &path
+	return r
+}
+
+// Filter by specific snippet IDs
+func (r ApiGetComparedSnippetPathsRequest) Ids(ids []string) ApiGetComparedSnippetPathsRequest {
+	r.ids = &ids
+	return r
+}
+
+// Filter by specific snippet package IDs
+func (r ApiGetComparedSnippetPathsRequest) PackageIds(packageIds []string) ApiGetComparedSnippetPathsRequest {
+	r.packageIds = &packageIds
+	return r
+}
+
+// Search term for filtering snippets by package name
+func (r ApiGetComparedSnippetPathsRequest) Search(search string) ApiGetComparedSnippetPathsRequest {
+	r.search = &search
+	return r
+}
+
+// Filter by rejection status
+func (r ApiGetComparedSnippetPathsRequest) RejectionStatus(rejectionStatus []string) ApiGetComparedSnippetPathsRequest {
+	r.rejectionStatus = &rejectionStatus
+	return r
+}
+
+// Filter by package labels
+func (r ApiGetComparedSnippetPathsRequest) PackageLabels(packageLabels []string) ApiGetComparedSnippetPathsRequest {
+	r.packageLabels = &packageLabels
 	return r
 }
 
@@ -45,7 +358,7 @@ func (r ApiGetComparedSnippetPathsRequest) Execute() (*GetSnippetPaths200Respons
 }
 
 /*
-GetComparedSnippetPaths Method for GetComparedSnippetPaths
+GetComparedSnippetPaths Get compared snippet paths between two revisions
 
 Retrieve file and directory paths for the comparison of snippets between two revisions.
 
@@ -88,9 +401,57 @@ func (a *SnippetsAPIService) GetComparedSnippetPathsExecute(r ApiGetComparedSnip
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.path == nil {
+		return localVarReturnValue, nil, reportError("path is required and must be specified")
+	}
 
-	if r.path != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "path", r.path, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "path", r.path, "form", "")
+	if r.ids != nil {
+		t := *r.ids
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "ids", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "ids", t, "form", "multi")
+		}
+	}
+	if r.packageIds != nil {
+		t := *r.packageIds
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "packageIds", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "packageIds", t, "form", "multi")
+		}
+	}
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
+	}
+	if r.rejectionStatus != nil {
+		t := *r.rejectionStatus
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "rejectionStatus", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "rejectionStatus", t, "form", "multi")
+		}
+	}
+	if r.packageLabels != nil {
+		t := *r.packageLabels
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", t, "form", "multi")
+		}
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -132,7 +493,7 @@ func (a *SnippetsAPIService) GetComparedSnippetPathsExecute(r ApiGetComparedSnip
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -143,7 +504,7 @@ func (a *SnippetsAPIService) GetComparedSnippetPathsExecute(r ApiGetComparedSnip
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -154,7 +515,7 @@ func (a *SnippetsAPIService) GetComparedSnippetPathsExecute(r ApiGetComparedSnip
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -186,11 +547,13 @@ type ApiGetComparedSnippetsRequest struct {
 	status string
 	path *string
 	ids *[]string
+	packageIds *[]string
 	search *string
-	confidence *[]string
+	rejectionStatus *[]string
+	packageLabels *[]string
 	sort *string
 	page *int32
-	count *int32
+	pageSize *int32
 }
 
 // The path to filter snippets by
@@ -205,15 +568,27 @@ func (r ApiGetComparedSnippetsRequest) Ids(ids []string) ApiGetComparedSnippetsR
 	return r
 }
 
-// Search term for filtering snippets
+// Filter by specific snippet package IDs
+func (r ApiGetComparedSnippetsRequest) PackageIds(packageIds []string) ApiGetComparedSnippetsRequest {
+	r.packageIds = &packageIds
+	return r
+}
+
+// Search term for filtering snippets by package name
 func (r ApiGetComparedSnippetsRequest) Search(search string) ApiGetComparedSnippetsRequest {
 	r.search = &search
 	return r
 }
 
-// Filter by confidence levels
-func (r ApiGetComparedSnippetsRequest) Confidence(confidence []string) ApiGetComparedSnippetsRequest {
-	r.confidence = &confidence
+// Filter by rejection status
+func (r ApiGetComparedSnippetsRequest) RejectionStatus(rejectionStatus []string) ApiGetComparedSnippetsRequest {
+	r.rejectionStatus = &rejectionStatus
+	return r
+}
+
+// Filter by package labels
+func (r ApiGetComparedSnippetsRequest) PackageLabels(packageLabels []string) ApiGetComparedSnippetsRequest {
+	r.packageLabels = &packageLabels
 	return r
 }
 
@@ -230,8 +605,8 @@ func (r ApiGetComparedSnippetsRequest) Page(page int32) ApiGetComparedSnippetsRe
 }
 
 // The number of items to return in each page of results
-func (r ApiGetComparedSnippetsRequest) Count(count int32) ApiGetComparedSnippetsRequest {
-	r.count = &count
+func (r ApiGetComparedSnippetsRequest) PageSize(pageSize int32) ApiGetComparedSnippetsRequest {
+	r.pageSize = &pageSize
 	return r
 }
 
@@ -240,7 +615,7 @@ func (r ApiGetComparedSnippetsRequest) Execute() (*GetSnippets200Response, *http
 }
 
 /*
-GetComparedSnippets Method for GetComparedSnippets
+GetComparedSnippets Get compared snippets between two revisions
 
 Compare snippets between two revisions with filtering, sorting, and pagination support.
 
@@ -299,37 +674,62 @@ func (a *SnippetsAPIService) GetComparedSnippetsExecute(r ApiGetComparedSnippets
 			parameterAddToHeaderOrQuery(localVarQueryParams, "ids", t, "form", "multi")
 		}
 	}
-	if r.search != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
-	}
-	if r.confidence != nil {
-		t := *r.confidence
+	if r.packageIds != nil {
+		t := *r.packageIds
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
 			s := reflect.ValueOf(t)
 			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "confidence", s.Index(i).Interface(), "form", "multi")
+				parameterAddToHeaderOrQuery(localVarQueryParams, "packageIds", s.Index(i).Interface(), "form", "multi")
 			}
 		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "confidence", t, "form", "multi")
+			parameterAddToHeaderOrQuery(localVarQueryParams, "packageIds", t, "form", "multi")
+		}
+	}
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
+	}
+	if r.rejectionStatus != nil {
+		t := *r.rejectionStatus
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "rejectionStatus", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "rejectionStatus", t, "form", "multi")
+		}
+	}
+	if r.packageLabels != nil {
+		t := *r.packageLabels
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", t, "form", "multi")
 		}
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	} else {
-		var defaultValue string = "confidence_desc"
+		var defaultValue string = "matchCount_desc"
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", defaultValue, "form", "")
 		r.sort = &defaultValue
 	}
 	if r.page != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
 	} else {
 		var defaultValue int32 = 1
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
 		r.page = &defaultValue
 	}
-	if r.count != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "count", r.count, "form", "")
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
 	} else {
-		var defaultValue int32 = 20
-		r.count = &defaultValue
+		var defaultValue int32 = 10
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", defaultValue, "form", "")
+		r.pageSize = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -371,7 +771,7 @@ func (a *SnippetsAPIService) GetComparedSnippetsExecute(r ApiGetComparedSnippets
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -382,7 +782,7 @@ func (a *SnippetsAPIService) GetComparedSnippetsExecute(r ApiGetComparedSnippets
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -393,7 +793,7 @@ func (a *SnippetsAPIService) GetComparedSnippetsExecute(r ApiGetComparedSnippets
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -417,68 +817,147 @@ func (a *SnippetsAPIService) GetComparedSnippetsExecute(r ApiGetComparedSnippets
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetSnippetByIdRequest struct {
+type ApiGetSnippetCountRequest struct {
 	ctx context.Context
 	ApiService *SnippetsAPIService
 	locator string
-	snippetId string
 	path *string
+	ids *[]string
+	packageIds *[]string
+	search *string
+	rejectionStatus *[]string
+	packageLabels *[]string
 }
 
-// The path to filter rejection status by. Defaults to root path (&#39;/&#39;) if not provided.
-func (r ApiGetSnippetByIdRequest) Path(path string) ApiGetSnippetByIdRequest {
+// The path to filter snippets by
+func (r ApiGetSnippetCountRequest) Path(path string) ApiGetSnippetCountRequest {
 	r.path = &path
 	return r
 }
 
-func (r ApiGetSnippetByIdRequest) Execute() (*GetSnippetById200Response, *http.Response, error) {
-	return r.ApiService.GetSnippetByIdExecute(r)
+// Filter by specific snippet IDs
+func (r ApiGetSnippetCountRequest) Ids(ids []string) ApiGetSnippetCountRequest {
+	r.ids = &ids
+	return r
+}
+
+// Filter by specific snippet package IDs
+func (r ApiGetSnippetCountRequest) PackageIds(packageIds []string) ApiGetSnippetCountRequest {
+	r.packageIds = &packageIds
+	return r
+}
+
+// Search term for filtering snippets by package name
+func (r ApiGetSnippetCountRequest) Search(search string) ApiGetSnippetCountRequest {
+	r.search = &search
+	return r
+}
+
+// Filter by rejection status
+func (r ApiGetSnippetCountRequest) RejectionStatus(rejectionStatus []string) ApiGetSnippetCountRequest {
+	r.rejectionStatus = &rejectionStatus
+	return r
+}
+
+// Filter by package labels
+func (r ApiGetSnippetCountRequest) PackageLabels(packageLabels []string) ApiGetSnippetCountRequest {
+	r.packageLabels = &packageLabels
+	return r
+}
+
+func (r ApiGetSnippetCountRequest) Execute() (*GetSnippetCount200Response, *http.Response, error) {
+	return r.ApiService.GetSnippetCountExecute(r)
 }
 
 /*
-GetSnippetById Method for GetSnippetById
+GetSnippetCount Get snippet count
 
-Retrieve a specific snippet by its ID.
+Get the total count of snippets detected in a revision with optional filtering.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param locator The revision locator
- @param snippetId The unique identifier of the snippet
- @return ApiGetSnippetByIdRequest
+ @return ApiGetSnippetCountRequest
 */
-func (a *SnippetsAPIService) GetSnippetById(ctx context.Context, locator string, snippetId string) ApiGetSnippetByIdRequest {
-	return ApiGetSnippetByIdRequest{
+func (a *SnippetsAPIService) GetSnippetCount(ctx context.Context, locator string) ApiGetSnippetCountRequest {
+	return ApiGetSnippetCountRequest{
 		ApiService: a,
 		ctx: ctx,
 		locator: locator,
-		snippetId: snippetId,
 	}
 }
 
 // Execute executes the request
-//  @return GetSnippetById200Response
-func (a *SnippetsAPIService) GetSnippetByIdExecute(r ApiGetSnippetByIdRequest) (*GetSnippetById200Response, *http.Response, error) {
+//  @return GetSnippetCount200Response
+func (a *SnippetsAPIService) GetSnippetCountExecute(r ApiGetSnippetCountRequest) (*GetSnippetCount200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetSnippetById200Response
+		localVarReturnValue  *GetSnippetCount200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SnippetsAPIService.GetSnippetById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SnippetsAPIService.GetSnippetCount")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/revisions/{locator}/snippets/{snippetId}"
+	localVarPath := localBasePath + "/revisions/{locator}/snippets/count"
 	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"snippetId"+"}", url.PathEscape(parameterValueToString(r.snippetId, "snippetId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.path == nil {
+		return localVarReturnValue, nil, reportError("path is required and must be specified")
+	}
 
-	if r.path != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "path", r.path, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "path", r.path, "form", "")
+	if r.ids != nil {
+		t := *r.ids
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "ids", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "ids", t, "form", "multi")
+		}
+	}
+	if r.packageIds != nil {
+		t := *r.packageIds
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "packageIds", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "packageIds", t, "form", "multi")
+		}
+	}
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
+	}
+	if r.rejectionStatus != nil {
+		t := *r.rejectionStatus
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "rejectionStatus", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "rejectionStatus", t, "form", "multi")
+		}
+	}
+	if r.packageLabels != nil {
+		t := *r.packageLabels
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", t, "form", "multi")
+		}
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -519,8 +998,19 @@ func (a *SnippetsAPIService) GetSnippetByIdExecute(r ApiGetSnippetByIdRequest) (
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -531,7 +1021,135 @@ func (a *SnippetsAPIService) GetSnippetByIdExecute(r ApiGetSnippetByIdRequest) (
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetSnippetDetailsRequest struct {
+	ctx context.Context
+	ApiService *SnippetsAPIService
+	locator string
+	snippetId string
+}
+
+func (r ApiGetSnippetDetailsRequest) Execute() (*GetSnippetDetails200Response, *http.Response, error) {
+	return r.ApiService.GetSnippetDetailsExecute(r)
+}
+
+/*
+GetSnippetDetails Get the details of a specific snippet
+
+Retrieve a specific snippet's details by its ID.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The revision locator
+ @param snippetId The unique identifier of the snippet
+ @return ApiGetSnippetDetailsRequest
+*/
+func (a *SnippetsAPIService) GetSnippetDetails(ctx context.Context, locator string, snippetId string) ApiGetSnippetDetailsRequest {
+	return ApiGetSnippetDetailsRequest{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+		snippetId: snippetId,
+	}
+}
+
+// Execute executes the request
+//  @return GetSnippetDetails200Response
+func (a *SnippetsAPIService) GetSnippetDetailsExecute(r ApiGetSnippetDetailsRequest) (*GetSnippetDetails200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetSnippetDetails200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SnippetsAPIService.GetSnippetDetails")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/revisions/{locator}/snippets/{snippetId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"snippetId"+"}", url.PathEscape(parameterValueToString(r.snippetId, "snippetId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -542,7 +1160,7 @@ func (a *SnippetsAPIService) GetSnippetByIdExecute(r ApiGetSnippetByIdRequest) (
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -579,7 +1197,7 @@ func (r ApiGetSnippetMatchDetailsRequest) Execute() (*GetSnippetMatchDetails200R
 }
 
 /*
-GetSnippetMatchDetails Method for GetSnippetMatchDetails
+GetSnippetMatchDetails Get the details of a specific snippet match
 
 Retrieve detailed match information for a snippet at a specific path, including reference and detected code lines.
 
@@ -663,7 +1281,7 @@ func (a *SnippetsAPIService) GetSnippetMatchDetailsExecute(r ApiGetSnippetMatchD
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -674,7 +1292,7 @@ func (a *SnippetsAPIService) GetSnippetMatchDetailsExecute(r ApiGetSnippetMatchD
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -685,7 +1303,7 @@ func (a *SnippetsAPIService) GetSnippetMatchDetailsExecute(r ApiGetSnippetMatchD
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -709,34 +1327,90 @@ func (a *SnippetsAPIService) GetSnippetMatchDetailsExecute(r ApiGetSnippetMatchD
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetSnippetPathsRequest struct {
+type ApiGetSnippetPackagesRequest struct {
 	ctx context.Context
 	ApiService *SnippetsAPIService
 	locator string
 	path *string
+	ids *[]string
+	packageIds *[]string
+	search *string
+	rejectionStatus *[]string
+	packageLabels *[]string
+	sort *string
+	page *int32
+	pageSize *int32
 }
 
-// The path from which a single depth of files and/or directories will be returned
-func (r ApiGetSnippetPathsRequest) Path(path string) ApiGetSnippetPathsRequest {
+// The path to filter snippets by
+func (r ApiGetSnippetPackagesRequest) Path(path string) ApiGetSnippetPackagesRequest {
 	r.path = &path
 	return r
 }
 
-func (r ApiGetSnippetPathsRequest) Execute() (*GetSnippetPaths200Response, *http.Response, error) {
-	return r.ApiService.GetSnippetPathsExecute(r)
+// Filter by specific snippet IDs
+func (r ApiGetSnippetPackagesRequest) Ids(ids []string) ApiGetSnippetPackagesRequest {
+	r.ids = &ids
+	return r
+}
+
+// Filter by specific snippet package IDs
+func (r ApiGetSnippetPackagesRequest) PackageIds(packageIds []string) ApiGetSnippetPackagesRequest {
+	r.packageIds = &packageIds
+	return r
+}
+
+// Search term for filtering snippets by package name
+func (r ApiGetSnippetPackagesRequest) Search(search string) ApiGetSnippetPackagesRequest {
+	r.search = &search
+	return r
+}
+
+// Filter by rejection status
+func (r ApiGetSnippetPackagesRequest) RejectionStatus(rejectionStatus []string) ApiGetSnippetPackagesRequest {
+	r.rejectionStatus = &rejectionStatus
+	return r
+}
+
+// Filter by package labels
+func (r ApiGetSnippetPackagesRequest) PackageLabels(packageLabels []string) ApiGetSnippetPackagesRequest {
+	r.packageLabels = &packageLabels
+	return r
+}
+
+// Sort order for results
+func (r ApiGetSnippetPackagesRequest) Sort(sort string) ApiGetSnippetPackagesRequest {
+	r.sort = &sort
+	return r
+}
+
+// The specific page of data to return
+func (r ApiGetSnippetPackagesRequest) Page(page int32) ApiGetSnippetPackagesRequest {
+	r.page = &page
+	return r
+}
+
+// The number of items to return in each page of results
+func (r ApiGetSnippetPackagesRequest) PageSize(pageSize int32) ApiGetSnippetPackagesRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+func (r ApiGetSnippetPackagesRequest) Execute() (*GetSnippetPackages200Response, *http.Response, error) {
+	return r.ApiService.GetSnippetPackagesExecute(r)
 }
 
 /*
-GetSnippetPaths Method for GetSnippetPaths
+GetSnippetPackages Get snippet packages
 
-Retrieve file and directory paths where snippets were detected in a revision.
+Retrieve snippet packages detected in a revision with filtering, sorting, and pagination support.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param locator The revision locator
- @return ApiGetSnippetPathsRequest
+ @return ApiGetSnippetPackagesRequest
 */
-func (a *SnippetsAPIService) GetSnippetPaths(ctx context.Context, locator string) ApiGetSnippetPathsRequest {
-	return ApiGetSnippetPathsRequest{
+func (a *SnippetsAPIService) GetSnippetPackages(ctx context.Context, locator string) ApiGetSnippetPackagesRequest {
+	return ApiGetSnippetPackagesRequest{
 		ApiService: a,
 		ctx: ctx,
 		locator: locator,
@@ -744,29 +1418,98 @@ func (a *SnippetsAPIService) GetSnippetPaths(ctx context.Context, locator string
 }
 
 // Execute executes the request
-//  @return GetSnippetPaths200Response
-func (a *SnippetsAPIService) GetSnippetPathsExecute(r ApiGetSnippetPathsRequest) (*GetSnippetPaths200Response, *http.Response, error) {
+//  @return GetSnippetPackages200Response
+func (a *SnippetsAPIService) GetSnippetPackagesExecute(r ApiGetSnippetPackagesRequest) (*GetSnippetPackages200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetSnippetPaths200Response
+		localVarReturnValue  *GetSnippetPackages200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SnippetsAPIService.GetSnippetPaths")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SnippetsAPIService.GetSnippetPackages")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/revisions/{locator}/snippets/paths"
+	localVarPath := localBasePath + "/revisions/{locator}/snippets/packages"
 	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.path == nil {
+		return localVarReturnValue, nil, reportError("path is required and must be specified")
+	}
 
-	if r.path != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "path", r.path, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "path", r.path, "form", "")
+	if r.ids != nil {
+		t := *r.ids
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "ids", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "ids", t, "form", "multi")
+		}
+	}
+	if r.packageIds != nil {
+		t := *r.packageIds
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "packageIds", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "packageIds", t, "form", "multi")
+		}
+	}
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
+	}
+	if r.rejectionStatus != nil {
+		t := *r.rejectionStatus
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "rejectionStatus", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "rejectionStatus", t, "form", "multi")
+		}
+	}
+	if r.packageLabels != nil {
+		t := *r.packageLabels
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", t, "form", "multi")
+		}
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	} else {
+		var defaultValue string = "matchCount_desc"
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", defaultValue, "form", "")
+		r.sort = &defaultValue
+	}
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	} else {
+		var defaultValue int32 = 1
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
+		r.page = &defaultValue
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
+	} else {
+		var defaultValue int32 = 10
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", defaultValue, "form", "")
+		r.pageSize = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -808,7 +1551,7 @@ func (a *SnippetsAPIService) GetSnippetPathsExecute(r ApiGetSnippetPathsRequest)
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -819,7 +1562,7 @@ func (a *SnippetsAPIService) GetSnippetPathsExecute(r ApiGetSnippetPathsRequest)
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -830,7 +1573,235 @@ func (a *SnippetsAPIService) GetSnippetPathsExecute(r ApiGetSnippetPathsRequest)
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetSnippetPathsRequest struct {
+	ctx context.Context
+	ApiService *SnippetsAPIService
+	locator string
+	path *string
+	ids *[]string
+	packageIds *[]string
+	search *string
+	rejectionStatus *[]string
+	packageLabels *[]string
+}
+
+// The path to filter snippets by
+func (r ApiGetSnippetPathsRequest) Path(path string) ApiGetSnippetPathsRequest {
+	r.path = &path
+	return r
+}
+
+// Filter by specific snippet IDs
+func (r ApiGetSnippetPathsRequest) Ids(ids []string) ApiGetSnippetPathsRequest {
+	r.ids = &ids
+	return r
+}
+
+// Filter by specific snippet package IDs
+func (r ApiGetSnippetPathsRequest) PackageIds(packageIds []string) ApiGetSnippetPathsRequest {
+	r.packageIds = &packageIds
+	return r
+}
+
+// Search term for filtering snippets by package name
+func (r ApiGetSnippetPathsRequest) Search(search string) ApiGetSnippetPathsRequest {
+	r.search = &search
+	return r
+}
+
+// Filter by rejection status
+func (r ApiGetSnippetPathsRequest) RejectionStatus(rejectionStatus []string) ApiGetSnippetPathsRequest {
+	r.rejectionStatus = &rejectionStatus
+	return r
+}
+
+// Filter by package labels
+func (r ApiGetSnippetPathsRequest) PackageLabels(packageLabels []string) ApiGetSnippetPathsRequest {
+	r.packageLabels = &packageLabels
+	return r
+}
+
+func (r ApiGetSnippetPathsRequest) Execute() (*GetSnippetPaths200Response, *http.Response, error) {
+	return r.ApiService.GetSnippetPathsExecute(r)
+}
+
+/*
+GetSnippetPaths Get snippet paths
+
+Retrieve file and directory paths where snippets were detected in a revision.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The revision locator
+ @return ApiGetSnippetPathsRequest
+*/
+func (a *SnippetsAPIService) GetSnippetPaths(ctx context.Context, locator string) ApiGetSnippetPathsRequest {
+	return ApiGetSnippetPathsRequest{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+	}
+}
+
+// Execute executes the request
+//  @return GetSnippetPaths200Response
+func (a *SnippetsAPIService) GetSnippetPathsExecute(r ApiGetSnippetPathsRequest) (*GetSnippetPaths200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetSnippetPaths200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SnippetsAPIService.GetSnippetPaths")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/revisions/{locator}/snippets/paths"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.path == nil {
+		return localVarReturnValue, nil, reportError("path is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "path", r.path, "form", "")
+	if r.ids != nil {
+		t := *r.ids
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "ids", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "ids", t, "form", "multi")
+		}
+	}
+	if r.packageIds != nil {
+		t := *r.packageIds
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "packageIds", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "packageIds", t, "form", "multi")
+		}
+	}
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
+	}
+	if r.rejectionStatus != nil {
+		t := *r.rejectionStatus
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "rejectionStatus", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "rejectionStatus", t, "form", "multi")
+		}
+	}
+	if r.packageLabels != nil {
+		t := *r.packageLabels
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", t, "form", "multi")
+		}
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -860,11 +1831,13 @@ type ApiGetSnippetsRequest struct {
 	locator string
 	path *string
 	ids *[]string
+	packageIds *[]string
 	search *string
-	confidence *[]string
+	rejectionStatus *[]string
+	packageLabels *[]string
 	sort *string
 	page *int32
-	count *int32
+	pageSize *int32
 }
 
 // The path to filter snippets by
@@ -879,15 +1852,27 @@ func (r ApiGetSnippetsRequest) Ids(ids []string) ApiGetSnippetsRequest {
 	return r
 }
 
-// Search term for filtering snippets
+// Filter by specific snippet package IDs
+func (r ApiGetSnippetsRequest) PackageIds(packageIds []string) ApiGetSnippetsRequest {
+	r.packageIds = &packageIds
+	return r
+}
+
+// Search term for filtering snippets by package name
 func (r ApiGetSnippetsRequest) Search(search string) ApiGetSnippetsRequest {
 	r.search = &search
 	return r
 }
 
-// Filter by confidence levels
-func (r ApiGetSnippetsRequest) Confidence(confidence []string) ApiGetSnippetsRequest {
-	r.confidence = &confidence
+// Filter by rejection status
+func (r ApiGetSnippetsRequest) RejectionStatus(rejectionStatus []string) ApiGetSnippetsRequest {
+	r.rejectionStatus = &rejectionStatus
+	return r
+}
+
+// Filter by package labels
+func (r ApiGetSnippetsRequest) PackageLabels(packageLabels []string) ApiGetSnippetsRequest {
+	r.packageLabels = &packageLabels
 	return r
 }
 
@@ -904,8 +1889,8 @@ func (r ApiGetSnippetsRequest) Page(page int32) ApiGetSnippetsRequest {
 }
 
 // The number of items to return in each page of results
-func (r ApiGetSnippetsRequest) Count(count int32) ApiGetSnippetsRequest {
-	r.count = &count
+func (r ApiGetSnippetsRequest) PageSize(pageSize int32) ApiGetSnippetsRequest {
+	r.pageSize = &pageSize
 	return r
 }
 
@@ -914,7 +1899,7 @@ func (r ApiGetSnippetsRequest) Execute() (*GetSnippets200Response, *http.Respons
 }
 
 /*
-GetSnippets Method for GetSnippets
+GetSnippets Get snippets
 
 Retrieve snippets detected in a revision with filtering, sorting, and pagination support.
 
@@ -967,37 +1952,62 @@ func (a *SnippetsAPIService) GetSnippetsExecute(r ApiGetSnippetsRequest) (*GetSn
 			parameterAddToHeaderOrQuery(localVarQueryParams, "ids", t, "form", "multi")
 		}
 	}
-	if r.search != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
-	}
-	if r.confidence != nil {
-		t := *r.confidence
+	if r.packageIds != nil {
+		t := *r.packageIds
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
 			s := reflect.ValueOf(t)
 			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "confidence", s.Index(i).Interface(), "form", "multi")
+				parameterAddToHeaderOrQuery(localVarQueryParams, "packageIds", s.Index(i).Interface(), "form", "multi")
 			}
 		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "confidence", t, "form", "multi")
+			parameterAddToHeaderOrQuery(localVarQueryParams, "packageIds", t, "form", "multi")
+		}
+	}
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
+	}
+	if r.rejectionStatus != nil {
+		t := *r.rejectionStatus
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "rejectionStatus", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "rejectionStatus", t, "form", "multi")
+		}
+	}
+	if r.packageLabels != nil {
+		t := *r.packageLabels
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", t, "form", "multi")
 		}
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	} else {
-		var defaultValue string = "confidence_desc"
+		var defaultValue string = "matchCount_desc"
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", defaultValue, "form", "")
 		r.sort = &defaultValue
 	}
 	if r.page != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
 	} else {
 		var defaultValue int32 = 1
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
 		r.page = &defaultValue
 	}
-	if r.count != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "count", r.count, "form", "")
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
 	} else {
-		var defaultValue int32 = 20
-		r.count = &defaultValue
+		var defaultValue int32 = 10
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", defaultValue, "form", "")
+		r.pageSize = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1039,7 +2049,7 @@ func (a *SnippetsAPIService) GetSnippetsExecute(r ApiGetSnippetsRequest) (*GetSn
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1050,7 +2060,7 @@ func (a *SnippetsAPIService) GetSnippetsExecute(r ApiGetSnippetsRequest) (*GetSn
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1061,7 +2071,7 @@ func (a *SnippetsAPIService) GetSnippetsExecute(r ApiGetSnippetsRequest) (*GetSn
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1102,7 +2112,7 @@ func (r ApiRejectSnippetsRequest) Execute() (*http.Response, error) {
 }
 
 /*
-RejectSnippets Method for RejectSnippets
+RejectSnippets Reject snippet matches
 
 Reject snippets matching the specified filter criteria.
 
@@ -1183,7 +2193,7 @@ func (a *SnippetsAPIService) RejectSnippetsExecute(r ApiRejectSnippetsRequest) (
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1194,7 +2204,7 @@ func (a *SnippetsAPIService) RejectSnippetsExecute(r ApiRejectSnippetsRequest) (
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1205,7 +2215,7 @@ func (a *SnippetsAPIService) RejectSnippetsExecute(r ApiRejectSnippetsRequest) (
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1237,7 +2247,7 @@ func (r ApiUnrejectSnippetsRequest) Execute() (*http.Response, error) {
 }
 
 /*
-UnrejectSnippets Method for UnrejectSnippets
+UnrejectSnippets Unreject snippet matches
 
 Remove rejection status from snippets matching the specified filter criteria.
 
@@ -1318,7 +2328,7 @@ func (a *SnippetsAPIService) UnrejectSnippetsExecute(r ApiUnrejectSnippetsReques
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1329,7 +2339,7 @@ func (a *SnippetsAPIService) UnrejectSnippetsExecute(r ApiUnrejectSnippetsReques
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1340,7 +2350,7 @@ func (a *SnippetsAPIService) UnrejectSnippetsExecute(r ApiUnrejectSnippetsReques
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

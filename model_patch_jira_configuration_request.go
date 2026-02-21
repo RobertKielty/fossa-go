@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -50,6 +50,8 @@ type PatchJiraConfigurationRequest struct {
 	DefaultLicensingProject NullableString `json:"defaultLicensingProject,omitempty"`
 	// The Jira Project to default to when exporting security issues
 	DefaultSecurityProject NullableString `json:"defaultSecurityProject,omitempty"`
+	// The Jira Project to default to when exporting quality issues
+	DefaultQualityProject NullableString `json:"defaultQualityProject,omitempty"`
 	// toggle to determine if each individual issue is 1:1 with a ticket upon creation
 	DefaultUniqueTickets *bool `json:"defaultUniqueTickets,omitempty"`
 }
@@ -648,6 +650,48 @@ func (o *PatchJiraConfigurationRequest) UnsetDefaultSecurityProject() {
 	o.DefaultSecurityProject.Unset()
 }
 
+// GetDefaultQualityProject returns the DefaultQualityProject field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *PatchJiraConfigurationRequest) GetDefaultQualityProject() string {
+	if o == nil || IsNil(o.DefaultQualityProject.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.DefaultQualityProject.Get()
+}
+
+// GetDefaultQualityProjectOk returns a tuple with the DefaultQualityProject field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *PatchJiraConfigurationRequest) GetDefaultQualityProjectOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DefaultQualityProject.Get(), o.DefaultQualityProject.IsSet()
+}
+
+// HasDefaultQualityProject returns a boolean if a field has been set.
+func (o *PatchJiraConfigurationRequest) HasDefaultQualityProject() bool {
+	if o != nil && o.DefaultQualityProject.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDefaultQualityProject gets a reference to the given NullableString and assigns it to the DefaultQualityProject field.
+func (o *PatchJiraConfigurationRequest) SetDefaultQualityProject(v string) {
+	o.DefaultQualityProject.Set(&v)
+}
+// SetDefaultQualityProjectNil sets the value for DefaultQualityProject to be an explicit nil
+func (o *PatchJiraConfigurationRequest) SetDefaultQualityProjectNil() {
+	o.DefaultQualityProject.Set(nil)
+}
+
+// UnsetDefaultQualityProject ensures that no value is present for DefaultQualityProject, not even an explicit nil
+func (o *PatchJiraConfigurationRequest) UnsetDefaultQualityProject() {
+	o.DefaultQualityProject.Unset()
+}
+
 // GetDefaultUniqueTickets returns the DefaultUniqueTickets field value if set, zero value otherwise.
 func (o *PatchJiraConfigurationRequest) GetDefaultUniqueTickets() bool {
 	if o == nil || IsNil(o.DefaultUniqueTickets) {
@@ -740,6 +784,9 @@ func (o PatchJiraConfigurationRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if o.DefaultSecurityProject.IsSet() {
 		toSerialize["defaultSecurityProject"] = o.DefaultSecurityProject.Get()
+	}
+	if o.DefaultQualityProject.IsSet() {
+		toSerialize["defaultQualityProject"] = o.DefaultQualityProject.Get()
 	}
 	if !IsNil(o.DefaultUniqueTickets) {
 		toSerialize["defaultUniqueTickets"] = o.DefaultUniqueTickets

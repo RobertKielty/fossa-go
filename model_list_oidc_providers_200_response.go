@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -26,7 +26,7 @@ type ListOIDCProviders200Response struct {
 	Results []ListOIDCProviders200ResponseAllOfResultsInner `json:"results"`
 	// Number of items requested per page
 	PageSize int32 `json:"pageSize"`
-	// ID of the last OIDC provider in the results
+	// ID of the last OIDC provider in the results. Used as the cursor to request the next page.
 	Last int32 `json:"last"`
 }
 

@@ -7,7 +7,6 @@ Name | Type | Description | Notes
 **ProjectId** | Pointer to **string** |  | [optional] 
 **Branch** | Pointer to **string** |  | [optional] 
 **RevisionId** | Pointer to **string** |  | [optional] 
-**ProjectGroupReleaseId** | Pointer to **int32** |  | [optional] 
 
 ## Methods
 
@@ -102,31 +101,6 @@ SetRevisionId sets RevisionId field to given value.
 `func (o *UpdateReleaseGroupReleaseByIdRequestProjectsInner) HasRevisionId() bool`
 
 HasRevisionId returns a boolean if a field has been set.
-
-### GetProjectGroupReleaseId
-
-`func (o *UpdateReleaseGroupReleaseByIdRequestProjectsInner) GetProjectGroupReleaseId() int32`
-
-GetProjectGroupReleaseId returns the ProjectGroupReleaseId field if non-nil, zero value otherwise.
-
-### GetProjectGroupReleaseIdOk
-
-`func (o *UpdateReleaseGroupReleaseByIdRequestProjectsInner) GetProjectGroupReleaseIdOk() (*int32, bool)`
-
-GetProjectGroupReleaseIdOk returns a tuple with the ProjectGroupReleaseId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetProjectGroupReleaseId
-
-`func (o *UpdateReleaseGroupReleaseByIdRequestProjectsInner) SetProjectGroupReleaseId(v int32)`
-
-SetProjectGroupReleaseId sets ProjectGroupReleaseId field to given value.
-
-### HasProjectGroupReleaseId
-
-`func (o *UpdateReleaseGroupReleaseByIdRequestProjectsInner) HasProjectGroupReleaseId() bool`
-
-HasProjectGroupReleaseId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

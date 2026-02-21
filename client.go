@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -42,7 +42,7 @@ var (
 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
 )
 
-// APIClient manages communication with the FOSSA API API v4.30.36
+// APIClient manages communication with the FOSSA API API v4.31.29
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -60,6 +60,8 @@ type APIClient struct {
 
 	ComponentsAPI *ComponentsAPIService
 
+	CustomRiskScoresAPI *CustomRiskScoresAPIService
+
 	DependenciesAPI *DependenciesAPIService
 
 	IssueFiltersAPI *IssueFiltersAPIService
@@ -69,6 +71,8 @@ type APIClient struct {
 	IssuesAPI *IssuesAPIService
 
 	JiraIntegrationSettingsAPI *JiraIntegrationSettingsAPIService
+
+	LicenseConclusionsAPI *LicenseConclusionsAPIService
 
 	OIDCAPI *OIDCAPIService
 
@@ -87,6 +91,8 @@ type APIClient struct {
 	ProjectsAPI *ProjectsAPIService
 
 	ReleaseGroupsAPI *ReleaseGroupsAPIService
+
+	ReportOptionsAPI *ReportOptionsAPIService
 
 	RevisionsAPI *RevisionsAPIService
 
@@ -126,11 +132,13 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.BuildsAPI = (*BuildsAPIService)(&c.common)
 	c.CLIAPI = (*CLIAPIService)(&c.common)
 	c.ComponentsAPI = (*ComponentsAPIService)(&c.common)
+	c.CustomRiskScoresAPI = (*CustomRiskScoresAPIService)(&c.common)
 	c.DependenciesAPI = (*DependenciesAPIService)(&c.common)
 	c.IssueFiltersAPI = (*IssueFiltersAPIService)(&c.common)
 	c.IssueOverviewAPI = (*IssueOverviewAPIService)(&c.common)
 	c.IssuesAPI = (*IssuesAPIService)(&c.common)
 	c.JiraIntegrationSettingsAPI = (*JiraIntegrationSettingsAPIService)(&c.common)
+	c.LicenseConclusionsAPI = (*LicenseConclusionsAPIService)(&c.common)
 	c.OIDCAPI = (*OIDCAPIService)(&c.common)
 	c.OrganizationLabelsAPI = (*OrganizationLabelsAPIService)(&c.common)
 	c.OrganizationLimitsAPI = (*OrganizationLimitsAPIService)(&c.common)
@@ -140,6 +148,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ProjectLabelsAPI = (*ProjectLabelsAPIService)(&c.common)
 	c.ProjectsAPI = (*ProjectsAPIService)(&c.common)
 	c.ReleaseGroupsAPI = (*ReleaseGroupsAPIService)(&c.common)
+	c.ReportOptionsAPI = (*ReportOptionsAPIService)(&c.common)
 	c.RevisionsAPI = (*RevisionsAPIService)(&c.common)
 	c.RolesAPI = (*RolesAPIService)(&c.common)
 	c.SBOMAPI = (*SBOMAPIService)(&c.common)
@@ -571,10 +580,7 @@ func addFile(w *multipart.Writer, fieldName, path string) error {
 	if err != nil {
 		return err
 	}
-	err = file.Close()
-	if err != nil {
-		return err
-	}
+	defer file.Close()
 
 	part, err := w.CreateFormFile(fieldName, filepath.Base(path))
 	if err != nil {

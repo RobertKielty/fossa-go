@@ -21,6 +21,7 @@ Name | Type | Description | Notes
 **CustomFields** | Pointer to [**map[string]PatchJiraConfigurationRequestCustomFieldsValue**](PatchJiraConfigurationRequestCustomFieldsValue.md) | a dictionary of custom fields | [optional] 
 **DefaultLicensingProject** | Pointer to **NullableString** | The Jira Project to default to when exporting licensing issues | [optional] 
 **DefaultSecurityProject** | Pointer to **NullableString** | The Jira Project to default to when exporting security issues | [optional] 
+**DefaultQualityProject** | Pointer to **NullableString** | The Jira Project to default to when exporting quality issues | [optional] 
 **DefaultUniqueTickets** | Pointer to **bool** | toggle to determine if each individual issue is 1:1 with a ticket upon creation | [optional] 
 
 ## Methods
@@ -527,6 +528,41 @@ HasDefaultSecurityProject returns a boolean if a field has been set.
 `func (o *PatchJiraConfigurationRequest) UnsetDefaultSecurityProject()`
 
 UnsetDefaultSecurityProject ensures that no value is present for DefaultSecurityProject, not even an explicit nil
+### GetDefaultQualityProject
+
+`func (o *PatchJiraConfigurationRequest) GetDefaultQualityProject() string`
+
+GetDefaultQualityProject returns the DefaultQualityProject field if non-nil, zero value otherwise.
+
+### GetDefaultQualityProjectOk
+
+`func (o *PatchJiraConfigurationRequest) GetDefaultQualityProjectOk() (*string, bool)`
+
+GetDefaultQualityProjectOk returns a tuple with the DefaultQualityProject field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDefaultQualityProject
+
+`func (o *PatchJiraConfigurationRequest) SetDefaultQualityProject(v string)`
+
+SetDefaultQualityProject sets DefaultQualityProject field to given value.
+
+### HasDefaultQualityProject
+
+`func (o *PatchJiraConfigurationRequest) HasDefaultQualityProject() bool`
+
+HasDefaultQualityProject returns a boolean if a field has been set.
+
+### SetDefaultQualityProjectNil
+
+`func (o *PatchJiraConfigurationRequest) SetDefaultQualityProjectNil(b bool)`
+
+ SetDefaultQualityProjectNil sets the value for DefaultQualityProject to be an explicit nil
+
+### UnsetDefaultQualityProject
+`func (o *PatchJiraConfigurationRequest) UnsetDefaultQualityProject()`
+
+UnsetDefaultQualityProject ensures that no value is present for DefaultQualityProject, not even an explicit nil
 ### GetDefaultUniqueTickets
 
 `func (o *PatchJiraConfigurationRequest) GetDefaultUniqueTickets() bool`

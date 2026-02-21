@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -127,7 +127,7 @@ func (a *IssuesAPIService) CreateIssueDisputeExecute(r ApiCreateIssueDisputeRequ
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -138,7 +138,7 @@ func (a *IssuesAPIService) CreateIssueDisputeExecute(r ApiCreateIssueDisputeRequ
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -149,7 +149,7 @@ func (a *IssuesAPIService) CreateIssueDisputeExecute(r ApiCreateIssueDisputeRequ
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -262,7 +262,7 @@ func (a *IssuesAPIService) DeleteIssueExceptionExecute(r ApiDeleteIssueException
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -273,7 +273,7 @@ func (a *IssuesAPIService) DeleteIssueExceptionExecute(r ApiDeleteIssueException
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -393,7 +393,7 @@ func (a *IssuesAPIService) DeleteIssueExceptionsExecute(r ApiDeleteIssueExceptio
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -404,7 +404,7 @@ func (a *IssuesAPIService) DeleteIssueExceptionsExecute(r ApiDeleteIssueExceptio
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -515,7 +515,7 @@ func (a *IssuesAPIService) DeleteProjectGenerateAttributionSlugExecute(r ApiDele
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -526,7 +526,7 @@ func (a *IssuesAPIService) DeleteProjectGenerateAttributionSlugExecute(r ApiDele
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -537,7 +537,145 @@ func (a *IssuesAPIService) DeleteProjectGenerateAttributionSlugExecute(r ApiDele
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+type ApiExtendIssueExceptionRequest struct {
+	ctx context.Context
+	ApiService *IssuesAPIService
+	id int32
+	extendIssueExceptionRequest *ExtendIssueExceptionRequest
+}
+
+func (r ApiExtendIssueExceptionRequest) ExtendIssueExceptionRequest(extendIssueExceptionRequest ExtendIssueExceptionRequest) ApiExtendIssueExceptionRequest {
+	r.extendIssueExceptionRequest = &extendIssueExceptionRequest
+	return r
+}
+
+func (r ApiExtendIssueExceptionRequest) Execute() (*http.Response, error) {
+	return r.ApiService.ExtendIssueExceptionExecute(r)
+}
+
+/*
+ExtendIssueException Extend an issue exception expiration date
+
+Updates the expiration date for an existing issue exception.
+Pass null to set the exception to never expire (unset the expiration date).
+Requires premium subscription.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the issue exception to extend
+ @return ApiExtendIssueExceptionRequest
+*/
+func (a *IssuesAPIService) ExtendIssueException(ctx context.Context, id int32) ApiExtendIssueExceptionRequest {
+	return ApiExtendIssueExceptionRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+func (a *IssuesAPIService) ExtendIssueExceptionExecute(r ApiExtendIssueExceptionRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IssuesAPIService.ExtendIssueException")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/issues/exceptions/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.extendIssueExceptionRequest == nil {
+		return nil, reportError("extendIssueExceptionRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.extendIssueExceptionRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -647,7 +785,7 @@ func (a *IssuesAPIService) GetGlobalIssuesCSVExecute(r ApiGetGlobalIssuesCSVRequ
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -832,7 +970,7 @@ func (a *IssuesAPIService) GetIssueExecute(r ApiGetIssueRequest) (*GetIssue200Re
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -843,7 +981,7 @@ func (a *IssuesAPIService) GetIssueExecute(r ApiGetIssueRequest) (*GetIssue200Re
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -854,7 +992,7 @@ func (a *IssuesAPIService) GetIssueExecute(r ApiGetIssueRequest) (*GetIssue200Re
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1039,7 +1177,7 @@ func (a *IssuesAPIService) GetIssueAffectedProjectsExecute(r ApiGetIssueAffected
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1050,7 +1188,7 @@ func (a *IssuesAPIService) GetIssueAffectedProjectsExecute(r ApiGetIssueAffected
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1131,7 +1269,7 @@ func (r ApiGetIssueCWEsRequest) ScopeReleaseScanId(scopeReleaseScanId string) Ap
 	return r
 }
 
-// The revision ID to compare issues with. Only availabe for Project Scope.
+// The revision ID to compare issues with. Only available for Project Scope.
 func (r ApiGetIssueCWEsRequest) ScopeCompareToRevision(scopeCompareToRevision string) ApiGetIssueCWEsRequest {
 	r.scopeCompareToRevision = &scopeCompareToRevision
 	return r
@@ -1268,7 +1406,7 @@ func (a *IssuesAPIService) GetIssueCWEsExecute(r ApiGetIssueCWEsRequest) (*GetIs
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1279,7 +1417,7 @@ func (a *IssuesAPIService) GetIssueCWEsExecute(r ApiGetIssueCWEsRequest) (*GetIs
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1290,7 +1428,7 @@ func (a *IssuesAPIService) GetIssueCWEsExecute(r ApiGetIssueCWEsRequest) (*GetIs
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1322,7 +1460,10 @@ type ApiGetIssueDiffComparisonSummariesRequest struct {
 	scopeId *string
 	scopeRevision *string
 	scopeRevisionScanId *int32
+	scopeRelease *string
+	scopeReleaseScanId *string
 	scopeCompareToRevision *string
+	scopeCompareToRelease *string
 	scopeCompareToChangeStatus *string
 	ids *[]int32
 	filterRevisionIds *[]string
@@ -1343,6 +1484,7 @@ type ApiGetIssueDiffComparisonSummariesRequest struct {
 	filterIgnoreReason *[]string
 	filterEpss *GetIssueDiffComparisonSummariesFilterEpssParameter
 	filterConfidence *[]string
+	filterIssueSource *GetIssueStatusesFilterIssueSourceParameter
 }
 
 // Issue category
@@ -1375,9 +1517,27 @@ func (r ApiGetIssueDiffComparisonSummariesRequest) ScopeRevisionScanId(scopeRevi
 	return r
 }
 
-// The revision ID to compare issues with. Only availabe for Project Scope.
+// Release group ID (when scope[type] is \&quot;releaseGroup\&quot;)
+func (r ApiGetIssueDiffComparisonSummariesRequest) ScopeRelease(scopeRelease string) ApiGetIssueDiffComparisonSummariesRequest {
+	r.scopeRelease = &scopeRelease
+	return r
+}
+
+// Release scan ID (when scope[type] is \&quot;releaseGroup\&quot;)
+func (r ApiGetIssueDiffComparisonSummariesRequest) ScopeReleaseScanId(scopeReleaseScanId string) ApiGetIssueDiffComparisonSummariesRequest {
+	r.scopeReleaseScanId = &scopeReleaseScanId
+	return r
+}
+
+// The revision ID to compare issues with. Only available for Project Scope.
 func (r ApiGetIssueDiffComparisonSummariesRequest) ScopeCompareToRevision(scopeCompareToRevision string) ApiGetIssueDiffComparisonSummariesRequest {
 	r.scopeCompareToRevision = &scopeCompareToRevision
+	return r
+}
+
+// The release ID to compare issues with. Only available for Release Group Scope.
+func (r ApiGetIssueDiffComparisonSummariesRequest) ScopeCompareToRelease(scopeCompareToRelease string) ApiGetIssueDiffComparisonSummariesRequest {
+	r.scopeCompareToRelease = &scopeCompareToRelease
 	return r
 }
 
@@ -1501,6 +1661,12 @@ func (r ApiGetIssueDiffComparisonSummariesRequest) FilterConfidence(filterConfid
 	return r
 }
 
+// Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored. 
+func (r ApiGetIssueDiffComparisonSummariesRequest) FilterIssueSource(filterIssueSource GetIssueStatusesFilterIssueSourceParameter) ApiGetIssueDiffComparisonSummariesRequest {
+	r.filterIssueSource = &filterIssueSource
+	return r
+}
+
 func (r ApiGetIssueDiffComparisonSummariesRequest) Execute() (*GetIssueDiffComparisonSummaries200Response, *http.Response, error) {
 	return r.ApiService.GetIssueDiffComparisonSummariesExecute(r)
 }
@@ -1508,7 +1674,7 @@ func (r ApiGetIssueDiffComparisonSummariesRequest) Execute() (*GetIssueDiffCompa
 /*
 GetIssueDiffComparisonSummaries Method for GetIssueDiffComparisonSummaries
 
-Retrieve the counts for the different change statuses when in Issue Comparison mode. Only available for Project Scope.
+Retrieve the counts for the different change statuses when in Issue Comparison mode. Supports both Project (revision comparison) and Release Group (release comparison) scopes.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetIssueDiffComparisonSummariesRequest
@@ -1558,8 +1724,17 @@ func (a *IssuesAPIService) GetIssueDiffComparisonSummariesExecute(r ApiGetIssueD
 	if r.scopeRevisionScanId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "scope[revisionScanId]", r.scopeRevisionScanId, "form", "")
 	}
+	if r.scopeRelease != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope[release]", r.scopeRelease, "form", "")
+	}
+	if r.scopeReleaseScanId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope[releaseScanId]", r.scopeReleaseScanId, "form", "")
+	}
 	if r.scopeCompareToRevision != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "scope[compareTo][revision]", r.scopeCompareToRevision, "form", "")
+	}
+	if r.scopeCompareToRelease != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scope[compareTo][release]", r.scopeCompareToRelease, "form", "")
 	}
 	if r.scopeCompareToChangeStatus != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "scope[compareTo][changeStatus]", r.scopeCompareToChangeStatus, "form", "")
@@ -1741,6 +1916,9 @@ func (a *IssuesAPIService) GetIssueDiffComparisonSummariesExecute(r ApiGetIssueD
 			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[confidence][]", t, "form", "multi")
 		}
 	}
+	if r.filterIssueSource != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[issueSource][]", r.filterIssueSource, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1781,7 +1959,7 @@ func (a *IssuesAPIService) GetIssueDiffComparisonSummariesExecute(r ApiGetIssueD
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1792,7 +1970,7 @@ func (a *IssuesAPIService) GetIssueDiffComparisonSummariesExecute(r ApiGetIssueD
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1803,7 +1981,7 @@ func (a *IssuesAPIService) GetIssueDiffComparisonSummariesExecute(r ApiGetIssueD
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1814,7 +1992,142 @@ func (a *IssuesAPIService) GetIssueDiffComparisonSummariesExecute(r ApiGetIssueD
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetIssueExceptionRequest struct {
+	ctx context.Context
+	ApiService *IssuesAPIService
+	id int32
+}
+
+func (r ApiGetIssueExceptionRequest) Execute() (*GetIssueException200Response, *http.Response, error) {
+	return r.ApiService.GetIssueExceptionExecute(r)
+}
+
+/*
+GetIssueException Method for GetIssueException
+
+Get a single issue ignore rule by ID.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id ID of the issue exception
+ @return ApiGetIssueExceptionRequest
+*/
+func (a *IssuesAPIService) GetIssueException(ctx context.Context, id int32) ApiGetIssueExceptionRequest {
+	return ApiGetIssueExceptionRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return GetIssueException200Response
+func (a *IssuesAPIService) GetIssueExceptionExecute(r ApiGetIssueExceptionRequest) (*GetIssueException200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetIssueException200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IssuesAPIService.GetIssueException")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/issues/exceptions/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1962,12 +2275,14 @@ func (a *IssuesAPIService) GetIssueExceptionsExecute(r ApiGetIssueExceptionsRequ
 		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
 	} else {
 		var defaultValue int32 = 1
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
 		r.page = &defaultValue
 	}
 	if r.count != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "count", r.count, "form", "")
 	} else {
 		var defaultValue int32 = 20
+		parameterAddToHeaderOrQuery(localVarQueryParams, "count", defaultValue, "form", "")
 		r.count = &defaultValue
 	}
 	// to determine the Content-Type header
@@ -2010,7 +2325,7 @@ func (a *IssuesAPIService) GetIssueExceptionsExecute(r ApiGetIssueExceptionsRequ
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2021,7 +2336,7 @@ func (a *IssuesAPIService) GetIssueExceptionsExecute(r ApiGetIssueExceptionsRequ
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2212,7 +2527,7 @@ func (a *IssuesAPIService) GetIssuePackageManagersExecute(r ApiGetIssuePackageMa
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2223,7 +2538,7 @@ func (a *IssuesAPIService) GetIssuePackageManagersExecute(r ApiGetIssuePackageMa
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2234,7 +2549,7 @@ func (a *IssuesAPIService) GetIssuePackageManagersExecute(r ApiGetIssuePackageMa
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2287,6 +2602,7 @@ type ApiGetIssueStatusesRequest struct {
 	filterExploitMaturity *[]string
 	filterIgnoreReason *[]string
 	filterLicenses *[]string
+	filterIssueSource *GetIssueStatusesFilterIssueSourceParameter
 }
 
 // Issue category
@@ -2331,7 +2647,7 @@ func (r ApiGetIssueStatusesRequest) ScopeReleaseScanId(scopeReleaseScanId string
 	return r
 }
 
-// The revision ID to compare issues with. Only availabe for Project Scope.
+// The revision ID to compare issues with. Only available for Project Scope.
 func (r ApiGetIssueStatusesRequest) ScopeCompareToRevision(scopeCompareToRevision string) ApiGetIssueStatusesRequest {
 	r.scopeCompareToRevision = &scopeCompareToRevision
 	return r
@@ -2442,6 +2758,12 @@ func (r ApiGetIssueStatusesRequest) FilterIgnoreReason(filterIgnoreReason []stri
 // Filter by issues affected by a set of license ID&#39;s (when category is \&quot;licensing\&quot;)
 func (r ApiGetIssueStatusesRequest) FilterLicenses(filterLicenses []string) ApiGetIssueStatusesRequest {
 	r.filterLicenses = &filterLicenses
+	return r
+}
+
+// Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored. 
+func (r ApiGetIssueStatusesRequest) FilterIssueSource(filterIssueSource GetIssueStatusesFilterIssueSourceParameter) ApiGetIssueStatusesRequest {
+	r.filterIssueSource = &filterIssueSource
 	return r
 }
 
@@ -2677,6 +2999,9 @@ func (a *IssuesAPIService) GetIssueStatusesExecute(r ApiGetIssueStatusesRequest)
 			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[licenses][]", t, "form", "multi")
 		}
 	}
+	if r.filterIssueSource != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[issueSource][]", r.filterIssueSource, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -2717,7 +3042,7 @@ func (a *IssuesAPIService) GetIssueStatusesExecute(r ApiGetIssueStatusesRequest)
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2728,7 +3053,7 @@ func (a *IssuesAPIService) GetIssueStatusesExecute(r ApiGetIssueStatusesRequest)
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2739,7 +3064,7 @@ func (a *IssuesAPIService) GetIssueStatusesExecute(r ApiGetIssueStatusesRequest)
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2798,6 +3123,7 @@ type ApiGetIssuesRequest struct {
 	filterIgnoreReason *[]string
 	filterEpss *GetIssueDiffComparisonSummariesFilterEpssParameter
 	filterConfidence *[]string
+	filterIssueSource *GetIssueStatusesFilterIssueSourceParameter
 	sort *string
 	page *int32
 	count *int32
@@ -2863,7 +3189,7 @@ func (r ApiGetIssuesRequest) ScopeReleaseScanId(scopeReleaseScanId string) ApiGe
 	return r
 }
 
-// The revision ID to compare issues with. Only availabe for Project Scope.
+// The revision ID to compare issues with. Only available for Project Scope.
 func (r ApiGetIssuesRequest) ScopeCompareToRevision(scopeCompareToRevision string) ApiGetIssuesRequest {
 	r.scopeCompareToRevision = &scopeCompareToRevision
 	return r
@@ -2992,6 +3318,12 @@ func (r ApiGetIssuesRequest) FilterEpss(filterEpss GetIssueDiffComparisonSummari
 // Filter issues by their binary dependency confidence level(s)
 func (r ApiGetIssuesRequest) FilterConfidence(filterConfidence []string) ApiGetIssuesRequest {
 	r.filterConfidence = &filterConfidence
+	return r
+}
+
+// Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored. 
+func (r ApiGetIssuesRequest) FilterIssueSource(filterIssueSource GetIssueStatusesFilterIssueSourceParameter) ApiGetIssuesRequest {
+	r.filterIssueSource = &filterIssueSource
 	return r
 }
 
@@ -3271,6 +3603,9 @@ func (a *IssuesAPIService) GetIssuesExecute(r ApiGetIssuesRequest) (*GetIssues20
 			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[confidence][]", t, "form", "multi")
 		}
 	}
+	if r.filterIssueSource != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[issueSource][]", r.filterIssueSource, "form", "")
+	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
@@ -3278,12 +3613,14 @@ func (a *IssuesAPIService) GetIssuesExecute(r ApiGetIssuesRequest) (*GetIssues20
 		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
 	} else {
 		var defaultValue int32 = 1
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
 		r.page = &defaultValue
 	}
 	if r.count != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "count", r.count, "form", "")
 	} else {
 		var defaultValue int32 = 20
+		parameterAddToHeaderOrQuery(localVarQueryParams, "count", defaultValue, "form", "")
 		r.count = &defaultValue
 	}
 	// to determine the Content-Type header
@@ -3326,7 +3663,7 @@ func (a *IssuesAPIService) GetIssuesExecute(r ApiGetIssuesRequest) (*GetIssues20
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3337,7 +3674,7 @@ func (a *IssuesAPIService) GetIssuesExecute(r ApiGetIssuesRequest) (*GetIssues20
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3348,7 +3685,7 @@ func (a *IssuesAPIService) GetIssuesExecute(r ApiGetIssuesRequest) (*GetIssues20
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 406 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3359,7 +3696,7 @@ func (a *IssuesAPIService) GetIssuesExecute(r ApiGetIssuesRequest) (*GetIssues20
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3529,7 +3866,7 @@ func (a *IssuesAPIService) GetIssuesByCategoryExecute(r ApiGetIssuesByCategoryRe
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3540,7 +3877,7 @@ func (a *IssuesAPIService) GetIssuesByCategoryExecute(r ApiGetIssuesByCategoryRe
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3551,7 +3888,7 @@ func (a *IssuesAPIService) GetIssuesByCategoryExecute(r ApiGetIssuesByCategoryRe
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -3605,6 +3942,7 @@ type ApiGetIssuesByRevisionRequest struct {
 	filterExploitMaturity *[]string
 	filterIgnoreReason *[]string
 	filterLicenses *[]string
+	filterIssueSource *GetIssueStatusesFilterIssueSourceParameter
 	sort *string
 	page *int32
 	count *int32
@@ -3658,7 +3996,7 @@ func (r ApiGetIssuesByRevisionRequest) ScopeReleaseScanId(scopeReleaseScanId str
 	return r
 }
 
-// The revision ID to compare issues with. Only availabe for Project Scope.
+// The revision ID to compare issues with. Only available for Project Scope.
 func (r ApiGetIssuesByRevisionRequest) ScopeCompareToRevision(scopeCompareToRevision string) ApiGetIssuesByRevisionRequest {
 	r.scopeCompareToRevision = &scopeCompareToRevision
 	return r
@@ -3769,6 +4107,12 @@ func (r ApiGetIssuesByRevisionRequest) FilterIgnoreReason(filterIgnoreReason []s
 // Filter by issues affected by a set of license ID&#39;s (when category is \&quot;licensing\&quot;)
 func (r ApiGetIssuesByRevisionRequest) FilterLicenses(filterLicenses []string) ApiGetIssuesByRevisionRequest {
 	r.filterLicenses = &filterLicenses
+	return r
+}
+
+// Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored. 
+func (r ApiGetIssuesByRevisionRequest) FilterIssueSource(filterIssueSource GetIssueStatusesFilterIssueSourceParameter) ApiGetIssuesByRevisionRequest {
+	r.filterIssueSource = &filterIssueSource
 	return r
 }
 
@@ -4025,6 +4369,9 @@ func (a *IssuesAPIService) GetIssuesByRevisionExecute(r ApiGetIssuesByRevisionRe
 			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[licenses][]", t, "form", "multi")
 		}
 	}
+	if r.filterIssueSource != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[issueSource][]", r.filterIssueSource, "form", "")
+	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
@@ -4032,12 +4379,14 @@ func (a *IssuesAPIService) GetIssuesByRevisionExecute(r ApiGetIssuesByRevisionRe
 		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
 	} else {
 		var defaultValue int32 = 1
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
 		r.page = &defaultValue
 	}
 	if r.count != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "count", r.count, "form", "")
 	} else {
 		var defaultValue int32 = 20
+		parameterAddToHeaderOrQuery(localVarQueryParams, "count", defaultValue, "form", "")
 		r.count = &defaultValue
 	}
 	// to determine the Content-Type header
@@ -4080,7 +4429,7 @@ func (a *IssuesAPIService) GetIssuesByRevisionExecute(r ApiGetIssuesByRevisionRe
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4091,7 +4440,7 @@ func (a *IssuesAPIService) GetIssuesByRevisionExecute(r ApiGetIssuesByRevisionRe
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4102,7 +4451,7 @@ func (a *IssuesAPIService) GetIssuesByRevisionExecute(r ApiGetIssuesByRevisionRe
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4272,7 +4621,7 @@ func (a *IssuesAPIService) GetIssuesByTypeExecute(r ApiGetIssuesByTypeRequest) (
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4283,7 +4632,7 @@ func (a *IssuesAPIService) GetIssuesByTypeExecute(r ApiGetIssuesByTypeRequest) (
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4294,7 +4643,7 @@ func (a *IssuesAPIService) GetIssuesByTypeExecute(r ApiGetIssuesByTypeRequest) (
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4475,7 +4824,7 @@ func (a *IssuesAPIService) GetLicenseListExecute(r ApiGetLicenseListRequest) (*G
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4486,7 +4835,7 @@ func (a *IssuesAPIService) GetLicenseListExecute(r ApiGetLicenseListRequest) (*G
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4497,7 +4846,7 @@ func (a *IssuesAPIService) GetLicenseListExecute(r ApiGetLicenseListRequest) (*G
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4651,7 +5000,7 @@ func (a *IssuesAPIService) GetProjectCSVExportIssuesExecute(r ApiGetProjectCSVEx
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4662,7 +5011,7 @@ func (a *IssuesAPIService) GetProjectCSVExportIssuesExecute(r ApiGetProjectCSVEx
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4673,7 +5022,7 @@ func (a *IssuesAPIService) GetProjectCSVExportIssuesExecute(r ApiGetProjectCSVEx
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 428 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4684,7 +5033,7 @@ func (a *IssuesAPIService) GetProjectCSVExportIssuesExecute(r ApiGetProjectCSVEx
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4848,7 +5197,7 @@ func (a *IssuesAPIService) GetProjectExportIssuesExecute(r ApiGetProjectExportIs
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4859,7 +5208,7 @@ func (a *IssuesAPIService) GetProjectExportIssuesExecute(r ApiGetProjectExportIs
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4870,7 +5219,7 @@ func (a *IssuesAPIService) GetProjectExportIssuesExecute(r ApiGetProjectExportIs
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 428 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -4881,7 +5230,7 @@ func (a *IssuesAPIService) GetProjectExportIssuesExecute(r ApiGetProjectExportIs
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -5035,7 +5384,7 @@ func (a *IssuesAPIService) GetProjectJSONExportIssuesExecute(r ApiGetProjectJSON
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -5046,7 +5395,7 @@ func (a *IssuesAPIService) GetProjectJSONExportIssuesExecute(r ApiGetProjectJSON
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -5057,7 +5406,7 @@ func (a *IssuesAPIService) GetProjectJSONExportIssuesExecute(r ApiGetProjectJSON
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 428 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -5068,7 +5417,7 @@ func (a *IssuesAPIService) GetProjectJSONExportIssuesExecute(r ApiGetProjectJSON
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -5123,6 +5472,7 @@ type ApiUpdateIssuesRequest struct {
 	filterIgnoreReason *[]string
 	filterLicenses *[]string
 	filterConfidence *[]string
+	filterIssueSource *GetIssueStatusesFilterIssueSourceParameter
 	updateIssuesRequest *UpdateIssuesRequest
 }
 
@@ -5174,7 +5524,7 @@ func (r ApiUpdateIssuesRequest) ScopeReleaseScanId(scopeReleaseScanId string) Ap
 	return r
 }
 
-// The revision ID to compare issues with. Only availabe for Project Scope.
+// The revision ID to compare issues with. Only available for Project Scope.
 func (r ApiUpdateIssuesRequest) ScopeCompareToRevision(scopeCompareToRevision string) ApiUpdateIssuesRequest {
 	r.scopeCompareToRevision = &scopeCompareToRevision
 	return r
@@ -5291,6 +5641,12 @@ func (r ApiUpdateIssuesRequest) FilterLicenses(filterLicenses []string) ApiUpdat
 // Filter issues by their binary dependency confidence level(s)
 func (r ApiUpdateIssuesRequest) FilterConfidence(filterConfidence []string) ApiUpdateIssuesRequest {
 	r.filterConfidence = &filterConfidence
+	return r
+}
+
+// Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored. 
+func (r ApiUpdateIssuesRequest) FilterIssueSource(filterIssueSource GetIssueStatusesFilterIssueSourceParameter) ApiUpdateIssuesRequest {
+	r.filterIssueSource = &filterIssueSource
 	return r
 }
 
@@ -5545,6 +5901,9 @@ func (a *IssuesAPIService) UpdateIssuesExecute(r ApiUpdateIssuesRequest) (*Updat
 			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[confidence][]", t, "form", "multi")
 		}
 	}
+	if r.filterIssueSource != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[issueSource][]", r.filterIssueSource, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -5587,7 +5946,7 @@ func (a *IssuesAPIService) UpdateIssuesExecute(r ApiUpdateIssuesRequest) (*Updat
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -5598,7 +5957,7 @@ func (a *IssuesAPIService) UpdateIssuesExecute(r ApiUpdateIssuesRequest) (*Updat
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

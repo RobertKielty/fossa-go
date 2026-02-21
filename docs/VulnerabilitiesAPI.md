@@ -4,8 +4,75 @@ All URIs are relative to *https://app.fossa.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**GetCveList**](VulnerabilitiesAPI.md#GetCveList) | **Get** /vulns/cve-list | 
 [**GetRemediationGuidance**](VulnerabilitiesAPI.md#GetRemediationGuidance) | **Get** /vulns/{vulnId}/revisions/{revisionId}/remediation-guidance | 
 
+
+
+## GetCveList
+
+> []GetCveList200ResponseInner GetCveList(ctx).Query(query).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	query := "CVE-2021" // string | Search string to find matching CVE identifiers
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.VulnerabilitiesAPI.GetCveList(context.Background()).Query(query).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `VulnerabilitiesAPI.GetCveList``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetCveList`: []GetCveList200ResponseInner
+	fmt.Fprintf(os.Stdout, "Response from `VulnerabilitiesAPI.GetCveList`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetCveListRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **query** | **string** | Search string to find matching CVE identifiers | 
+
+### Return type
+
+[**[]GetCveList200ResponseInner**](GetCveList200ResponseInner.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## GetRemediationGuidance

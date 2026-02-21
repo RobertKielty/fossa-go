@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Id** | Pointer to **int32** |  | [optional] 
 **Name** | Pointer to **string** |  | [optional] 
 **UniqueId** | Pointer to **NullableString** |  | [optional] 
+**TeamType** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -112,6 +113,31 @@ HasUniqueId returns a boolean if a field has been set.
 `func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner) UnsetUniqueId()`
 
 UnsetUniqueId ensures that no value is present for UniqueId, not even an explicit nil
+### GetTeamType
+
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner) GetTeamType() string`
+
+GetTeamType returns the TeamType field if non-nil, zero value otherwise.
+
+### GetTeamTypeOk
+
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner) GetTeamTypeOk() (*string, bool)`
+
+GetTeamTypeOk returns a tuple with the TeamType field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTeamType
+
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner) SetTeamType(v string)`
+
+SetTeamType sets TeamType field to given value.
+
+### HasTeamType
+
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner) HasTeamType() bool`
+
+HasTeamType returns a boolean if a field has been set.
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

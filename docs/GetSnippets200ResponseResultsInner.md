@@ -5,11 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** | Unique identifier for the snippet | 
-**Locator** | Pointer to **string** | The locator for the snippet (optional) | [optional] 
+**PackageId** | **string** | Unique identifier for the snippet package | 
+**Purl** | **string** | Package URL (purl) for the snippet | 
+**Locator** | **string** | The locator for the snippet (optional) | 
 **Package** | **string** | Name of the package containing the snippet | 
 **Version** | **string** | Version of the package | 
-**Kind** | **string** | Type of snippet detection (snippet&#x3D;partial match, file&#x3D;100% match, dependency&#x3D;complete copy) | 
-**Matches** | [**[]GetSnippets200ResponseResultsInnerMatchesInner**](GetSnippets200ResponseResultsInnerMatchesInner.md) | Array of path matches where this snippet was detected | 
+**Kind** | **string** | Type of snippet detection (snippet&#x3D;partial match, file&#x3D;100% match) | 
+**MatchCount** | **int32** | Total number of matches for this snippet | 
 **HighestMatchPercentage** | **float32** | The highest match percentage across all matches | 
 **ReleaseDate** | Pointer to **time.Time** | Release date of the package (optional) | [optional] 
 **HomeUrl** | Pointer to **string** | Homepage URL of the package (optional) | [optional] 
@@ -17,13 +19,13 @@ Name | Type | Description | Notes
 **Licenses** | [**[]GetSnippets200ResponseResultsInnerLicensesInner**](GetSnippets200ResponseResultsInnerLicensesInner.md) | Array of licenses associated with the snippet | 
 **IssueCounts** | [**GetSnippets200ResponseResultsInnerIssueCounts**](GetSnippets200ResponseResultsInnerIssueCounts.md) |  | 
 **RejectionDetails** | Pointer to [**GetSnippets200ResponseResultsInnerRejectionDetails**](GetSnippets200ResponseResultsInnerRejectionDetails.md) |  | [optional] 
-**Labels** | Pointer to **[]map[string]interface{}** | Package labels assigned to this snippet | [optional] 
+**Labels** | [**[]GetSnippets200ResponseResultsInnerLabelsInner**](GetSnippets200ResponseResultsInnerLabelsInner.md) | Package labels assigned to this snippet | 
 
 ## Methods
 
 ### NewGetSnippets200ResponseResultsInner
 
-`func NewGetSnippets200ResponseResultsInner(id string, package_ string, version string, kind string, matches []GetSnippets200ResponseResultsInnerMatchesInner, highestMatchPercentage float32, licenses []GetSnippets200ResponseResultsInnerLicensesInner, issueCounts GetSnippets200ResponseResultsInnerIssueCounts, ) *GetSnippets200ResponseResultsInner`
+`func NewGetSnippets200ResponseResultsInner(id string, packageId string, purl string, locator string, package_ string, version string, kind string, matchCount int32, highestMatchPercentage float32, licenses []GetSnippets200ResponseResultsInnerLicensesInner, issueCounts GetSnippets200ResponseResultsInnerIssueCounts, labels []GetSnippets200ResponseResultsInnerLabelsInner, ) *GetSnippets200ResponseResultsInner`
 
 NewGetSnippets200ResponseResultsInner instantiates a new GetSnippets200ResponseResultsInner object
 This constructor will assign default values to properties that have it defined,
@@ -58,6 +60,46 @@ and a boolean to check if the value has been set.
 SetId sets Id field to given value.
 
 
+### GetPackageId
+
+`func (o *GetSnippets200ResponseResultsInner) GetPackageId() string`
+
+GetPackageId returns the PackageId field if non-nil, zero value otherwise.
+
+### GetPackageIdOk
+
+`func (o *GetSnippets200ResponseResultsInner) GetPackageIdOk() (*string, bool)`
+
+GetPackageIdOk returns a tuple with the PackageId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPackageId
+
+`func (o *GetSnippets200ResponseResultsInner) SetPackageId(v string)`
+
+SetPackageId sets PackageId field to given value.
+
+
+### GetPurl
+
+`func (o *GetSnippets200ResponseResultsInner) GetPurl() string`
+
+GetPurl returns the Purl field if non-nil, zero value otherwise.
+
+### GetPurlOk
+
+`func (o *GetSnippets200ResponseResultsInner) GetPurlOk() (*string, bool)`
+
+GetPurlOk returns a tuple with the Purl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPurl
+
+`func (o *GetSnippets200ResponseResultsInner) SetPurl(v string)`
+
+SetPurl sets Purl field to given value.
+
+
 ### GetLocator
 
 `func (o *GetSnippets200ResponseResultsInner) GetLocator() string`
@@ -77,11 +119,6 @@ and a boolean to check if the value has been set.
 
 SetLocator sets Locator field to given value.
 
-### HasLocator
-
-`func (o *GetSnippets200ResponseResultsInner) HasLocator() bool`
-
-HasLocator returns a boolean if a field has been set.
 
 ### GetPackage
 
@@ -143,24 +180,24 @@ and a boolean to check if the value has been set.
 SetKind sets Kind field to given value.
 
 
-### GetMatches
+### GetMatchCount
 
-`func (o *GetSnippets200ResponseResultsInner) GetMatches() []GetSnippets200ResponseResultsInnerMatchesInner`
+`func (o *GetSnippets200ResponseResultsInner) GetMatchCount() int32`
 
-GetMatches returns the Matches field if non-nil, zero value otherwise.
+GetMatchCount returns the MatchCount field if non-nil, zero value otherwise.
 
-### GetMatchesOk
+### GetMatchCountOk
 
-`func (o *GetSnippets200ResponseResultsInner) GetMatchesOk() (*[]GetSnippets200ResponseResultsInnerMatchesInner, bool)`
+`func (o *GetSnippets200ResponseResultsInner) GetMatchCountOk() (*int32, bool)`
 
-GetMatchesOk returns a tuple with the Matches field if it's non-nil, zero value otherwise
+GetMatchCountOk returns a tuple with the MatchCount field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetMatches
+### SetMatchCount
 
-`func (o *GetSnippets200ResponseResultsInner) SetMatches(v []GetSnippets200ResponseResultsInnerMatchesInner)`
+`func (o *GetSnippets200ResponseResultsInner) SetMatchCount(v int32)`
 
-SetMatches sets Matches field to given value.
+SetMatchCount sets MatchCount field to given value.
 
 
 ### GetHighestMatchPercentage
@@ -325,28 +362,23 @@ HasRejectionDetails returns a boolean if a field has been set.
 
 ### GetLabels
 
-`func (o *GetSnippets200ResponseResultsInner) GetLabels() []map[string]interface{}`
+`func (o *GetSnippets200ResponseResultsInner) GetLabels() []GetSnippets200ResponseResultsInnerLabelsInner`
 
 GetLabels returns the Labels field if non-nil, zero value otherwise.
 
 ### GetLabelsOk
 
-`func (o *GetSnippets200ResponseResultsInner) GetLabelsOk() (*[]map[string]interface{}, bool)`
+`func (o *GetSnippets200ResponseResultsInner) GetLabelsOk() (*[]GetSnippets200ResponseResultsInnerLabelsInner, bool)`
 
 GetLabelsOk returns a tuple with the Labels field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLabels
 
-`func (o *GetSnippets200ResponseResultsInner) SetLabels(v []map[string]interface{})`
+`func (o *GetSnippets200ResponseResultsInner) SetLabels(v []GetSnippets200ResponseResultsInnerLabelsInner)`
 
 SetLabels sets Labels field to given value.
 
-### HasLabels
-
-`func (o *GetSnippets200ResponseResultsInner) HasLabels() bool`
-
-HasLabels returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Licensing** | Pointer to [**GetSnippets200ResponseResultsInnerIssueCountsLicensing**](GetSnippets200ResponseResultsInnerIssueCountsLicensing.md) |  | [optional] 
+**Security** | Pointer to [**GetSnippets200ResponseResultsInnerIssueCountsSecurity**](GetSnippets200ResponseResultsInnerIssueCountsSecurity.md) |  | [optional] 
 
 ## Methods
 
@@ -49,6 +50,31 @@ SetLicensing sets Licensing field to given value.
 `func (o *GetSnippets200ResponseResultsInnerIssueCounts) HasLicensing() bool`
 
 HasLicensing returns a boolean if a field has been set.
+
+### GetSecurity
+
+`func (o *GetSnippets200ResponseResultsInnerIssueCounts) GetSecurity() GetSnippets200ResponseResultsInnerIssueCountsSecurity`
+
+GetSecurity returns the Security field if non-nil, zero value otherwise.
+
+### GetSecurityOk
+
+`func (o *GetSnippets200ResponseResultsInnerIssueCounts) GetSecurityOk() (*GetSnippets200ResponseResultsInnerIssueCountsSecurity, bool)`
+
+GetSecurityOk returns a tuple with the Security field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSecurity
+
+`func (o *GetSnippets200ResponseResultsInnerIssueCounts) SetSecurity(v GetSnippets200ResponseResultsInnerIssueCountsSecurity)`
+
+SetSecurity sets Security field to given value.
+
+### HasSecurity
+
+`func (o *GetSnippets200ResponseResultsInnerIssueCounts) HasSecurity() bool`
+
+HasSecurity returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
