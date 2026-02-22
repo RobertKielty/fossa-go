@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -35,6 +35,7 @@ type GetProjectDependencies200ResponseDependenciesInner struct {
 	RootProjects []GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner `json:"rootProjects,omitempty"`
 	LayerDepth *float32 `json:"layerDepth,omitempty"`
 	Cpes []string `json:"cpes,omitempty"`
+	VendoredPaths []string `json:"vendoredPaths,omitempty"`
 	Version *string `json:"version,omitempty"`
 }
 
@@ -535,6 +536,38 @@ func (o *GetProjectDependencies200ResponseDependenciesInner) SetCpes(v []string)
 	o.Cpes = v
 }
 
+// GetVendoredPaths returns the VendoredPaths field value if set, zero value otherwise.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetVendoredPaths() []string {
+	if o == nil || IsNil(o.VendoredPaths) {
+		var ret []string
+		return ret
+	}
+	return o.VendoredPaths
+}
+
+// GetVendoredPathsOk returns a tuple with the VendoredPaths field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetVendoredPathsOk() ([]string, bool) {
+	if o == nil || IsNil(o.VendoredPaths) {
+		return nil, false
+	}
+	return o.VendoredPaths, true
+}
+
+// HasVendoredPaths returns a boolean if a field has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) HasVendoredPaths() bool {
+	if o != nil && !IsNil(o.VendoredPaths) {
+		return true
+	}
+
+	return false
+}
+
+// SetVendoredPaths gets a reference to the given []string and assigns it to the VendoredPaths field.
+func (o *GetProjectDependencies200ResponseDependenciesInner) SetVendoredPaths(v []string) {
+	o.VendoredPaths = v
+}
+
 // GetVersion returns the Version field value if set, zero value otherwise.
 func (o *GetProjectDependencies200ResponseDependenciesInner) GetVersion() string {
 	if o == nil || IsNil(o.Version) {
@@ -621,6 +654,9 @@ func (o GetProjectDependencies200ResponseDependenciesInner) ToMap() (map[string]
 	}
 	if !IsNil(o.Cpes) {
 		toSerialize["cpes"] = o.Cpes
+	}
+	if !IsNil(o.VendoredPaths) {
+		toSerialize["vendoredPaths"] = o.VendoredPaths
 	}
 	if !IsNil(o.Version) {
 		toSerialize["version"] = o.Version

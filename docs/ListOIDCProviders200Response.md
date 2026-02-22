@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Results** | [**[]ListOIDCProviders200ResponseAllOfResultsInner**](ListOIDCProviders200ResponseAllOfResultsInner.md) | Array of OIDC Providers | 
 **PageSize** | **int32** | Number of items requested per page | [default to 10]
-**Last** | **int32** | ID of the last OIDC provider in the results | 
+**Last** | **int32** | ID of the last OIDC provider in the results. Used as the cursor to request the next page. | 
 
 ## Methods
 

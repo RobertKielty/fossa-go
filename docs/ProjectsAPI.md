@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**GetProjectsSummary**](ProjectsAPI.md#GetProjectsSummary) | **Get** /v2/projects/summary | 
 [**GetReleaseGroups**](ProjectsAPI.md#GetReleaseGroups) | **Get** /v2/release-groups | 
 [**ListReleaseGroupsForProject**](ProjectsAPI.md#ListReleaseGroupsForProject) | **Get** /v2/projects/{locator}/release-groups | 
+[**UpdateProject**](ProjectsAPI.md#UpdateProject) | **Put** /projects/{locator} | Update a project&#39;s settings and configuration.
 [**UpdateProjectsLabels**](ProjectsAPI.md#UpdateProjectsLabels) | **Put** /v2/projects/labels | 
 [**UpdateProjectsPolicies**](ProjectsAPI.md#UpdateProjectsPolicies) | **Put** /v2/projects/policy | 
 [**UpdateReleaseGroupsPolicies**](ProjectsAPI.md#UpdateReleaseGroupsPolicies) | **Put** /v2/release-groups/policy | 
@@ -993,6 +994,78 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateProject
+
+> map[string]interface{} UpdateProject(ctx, locator).UpdateProjectRequest(updateProjectRequest).Execute()
+
+Update a project's settings and configuration.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	locator := "git%2Bgithub.com%2Ffossas%2Ffossa-cli" // string | The URL-encoded locator of the project (e.g., \"git+github.com/owner/repo\")
+	updateProjectRequest := *openapiclient.NewUpdateProjectRequest() // UpdateProjectRequest | Project fields to update. All fields are optional. Only the fields provided will be updated; omitted fields remain unchanged. Note: The endpoint filters out any fields not in the allowed list automatically.  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ProjectsAPI.UpdateProject(context.Background(), locator).UpdateProjectRequest(updateProjectRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.UpdateProject``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateProject`: map[string]interface{}
+	fmt.Fprintf(os.Stdout, "Response from `ProjectsAPI.UpdateProject`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**locator** | **string** | The URL-encoded locator of the project (e.g., \&quot;git+github.com/owner/repo\&quot;) | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateProjectRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateProjectRequest** | [**UpdateProjectRequest**](UpdateProjectRequest.md) | Project fields to update. All fields are optional. Only the fields provided will be updated; omitted fields remain unchanged. Note: The endpoint filters out any fields not in the allowed list automatically.  | 
+
+### Return type
+
+**map[string]interface{}**
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

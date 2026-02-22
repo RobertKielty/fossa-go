@@ -5,7 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Path** | **string** | The file path where the match was detected | 
-**MatchPercentage** | **float32** | Percentage match confidence for this specific path | 
+**MatchPercentage** | **float32** | Match percentage for this specific match | 
+**RejectionDetails** | Pointer to [**GetSnippets200ResponseResultsInnerRejectionDetails**](GetSnippets200ResponseResultsInnerRejectionDetails.md) |  | [optional] 
 **ReferenceCode** | [**[]GetSnippetMatchDetails200ResponseMatchDetailsAllOfReferenceCodeInner**](GetSnippetMatchDetails200ResponseMatchDetailsAllOfReferenceCodeInner.md) | Code lines from the reference (third-party) source | 
 **DetectedCode** | [**[]GetSnippetMatchDetails200ResponseMatchDetailsAllOfReferenceCodeInner**](GetSnippetMatchDetails200ResponseMatchDetailsAllOfReferenceCodeInner.md) | Code lines from the detected source in the user&#39;s project | 
 
@@ -67,6 +68,31 @@ and a boolean to check if the value has been set.
 
 SetMatchPercentage sets MatchPercentage field to given value.
 
+
+### GetRejectionDetails
+
+`func (o *GetSnippetMatchDetails200ResponseMatchDetails) GetRejectionDetails() GetSnippets200ResponseResultsInnerRejectionDetails`
+
+GetRejectionDetails returns the RejectionDetails field if non-nil, zero value otherwise.
+
+### GetRejectionDetailsOk
+
+`func (o *GetSnippetMatchDetails200ResponseMatchDetails) GetRejectionDetailsOk() (*GetSnippets200ResponseResultsInnerRejectionDetails, bool)`
+
+GetRejectionDetailsOk returns a tuple with the RejectionDetails field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRejectionDetails
+
+`func (o *GetSnippetMatchDetails200ResponseMatchDetails) SetRejectionDetails(v GetSnippets200ResponseResultsInnerRejectionDetails)`
+
+SetRejectionDetails sets RejectionDetails field to given value.
+
+### HasRejectionDetails
+
+`func (o *GetSnippetMatchDetails200ResponseMatchDetails) HasRejectionDetails() bool`
+
+HasRejectionDetails returns a boolean if a field has been set.
 
 ### GetReferenceCode
 

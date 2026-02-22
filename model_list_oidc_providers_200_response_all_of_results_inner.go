@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -13,287 +13,124 @@ package fossa
 
 import (
 	"encoding/json"
-	"time"
-	"bytes"
 	"fmt"
+	"gopkg.in/validator.v2"
 )
 
-// checks if the ListOIDCProviders200ResponseAllOfResultsInner type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &ListOIDCProviders200ResponseAllOfResultsInner{}
-
-// ListOIDCProviders200ResponseAllOfResultsInner struct for ListOIDCProviders200ResponseAllOfResultsInner
+// ListOIDCProviders200ResponseAllOfResultsInner - struct for ListOIDCProviders200ResponseAllOfResultsInner
 type ListOIDCProviders200ResponseAllOfResultsInner struct {
-	// The unique identifier of the OIDC Provider
-	Id int32 `json:"id"`
-	// The ID of the organization this provider belongs to
-	OrganizationId int32 `json:"organizationId"`
-	// The issuer URL of the OIDC Provider
-	Issuer string `json:"issuer"`
-	// The scope level of the OIDC Provider
-	Scope string `json:"scope"`
-	// The ID associated with the scope: either the organization ID or the team ID
-	ScopeId int32 `json:"scopeId"`
-	// When the OIDC Provider was created
-	CreatedAt time.Time `json:"createdAt"`
-	// When the OIDC Provider was last updated
-	UpdatedAt time.Time `json:"updatedAt"`
+	ListOIDCProviders200ResponseAllOfResultsInnerOneOf *ListOIDCProviders200ResponseAllOfResultsInnerOneOf
+	ListOIDCProviders200ResponseAllOfResultsInnerOneOf1 *ListOIDCProviders200ResponseAllOfResultsInnerOneOf1
 }
 
-type _ListOIDCProviders200ResponseAllOfResultsInner ListOIDCProviders200ResponseAllOfResultsInner
-
-// NewListOIDCProviders200ResponseAllOfResultsInner instantiates a new ListOIDCProviders200ResponseAllOfResultsInner object
-// This constructor will assign default values to properties that have it defined,
-// and makes sure properties required by API are set, but the set of arguments
-// will change when the set of required properties is changed
-func NewListOIDCProviders200ResponseAllOfResultsInner(id int32, organizationId int32, issuer string, scope string, scopeId int32, createdAt time.Time, updatedAt time.Time) *ListOIDCProviders200ResponseAllOfResultsInner {
-	this := ListOIDCProviders200ResponseAllOfResultsInner{}
-	this.Id = id
-	this.OrganizationId = organizationId
-	this.Issuer = issuer
-	this.Scope = scope
-	this.ScopeId = scopeId
-	this.CreatedAt = createdAt
-	this.UpdatedAt = updatedAt
-	return &this
-}
-
-// NewListOIDCProviders200ResponseAllOfResultsInnerWithDefaults instantiates a new ListOIDCProviders200ResponseAllOfResultsInner object
-// This constructor will only assign default values to properties that have it defined,
-// but it doesn't guarantee that properties required by API are set
-func NewListOIDCProviders200ResponseAllOfResultsInnerWithDefaults() *ListOIDCProviders200ResponseAllOfResultsInner {
-	this := ListOIDCProviders200ResponseAllOfResultsInner{}
-	return &this
-}
-
-// GetId returns the Id field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetId() int32 {
-	if o == nil {
-		var ret int32
-		return ret
+// ListOIDCProviders200ResponseAllOfResultsInnerOneOfAsListOIDCProviders200ResponseAllOfResultsInner is a convenience function that returns ListOIDCProviders200ResponseAllOfResultsInnerOneOf wrapped in ListOIDCProviders200ResponseAllOfResultsInner
+func ListOIDCProviders200ResponseAllOfResultsInnerOneOfAsListOIDCProviders200ResponseAllOfResultsInner(v *ListOIDCProviders200ResponseAllOfResultsInnerOneOf) ListOIDCProviders200ResponseAllOfResultsInner {
+	return ListOIDCProviders200ResponseAllOfResultsInner{
+		ListOIDCProviders200ResponseAllOfResultsInnerOneOf: v,
 	}
-
-	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value
-// and a boolean to check if the value has been set.
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetIdOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
+// ListOIDCProviders200ResponseAllOfResultsInnerOneOf1AsListOIDCProviders200ResponseAllOfResultsInner is a convenience function that returns ListOIDCProviders200ResponseAllOfResultsInnerOneOf1 wrapped in ListOIDCProviders200ResponseAllOfResultsInner
+func ListOIDCProviders200ResponseAllOfResultsInnerOneOf1AsListOIDCProviders200ResponseAllOfResultsInner(v *ListOIDCProviders200ResponseAllOfResultsInnerOneOf1) ListOIDCProviders200ResponseAllOfResultsInner {
+	return ListOIDCProviders200ResponseAllOfResultsInner{
+		ListOIDCProviders200ResponseAllOfResultsInnerOneOf1: v,
 	}
-	return &o.Id, true
 }
 
-// SetId sets field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetId(v int32) {
-	o.Id = v
-}
 
-// GetOrganizationId returns the OrganizationId field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetOrganizationId() int32 {
-	if o == nil {
-		var ret int32
-		return ret
-	}
-
-	return o.OrganizationId
-}
-
-// GetOrganizationIdOk returns a tuple with the OrganizationId field value
-// and a boolean to check if the value has been set.
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetOrganizationIdOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.OrganizationId, true
-}
-
-// SetOrganizationId sets field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetOrganizationId(v int32) {
-	o.OrganizationId = v
-}
-
-// GetIssuer returns the Issuer field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetIssuer() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Issuer
-}
-
-// GetIssuerOk returns a tuple with the Issuer field value
-// and a boolean to check if the value has been set.
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetIssuerOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Issuer, true
-}
-
-// SetIssuer sets field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetIssuer(v string) {
-	o.Issuer = v
-}
-
-// GetScope returns the Scope field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetScope() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Scope
-}
-
-// GetScopeOk returns a tuple with the Scope field value
-// and a boolean to check if the value has been set.
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetScopeOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Scope, true
-}
-
-// SetScope sets field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetScope(v string) {
-	o.Scope = v
-}
-
-// GetScopeId returns the ScopeId field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetScopeId() int32 {
-	if o == nil {
-		var ret int32
-		return ret
-	}
-
-	return o.ScopeId
-}
-
-// GetScopeIdOk returns a tuple with the ScopeId field value
-// and a boolean to check if the value has been set.
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetScopeIdOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.ScopeId, true
-}
-
-// SetScopeId sets field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetScopeId(v int32) {
-	o.ScopeId = v
-}
-
-// GetCreatedAt returns the CreatedAt field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetCreatedAt() time.Time {
-	if o == nil {
-		var ret time.Time
-		return ret
-	}
-
-	return o.CreatedAt
-}
-
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
-// and a boolean to check if the value has been set.
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetCreatedAtOk() (*time.Time, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.CreatedAt, true
-}
-
-// SetCreatedAt sets field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetCreatedAt(v time.Time) {
-	o.CreatedAt = v
-}
-
-// GetUpdatedAt returns the UpdatedAt field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetUpdatedAt() time.Time {
-	if o == nil {
-		var ret time.Time
-		return ret
-	}
-
-	return o.UpdatedAt
-}
-
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value
-// and a boolean to check if the value has been set.
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetUpdatedAtOk() (*time.Time, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.UpdatedAt, true
-}
-
-// SetUpdatedAt sets field value
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetUpdatedAt(v time.Time) {
-	o.UpdatedAt = v
-}
-
-func (o ListOIDCProviders200ResponseAllOfResultsInner) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
-func (o ListOIDCProviders200ResponseAllOfResultsInner) ToMap() (map[string]interface{}, error) {
-	toSerialize := map[string]interface{}{}
-	toSerialize["id"] = o.Id
-	toSerialize["organizationId"] = o.OrganizationId
-	toSerialize["issuer"] = o.Issuer
-	toSerialize["scope"] = o.Scope
-	toSerialize["scopeId"] = o.ScopeId
-	toSerialize["createdAt"] = o.CreatedAt
-	toSerialize["updatedAt"] = o.UpdatedAt
-	return toSerialize, nil
-}
-
-func (o *ListOIDCProviders200ResponseAllOfResultsInner) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"id",
-		"organizationId",
-		"issuer",
-		"scope",
-		"scopeId",
-		"createdAt",
-		"updatedAt",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err;
-	}
-
-	for _, requiredProperty := range(requiredProperties) {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
+// Unmarshal JSON data into one of the pointers in the struct
+func (dst *ListOIDCProviders200ResponseAllOfResultsInner) UnmarshalJSON(data []byte) error {
+	var err error
+	match := 0
+	// try to unmarshal data into ListOIDCProviders200ResponseAllOfResultsInnerOneOf
+	err = newStrictDecoder(data).Decode(&dst.ListOIDCProviders200ResponseAllOfResultsInnerOneOf)
+	if err == nil {
+		jsonListOIDCProviders200ResponseAllOfResultsInnerOneOf, _ := json.Marshal(dst.ListOIDCProviders200ResponseAllOfResultsInnerOneOf)
+		if string(jsonListOIDCProviders200ResponseAllOfResultsInnerOneOf) == "{}" { // empty struct
+			dst.ListOIDCProviders200ResponseAllOfResultsInnerOneOf = nil
+		} else {
+			if err = validator.Validate(dst.ListOIDCProviders200ResponseAllOfResultsInnerOneOf); err != nil {
+				dst.ListOIDCProviders200ResponseAllOfResultsInnerOneOf = nil
+			} else {
+				match++
+			}
 		}
+	} else {
+		dst.ListOIDCProviders200ResponseAllOfResultsInnerOneOf = nil
 	}
 
-	varListOIDCProviders200ResponseAllOfResultsInner := _ListOIDCProviders200ResponseAllOfResultsInner{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varListOIDCProviders200ResponseAllOfResultsInner)
-
-	if err != nil {
-		return err
+	// try to unmarshal data into ListOIDCProviders200ResponseAllOfResultsInnerOneOf1
+	err = newStrictDecoder(data).Decode(&dst.ListOIDCProviders200ResponseAllOfResultsInnerOneOf1)
+	if err == nil {
+		jsonListOIDCProviders200ResponseAllOfResultsInnerOneOf1, _ := json.Marshal(dst.ListOIDCProviders200ResponseAllOfResultsInnerOneOf1)
+		if string(jsonListOIDCProviders200ResponseAllOfResultsInnerOneOf1) == "{}" { // empty struct
+			dst.ListOIDCProviders200ResponseAllOfResultsInnerOneOf1 = nil
+		} else {
+			if err = validator.Validate(dst.ListOIDCProviders200ResponseAllOfResultsInnerOneOf1); err != nil {
+				dst.ListOIDCProviders200ResponseAllOfResultsInnerOneOf1 = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.ListOIDCProviders200ResponseAllOfResultsInnerOneOf1 = nil
 	}
 
-	*o = ListOIDCProviders200ResponseAllOfResultsInner(varListOIDCProviders200ResponseAllOfResultsInner)
+	if match > 1 { // more than 1 match
+		// reset to nil
+		dst.ListOIDCProviders200ResponseAllOfResultsInnerOneOf = nil
+		dst.ListOIDCProviders200ResponseAllOfResultsInnerOneOf1 = nil
 
-	return err
+		return fmt.Errorf("data matches more than one schema in oneOf(ListOIDCProviders200ResponseAllOfResultsInner)")
+	} else if match == 1 {
+		return nil // exactly one match
+	} else { // no match
+		return fmt.Errorf("data failed to match schemas in oneOf(ListOIDCProviders200ResponseAllOfResultsInner)")
+	}
+}
+
+// Marshal data from the first non-nil pointers in the struct to JSON
+func (src ListOIDCProviders200ResponseAllOfResultsInner) MarshalJSON() ([]byte, error) {
+	if src.ListOIDCProviders200ResponseAllOfResultsInnerOneOf != nil {
+		return json.Marshal(&src.ListOIDCProviders200ResponseAllOfResultsInnerOneOf)
+	}
+
+	if src.ListOIDCProviders200ResponseAllOfResultsInnerOneOf1 != nil {
+		return json.Marshal(&src.ListOIDCProviders200ResponseAllOfResultsInnerOneOf1)
+	}
+
+	return nil, nil // no data in oneOf schemas
+}
+
+// Get the actual instance
+func (obj *ListOIDCProviders200ResponseAllOfResultsInner) GetActualInstance() (interface{}) {
+	if obj == nil {
+		return nil
+	}
+	if obj.ListOIDCProviders200ResponseAllOfResultsInnerOneOf != nil {
+		return obj.ListOIDCProviders200ResponseAllOfResultsInnerOneOf
+	}
+
+	if obj.ListOIDCProviders200ResponseAllOfResultsInnerOneOf1 != nil {
+		return obj.ListOIDCProviders200ResponseAllOfResultsInnerOneOf1
+	}
+
+	// all schemas are nil
+	return nil
+}
+
+// Get the actual instance value
+func (obj ListOIDCProviders200ResponseAllOfResultsInner) GetActualInstanceValue() (interface{}) {
+	if obj.ListOIDCProviders200ResponseAllOfResultsInnerOneOf != nil {
+		return *obj.ListOIDCProviders200ResponseAllOfResultsInnerOneOf
+	}
+
+	if obj.ListOIDCProviders200ResponseAllOfResultsInnerOneOf1 != nil {
+		return *obj.ListOIDCProviders200ResponseAllOfResultsInnerOneOf1
+	}
+
+	// all schemas are nil
+	return nil
 }
 
 type NullableListOIDCProviders200ResponseAllOfResultsInner struct {

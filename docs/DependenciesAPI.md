@@ -8,17 +8,21 @@ Method | HTTP request | Description
 [**GetGlobalDependency**](DependenciesAPI.md#GetGlobalDependency) | **Get** /v2/dependencies/{locator} | 
 [**GetProjectDependencies**](DependenciesAPI.md#GetProjectDependencies) | **Get** /v2/revisions/{locator}/dependencies | 
 [**GetProjectDependency**](DependenciesAPI.md#GetProjectDependency) | **Get** /v2/revisions/{locator}/dependencies/{dependencyRevisionLocator} | 
+[**GetProjectDependencyCount**](DependenciesAPI.md#GetProjectDependencyCount) | **Get** /v2/revisions/{locator}/dependencies/count | 
 [**GetProjectDependencyPackageManagers**](DependenciesAPI.md#GetProjectDependencyPackageManagers) | **Get** /v2/revisions/{locator}/dependencies/package-managers | 
 [**GetReleaseGroupDependencies**](DependenciesAPI.md#GetReleaseGroupDependencies) | **Get** /v2/release-groups/{projectGroupId}/releases/{projectGroupReleaseId}/dependencies | 
 [**GetReleaseGroupDependency**](DependenciesAPI.md#GetReleaseGroupDependency) | **Get** /v2/release-groups/{projectGroupId}/releases/{projectGroupReleaseId}/dependencies/{dependencyRevisionLocator} | 
+[**GetReleaseGroupDependencyCount**](DependenciesAPI.md#GetReleaseGroupDependencyCount) | **Get** /v2/release-groups/{projectGroupId}/releases/{projectGroupReleaseId}/dependencies/count | 
 [**GetReleaseGroupDependencyPackageManagers**](DependenciesAPI.md#GetReleaseGroupDependencyPackageManagers) | **Get** /v2/release-groups/{projectGroupId}/releases/{projectGroupReleaseId}/dependencies/package-managers | 
 [**GetReleaseGroupDependencyRootProjects**](DependenciesAPI.md#GetReleaseGroupDependencyRootProjects) | **Get** /v2/release-groups/{projectGroupId}/releases/{projectGroupReleaseId}/root-projects | 
+[**GetRevisionDependencies**](DependenciesAPI.md#GetRevisionDependencies) | **Get** /revisions/{locator}/dependencies | 
+[**GetRevisionDependenciesPost**](DependenciesAPI.md#GetRevisionDependenciesPost) | **Post** /revisions/{locator}/list-dependencies | 
 
 
 
 ## GetCustomLicenses
 
-> GetCustomLicenses200Response GetCustomLicenses(ctx).ProjectLocator(projectLocator).Page(page).Count(count).Execute()
+> GetCustomLicenses200Response GetCustomLicenses(ctx).ProjectLocator(projectLocator).Page(page).PageSize(pageSize).Execute()
 
 
 
@@ -39,11 +43,11 @@ import (
 func main() {
 	projectLocator := "custom+1234/my-project" // string | Optional project locator to filter results to custom licenses used within a specific project. If not provided, returns custom licenses across all projects the user has access to.  (optional)
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
-	count := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 20)
+	pageSize := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 10)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DependenciesAPI.GetCustomLicenses(context.Background()).ProjectLocator(projectLocator).Page(page).Count(count).Execute()
+	resp, r, err := apiClient.DependenciesAPI.GetCustomLicenses(context.Background()).ProjectLocator(projectLocator).Page(page).PageSize(pageSize).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetCustomLicenses``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -66,7 +70,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **projectLocator** | **string** | Optional project locator to filter results to custom licenses used within a specific project. If not provided, returns custom licenses across all projects the user has access to.  | 
  **page** | **int32** | The specific page of data to return | [default to 1]
- **count** | **int32** | The number of items to return in each page of results | [default to 20]
+ **pageSize** | **int32** | The number of items to return in each page of results | [default to 10]
 
 ### Return type
 
@@ -158,7 +162,7 @@ Name | Type | Description  | Notes
 
 ## GetProjectDependencies
 
-> GetProjectDependencies200Response GetProjectDependencies(ctx, locator).Locators(locators).Title(title).Status(status).Depth(depth).LayerDepth(layerDepth).HasIssues(hasIssues).Licenses(licenses).Fetchers(fetchers).ShowIgnored(showIgnored).Confidence(confidence).Page(page).Count(count).Execute()
+> GetProjectDependencies200Response GetProjectDependencies(ctx, locator).Locators(locators).Title(title).Status(status).Depth(depth).LayerDepth(layerDepth).HasIssues(hasIssues).Licenses(licenses).Fetchers(fetchers).ShowIgnored(showIgnored).Confidence(confidence).Sources(sources).Page(page).Count(count).Execute()
 
 
 
@@ -188,12 +192,13 @@ func main() {
 	fetchers := []string{"Inner_example"} // []string | Filter dependencies by package manager (optional)
 	showIgnored := true // bool | Includes ignored dependencies (optional)
 	confidence := []string{"Confidence_example"} // []string | Filter dependencies by confidence (optional)
+	sources := []string{"Sources_example"} // []string | Filter dependencies by source type (managed or vendored). Only supported on project scope. (optional)
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
 	count := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 50)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DependenciesAPI.GetProjectDependencies(context.Background(), locator).Locators(locators).Title(title).Status(status).Depth(depth).LayerDepth(layerDepth).HasIssues(hasIssues).Licenses(licenses).Fetchers(fetchers).ShowIgnored(showIgnored).Confidence(confidence).Page(page).Count(count).Execute()
+	resp, r, err := apiClient.DependenciesAPI.GetProjectDependencies(context.Background(), locator).Locators(locators).Title(title).Status(status).Depth(depth).LayerDepth(layerDepth).HasIssues(hasIssues).Licenses(licenses).Fetchers(fetchers).ShowIgnored(showIgnored).Confidence(confidence).Sources(sources).Page(page).Count(count).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetProjectDependencies``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -229,6 +234,7 @@ Name | Type | Description  | Notes
  **fetchers** | **[]string** | Filter dependencies by package manager | 
  **showIgnored** | **bool** | Includes ignored dependencies | 
  **confidence** | **[]string** | Filter dependencies by confidence | 
+ **sources** | **[]string** | Filter dependencies by source type (managed or vendored). Only supported on project scope. | 
  **page** | **int32** | The specific page of data to return | [default to 1]
  **count** | **int32** | The number of items to return in each page of results | [default to 50]
 
@@ -323,6 +329,78 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetProjectDependencyCount
+
+> GetProjectDependencyCount200Response GetProjectDependencyCount(ctx, locator).Sources(sources).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	locator := "locator_example" // string | The locator of the project revision
+	sources := []string{"Sources_example"} // []string | Filter dependencies by source type (managed or vendored). Only supported on project scope. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DependenciesAPI.GetProjectDependencyCount(context.Background(), locator).Sources(sources).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetProjectDependencyCount``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetProjectDependencyCount`: GetProjectDependencyCount200Response
+	fmt.Fprintf(os.Stdout, "Response from `DependenciesAPI.GetProjectDependencyCount`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**locator** | **string** | The locator of the project revision | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetProjectDependencyCountRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **sources** | **[]string** | Filter dependencies by source type (managed or vendored). Only supported on project scope. | 
+
+### Return type
+
+[**GetProjectDependencyCount200Response**](GetProjectDependencyCount200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetProjectDependencyPackageManagers
 
 > GetIssuePackageManagers200Response GetProjectDependencyPackageManagers(ctx, locator).Execute()
@@ -395,7 +473,7 @@ Name | Type | Description  | Notes
 
 ## GetReleaseGroupDependencies
 
-> GetProjectDependencies200Response GetReleaseGroupDependencies(ctx, projectGroupId, projectGroupReleaseId).Locators(locators).Title(title).Status(status).Depth(depth).LayerDepth(layerDepth).HasIssues(hasIssues).Licenses(licenses).Fetchers(fetchers).ShowIgnored(showIgnored).Confidence(confidence).RootProjects(rootProjects).Page(page).Count(count).Execute()
+> GetProjectDependencies200Response GetReleaseGroupDependencies(ctx, projectGroupId, projectGroupReleaseId).Locators(locators).Title(title).Status(status).Depth(depth).LayerDepth(layerDepth).HasIssues(hasIssues).Licenses(licenses).Fetchers(fetchers).ShowIgnored(showIgnored).Confidence(confidence).Sources(sources).RootProjects(rootProjects).Page(page).Count(count).Execute()
 
 
 
@@ -426,13 +504,14 @@ func main() {
 	fetchers := []string{"Inner_example"} // []string | Filter dependencies by package manager (optional)
 	showIgnored := true // bool | Includes ignored dependencies (optional)
 	confidence := []string{"Confidence_example"} // []string | Filter dependencies by confidence (optional)
+	sources := []string{"Sources_example"} // []string | Filter dependencies by source type (managed or vendored). Only supported on project scope. (optional)
 	rootProjects := []string{"Inner_example"} // []string | Filter release group dependencies by root projects (optional)
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
 	count := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 50)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DependenciesAPI.GetReleaseGroupDependencies(context.Background(), projectGroupId, projectGroupReleaseId).Locators(locators).Title(title).Status(status).Depth(depth).LayerDepth(layerDepth).HasIssues(hasIssues).Licenses(licenses).Fetchers(fetchers).ShowIgnored(showIgnored).Confidence(confidence).RootProjects(rootProjects).Page(page).Count(count).Execute()
+	resp, r, err := apiClient.DependenciesAPI.GetReleaseGroupDependencies(context.Background(), projectGroupId, projectGroupReleaseId).Locators(locators).Title(title).Status(status).Depth(depth).LayerDepth(layerDepth).HasIssues(hasIssues).Licenses(licenses).Fetchers(fetchers).ShowIgnored(showIgnored).Confidence(confidence).Sources(sources).RootProjects(rootProjects).Page(page).Count(count).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetReleaseGroupDependencies``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -470,6 +549,7 @@ Name | Type | Description  | Notes
  **fetchers** | **[]string** | Filter dependencies by package manager | 
  **showIgnored** | **bool** | Includes ignored dependencies | 
  **confidence** | **[]string** | Filter dependencies by confidence | 
+ **sources** | **[]string** | Filter dependencies by source type (managed or vendored). Only supported on project scope. | 
  **rootProjects** | **[]string** | Filter release group dependencies by root projects | 
  **page** | **int32** | The specific page of data to return | [default to 1]
  **count** | **int32** | The number of items to return in each page of results | [default to 50]
@@ -553,6 +633,81 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetProjectDependency200Response**](GetProjectDependency200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetReleaseGroupDependencyCount
+
+> GetReleaseGroupDependencyCount200Response GetReleaseGroupDependencyCount(ctx, projectGroupId, projectGroupReleaseId).Sources(sources).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	projectGroupId := int32(56) // int32 | The ID of the release group
+	projectGroupReleaseId := int32(56) // int32 | The ID of the release
+	sources := []string{"Sources_example"} // []string | Filter dependencies by source type (managed or vendored). Only supported on project scope. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DependenciesAPI.GetReleaseGroupDependencyCount(context.Background(), projectGroupId, projectGroupReleaseId).Sources(sources).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetReleaseGroupDependencyCount``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetReleaseGroupDependencyCount`: GetReleaseGroupDependencyCount200Response
+	fmt.Fprintf(os.Stdout, "Response from `DependenciesAPI.GetReleaseGroupDependencyCount`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**projectGroupId** | **int32** | The ID of the release group | 
+**projectGroupReleaseId** | **int32** | The ID of the release | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetReleaseGroupDependencyCountRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **sources** | **[]string** | Filter dependencies by source type (managed or vendored). Only supported on project scope. | 
+
+### Return type
+
+[**GetReleaseGroupDependencyCount200Response**](GetReleaseGroupDependencyCount200Response.md)
 
 ### Authorization
 
@@ -707,6 +862,160 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetRevisionDependencies
+
+> []GetRevisionDependenciesPost200ResponseInner GetRevisionDependencies(ctx, locator).Limit(limit).Offset(offset).IncludeIgnored(includeIgnored).IncludeHashData(includeHashData).IncludeLicenseText(includeLicenseText).IncludeLocators(includeLocators).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	locator := "custom+1234/my-project$abcd1234" // string | The URL-encoded locator of the revision
+	limit := int32(100) // int32 | Maximum number of dependencies to return (min 1, max 10000) (optional)
+	offset := int32(0) // int32 | Number of dependencies to skip for pagination (optional)
+	includeIgnored := true // bool | Whether to include ignored dependencies in the response (optional) (default to false)
+	includeHashData := true // bool | Whether to include hash and version data for dependencies (optional) (default to false)
+	includeLicenseText := true // bool | Whether to include full license text in the license information (optional) (default to false)
+	includeLocators := []string{"Inner_example"} // []string | Array of locators to filter dependencies. Only dependencies matching these locators will be returned. Note: For large lists of locators that may exceed URL length limits, use POST /api/revisions/:locator/deps instead.  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DependenciesAPI.GetRevisionDependencies(context.Background(), locator).Limit(limit).Offset(offset).IncludeIgnored(includeIgnored).IncludeHashData(includeHashData).IncludeLicenseText(includeLicenseText).IncludeLocators(includeLocators).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetRevisionDependencies``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetRevisionDependencies`: []GetRevisionDependenciesPost200ResponseInner
+	fmt.Fprintf(os.Stdout, "Response from `DependenciesAPI.GetRevisionDependencies`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**locator** | **string** | The URL-encoded locator of the revision | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetRevisionDependenciesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **limit** | **int32** | Maximum number of dependencies to return (min 1, max 10000) | 
+ **offset** | **int32** | Number of dependencies to skip for pagination | 
+ **includeIgnored** | **bool** | Whether to include ignored dependencies in the response | [default to false]
+ **includeHashData** | **bool** | Whether to include hash and version data for dependencies | [default to false]
+ **includeLicenseText** | **bool** | Whether to include full license text in the license information | [default to false]
+ **includeLocators** | **[]string** | Array of locators to filter dependencies. Only dependencies matching these locators will be returned. Note: For large lists of locators that may exceed URL length limits, use POST /api/revisions/:locator/deps instead.  | 
+
+### Return type
+
+[**[]GetRevisionDependenciesPost200ResponseInner**](GetRevisionDependenciesPost200ResponseInner.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetRevisionDependenciesPost
+
+> []GetRevisionDependenciesPost200ResponseInner GetRevisionDependenciesPost(ctx, locator).GetRevisionDependenciesPostRequest(getRevisionDependenciesPostRequest).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	locator := "custom+1234/my-project$abcd1234" // string | The URL-encoded locator of the revision
+	getRevisionDependenciesPostRequest := *openapiclient.NewGetRevisionDependenciesPostRequest() // GetRevisionDependenciesPostRequest | Query parameters for filtering and configuring the dependency response (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.DependenciesAPI.GetRevisionDependenciesPost(context.Background(), locator).GetRevisionDependenciesPostRequest(getRevisionDependenciesPostRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetRevisionDependenciesPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetRevisionDependenciesPost`: []GetRevisionDependenciesPost200ResponseInner
+	fmt.Fprintf(os.Stdout, "Response from `DependenciesAPI.GetRevisionDependenciesPost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**locator** | **string** | The URL-encoded locator of the revision | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetRevisionDependenciesPostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **getRevisionDependenciesPostRequest** | [**GetRevisionDependenciesPostRequest**](GetRevisionDependenciesPostRequest.md) | Query parameters for filtering and configuring the dependency response | 
+
+### Return type
+
+[**[]GetRevisionDependenciesPost200ResponseInner**](GetRevisionDependenciesPost200ResponseInner.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

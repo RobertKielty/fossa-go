@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **TeamMembersCount** | Pointer to **int32** | The number of members in the team | [optional] 
 **TeamReleaseGroupsCount** | Pointer to **int32** | The number of release groups associated with the team | [optional] 
 **TeamProjectsCount** | Pointer to **int32** | The number of projects associated with the team | [optional] 
+**TeamOIDCProvidersCount** | Pointer to **int32** | The number of OIDC providers that can be accessed by members of this team. Includes both org-scoped providers and team-scoped providers where the scopeId matches the team ID. This property is only returned if the user has permission to view OIDC providers.  | [optional] 
 
 ## Methods
 
@@ -335,6 +336,31 @@ SetTeamProjectsCount sets TeamProjectsCount field to given value.
 `func (o *GetTeamByIdV2200Response) HasTeamProjectsCount() bool`
 
 HasTeamProjectsCount returns a boolean if a field has been set.
+
+### GetTeamOIDCProvidersCount
+
+`func (o *GetTeamByIdV2200Response) GetTeamOIDCProvidersCount() int32`
+
+GetTeamOIDCProvidersCount returns the TeamOIDCProvidersCount field if non-nil, zero value otherwise.
+
+### GetTeamOIDCProvidersCountOk
+
+`func (o *GetTeamByIdV2200Response) GetTeamOIDCProvidersCountOk() (*int32, bool)`
+
+GetTeamOIDCProvidersCountOk returns a tuple with the TeamOIDCProvidersCount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTeamOIDCProvidersCount
+
+`func (o *GetTeamByIdV2200Response) SetTeamOIDCProvidersCount(v int32)`
+
+SetTeamOIDCProvidersCount sets TeamOIDCProvidersCount field to given value.
+
+### HasTeamOIDCProvidersCount
+
+`func (o *GetTeamByIdV2200Response) HasTeamOIDCProvidersCount() bool`
+
+HasTeamOIDCProvidersCount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

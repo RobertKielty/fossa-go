@@ -10,16 +10,20 @@ Name | Type | Description | Notes
 **ProviderId** | **int32** | The ID of the OIDC Provider this trust relationship uses | 
 **Scope** | Pointer to **string** | The scope level of the trust relationship | [optional] 
 **ScopeId** | Pointer to **int32** | The ID associated with the scope: either the organization ID or the team ID | [optional] 
-**Audiences** | **[]string** | Array of valid audiences for this trust relationship (max 5) | 
-**RequiredClaims** | [**[]ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner**](ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner.md) | Array of claim objects. Must contain at least one object with claim: \&quot;sub\&quot;. Additional objects with other claims are optional.  | 
+**Audiences** | **[]string** | Array of valid audiences for this trust relationship | 
+**RequiredClaims** | [**[]ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner**](ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner.md) | Array of claim objects. Must contain at least one object with claim: \&quot;sub\&quot;. Additional objects with other claims are optional.  | 
 **CreatedAt** | **time.Time** | When the trust relationship was created | 
 **UpdatedAt** | **time.Time** | When the trust relationship was last updated | 
+**Username** | **string** | The username of the service account associated with this trust relationship | 
+**Email** | Pointer to **string** | The email of the service account associated with this trust relationship (if available) | [optional] 
+**TeamName** | **string** | The name of the team (if scope is team) | 
+**Issuer** | **string** | The issuer URL of the OIDC Provider | 
 
 ## Methods
 
 ### NewListOIDCTrustRelationships200ResponseAllOfResultsInner
 
-`func NewListOIDCTrustRelationships200ResponseAllOfResultsInner(id int32, organizationId int32, userId int32, providerId int32, audiences []string, requiredClaims []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner, createdAt time.Time, updatedAt time.Time, ) *ListOIDCTrustRelationships200ResponseAllOfResultsInner`
+`func NewListOIDCTrustRelationships200ResponseAllOfResultsInner(id int32, organizationId int32, userId int32, providerId int32, audiences []string, requiredClaims []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner, createdAt time.Time, updatedAt time.Time, username string, teamName string, issuer string, ) *ListOIDCTrustRelationships200ResponseAllOfResultsInner`
 
 NewListOIDCTrustRelationships200ResponseAllOfResultsInner instantiates a new ListOIDCTrustRelationships200ResponseAllOfResultsInner object
 This constructor will assign default values to properties that have it defined,
@@ -186,20 +190,20 @@ SetAudiences sets Audiences field to given value.
 
 ### GetRequiredClaims
 
-`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetRequiredClaims() []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner`
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetRequiredClaims() []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner`
 
 GetRequiredClaims returns the RequiredClaims field if non-nil, zero value otherwise.
 
 ### GetRequiredClaimsOk
 
-`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetRequiredClaimsOk() (*[]ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner, bool)`
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetRequiredClaimsOk() (*[]ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner, bool)`
 
 GetRequiredClaimsOk returns a tuple with the RequiredClaims field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRequiredClaims
 
-`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetRequiredClaims(v []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner)`
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetRequiredClaims(v []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner)`
 
 SetRequiredClaims sets RequiredClaims field to given value.
 
@@ -242,6 +246,91 @@ and a boolean to check if the value has been set.
 `func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetUpdatedAt(v time.Time)`
 
 SetUpdatedAt sets UpdatedAt field to given value.
+
+
+### GetUsername
+
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetUsername() string`
+
+GetUsername returns the Username field if non-nil, zero value otherwise.
+
+### GetUsernameOk
+
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetUsernameOk() (*string, bool)`
+
+GetUsernameOk returns a tuple with the Username field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUsername
+
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetUsername(v string)`
+
+SetUsername sets Username field to given value.
+
+
+### GetEmail
+
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetEmail() string`
+
+GetEmail returns the Email field if non-nil, zero value otherwise.
+
+### GetEmailOk
+
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetEmailOk() (*string, bool)`
+
+GetEmailOk returns a tuple with the Email field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEmail
+
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetEmail(v string)`
+
+SetEmail sets Email field to given value.
+
+### HasEmail
+
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) HasEmail() bool`
+
+HasEmail returns a boolean if a field has been set.
+
+### GetTeamName
+
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetTeamName() string`
+
+GetTeamName returns the TeamName field if non-nil, zero value otherwise.
+
+### GetTeamNameOk
+
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetTeamNameOk() (*string, bool)`
+
+GetTeamNameOk returns a tuple with the TeamName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTeamName
+
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetTeamName(v string)`
+
+SetTeamName sets TeamName field to given value.
+
+
+### GetIssuer
+
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetIssuer() string`
+
+GetIssuer returns the Issuer field if non-nil, zero value otherwise.
+
+### GetIssuerOk
+
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetIssuerOk() (*string, bool)`
+
+GetIssuerOk returns a tuple with the Issuer field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIssuer
+
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetIssuer(v string)`
+
+SetIssuer sets Issuer field to given value.
 
 
 

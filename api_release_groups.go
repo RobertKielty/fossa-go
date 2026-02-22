@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -121,7 +121,7 @@ func (a *ReleaseGroupsAPIService) CreateReleaseGroupExecute(r ApiCreateReleaseGr
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -132,7 +132,7 @@ func (a *ReleaseGroupsAPIService) CreateReleaseGroupExecute(r ApiCreateReleaseGr
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -256,7 +256,7 @@ func (a *ReleaseGroupsAPIService) CreateReleaseGroupReleasesExecute(r ApiCreateR
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -278,7 +278,7 @@ func (a *ReleaseGroupsAPIService) CreateReleaseGroupReleasesExecute(r ApiCreateR
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -400,7 +400,7 @@ func (a *ReleaseGroupsAPIService) DeleteReleaseGroupByIdExecute(r ApiDeleteRelea
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -506,7 +506,7 @@ func (a *ReleaseGroupsAPIService) DeleteReleaseGroupReleaseByIdExecute(r ApiDele
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -517,7 +517,7 @@ func (a *ReleaseGroupsAPIService) DeleteReleaseGroupReleaseByIdExecute(r ApiDele
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -624,7 +624,7 @@ func (a *ReleaseGroupsAPIService) DeprecatedGetReleaseGroupReleasesExecute(r Api
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -737,7 +737,7 @@ func (a *ReleaseGroupsAPIService) GetAllProjectsInReleaseGroupExecute(r ApiGetAl
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -953,7 +953,7 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupAttributionReportStatusExecute(
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -964,7 +964,7 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupAttributionReportStatusExecute(
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -975,7 +975,7 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupAttributionReportStatusExecute(
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1088,7 +1088,7 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupByIdExecute(r ApiGetReleaseGrou
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1205,7 +1205,7 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseByIdExecute(r ApiGetRele
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1322,7 +1322,7 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseLicensesExecute(r ApiGet
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1333,7 +1333,7 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseLicensesExecute(r ApiGet
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1450,7 +1450,7 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseObligationsExecute(r Api
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1461,7 +1461,7 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseObligationsExecute(r Api
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1578,7 +1578,7 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseRevisionsExecute(r ApiGe
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1695,7 +1695,7 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseScansExecute(r ApiGetRel
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1812,7 +1812,7 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseSummaryExecute(r ApiGetR
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1907,12 +1907,14 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupReleasesExecute(r ApiGetRelease
 		parameterAddToHeaderOrQuery(localVarQueryParams, "count", r.count, "form", "")
 	} else {
 		var defaultValue int32 = 10
+		parameterAddToHeaderOrQuery(localVarQueryParams, "count", defaultValue, "form", "")
 		r.count = &defaultValue
 	}
 	if r.page != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
 	} else {
 		var defaultValue int32 = 1
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
 		r.page = &defaultValue
 	}
 	if r.search != nil {
@@ -1958,7 +1960,7 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupReleasesExecute(r ApiGetRelease
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1969,7 +1971,7 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupReleasesExecute(r ApiGetRelease
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2001,6 +2003,7 @@ type ApiQueueReleaseGroupAttributionReportRequest struct {
 	format string
 	includeDeepDependencies *bool
 	includeDirectDependencies *bool
+	includeFOSSADependencies *bool
 	includeLicenseList *bool
 	includeLicenseScan *bool
 	includeProjectLicense *bool
@@ -2011,6 +2014,7 @@ type ApiQueueReleaseGroupAttributionReportRequest struct {
 	includeDependencySummary *bool
 	includeLicenseHeaders *bool
 	dependencyInfoOptions *[]string
+	isPublishing *bool
 }
 
 func (r ApiQueueReleaseGroupAttributionReportRequest) IncludeDeepDependencies(includeDeepDependencies bool) ApiQueueReleaseGroupAttributionReportRequest {
@@ -2020,6 +2024,11 @@ func (r ApiQueueReleaseGroupAttributionReportRequest) IncludeDeepDependencies(in
 
 func (r ApiQueueReleaseGroupAttributionReportRequest) IncludeDirectDependencies(includeDirectDependencies bool) ApiQueueReleaseGroupAttributionReportRequest {
 	r.includeDirectDependencies = &includeDirectDependencies
+	return r
+}
+
+func (r ApiQueueReleaseGroupAttributionReportRequest) IncludeFOSSADependencies(includeFOSSADependencies bool) ApiQueueReleaseGroupAttributionReportRequest {
+	r.includeFOSSADependencies = &includeFOSSADependencies
 	return r
 }
 
@@ -2070,6 +2079,12 @@ func (r ApiQueueReleaseGroupAttributionReportRequest) IncludeLicenseHeaders(incl
 
 func (r ApiQueueReleaseGroupAttributionReportRequest) DependencyInfoOptions(dependencyInfoOptions []string) ApiQueueReleaseGroupAttributionReportRequest {
 	r.dependencyInfoOptions = &dependencyInfoOptions
+	return r
+}
+
+// Whether to publish the report to the portal
+func (r ApiQueueReleaseGroupAttributionReportRequest) IsPublishing(isPublishing bool) ApiQueueReleaseGroupAttributionReportRequest {
+	r.isPublishing = &isPublishing
 	return r
 }
 
@@ -2128,6 +2143,9 @@ func (a *ReleaseGroupsAPIService) QueueReleaseGroupAttributionReportExecute(r Ap
 	if r.includeDirectDependencies != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDirectDependencies", r.includeDirectDependencies, "form", "")
 	}
+	if r.includeFOSSADependencies != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFOSSADependencies", r.includeFOSSADependencies, "form", "")
+	}
 	if r.includeLicenseList != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseList", r.includeLicenseList, "form", "")
 	}
@@ -2165,6 +2183,13 @@ func (a *ReleaseGroupsAPIService) QueueReleaseGroupAttributionReportExecute(r Ap
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "dependencyInfoOptions[]", t, "form", "multi")
 		}
+	}
+	if r.isPublishing != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "isPublishing", r.isPublishing, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "isPublishing", defaultValue, "form", "")
+		r.isPublishing = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2206,7 +2231,7 @@ func (a *ReleaseGroupsAPIService) QueueReleaseGroupAttributionReportExecute(r Ap
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2217,7 +2242,7 @@ func (a *ReleaseGroupsAPIService) QueueReleaseGroupAttributionReportExecute(r Ap
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2228,7 +2253,7 @@ func (a *ReleaseGroupsAPIService) QueueReleaseGroupAttributionReportExecute(r Ap
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2363,7 +2388,7 @@ func (a *ReleaseGroupsAPIService) UpdateReleaseGroupByIdExecute(r ApiUpdateRelea
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2491,7 +2516,7 @@ func (a *ReleaseGroupsAPIService) UpdateReleaseGroupReleaseByIdExecute(r ApiUpda
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2502,7 +2527,7 @@ func (a *ReleaseGroupsAPIService) UpdateReleaseGroupReleaseByIdExecute(r ApiUpda
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2513,7 +2538,7 @@ func (a *ReleaseGroupsAPIService) UpdateReleaseGroupReleaseByIdExecute(r ApiUpda
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

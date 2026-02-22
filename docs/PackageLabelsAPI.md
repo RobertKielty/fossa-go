@@ -4,6 +4,7 @@ All URIs are relative to *https://app.fossa.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**BulkAssignPackageLabels**](PackageLabelsAPI.md#BulkAssignPackageLabels) | **Post** /package-label-assignments/bulk | 
 [**CreatePackageLabel**](PackageLabelsAPI.md#CreatePackageLabel) | **Post** /package-labels | 
 [**CreatePackageLabelAssignments**](PackageLabelsAPI.md#CreatePackageLabelAssignments) | **Post** /package-label-assignments | 
 [**DeletePackageLabelAssignments**](PackageLabelsAPI.md#DeletePackageLabelAssignments) | **Delete** /package-label-assignments | 
@@ -11,6 +12,72 @@ Method | HTTP request | Description
 [**GetPackageLabelAssignments**](PackageLabelsAPI.md#GetPackageLabelAssignments) | **Get** /package-label-assignments | 
 [**GetPackageLabels**](PackageLabelsAPI.md#GetPackageLabels) | **Get** /package-labels | 
 
+
+
+## BulkAssignPackageLabels
+
+> GetPackageLabelAssignments200Response BulkAssignPackageLabels(ctx).BulkAssignPackageLabelsRequest(bulkAssignPackageLabelsRequest).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	bulkAssignPackageLabelsRequest := *openapiclient.NewBulkAssignPackageLabelsRequest([]string{"PackageLocators_example"}, int32(123), "Scope_example") // BulkAssignPackageLabelsRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.PackageLabelsAPI.BulkAssignPackageLabels(context.Background()).BulkAssignPackageLabelsRequest(bulkAssignPackageLabelsRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PackageLabelsAPI.BulkAssignPackageLabels``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `BulkAssignPackageLabels`: GetPackageLabelAssignments200Response
+	fmt.Fprintf(os.Stdout, "Response from `PackageLabelsAPI.BulkAssignPackageLabels`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiBulkAssignPackageLabelsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **bulkAssignPackageLabelsRequest** | [**BulkAssignPackageLabelsRequest**](BulkAssignPackageLabelsRequest.md) |  | 
+
+### Return type
+
+[**GetPackageLabelAssignments200Response**](GetPackageLabelAssignments200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreatePackageLabel
@@ -275,7 +342,7 @@ No authorization required
 
 ## GetPackageLabelAssignments
 
-> GetPackageLabelAssignments200Response GetPackageLabelAssignments(ctx).PackageId(packageId).PackageVersion(packageVersion).Scope(scope).ScopeId(scopeId).Execute()
+> GetPackageLabelAssignments200Response GetPackageLabelAssignments(ctx).FiltersPackageId(filtersPackageId).FiltersPackageVersion(filtersPackageVersion).FiltersScope(filtersScope).FiltersScopeId(filtersScopeId).Execute()
 
 
 
@@ -294,14 +361,14 @@ import (
 )
 
 func main() {
-	packageId := "npm+lodash" // string |  (optional)
-	packageVersion := "4.15.0" // string |  (optional)
-	scope := "project" // string |  (optional)
-	scopeId := "custom+1/my-cli-project or custom+1/my-cli-project/$revision1" // string |  (optional)
+	filtersPackageId := "npm+lodash" // string |  (optional)
+	filtersPackageVersion := "4.15.0" // string |  (optional)
+	filtersScope := "project" // string |  (optional)
+	filtersScopeId := "custom+1/my-cli-project or custom+1/my-cli-project/$revision1" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.PackageLabelsAPI.GetPackageLabelAssignments(context.Background()).PackageId(packageId).PackageVersion(packageVersion).Scope(scope).ScopeId(scopeId).Execute()
+	resp, r, err := apiClient.PackageLabelsAPI.GetPackageLabelAssignments(context.Background()).FiltersPackageId(filtersPackageId).FiltersPackageVersion(filtersPackageVersion).FiltersScope(filtersScope).FiltersScopeId(filtersScopeId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `PackageLabelsAPI.GetPackageLabelAssignments``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -322,10 +389,10 @@ Other parameters are passed through a pointer to a apiGetPackageLabelAssignments
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **packageId** | **string** |  | 
- **packageVersion** | **string** |  | 
- **scope** | **string** |  | 
- **scopeId** | **string** |  | 
+ **filtersPackageId** | **string** |  | 
+ **filtersPackageVersion** | **string** |  | 
+ **filtersScope** | **string** |  | 
+ **filtersScopeId** | **string** |  | 
 
 ### Return type
 

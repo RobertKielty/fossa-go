@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **RootProjects** | Pointer to [**[]GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner**](GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner.md) |  | [optional] 
 **LayerDepth** | Pointer to **float32** |  | [optional] 
 **Cpes** | Pointer to **[]string** |  | [optional] 
+**VendoredPaths** | Pointer to **[]string** |  | [optional] 
 **Version** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -414,6 +415,31 @@ SetCpes sets Cpes field to given value.
 `func (o *GetProjectDependencies200ResponseDependenciesInner) HasCpes() bool`
 
 HasCpes returns a boolean if a field has been set.
+
+### GetVendoredPaths
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) GetVendoredPaths() []string`
+
+GetVendoredPaths returns the VendoredPaths field if non-nil, zero value otherwise.
+
+### GetVendoredPathsOk
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) GetVendoredPathsOk() (*[]string, bool)`
+
+GetVendoredPathsOk returns a tuple with the VendoredPaths field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVendoredPaths
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) SetVendoredPaths(v []string)`
+
+SetVendoredPaths sets VendoredPaths field to given value.
+
+### HasVendoredPaths
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) HasVendoredPaths() bool`
+
+HasVendoredPaths returns a boolean if a field has been set.
 
 ### GetVersion
 

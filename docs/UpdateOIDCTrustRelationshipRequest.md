@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Audiences** | Pointer to **[]string** | Array of valid audiences for this trust relationship | [optional] 
-**RequiredClaims** | Pointer to [**[]ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner**](ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner.md) | Array of claim objects. Must contain at least one object with claim: \&quot;sub\&quot;. Additional objects with other claims are optional.  | [optional] 
+**RequiredClaims** | Pointer to [**[]ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner**](ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner.md) | Array of claim objects. Must contain at least one object with claim: \&quot;sub\&quot;. Additional objects with other claims are optional.  | [optional] 
 
 ## Methods
 
@@ -53,20 +53,20 @@ HasAudiences returns a boolean if a field has been set.
 
 ### GetRequiredClaims
 
-`func (o *UpdateOIDCTrustRelationshipRequest) GetRequiredClaims() []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner`
+`func (o *UpdateOIDCTrustRelationshipRequest) GetRequiredClaims() []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner`
 
 GetRequiredClaims returns the RequiredClaims field if non-nil, zero value otherwise.
 
 ### GetRequiredClaimsOk
 
-`func (o *UpdateOIDCTrustRelationshipRequest) GetRequiredClaimsOk() (*[]ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner, bool)`
+`func (o *UpdateOIDCTrustRelationshipRequest) GetRequiredClaimsOk() (*[]ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner, bool)`
 
 GetRequiredClaimsOk returns a tuple with the RequiredClaims field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRequiredClaims
 
-`func (o *UpdateOIDCTrustRelationshipRequest) SetRequiredClaims(v []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner)`
+`func (o *UpdateOIDCTrustRelationshipRequest) SetRequiredClaims(v []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner)`
 
 SetRequiredClaims sets RequiredClaims field to given value.
 

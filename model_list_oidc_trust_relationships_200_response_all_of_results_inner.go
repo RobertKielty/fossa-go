@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -35,14 +35,22 @@ type ListOIDCTrustRelationships200ResponseAllOfResultsInner struct {
 	Scope *string `json:"scope,omitempty"`
 	// The ID associated with the scope: either the organization ID or the team ID
 	ScopeId *int32 `json:"scopeId,omitempty"`
-	// Array of valid audiences for this trust relationship (max 5)
+	// Array of valid audiences for this trust relationship
 	Audiences []string `json:"audiences"`
 	// Array of claim objects. Must contain at least one object with claim: \"sub\". Additional objects with other claims are optional. 
-	RequiredClaims []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner `json:"requiredClaims"`
+	RequiredClaims []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner `json:"requiredClaims"`
 	// When the trust relationship was created
 	CreatedAt time.Time `json:"createdAt"`
 	// When the trust relationship was last updated
 	UpdatedAt time.Time `json:"updatedAt"`
+	// The username of the service account associated with this trust relationship
+	Username string `json:"username"`
+	// The email of the service account associated with this trust relationship (if available)
+	Email *string `json:"email,omitempty"`
+	// The name of the team (if scope is team)
+	TeamName string `json:"teamName"`
+	// The issuer URL of the OIDC Provider
+	Issuer string `json:"issuer"`
 }
 
 type _ListOIDCTrustRelationships200ResponseAllOfResultsInner ListOIDCTrustRelationships200ResponseAllOfResultsInner
@@ -51,7 +59,7 @@ type _ListOIDCTrustRelationships200ResponseAllOfResultsInner ListOIDCTrustRelati
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewListOIDCTrustRelationships200ResponseAllOfResultsInner(id int32, organizationId int32, userId int32, providerId int32, audiences []string, requiredClaims []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner, createdAt time.Time, updatedAt time.Time) *ListOIDCTrustRelationships200ResponseAllOfResultsInner {
+func NewListOIDCTrustRelationships200ResponseAllOfResultsInner(id int32, organizationId int32, userId int32, providerId int32, audiences []string, requiredClaims []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner, createdAt time.Time, updatedAt time.Time, username string, teamName string, issuer string) *ListOIDCTrustRelationships200ResponseAllOfResultsInner {
 	this := ListOIDCTrustRelationships200ResponseAllOfResultsInner{}
 	this.Id = id
 	this.OrganizationId = organizationId
@@ -61,6 +69,9 @@ func NewListOIDCTrustRelationships200ResponseAllOfResultsInner(id int32, organiz
 	this.RequiredClaims = requiredClaims
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
+	this.Username = username
+	this.TeamName = teamName
+	this.Issuer = issuer
 	return &this
 }
 
@@ -257,9 +268,9 @@ func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetAudiences(v 
 }
 
 // GetRequiredClaims returns the RequiredClaims field value
-func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetRequiredClaims() []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner {
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetRequiredClaims() []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner {
 	if o == nil {
-		var ret []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner
+		var ret []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner
 		return ret
 	}
 
@@ -268,7 +279,7 @@ func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetRequiredClai
 
 // GetRequiredClaimsOk returns a tuple with the RequiredClaims field value
 // and a boolean to check if the value has been set.
-func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetRequiredClaimsOk() ([]ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner, bool) {
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetRequiredClaimsOk() ([]ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -276,7 +287,7 @@ func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetRequiredClai
 }
 
 // SetRequiredClaims sets field value
-func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetRequiredClaims(v []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner) {
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetRequiredClaims(v []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner) {
 	o.RequiredClaims = v
 }
 
@@ -328,6 +339,110 @@ func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetUpdatedAt(v 
 	o.UpdatedAt = v
 }
 
+// GetUsername returns the Username field value
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetUsername() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Username
+}
+
+// GetUsernameOk returns a tuple with the Username field value
+// and a boolean to check if the value has been set.
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetUsernameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Username, true
+}
+
+// SetUsername sets field value
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetUsername(v string) {
+	o.Username = v
+}
+
+// GetEmail returns the Email field value if set, zero value otherwise.
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetEmail() string {
+	if o == nil || IsNil(o.Email) {
+		var ret string
+		return ret
+	}
+	return *o.Email
+}
+
+// GetEmailOk returns a tuple with the Email field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetEmailOk() (*string, bool) {
+	if o == nil || IsNil(o.Email) {
+		return nil, false
+	}
+	return o.Email, true
+}
+
+// HasEmail returns a boolean if a field has been set.
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) HasEmail() bool {
+	if o != nil && !IsNil(o.Email) {
+		return true
+	}
+
+	return false
+}
+
+// SetEmail gets a reference to the given string and assigns it to the Email field.
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetEmail(v string) {
+	o.Email = &v
+}
+
+// GetTeamName returns the TeamName field value
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetTeamName() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.TeamName
+}
+
+// GetTeamNameOk returns a tuple with the TeamName field value
+// and a boolean to check if the value has been set.
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetTeamNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.TeamName, true
+}
+
+// SetTeamName sets field value
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetTeamName(v string) {
+	o.TeamName = v
+}
+
+// GetIssuer returns the Issuer field value
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetIssuer() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Issuer
+}
+
+// GetIssuerOk returns a tuple with the Issuer field value
+// and a boolean to check if the value has been set.
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetIssuerOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Issuer, true
+}
+
+// SetIssuer sets field value
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetIssuer(v string) {
+	o.Issuer = v
+}
+
 func (o ListOIDCTrustRelationships200ResponseAllOfResultsInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -352,6 +467,12 @@ func (o ListOIDCTrustRelationships200ResponseAllOfResultsInner) ToMap() (map[str
 	toSerialize["requiredClaims"] = o.RequiredClaims
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
+	toSerialize["username"] = o.Username
+	if !IsNil(o.Email) {
+		toSerialize["email"] = o.Email
+	}
+	toSerialize["teamName"] = o.TeamName
+	toSerialize["issuer"] = o.Issuer
 	return toSerialize, nil
 }
 
@@ -368,6 +489,9 @@ func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) UnmarshalJSON(d
 		"requiredClaims",
 		"createdAt",
 		"updatedAt",
+		"username",
+		"teamName",
+		"issuer",
 	}
 
 	allProperties := make(map[string]interface{})

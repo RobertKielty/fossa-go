@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Results** | [**[]ListOIDCTrustRelationships200ResponseAllOfResultsInner**](ListOIDCTrustRelationships200ResponseAllOfResultsInner.md) | Array of OIDC Trust Relationships | 
+**Results** | [**[]ListOIDCTrustRelationships200ResponseAllOfResultsInner**](ListOIDCTrustRelationships200ResponseAllOfResultsInner.md) | Array of OIDC Trust Relationships with user, team, and provider details | 
 **PageSize** | **int32** | Number of items requested per page | [default to 10]
 **Last** | **int32** | ID of the last OIDC trust relationship in the results | 
 

@@ -6,8 +6,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Path** | **string** | The path to filter snippets by | 
 **Ids** | Pointer to **[]string** | Filter by specific snippet IDs | [optional] 
+**PackageIds** | Pointer to **[]string** | Filter by specific snippet package IDs | [optional] 
 **Search** | Pointer to **string** | Search term for filtering snippets | [optional] 
-**Confidence** | Pointer to **[]string** | Filter by confidence levels | [optional] 
+**RejectionStatus** | Pointer to **[]string** | Filter by rejection status | [optional] 
+**PackageLabels** | Pointer to **[]string** | Filter by package labels | [optional] 
 
 ## Methods
 
@@ -73,6 +75,31 @@ SetIds sets Ids field to given value.
 
 HasIds returns a boolean if a field has been set.
 
+### GetPackageIds
+
+`func (o *RejectSnippetsRequest) GetPackageIds() []string`
+
+GetPackageIds returns the PackageIds field if non-nil, zero value otherwise.
+
+### GetPackageIdsOk
+
+`func (o *RejectSnippetsRequest) GetPackageIdsOk() (*[]string, bool)`
+
+GetPackageIdsOk returns a tuple with the PackageIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPackageIds
+
+`func (o *RejectSnippetsRequest) SetPackageIds(v []string)`
+
+SetPackageIds sets PackageIds field to given value.
+
+### HasPackageIds
+
+`func (o *RejectSnippetsRequest) HasPackageIds() bool`
+
+HasPackageIds returns a boolean if a field has been set.
+
 ### GetSearch
 
 `func (o *RejectSnippetsRequest) GetSearch() string`
@@ -98,30 +125,55 @@ SetSearch sets Search field to given value.
 
 HasSearch returns a boolean if a field has been set.
 
-### GetConfidence
+### GetRejectionStatus
 
-`func (o *RejectSnippetsRequest) GetConfidence() []string`
+`func (o *RejectSnippetsRequest) GetRejectionStatus() []string`
 
-GetConfidence returns the Confidence field if non-nil, zero value otherwise.
+GetRejectionStatus returns the RejectionStatus field if non-nil, zero value otherwise.
 
-### GetConfidenceOk
+### GetRejectionStatusOk
 
-`func (o *RejectSnippetsRequest) GetConfidenceOk() (*[]string, bool)`
+`func (o *RejectSnippetsRequest) GetRejectionStatusOk() (*[]string, bool)`
 
-GetConfidenceOk returns a tuple with the Confidence field if it's non-nil, zero value otherwise
+GetRejectionStatusOk returns a tuple with the RejectionStatus field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetConfidence
+### SetRejectionStatus
 
-`func (o *RejectSnippetsRequest) SetConfidence(v []string)`
+`func (o *RejectSnippetsRequest) SetRejectionStatus(v []string)`
 
-SetConfidence sets Confidence field to given value.
+SetRejectionStatus sets RejectionStatus field to given value.
 
-### HasConfidence
+### HasRejectionStatus
 
-`func (o *RejectSnippetsRequest) HasConfidence() bool`
+`func (o *RejectSnippetsRequest) HasRejectionStatus() bool`
 
-HasConfidence returns a boolean if a field has been set.
+HasRejectionStatus returns a boolean if a field has been set.
+
+### GetPackageLabels
+
+`func (o *RejectSnippetsRequest) GetPackageLabels() []string`
+
+GetPackageLabels returns the PackageLabels field if non-nil, zero value otherwise.
+
+### GetPackageLabelsOk
+
+`func (o *RejectSnippetsRequest) GetPackageLabelsOk() (*[]string, bool)`
+
+GetPackageLabelsOk returns a tuple with the PackageLabels field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPackageLabels
+
+`func (o *RejectSnippetsRequest) SetPackageLabels(v []string)`
+
+SetPackageLabels sets PackageLabels field to given value.
+
+### HasPackageLabels
+
+`func (o *RejectSnippetsRequest) HasPackageLabels() bool`
+
+HasPackageLabels returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

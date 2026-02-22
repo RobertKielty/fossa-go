@@ -8,11 +8,13 @@ Method | HTTP request | Description
 [**DeleteIssueException**](IssuesAPI.md#DeleteIssueException) | **Delete** /v2/issues/exceptions/{id} | 
 [**DeleteIssueExceptions**](IssuesAPI.md#DeleteIssueExceptions) | **Delete** /v2/issues/exceptions | 
 [**DeleteProjectGenerateAttributionSlug**](IssuesAPI.md#DeleteProjectGenerateAttributionSlug) | **Delete** /projects/{locator}/generate_attribution_slug | 
+[**ExtendIssueException**](IssuesAPI.md#ExtendIssueException) | **Put** /v2/issues/exceptions/{id} | Extend an issue exception expiration date
 [**GetGlobalIssuesCSV**](IssuesAPI.md#GetGlobalIssuesCSV) | **Get** /v2/issues/csv/global | 
 [**GetIssue**](IssuesAPI.md#GetIssue) | **Get** /v2/issues/{issueId} | 
 [**GetIssueAffectedProjects**](IssuesAPI.md#GetIssueAffectedProjects) | **Get** /v2/issues/{issueId}/affected-projects | 
 [**GetIssueCWEs**](IssuesAPI.md#GetIssueCWEs) | **Get** /v2/issues/cwes | 
 [**GetIssueDiffComparisonSummaries**](IssuesAPI.md#GetIssueDiffComparisonSummaries) | **Get** /v2/issues/compare/summaries | 
+[**GetIssueException**](IssuesAPI.md#GetIssueException) | **Get** /v2/issues/exceptions/{id} | 
 [**GetIssueExceptions**](IssuesAPI.md#GetIssueExceptions) | **Get** /v2/issues/exceptions | 
 [**GetIssuePackageManagers**](IssuesAPI.md#GetIssuePackageManagers) | **Get** /v2/issues/package-managers | 
 [**GetIssueStatuses**](IssuesAPI.md#GetIssueStatuses) | **Get** /v2/issues/statuses | 
@@ -304,6 +306,77 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ExtendIssueException
+
+> ExtendIssueException(ctx, id).ExtendIssueExceptionRequest(extendIssueExceptionRequest).Execute()
+
+Extend an issue exception expiration date
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+    "time"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(56) // int32 | ID of the issue exception to extend
+	extendIssueExceptionRequest := *openapiclient.NewExtendIssueExceptionRequest(time.Now()) // ExtendIssueExceptionRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.IssuesAPI.ExtendIssueException(context.Background(), id).ExtendIssueExceptionRequest(extendIssueExceptionRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.ExtendIssueException``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** | ID of the issue exception to extend | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiExtendIssueExceptionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **extendIssueExceptionRequest** | [**ExtendIssueExceptionRequest**](ExtendIssueExceptionRequest.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetGlobalIssuesCSV
 
 > *os.File GetGlobalIssuesCSV(ctx).Email(email).Execute()
@@ -566,7 +639,7 @@ func main() {
 	scopeRevisionScanId := int32(56) // int32 | Revision scan ID (when scope[type] is \"project\") (optional)
 	scopeRelease := "scopeRelease_example" // string | Release group ID (when scope[type] is \"releaseGroup\") (optional)
 	scopeReleaseScanId := "scopeReleaseScanId_example" // string | Release scan ID (when scope[type] is \"releaseGroup\") (optional)
-	scopeCompareToRevision := "scopeCompareToRevision_example" // string | The revision ID to compare issues with. Only availabe for Project Scope. (optional)
+	scopeCompareToRevision := "scopeCompareToRevision_example" // string | The revision ID to compare issues with. Only available for Project Scope. (optional)
 	scopeCompareToChangeStatus := "scopeCompareToChangeStatus_example" // string | The status of issues to fetch when comparing issues. - New issues are present in the current revision but not in the comparison revision. - Remediated issues are present in the comparison revision but not in the current revision. - Unchanged issues are present in both revisions. Only available for Project Scope.  (optional)
 	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
 
@@ -600,7 +673,7 @@ Name | Type | Description  | Notes
  **scopeRevisionScanId** | **int32** | Revision scan ID (when scope[type] is \&quot;project\&quot;) | 
  **scopeRelease** | **string** | Release group ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
  **scopeReleaseScanId** | **string** | Release scan ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
- **scopeCompareToRevision** | **string** | The revision ID to compare issues with. Only availabe for Project Scope. | 
+ **scopeCompareToRevision** | **string** | The revision ID to compare issues with. Only available for Project Scope. | 
  **scopeCompareToChangeStatus** | **string** | The status of issues to fetch when comparing issues. - New issues are present in the current revision but not in the comparison revision. - Remediated issues are present in the comparison revision but not in the current revision. - Unchanged issues are present in both revisions. Only available for Project Scope.  | 
  **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
 
@@ -624,7 +697,7 @@ Name | Type | Description  | Notes
 
 ## GetIssueDiffComparisonSummaries
 
-> GetIssueDiffComparisonSummaries200Response GetIssueDiffComparisonSummaries(ctx).Category(category).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterCwes(filterCwes).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterEpss(filterEpss).FilterConfidence(filterConfidence).Execute()
+> GetIssueDiffComparisonSummaries200Response GetIssueDiffComparisonSummaries(ctx).Category(category).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToRelease(scopeCompareToRelease).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterCwes(filterCwes).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterEpss(filterEpss).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).Execute()
 
 
 
@@ -649,7 +722,10 @@ func main() {
 	scopeId := "scopeId_example" // string | Project or release group ID (required when scope[type] is \"project\" or \"releaseGroup\") (optional)
 	scopeRevision := "scopeRevision_example" // string | Revision ID (when scope[type] is \"project\") (optional)
 	scopeRevisionScanId := int32(56) // int32 | Revision scan ID (when scope[type] is \"project\") (optional)
-	scopeCompareToRevision := "scopeCompareToRevision_example" // string | The revision ID to compare issues with. Only availabe for Project Scope. (optional)
+	scopeRelease := "scopeRelease_example" // string | Release group ID (when scope[type] is \"releaseGroup\") (optional)
+	scopeReleaseScanId := "scopeReleaseScanId_example" // string | Release scan ID (when scope[type] is \"releaseGroup\") (optional)
+	scopeCompareToRevision := "scopeCompareToRevision_example" // string | The revision ID to compare issues with. Only available for Project Scope. (optional)
+	scopeCompareToRelease := "scopeCompareToRelease_example" // string | The release ID to compare issues with. Only available for Release Group Scope. (optional)
 	scopeCompareToChangeStatus := "scopeCompareToChangeStatus_example" // string | The status of issues to fetch when comparing issues. - New issues are present in the current revision but not in the comparison revision. - Remediated issues are present in the comparison revision but not in the current revision. - Unchanged issues are present in both revisions. Only available for Project Scope.  (optional)
 	ids := []int32{int32(123)} // []int32 | Filter by specific issue IDs (optional)
 	filterRevisionIds := []string{"Inner_example"} // []string | Filter by specific revision IDs (optional)
@@ -670,10 +746,11 @@ func main() {
 	filterIgnoreReason := []string{"FilterIgnoreReason_example"} // []string | Filter by vuln ignore reason (when category is \"vulnerability\") This value appears in the vulnerabilities.analysis.detail field in CycloneDX SBOM reports  (optional)
 	filterEpss := *openapiclient.NewGetIssueDiffComparisonSummariesFilterEpssParameter() // GetIssueDiffComparisonSummariesFilterEpssParameter | Filter by epss 'score' or 'percentile'. All fields are required.  Only available to premium users. (optional)
 	filterConfidence := []string{"FilterConfidence_example"} // []string | Filter issues by their binary dependency confidence level(s) (optional)
+	filterIssueSource := openapiclient.getIssueStatuses_filter_issueSource____parameter{ArrayOfString: new([]string)} // GetIssueStatusesFilterIssueSourceParameter | Filter by issue source. Use 'dependency' and 'snippet' to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use 'managed-dependency' and 'vendored-dependency' to filter dependency issues by whether the dependency is managed or vendored.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IssuesAPI.GetIssueDiffComparisonSummaries(context.Background()).Category(category).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterCwes(filterCwes).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterEpss(filterEpss).FilterConfidence(filterConfidence).Execute()
+	resp, r, err := apiClient.IssuesAPI.GetIssueDiffComparisonSummaries(context.Background()).Category(category).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToRelease(scopeCompareToRelease).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterCwes(filterCwes).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterEpss(filterEpss).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.GetIssueDiffComparisonSummaries``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -699,7 +776,10 @@ Name | Type | Description  | Notes
  **scopeId** | **string** | Project or release group ID (required when scope[type] is \&quot;project\&quot; or \&quot;releaseGroup\&quot;) | 
  **scopeRevision** | **string** | Revision ID (when scope[type] is \&quot;project\&quot;) | 
  **scopeRevisionScanId** | **int32** | Revision scan ID (when scope[type] is \&quot;project\&quot;) | 
- **scopeCompareToRevision** | **string** | The revision ID to compare issues with. Only availabe for Project Scope. | 
+ **scopeRelease** | **string** | Release group ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
+ **scopeReleaseScanId** | **string** | Release scan ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
+ **scopeCompareToRevision** | **string** | The revision ID to compare issues with. Only available for Project Scope. | 
+ **scopeCompareToRelease** | **string** | The release ID to compare issues with. Only available for Release Group Scope. | 
  **scopeCompareToChangeStatus** | **string** | The status of issues to fetch when comparing issues. - New issues are present in the current revision but not in the comparison revision. - Remediated issues are present in the comparison revision but not in the current revision. - Unchanged issues are present in both revisions. Only available for Project Scope.  | 
  **ids** | **[]int32** | Filter by specific issue IDs | 
  **filterRevisionIds** | **[]string** | Filter by specific revision IDs | 
@@ -720,10 +800,81 @@ Name | Type | Description  | Notes
  **filterIgnoreReason** | **[]string** | Filter by vuln ignore reason (when category is \&quot;vulnerability\&quot;) This value appears in the vulnerabilities.analysis.detail field in CycloneDX SBOM reports  | 
  **filterEpss** | [**GetIssueDiffComparisonSummariesFilterEpssParameter**](GetIssueDiffComparisonSummariesFilterEpssParameter.md) | Filter by epss &#39;score&#39; or &#39;percentile&#39;. All fields are required.  Only available to premium users. | 
  **filterConfidence** | **[]string** | Filter issues by their binary dependency confidence level(s) | 
+ **filterIssueSource** | [**GetIssueStatusesFilterIssueSourceParameter**](GetIssueStatusesFilterIssueSourceParameter.md) | Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored.  | 
 
 ### Return type
 
 [**GetIssueDiffComparisonSummaries200Response**](GetIssueDiffComparisonSummaries200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetIssueException
+
+> GetIssueException200Response GetIssueException(ctx, id).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(56) // int32 | ID of the issue exception
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.IssuesAPI.GetIssueException(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.GetIssueException``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetIssueException`: GetIssueException200Response
+	fmt.Fprintf(os.Stdout, "Response from `IssuesAPI.GetIssueException`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** | ID of the issue exception | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetIssueExceptionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**GetIssueException200Response**](GetIssueException200Response.md)
 
 ### Authorization
 
@@ -901,7 +1052,7 @@ Name | Type | Description  | Notes
 
 ## GetIssueStatuses
 
-> GetIssueStatuses200Response GetIssueStatuses(ctx).Category(category).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).Execute()
+> GetIssueStatuses200Response GetIssueStatuses(ctx).Category(category).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterIssueSource(filterIssueSource).Execute()
 
 
 
@@ -928,7 +1079,7 @@ func main() {
 	scopeRevisionScanId := int32(56) // int32 | Revision scan ID (when scope[type] is \"project\") (optional)
 	scopeRelease := "scopeRelease_example" // string | Release group ID (when scope[type] is \"releaseGroup\") (optional)
 	scopeReleaseScanId := "scopeReleaseScanId_example" // string | Release scan ID (when scope[type] is \"releaseGroup\") (optional)
-	scopeCompareToRevision := "scopeCompareToRevision_example" // string | The revision ID to compare issues with. Only availabe for Project Scope. (optional)
+	scopeCompareToRevision := "scopeCompareToRevision_example" // string | The revision ID to compare issues with. Only available for Project Scope. (optional)
 	scopeCompareToChangeStatus := "scopeCompareToChangeStatus_example" // string | The status of issues to fetch when comparing issues. - New issues are present in the current revision but not in the comparison revision. - Remediated issues are present in the comparison revision but not in the current revision. - Unchanged issues are present in both revisions. Only available for Project Scope.  (optional)
 	ids := []int32{int32(123)} // []int32 | Filter by specific issue IDs (optional)
 	filterRevisionIds := []string{"Inner_example"} // []string | Filter by specific revision IDs (optional)
@@ -947,10 +1098,11 @@ func main() {
 	filterExploitMaturity := []string{"FilterExploitMaturity_example"} // []string | Filter by vuln exploit maturity (when category is \"vulnerability\") (optional)
 	filterIgnoreReason := []string{"FilterIgnoreReason_example"} // []string | Filter by vuln ignore reason (when category is \"vulnerability\") This value appears in the vulnerabilities.analysis.detail field in CycloneDX SBOM reports  (optional)
 	filterLicenses := []string{"Inner_example"} // []string | Filter by issues affected by a set of license ID's (when category is \"licensing\") (optional)
+	filterIssueSource := openapiclient.getIssueStatuses_filter_issueSource____parameter{ArrayOfString: new([]string)} // GetIssueStatusesFilterIssueSourceParameter | Filter by issue source. Use 'dependency' and 'snippet' to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use 'managed-dependency' and 'vendored-dependency' to filter dependency issues by whether the dependency is managed or vendored.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IssuesAPI.GetIssueStatuses(context.Background()).Category(category).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).Execute()
+	resp, r, err := apiClient.IssuesAPI.GetIssueStatuses(context.Background()).Category(category).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterIssueSource(filterIssueSource).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.GetIssueStatuses``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -978,7 +1130,7 @@ Name | Type | Description  | Notes
  **scopeRevisionScanId** | **int32** | Revision scan ID (when scope[type] is \&quot;project\&quot;) | 
  **scopeRelease** | **string** | Release group ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
  **scopeReleaseScanId** | **string** | Release scan ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
- **scopeCompareToRevision** | **string** | The revision ID to compare issues with. Only availabe for Project Scope. | 
+ **scopeCompareToRevision** | **string** | The revision ID to compare issues with. Only available for Project Scope. | 
  **scopeCompareToChangeStatus** | **string** | The status of issues to fetch when comparing issues. - New issues are present in the current revision but not in the comparison revision. - Remediated issues are present in the comparison revision but not in the current revision. - Unchanged issues are present in both revisions. Only available for Project Scope.  | 
  **ids** | **[]int32** | Filter by specific issue IDs | 
  **filterRevisionIds** | **[]string** | Filter by specific revision IDs | 
@@ -997,6 +1149,7 @@ Name | Type | Description  | Notes
  **filterExploitMaturity** | **[]string** | Filter by vuln exploit maturity (when category is \&quot;vulnerability\&quot;) | 
  **filterIgnoreReason** | **[]string** | Filter by vuln ignore reason (when category is \&quot;vulnerability\&quot;) This value appears in the vulnerabilities.analysis.detail field in CycloneDX SBOM reports  | 
  **filterLicenses** | **[]string** | Filter by issues affected by a set of license ID&#39;s (when category is \&quot;licensing\&quot;) | 
+ **filterIssueSource** | [**GetIssueStatusesFilterIssueSourceParameter**](GetIssueStatusesFilterIssueSourceParameter.md) | Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored.  | 
 
 ### Return type
 
@@ -1018,7 +1171,7 @@ Name | Type | Description  | Notes
 
 ## GetIssues
 
-> GetIssues200Response GetIssues(ctx).Category(category).ScopeType(scopeType).Csv(csv).IncludeDirectDependencyOriginPaths(includeDirectDependencyOriginPaths).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterCwes(filterCwes).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundBefore(filterFoundBefore).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterEpss(filterEpss).FilterConfidence(filterConfidence).Sort(sort).Page(page).Count(count).Execute()
+> GetIssues200Response GetIssues(ctx).Category(category).ScopeType(scopeType).Csv(csv).IncludeDirectDependencyOriginPaths(includeDirectDependencyOriginPaths).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterCwes(filterCwes).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundBefore(filterFoundBefore).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterEpss(filterEpss).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).Sort(sort).Page(page).Count(count).Execute()
 
 
 
@@ -1048,7 +1201,7 @@ func main() {
 	scopeRevisionScanId := int32(56) // int32 | Revision scan ID (when scope[type] is \"project\") (optional)
 	scopeRelease := "scopeRelease_example" // string | Release group ID (when scope[type] is \"releaseGroup\") (optional)
 	scopeReleaseScanId := "scopeReleaseScanId_example" // string | Release scan ID (when scope[type] is \"releaseGroup\") (optional)
-	scopeCompareToRevision := "scopeCompareToRevision_example" // string | The revision ID to compare issues with. Only availabe for Project Scope. (optional)
+	scopeCompareToRevision := "scopeCompareToRevision_example" // string | The revision ID to compare issues with. Only available for Project Scope. (optional)
 	scopeCompareToChangeStatus := "scopeCompareToChangeStatus_example" // string | The status of issues to fetch when comparing issues. - New issues are present in the current revision but not in the comparison revision. - Remediated issues are present in the comparison revision but not in the current revision. - Unchanged issues are present in both revisions. Only available for Project Scope.  (optional)
 	ids := []int32{int32(123)} // []int32 | Filter by specific issue IDs (optional)
 	filterRevisionIds := []string{"Inner_example"} // []string | Filter by specific revision IDs (optional)
@@ -1070,13 +1223,14 @@ func main() {
 	filterIgnoreReason := []string{"FilterIgnoreReason_example"} // []string | Filter by vuln ignore reason (when category is \"vulnerability\") This value appears in the vulnerabilities.analysis.detail field in CycloneDX SBOM reports  (optional)
 	filterEpss := *openapiclient.NewGetIssueDiffComparisonSummariesFilterEpssParameter() // GetIssueDiffComparisonSummariesFilterEpssParameter | Filter by epss 'score' or 'percentile'. All fields are required.  Only available to premium users. (optional)
 	filterConfidence := []string{"FilterConfidence_example"} // []string | Filter issues by their binary dependency confidence level(s) (optional)
+	filterIssueSource := openapiclient.getIssueStatuses_filter_issueSource____parameter{ArrayOfString: new([]string)} // GetIssueStatusesFilterIssueSourceParameter | Filter by issue source. Use 'dependency' and 'snippet' to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use 'managed-dependency' and 'vendored-dependency' to filter dependency issues by whether the dependency is managed or vendored.  (optional)
 	sort := "sort_example" // string | Sort by package name, when the issue was created, or severity (when category is \"vulnerability\")  (optional)
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
 	count := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 20)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IssuesAPI.GetIssues(context.Background()).Category(category).ScopeType(scopeType).Csv(csv).IncludeDirectDependencyOriginPaths(includeDirectDependencyOriginPaths).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterCwes(filterCwes).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundBefore(filterFoundBefore).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterEpss(filterEpss).FilterConfidence(filterConfidence).Sort(sort).Page(page).Count(count).Execute()
+	resp, r, err := apiClient.IssuesAPI.GetIssues(context.Background()).Category(category).ScopeType(scopeType).Csv(csv).IncludeDirectDependencyOriginPaths(includeDirectDependencyOriginPaths).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterCwes(filterCwes).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundBefore(filterFoundBefore).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterEpss(filterEpss).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).Sort(sort).Page(page).Count(count).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.GetIssues``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1107,7 +1261,7 @@ Name | Type | Description  | Notes
  **scopeRevisionScanId** | **int32** | Revision scan ID (when scope[type] is \&quot;project\&quot;) | 
  **scopeRelease** | **string** | Release group ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
  **scopeReleaseScanId** | **string** | Release scan ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
- **scopeCompareToRevision** | **string** | The revision ID to compare issues with. Only availabe for Project Scope. | 
+ **scopeCompareToRevision** | **string** | The revision ID to compare issues with. Only available for Project Scope. | 
  **scopeCompareToChangeStatus** | **string** | The status of issues to fetch when comparing issues. - New issues are present in the current revision but not in the comparison revision. - Remediated issues are present in the comparison revision but not in the current revision. - Unchanged issues are present in both revisions. Only available for Project Scope.  | 
  **ids** | **[]int32** | Filter by specific issue IDs | 
  **filterRevisionIds** | **[]string** | Filter by specific revision IDs | 
@@ -1129,6 +1283,7 @@ Name | Type | Description  | Notes
  **filterIgnoreReason** | **[]string** | Filter by vuln ignore reason (when category is \&quot;vulnerability\&quot;) This value appears in the vulnerabilities.analysis.detail field in CycloneDX SBOM reports  | 
  **filterEpss** | [**GetIssueDiffComparisonSummariesFilterEpssParameter**](GetIssueDiffComparisonSummariesFilterEpssParameter.md) | Filter by epss &#39;score&#39; or &#39;percentile&#39;. All fields are required.  Only available to premium users. | 
  **filterConfidence** | **[]string** | Filter issues by their binary dependency confidence level(s) | 
+ **filterIssueSource** | [**GetIssueStatusesFilterIssueSourceParameter**](GetIssueStatusesFilterIssueSourceParameter.md) | Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored.  | 
  **sort** | **string** | Sort by package name, when the issue was created, or severity (when category is \&quot;vulnerability\&quot;)  | 
  **page** | **int32** | The specific page of data to return | [default to 1]
  **count** | **int32** | The number of items to return in each page of results | [default to 20]
@@ -1229,7 +1384,7 @@ Name | Type | Description  | Notes
 
 ## GetIssuesByRevision
 
-> GetIssuesByRevision200Response GetIssuesByRevision(ctx).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).Sort(sort).Page(page).Count(count).Execute()
+> GetIssuesByRevision200Response GetIssuesByRevision(ctx).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterIssueSource(filterIssueSource).Sort(sort).Page(page).Count(count).Execute()
 
 
 
@@ -1257,7 +1412,7 @@ func main() {
 	scopeRevisionScanId := int32(56) // int32 | Revision scan ID (when scope[type] is \"project\") (optional)
 	scopeRelease := "scopeRelease_example" // string | Release group ID (when scope[type] is \"releaseGroup\") (optional)
 	scopeReleaseScanId := "scopeReleaseScanId_example" // string | Release scan ID (when scope[type] is \"releaseGroup\") (optional)
-	scopeCompareToRevision := "scopeCompareToRevision_example" // string | The revision ID to compare issues with. Only availabe for Project Scope. (optional)
+	scopeCompareToRevision := "scopeCompareToRevision_example" // string | The revision ID to compare issues with. Only available for Project Scope. (optional)
 	scopeCompareToChangeStatus := "scopeCompareToChangeStatus_example" // string | The status of issues to fetch when comparing issues. - New issues are present in the current revision but not in the comparison revision. - Remediated issues are present in the comparison revision but not in the current revision. - Unchanged issues are present in both revisions. Only available for Project Scope.  (optional)
 	ids := []int32{int32(123)} // []int32 | Filter by specific issue IDs (optional)
 	filterRevisionIds := []string{"Inner_example"} // []string | Filter by specific revision IDs (optional)
@@ -1276,13 +1431,14 @@ func main() {
 	filterExploitMaturity := []string{"FilterExploitMaturity_example"} // []string | Filter by vuln exploit maturity (when category is \"vulnerability\") (optional)
 	filterIgnoreReason := []string{"FilterIgnoreReason_example"} // []string | Filter by vuln ignore reason (when category is \"vulnerability\") This value appears in the vulnerabilities.analysis.detail field in CycloneDX SBOM reports  (optional)
 	filterLicenses := []string{"Inner_example"} // []string | Filter by issues affected by a set of license ID's (when category is \"licensing\") (optional)
+	filterIssueSource := openapiclient.getIssueStatuses_filter_issueSource____parameter{ArrayOfString: new([]string)} // GetIssueStatusesFilterIssueSourceParameter | Filter by issue source. Use 'dependency' and 'snippet' to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use 'managed-dependency' and 'vendored-dependency' to filter dependency issues by whether the dependency is managed or vendored.  (optional)
 	sort := "sort_example" // string | Sort by package name, when the issue was created, or total number of issues  (optional)
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
 	count := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 20)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IssuesAPI.GetIssuesByRevision(context.Background()).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).Sort(sort).Page(page).Count(count).Execute()
+	resp, r, err := apiClient.IssuesAPI.GetIssuesByRevision(context.Background()).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterIssueSource(filterIssueSource).Sort(sort).Page(page).Count(count).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.GetIssuesByRevision``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1311,7 +1467,7 @@ Name | Type | Description  | Notes
  **scopeRevisionScanId** | **int32** | Revision scan ID (when scope[type] is \&quot;project\&quot;) | 
  **scopeRelease** | **string** | Release group ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
  **scopeReleaseScanId** | **string** | Release scan ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
- **scopeCompareToRevision** | **string** | The revision ID to compare issues with. Only availabe for Project Scope. | 
+ **scopeCompareToRevision** | **string** | The revision ID to compare issues with. Only available for Project Scope. | 
  **scopeCompareToChangeStatus** | **string** | The status of issues to fetch when comparing issues. - New issues are present in the current revision but not in the comparison revision. - Remediated issues are present in the comparison revision but not in the current revision. - Unchanged issues are present in both revisions. Only available for Project Scope.  | 
  **ids** | **[]int32** | Filter by specific issue IDs | 
  **filterRevisionIds** | **[]string** | Filter by specific revision IDs | 
@@ -1330,6 +1486,7 @@ Name | Type | Description  | Notes
  **filterExploitMaturity** | **[]string** | Filter by vuln exploit maturity (when category is \&quot;vulnerability\&quot;) | 
  **filterIgnoreReason** | **[]string** | Filter by vuln ignore reason (when category is \&quot;vulnerability\&quot;) This value appears in the vulnerabilities.analysis.detail field in CycloneDX SBOM reports  | 
  **filterLicenses** | **[]string** | Filter by issues affected by a set of license ID&#39;s (when category is \&quot;licensing\&quot;) | 
+ **filterIssueSource** | [**GetIssueStatusesFilterIssueSourceParameter**](GetIssueStatusesFilterIssueSourceParameter.md) | Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored.  | 
  **sort** | **string** | Sort by package name, when the issue was created, or total number of issues  | 
  **page** | **int32** | The specific page of data to return | [default to 1]
  **count** | **int32** | The number of items to return in each page of results | [default to 20]
@@ -1744,7 +1901,7 @@ Name | Type | Description  | Notes
 
 ## UpdateIssues
 
-> UpdateIssues200Response UpdateIssues(ctx).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterConfidence(filterConfidence).UpdateIssuesRequest(updateIssuesRequest).Execute()
+> UpdateIssues200Response UpdateIssues(ctx).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).UpdateIssuesRequest(updateIssuesRequest).Execute()
 
 
 
@@ -1772,7 +1929,7 @@ func main() {
 	scopeRevisionScanId := int32(56) // int32 | Revision scan ID (when scope[type] is \"project\") (optional)
 	scopeRelease := "scopeRelease_example" // string | Release group ID (when scope[type] is \"releaseGroup\") (optional)
 	scopeReleaseScanId := "scopeReleaseScanId_example" // string | Release scan ID (when scope[type] is \"releaseGroup\") (optional)
-	scopeCompareToRevision := "scopeCompareToRevision_example" // string | The revision ID to compare issues with. Only availabe for Project Scope. (optional)
+	scopeCompareToRevision := "scopeCompareToRevision_example" // string | The revision ID to compare issues with. Only available for Project Scope. (optional)
 	scopeCompareToChangeStatus := "scopeCompareToChangeStatus_example" // string | The status of issues to fetch when comparing issues. - New issues are present in the current revision but not in the comparison revision. - Remediated issues are present in the comparison revision but not in the current revision. - Unchanged issues are present in both revisions. Only available for Project Scope.  (optional)
 	ids := []int32{int32(123)} // []int32 | Filter by specific issue IDs (optional)
 	filterRevisionIds := []string{"Inner_example"} // []string | Filter by specific revision IDs (optional)
@@ -1792,11 +1949,12 @@ func main() {
 	filterIgnoreReason := []string{"FilterIgnoreReason_example"} // []string | Filter by vuln ignore reason (when category is \"vulnerability\") This value appears in the vulnerabilities.analysis.detail field in CycloneDX SBOM reports  (optional)
 	filterLicenses := []string{"Inner_example"} // []string | Filter by issues affected by a set of license ID's (when category is \"licensing\") (optional)
 	filterConfidence := []string{"FilterConfidence_example"} // []string | Filter issues by their binary dependency confidence level(s) (optional)
+	filterIssueSource := openapiclient.getIssueStatuses_filter_issueSource____parameter{ArrayOfString: new([]string)} // GetIssueStatusesFilterIssueSourceParameter | Filter by issue source. Use 'dependency' and 'snippet' to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use 'managed-dependency' and 'vendored-dependency' to filter dependency issues by whether the dependency is managed or vendored.  (optional)
 	updateIssuesRequest := openapiclient.updateIssues_request{UpdateIssuesRequestOneOf: openapiclient.NewUpdateIssuesRequestOneOf()} // UpdateIssuesRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IssuesAPI.UpdateIssues(context.Background()).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterConfidence(filterConfidence).UpdateIssuesRequest(updateIssuesRequest).Execute()
+	resp, r, err := apiClient.IssuesAPI.UpdateIssues(context.Background()).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).UpdateIssuesRequest(updateIssuesRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.UpdateIssues``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1825,7 +1983,7 @@ Name | Type | Description  | Notes
  **scopeRevisionScanId** | **int32** | Revision scan ID (when scope[type] is \&quot;project\&quot;) | 
  **scopeRelease** | **string** | Release group ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
  **scopeReleaseScanId** | **string** | Release scan ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
- **scopeCompareToRevision** | **string** | The revision ID to compare issues with. Only availabe for Project Scope. | 
+ **scopeCompareToRevision** | **string** | The revision ID to compare issues with. Only available for Project Scope. | 
  **scopeCompareToChangeStatus** | **string** | The status of issues to fetch when comparing issues. - New issues are present in the current revision but not in the comparison revision. - Remediated issues are present in the comparison revision but not in the current revision. - Unchanged issues are present in both revisions. Only available for Project Scope.  | 
  **ids** | **[]int32** | Filter by specific issue IDs | 
  **filterRevisionIds** | **[]string** | Filter by specific revision IDs | 
@@ -1845,6 +2003,7 @@ Name | Type | Description  | Notes
  **filterIgnoreReason** | **[]string** | Filter by vuln ignore reason (when category is \&quot;vulnerability\&quot;) This value appears in the vulnerabilities.analysis.detail field in CycloneDX SBOM reports  | 
  **filterLicenses** | **[]string** | Filter by issues affected by a set of license ID&#39;s (when category is \&quot;licensing\&quot;) | 
  **filterConfidence** | **[]string** | Filter issues by their binary dependency confidence level(s) | 
+ **filterIssueSource** | [**GetIssueStatusesFilterIssueSourceParameter**](GetIssueStatusesFilterIssueSourceParameter.md) | Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored.  | 
  **updateIssuesRequest** | [**UpdateIssuesRequest**](UpdateIssuesRequest.md) |  | 
 
 ### Return type

@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -24,8 +24,9 @@ var _ MappedNullable = &GetSnippetMatchDetails200ResponseMatchDetails{}
 type GetSnippetMatchDetails200ResponseMatchDetails struct {
 	// The file path where the match was detected
 	Path string `json:"path"`
-	// Percentage match confidence for this specific path
+	// Match percentage for this specific match
 	MatchPercentage float32 `json:"matchPercentage"`
+	RejectionDetails *GetSnippets200ResponseResultsInnerRejectionDetails `json:"rejectionDetails,omitempty"`
 	// Code lines from the reference (third-party) source
 	ReferenceCode []GetSnippetMatchDetails200ResponseMatchDetailsAllOfReferenceCodeInner `json:"referenceCode"`
 	// Code lines from the detected source in the user's project
@@ -103,6 +104,38 @@ func (o *GetSnippetMatchDetails200ResponseMatchDetails) SetMatchPercentage(v flo
 	o.MatchPercentage = v
 }
 
+// GetRejectionDetails returns the RejectionDetails field value if set, zero value otherwise.
+func (o *GetSnippetMatchDetails200ResponseMatchDetails) GetRejectionDetails() GetSnippets200ResponseResultsInnerRejectionDetails {
+	if o == nil || IsNil(o.RejectionDetails) {
+		var ret GetSnippets200ResponseResultsInnerRejectionDetails
+		return ret
+	}
+	return *o.RejectionDetails
+}
+
+// GetRejectionDetailsOk returns a tuple with the RejectionDetails field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetSnippetMatchDetails200ResponseMatchDetails) GetRejectionDetailsOk() (*GetSnippets200ResponseResultsInnerRejectionDetails, bool) {
+	if o == nil || IsNil(o.RejectionDetails) {
+		return nil, false
+	}
+	return o.RejectionDetails, true
+}
+
+// HasRejectionDetails returns a boolean if a field has been set.
+func (o *GetSnippetMatchDetails200ResponseMatchDetails) HasRejectionDetails() bool {
+	if o != nil && !IsNil(o.RejectionDetails) {
+		return true
+	}
+
+	return false
+}
+
+// SetRejectionDetails gets a reference to the given GetSnippets200ResponseResultsInnerRejectionDetails and assigns it to the RejectionDetails field.
+func (o *GetSnippetMatchDetails200ResponseMatchDetails) SetRejectionDetails(v GetSnippets200ResponseResultsInnerRejectionDetails) {
+	o.RejectionDetails = &v
+}
+
 // GetReferenceCode returns the ReferenceCode field value
 func (o *GetSnippetMatchDetails200ResponseMatchDetails) GetReferenceCode() []GetSnippetMatchDetails200ResponseMatchDetailsAllOfReferenceCodeInner {
 	if o == nil {
@@ -163,6 +196,9 @@ func (o GetSnippetMatchDetails200ResponseMatchDetails) ToMap() (map[string]inter
 	toSerialize := map[string]interface{}{}
 	toSerialize["path"] = o.Path
 	toSerialize["matchPercentage"] = o.MatchPercentage
+	if !IsNil(o.RejectionDetails) {
+		toSerialize["rejectionDetails"] = o.RejectionDetails
+	}
 	toSerialize["referenceCode"] = o.ReferenceCode
 	toSerialize["detectedCode"] = o.DetectedCode
 	return toSerialize, nil
