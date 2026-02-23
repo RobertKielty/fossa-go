@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Approved** | **int32** | Number of approved issues | 
 **Denied** | **int32** | Number of denied issues | 
 **Flagged** | **int32** | Number of flagged issues | 
 **Unknown** | **int32** | Number of unknown issues | 
@@ -13,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewGetSnippets200ResponseResultsInnerIssueCountsLicensing
 
-`func NewGetSnippets200ResponseResultsInnerIssueCountsLicensing(approved int32, denied int32, flagged int32, unknown int32, ) *GetSnippets200ResponseResultsInnerIssueCountsLicensing`
+`func NewGetSnippets200ResponseResultsInnerIssueCountsLicensing(denied int32, flagged int32, unknown int32, ) *GetSnippets200ResponseResultsInnerIssueCountsLicensing`
 
 NewGetSnippets200ResponseResultsInnerIssueCountsLicensing instantiates a new GetSnippets200ResponseResultsInnerIssueCountsLicensing object
 This constructor will assign default values to properties that have it defined,
@@ -27,26 +26,6 @@ will change when the set of required properties is changed
 NewGetSnippets200ResponseResultsInnerIssueCountsLicensingWithDefaults instantiates a new GetSnippets200ResponseResultsInnerIssueCountsLicensing object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetApproved
-
-`func (o *GetSnippets200ResponseResultsInnerIssueCountsLicensing) GetApproved() int32`
-
-GetApproved returns the Approved field if non-nil, zero value otherwise.
-
-### GetApprovedOk
-
-`func (o *GetSnippets200ResponseResultsInnerIssueCountsLicensing) GetApprovedOk() (*int32, bool)`
-
-GetApprovedOk returns a tuple with the Approved field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetApproved
-
-`func (o *GetSnippets200ResponseResultsInnerIssueCountsLicensing) SetApproved(v int32)`
-
-SetApproved sets Approved field to given value.
-
 
 ### GetDenied
 

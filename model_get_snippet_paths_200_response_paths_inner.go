@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -28,6 +28,8 @@ type GetSnippetPaths200ResponsePathsInner struct {
 	Name string `json:"name"`
 	// Full path to the file or directory
 	Path string `json:"path"`
+	// Number of snippets found at this path
+	Count int32 `json:"count"`
 }
 
 type _GetSnippetPaths200ResponsePathsInner GetSnippetPaths200ResponsePathsInner
@@ -36,11 +38,12 @@ type _GetSnippetPaths200ResponsePathsInner GetSnippetPaths200ResponsePathsInner
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetSnippetPaths200ResponsePathsInner(type_ string, name string, path string) *GetSnippetPaths200ResponsePathsInner {
+func NewGetSnippetPaths200ResponsePathsInner(type_ string, name string, path string, count int32) *GetSnippetPaths200ResponsePathsInner {
 	this := GetSnippetPaths200ResponsePathsInner{}
 	this.Type = type_
 	this.Name = name
 	this.Path = path
+	this.Count = count
 	return &this
 }
 
@@ -124,6 +127,30 @@ func (o *GetSnippetPaths200ResponsePathsInner) SetPath(v string) {
 	o.Path = v
 }
 
+// GetCount returns the Count field value
+func (o *GetSnippetPaths200ResponsePathsInner) GetCount() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.Count
+}
+
+// GetCountOk returns a tuple with the Count field value
+// and a boolean to check if the value has been set.
+func (o *GetSnippetPaths200ResponsePathsInner) GetCountOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Count, true
+}
+
+// SetCount sets field value
+func (o *GetSnippetPaths200ResponsePathsInner) SetCount(v int32) {
+	o.Count = v
+}
+
 func (o GetSnippetPaths200ResponsePathsInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -137,6 +164,7 @@ func (o GetSnippetPaths200ResponsePathsInner) ToMap() (map[string]interface{}, e
 	toSerialize["type"] = o.Type
 	toSerialize["name"] = o.Name
 	toSerialize["path"] = o.Path
+	toSerialize["count"] = o.Count
 	return toSerialize, nil
 }
 
@@ -148,6 +176,7 @@ func (o *GetSnippetPaths200ResponsePathsInner) UnmarshalJSON(data []byte) (err e
 		"type",
 		"name",
 		"path",
+		"count",
 	}
 
 	allProperties := make(map[string]interface{})

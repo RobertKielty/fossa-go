@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -35,7 +35,7 @@ func (r ApiCreateOIDCProviderRequest) CreateOIDCProviderRequest(createOIDCProvid
 	return r
 }
 
-func (r ApiCreateOIDCProviderRequest) Execute() (*ListOIDCProviders200ResponseAllOfResultsInner, *http.Response, error) {
+func (r ApiCreateOIDCProviderRequest) Execute() (*CreateOIDCProvider201Response, *http.Response, error) {
 	return r.ApiService.CreateOIDCProviderExecute(r)
 }
 
@@ -55,13 +55,13 @@ func (a *OIDCAPIService) CreateOIDCProvider(ctx context.Context) ApiCreateOIDCPr
 }
 
 // Execute executes the request
-//  @return ListOIDCProviders200ResponseAllOfResultsInner
-func (a *OIDCAPIService) CreateOIDCProviderExecute(r ApiCreateOIDCProviderRequest) (*ListOIDCProviders200ResponseAllOfResultsInner, *http.Response, error) {
+//  @return CreateOIDCProvider201Response
+func (a *OIDCAPIService) CreateOIDCProviderExecute(r ApiCreateOIDCProviderRequest) (*CreateOIDCProvider201Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ListOIDCProviders200ResponseAllOfResultsInner
+		localVarReturnValue  *CreateOIDCProvider201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OIDCAPIService.CreateOIDCProvider")
@@ -120,7 +120,7 @@ func (a *OIDCAPIService) CreateOIDCProviderExecute(r ApiCreateOIDCProviderReques
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -131,7 +131,7 @@ func (a *OIDCAPIService) CreateOIDCProviderExecute(r ApiCreateOIDCProviderReques
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -142,7 +142,7 @@ func (a *OIDCAPIService) CreateOIDCProviderExecute(r ApiCreateOIDCProviderReques
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -153,7 +153,7 @@ func (a *OIDCAPIService) CreateOIDCProviderExecute(r ApiCreateOIDCProviderReques
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -188,7 +188,7 @@ func (r ApiCreateOIDCTrustRelationshipRequest) CreateOIDCTrustRelationshipReques
 	return r
 }
 
-func (r ApiCreateOIDCTrustRelationshipRequest) Execute() (*ListOIDCTrustRelationships200ResponseAllOfResultsInner, *http.Response, error) {
+func (r ApiCreateOIDCTrustRelationshipRequest) Execute() (*CreateOIDCTrustRelationship201Response, *http.Response, error) {
 	return r.ApiService.CreateOIDCTrustRelationshipExecute(r)
 }
 
@@ -208,13 +208,13 @@ func (a *OIDCAPIService) CreateOIDCTrustRelationship(ctx context.Context) ApiCre
 }
 
 // Execute executes the request
-//  @return ListOIDCTrustRelationships200ResponseAllOfResultsInner
-func (a *OIDCAPIService) CreateOIDCTrustRelationshipExecute(r ApiCreateOIDCTrustRelationshipRequest) (*ListOIDCTrustRelationships200ResponseAllOfResultsInner, *http.Response, error) {
+//  @return CreateOIDCTrustRelationship201Response
+func (a *OIDCAPIService) CreateOIDCTrustRelationshipExecute(r ApiCreateOIDCTrustRelationshipRequest) (*CreateOIDCTrustRelationship201Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ListOIDCTrustRelationships200ResponseAllOfResultsInner
+		localVarReturnValue  *CreateOIDCTrustRelationship201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OIDCAPIService.CreateOIDCTrustRelationship")
@@ -273,7 +273,7 @@ func (a *OIDCAPIService) CreateOIDCTrustRelationshipExecute(r ApiCreateOIDCTrust
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -284,7 +284,7 @@ func (a *OIDCAPIService) CreateOIDCTrustRelationshipExecute(r ApiCreateOIDCTrust
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -295,7 +295,7 @@ func (a *OIDCAPIService) CreateOIDCTrustRelationshipExecute(r ApiCreateOIDCTrust
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -306,7 +306,7 @@ func (a *OIDCAPIService) CreateOIDCTrustRelationshipExecute(r ApiCreateOIDCTrust
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -417,7 +417,7 @@ func (a *OIDCAPIService) DeleteOIDCProviderExecute(r ApiDeleteOIDCProviderReques
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -428,7 +428,7 @@ func (a *OIDCAPIService) DeleteOIDCProviderExecute(r ApiDeleteOIDCProviderReques
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -439,7 +439,7 @@ func (a *OIDCAPIService) DeleteOIDCProviderExecute(r ApiDeleteOIDCProviderReques
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -450,7 +450,7 @@ func (a *OIDCAPIService) DeleteOIDCProviderExecute(r ApiDeleteOIDCProviderReques
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -461,7 +461,7 @@ func (a *OIDCAPIService) DeleteOIDCProviderExecute(r ApiDeleteOIDCProviderReques
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -563,7 +563,7 @@ func (a *OIDCAPIService) DeleteOIDCTrustRelationshipExecute(r ApiDeleteOIDCTrust
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -574,7 +574,7 @@ func (a *OIDCAPIService) DeleteOIDCTrustRelationshipExecute(r ApiDeleteOIDCTrust
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -585,7 +585,7 @@ func (a *OIDCAPIService) DeleteOIDCTrustRelationshipExecute(r ApiDeleteOIDCTrust
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -596,7 +596,7 @@ func (a *OIDCAPIService) DeleteOIDCTrustRelationshipExecute(r ApiDeleteOIDCTrust
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -607,7 +607,7 @@ func (a *OIDCAPIService) DeleteOIDCTrustRelationshipExecute(r ApiDeleteOIDCTrust
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -718,7 +718,7 @@ func (a *OIDCAPIService) ExchangeOIDCTokenExecute(r ApiExchangeOIDCTokenRequest)
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -729,7 +729,7 @@ func (a *OIDCAPIService) ExchangeOIDCTokenExecute(r ApiExchangeOIDCTokenRequest)
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -740,7 +740,7 @@ func (a *OIDCAPIService) ExchangeOIDCTokenExecute(r ApiExchangeOIDCTokenRequest)
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -751,7 +751,7 @@ func (a *OIDCAPIService) ExchangeOIDCTokenExecute(r ApiExchangeOIDCTokenRequest)
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -781,7 +781,7 @@ type ApiGetOIDCProviderRequest struct {
 	id int32
 }
 
-func (r ApiGetOIDCProviderRequest) Execute() (*ListOIDCProviders200ResponseAllOfResultsInner, *http.Response, error) {
+func (r ApiGetOIDCProviderRequest) Execute() (*CreateOIDCProvider201Response, *http.Response, error) {
 	return r.ApiService.GetOIDCProviderExecute(r)
 }
 
@@ -803,13 +803,13 @@ func (a *OIDCAPIService) GetOIDCProvider(ctx context.Context, id int32) ApiGetOI
 }
 
 // Execute executes the request
-//  @return ListOIDCProviders200ResponseAllOfResultsInner
-func (a *OIDCAPIService) GetOIDCProviderExecute(r ApiGetOIDCProviderRequest) (*ListOIDCProviders200ResponseAllOfResultsInner, *http.Response, error) {
+//  @return CreateOIDCProvider201Response
+func (a *OIDCAPIService) GetOIDCProviderExecute(r ApiGetOIDCProviderRequest) (*CreateOIDCProvider201Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ListOIDCProviders200ResponseAllOfResultsInner
+		localVarReturnValue  *CreateOIDCProvider201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OIDCAPIService.GetOIDCProvider")
@@ -864,7 +864,7 @@ func (a *OIDCAPIService) GetOIDCProviderExecute(r ApiGetOIDCProviderRequest) (*L
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -875,7 +875,7 @@ func (a *OIDCAPIService) GetOIDCProviderExecute(r ApiGetOIDCProviderRequest) (*L
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -886,7 +886,7 @@ func (a *OIDCAPIService) GetOIDCProviderExecute(r ApiGetOIDCProviderRequest) (*L
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -897,7 +897,207 @@ func (a *OIDCAPIService) GetOIDCProviderExecute(r ApiGetOIDCProviderRequest) (*L
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetOIDCProviderAvailableServiceAccountsRequest struct {
+	ctx context.Context
+	ApiService *OIDCAPIService
+	id int32
+	teamId *int32
+	pageSize *int32
+	prev *int32
+}
+
+// The team ID that the service account must be a member of. Required if the user making the request only has team-level permission to manage trust relationships. If the user has organization-level permission then this parameter has no effect. 
+func (r ApiGetOIDCProviderAvailableServiceAccountsRequest) TeamId(teamId int32) ApiGetOIDCProviderAvailableServiceAccountsRequest {
+	r.teamId = &teamId
+	return r
+}
+
+// Number of service accounts to return
+func (r ApiGetOIDCProviderAvailableServiceAccountsRequest) PageSize(pageSize int32) ApiGetOIDCProviderAvailableServiceAccountsRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+// ID of the last service account from the previous page for pagination
+func (r ApiGetOIDCProviderAvailableServiceAccountsRequest) Prev(prev int32) ApiGetOIDCProviderAvailableServiceAccountsRequest {
+	r.prev = &prev
+	return r
+}
+
+func (r ApiGetOIDCProviderAvailableServiceAccountsRequest) Execute() (*GetOIDCProviderAvailableServiceAccounts200Response, *http.Response, error) {
+	return r.ApiService.GetOIDCProviderAvailableServiceAccountsExecute(r)
+}
+
+/*
+GetOIDCProviderAvailableServiceAccounts Method for GetOIDCProviderAvailableServiceAccounts
+
+This endpoint returns service accounts that can be used when creating new trust relationships for an OIDC Provider.
+If the user making the request has organization-level permission to manage trust relationships, then this will
+return all available service accounts. Otherwise, if the user only has team-level permission to manage trust
+relationships, then a `teamId` query parameter must be provided to filter the available service accounts to only
+those on the team.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id The ID of the OIDC Provider
+ @return ApiGetOIDCProviderAvailableServiceAccountsRequest
+*/
+func (a *OIDCAPIService) GetOIDCProviderAvailableServiceAccounts(ctx context.Context, id int32) ApiGetOIDCProviderAvailableServiceAccountsRequest {
+	return ApiGetOIDCProviderAvailableServiceAccountsRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return GetOIDCProviderAvailableServiceAccounts200Response
+func (a *OIDCAPIService) GetOIDCProviderAvailableServiceAccountsExecute(r ApiGetOIDCProviderAvailableServiceAccountsRequest) (*GetOIDCProviderAvailableServiceAccounts200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetOIDCProviderAvailableServiceAccounts200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OIDCAPIService.GetOIDCProviderAvailableServiceAccounts")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/oidc/providers/{id}/available-service-accounts"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.teamId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "teamId", r.teamId, "form", "")
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
+	} else {
+		var defaultValue int32 = 10
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", defaultValue, "form", "")
+		r.pageSize = &defaultValue
+	}
+	if r.prev != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "prev", r.prev, "form", "")
+	} else {
+		var defaultValue int32 = 0
+		parameterAddToHeaderOrQuery(localVarQueryParams, "prev", defaultValue, "form", "")
+		r.prev = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -927,7 +1127,7 @@ type ApiGetOIDCTrustRelationshipRequest struct {
 	id int32
 }
 
-func (r ApiGetOIDCTrustRelationshipRequest) Execute() (*ListOIDCTrustRelationships200ResponseAllOfResultsInner, *http.Response, error) {
+func (r ApiGetOIDCTrustRelationshipRequest) Execute() (*GetOIDCTrustRelationship200Response, *http.Response, error) {
 	return r.ApiService.GetOIDCTrustRelationshipExecute(r)
 }
 
@@ -949,13 +1149,13 @@ func (a *OIDCAPIService) GetOIDCTrustRelationship(ctx context.Context, id int32)
 }
 
 // Execute executes the request
-//  @return ListOIDCTrustRelationships200ResponseAllOfResultsInner
-func (a *OIDCAPIService) GetOIDCTrustRelationshipExecute(r ApiGetOIDCTrustRelationshipRequest) (*ListOIDCTrustRelationships200ResponseAllOfResultsInner, *http.Response, error) {
+//  @return GetOIDCTrustRelationship200Response
+func (a *OIDCAPIService) GetOIDCTrustRelationshipExecute(r ApiGetOIDCTrustRelationshipRequest) (*GetOIDCTrustRelationship200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ListOIDCTrustRelationships200ResponseAllOfResultsInner
+		localVarReturnValue  *GetOIDCTrustRelationship200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OIDCAPIService.GetOIDCTrustRelationship")
@@ -1010,7 +1210,7 @@ func (a *OIDCAPIService) GetOIDCTrustRelationshipExecute(r ApiGetOIDCTrustRelati
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1021,7 +1221,7 @@ func (a *OIDCAPIService) GetOIDCTrustRelationshipExecute(r ApiGetOIDCTrustRelati
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1032,7 +1232,7 @@ func (a *OIDCAPIService) GetOIDCTrustRelationshipExecute(r ApiGetOIDCTrustRelati
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1043,7 +1243,7 @@ func (a *OIDCAPIService) GetOIDCTrustRelationshipExecute(r ApiGetOIDCTrustRelati
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1072,6 +1272,8 @@ type ApiListOIDCProvidersRequest struct {
 	ApiService *OIDCAPIService
 	pageSize *int32
 	prev *int32
+	filterScope *string
+	filterScopeId *int32
 }
 
 // Number of providers to return
@@ -1086,6 +1288,18 @@ func (r ApiListOIDCProvidersRequest) Prev(prev int32) ApiListOIDCProvidersReques
 	return r
 }
 
+// Filter providers by scope (org or team). When filtering by team, the &#x60;scopeId&#x60; parameter must also be provided. The org scope will only return organization-scoped providers. The team scope will return both org-scoped providers as well as team-scoped providers where the scopeId matches the team ID. 
+func (r ApiListOIDCProvidersRequest) FilterScope(filterScope string) ApiListOIDCProvidersRequest {
+	r.filterScope = &filterScope
+	return r
+}
+
+// Filter providers by scope ID. Required when the &#x60;scope&#x60; parameter is &#x60;team&#x60;.
+func (r ApiListOIDCProvidersRequest) FilterScopeId(filterScopeId int32) ApiListOIDCProvidersRequest {
+	r.filterScopeId = &filterScopeId
+	return r
+}
+
 func (r ApiListOIDCProvidersRequest) Execute() (*ListOIDCProviders200Response, *http.Response, error) {
 	return r.ApiService.ListOIDCProvidersExecute(r)
 }
@@ -1093,7 +1307,7 @@ func (r ApiListOIDCProvidersRequest) Execute() (*ListOIDCProviders200Response, *
 /*
 ListOIDCProviders Method for ListOIDCProviders
 
-List OIDC Providers with pagination
+List OIDC Providers
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListOIDCProvidersRequest
@@ -1130,13 +1344,21 @@ func (a *OIDCAPIService) ListOIDCProvidersExecute(r ApiListOIDCProvidersRequest)
 		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
 	} else {
 		var defaultValue int32 = 10
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", defaultValue, "form", "")
 		r.pageSize = &defaultValue
 	}
 	if r.prev != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "prev", r.prev, "form", "")
 	} else {
 		var defaultValue int32 = 0
+		parameterAddToHeaderOrQuery(localVarQueryParams, "prev", defaultValue, "form", "")
 		r.prev = &defaultValue
+	}
+	if r.filterScope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[scope]", r.filterScope, "form", "")
+	}
+	if r.filterScopeId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[scopeId]", r.filterScopeId, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1178,7 +1400,7 @@ func (a *OIDCAPIService) ListOIDCProvidersExecute(r ApiListOIDCProvidersRequest)
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1189,7 +1411,7 @@ func (a *OIDCAPIService) ListOIDCProvidersExecute(r ApiListOIDCProvidersRequest)
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1200,7 +1422,7 @@ func (a *OIDCAPIService) ListOIDCProvidersExecute(r ApiListOIDCProvidersRequest)
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1307,12 +1529,14 @@ func (a *OIDCAPIService) ListOIDCTrustRelationshipsExecute(r ApiListOIDCTrustRel
 		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
 	} else {
 		var defaultValue int32 = 10
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", defaultValue, "form", "")
 		r.pageSize = &defaultValue
 	}
 	if r.prev != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "prev", r.prev, "form", "")
 	} else {
 		var defaultValue int32 = 0
+		parameterAddToHeaderOrQuery(localVarQueryParams, "prev", defaultValue, "form", "")
 		r.prev = &defaultValue
 	}
 	// to determine the Content-Type header
@@ -1355,7 +1579,7 @@ func (a *OIDCAPIService) ListOIDCTrustRelationshipsExecute(r ApiListOIDCTrustRel
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1366,7 +1590,7 @@ func (a *OIDCAPIService) ListOIDCTrustRelationshipsExecute(r ApiListOIDCTrustRel
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1377,7 +1601,7 @@ func (a *OIDCAPIService) ListOIDCTrustRelationshipsExecute(r ApiListOIDCTrustRel
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1413,7 +1637,7 @@ func (r ApiUpdateOIDCTrustRelationshipRequest) UpdateOIDCTrustRelationshipReques
 	return r
 }
 
-func (r ApiUpdateOIDCTrustRelationshipRequest) Execute() (*ListOIDCTrustRelationships200ResponseAllOfResultsInner, *http.Response, error) {
+func (r ApiUpdateOIDCTrustRelationshipRequest) Execute() (*CreateOIDCTrustRelationship201Response, *http.Response, error) {
 	return r.ApiService.UpdateOIDCTrustRelationshipExecute(r)
 }
 
@@ -1435,13 +1659,13 @@ func (a *OIDCAPIService) UpdateOIDCTrustRelationship(ctx context.Context, id int
 }
 
 // Execute executes the request
-//  @return ListOIDCTrustRelationships200ResponseAllOfResultsInner
-func (a *OIDCAPIService) UpdateOIDCTrustRelationshipExecute(r ApiUpdateOIDCTrustRelationshipRequest) (*ListOIDCTrustRelationships200ResponseAllOfResultsInner, *http.Response, error) {
+//  @return CreateOIDCTrustRelationship201Response
+func (a *OIDCAPIService) UpdateOIDCTrustRelationshipExecute(r ApiUpdateOIDCTrustRelationshipRequest) (*CreateOIDCTrustRelationship201Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ListOIDCTrustRelationships200ResponseAllOfResultsInner
+		localVarReturnValue  *CreateOIDCTrustRelationship201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OIDCAPIService.UpdateOIDCTrustRelationship")
@@ -1501,7 +1725,7 @@ func (a *OIDCAPIService) UpdateOIDCTrustRelationshipExecute(r ApiUpdateOIDCTrust
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1512,7 +1736,7 @@ func (a *OIDCAPIService) UpdateOIDCTrustRelationshipExecute(r ApiUpdateOIDCTrust
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1523,7 +1747,7 @@ func (a *OIDCAPIService) UpdateOIDCTrustRelationshipExecute(r ApiUpdateOIDCTrust
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1534,7 +1758,7 @@ func (a *OIDCAPIService) UpdateOIDCTrustRelationshipExecute(r ApiUpdateOIDCTrust
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1545,7 +1769,7 @@ func (a *OIDCAPIService) UpdateOIDCTrustRelationshipExecute(r ApiUpdateOIDCTrust
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

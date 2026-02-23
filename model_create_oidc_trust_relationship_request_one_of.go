@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -28,10 +28,10 @@ type CreateOIDCTrustRelationshipRequestOneOf struct {
 	ProviderId int32 `json:"providerId"`
 	// The scope level of the trust relationship
 	Scope string `json:"scope"`
-	// Array of valid audiences for this trust relationship (max 5)
+	// Array of valid audiences for this trust relationship
 	Audiences []string `json:"audiences"`
 	// Array of claim objects. Must contain at least one object with claim: \"sub\". Additional objects with other claims are optional. 
-	RequiredClaims []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner `json:"requiredClaims"`
+	RequiredClaims []CreateOIDCTrustRelationshipRequestOneOfRequiredClaimsInner `json:"requiredClaims"`
 }
 
 type _CreateOIDCTrustRelationshipRequestOneOf CreateOIDCTrustRelationshipRequestOneOf
@@ -40,7 +40,7 @@ type _CreateOIDCTrustRelationshipRequestOneOf CreateOIDCTrustRelationshipRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateOIDCTrustRelationshipRequestOneOf(userId int32, providerId int32, scope string, audiences []string, requiredClaims []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner) *CreateOIDCTrustRelationshipRequestOneOf {
+func NewCreateOIDCTrustRelationshipRequestOneOf(userId int32, providerId int32, scope string, audiences []string, requiredClaims []CreateOIDCTrustRelationshipRequestOneOfRequiredClaimsInner) *CreateOIDCTrustRelationshipRequestOneOf {
 	this := CreateOIDCTrustRelationshipRequestOneOf{}
 	this.UserId = userId
 	this.ProviderId = providerId
@@ -155,9 +155,9 @@ func (o *CreateOIDCTrustRelationshipRequestOneOf) SetAudiences(v []string) {
 }
 
 // GetRequiredClaims returns the RequiredClaims field value
-func (o *CreateOIDCTrustRelationshipRequestOneOf) GetRequiredClaims() []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner {
+func (o *CreateOIDCTrustRelationshipRequestOneOf) GetRequiredClaims() []CreateOIDCTrustRelationshipRequestOneOfRequiredClaimsInner {
 	if o == nil {
-		var ret []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner
+		var ret []CreateOIDCTrustRelationshipRequestOneOfRequiredClaimsInner
 		return ret
 	}
 
@@ -166,7 +166,7 @@ func (o *CreateOIDCTrustRelationshipRequestOneOf) GetRequiredClaims() []ListOIDC
 
 // GetRequiredClaimsOk returns a tuple with the RequiredClaims field value
 // and a boolean to check if the value has been set.
-func (o *CreateOIDCTrustRelationshipRequestOneOf) GetRequiredClaimsOk() ([]ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner, bool) {
+func (o *CreateOIDCTrustRelationshipRequestOneOf) GetRequiredClaimsOk() ([]CreateOIDCTrustRelationshipRequestOneOfRequiredClaimsInner, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -174,7 +174,7 @@ func (o *CreateOIDCTrustRelationshipRequestOneOf) GetRequiredClaimsOk() ([]ListO
 }
 
 // SetRequiredClaims sets field value
-func (o *CreateOIDCTrustRelationshipRequestOneOf) SetRequiredClaims(v []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner) {
+func (o *CreateOIDCTrustRelationshipRequestOneOf) SetRequiredClaims(v []CreateOIDCTrustRelationshipRequestOneOfRequiredClaimsInner) {
 	o.RequiredClaims = v
 }
 

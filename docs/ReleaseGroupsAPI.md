@@ -1169,7 +1169,7 @@ Name | Type | Description  | Notes
 
 ## QueueReleaseGroupAttributionReport
 
-> QueueReleaseGroupAttributionReport200Response QueueReleaseGroupAttributionReport(ctx, groupId, releaseId, format).IncludeDeepDependencies(includeDeepDependencies).IncludeDirectDependencies(includeDirectDependencies).IncludeLicenseList(includeLicenseList).IncludeLicenseScan(includeLicenseScan).IncludeProjectLicense(includeProjectLicense).IncludeCopyrightList(includeCopyrightList).IncludeFileMatches(includeFileMatches).IncludeOpenVulnerabilities(includeOpenVulnerabilities).IncludeClosedVulnerabilities(includeClosedVulnerabilities).IncludeDependencySummary(includeDependencySummary).IncludeLicenseHeaders(includeLicenseHeaders).DependencyInfoOptions(dependencyInfoOptions).Execute()
+> QueueReleaseGroupAttributionReport200Response QueueReleaseGroupAttributionReport(ctx, groupId, releaseId, format).IncludeDeepDependencies(includeDeepDependencies).IncludeDirectDependencies(includeDirectDependencies).IncludeFOSSADependencies(includeFOSSADependencies).IncludeLicenseList(includeLicenseList).IncludeLicenseScan(includeLicenseScan).IncludeProjectLicense(includeProjectLicense).IncludeCopyrightList(includeCopyrightList).IncludeFileMatches(includeFileMatches).IncludeOpenVulnerabilities(includeOpenVulnerabilities).IncludeClosedVulnerabilities(includeClosedVulnerabilities).IncludeDependencySummary(includeDependencySummary).IncludeLicenseHeaders(includeLicenseHeaders).DependencyInfoOptions(dependencyInfoOptions).IsPublishing(isPublishing).Execute()
 
 
 
@@ -1193,6 +1193,7 @@ func main() {
 	format := "format_example" // string | 
 	includeDeepDependencies := true // bool |  (optional)
 	includeDirectDependencies := true // bool |  (optional)
+	includeFOSSADependencies := true // bool |  (optional)
 	includeLicenseList := true // bool |  (optional)
 	includeLicenseScan := true // bool |  (optional)
 	includeProjectLicense := true // bool |  (optional)
@@ -1203,10 +1204,11 @@ func main() {
 	includeDependencySummary := true // bool |  (optional)
 	includeLicenseHeaders := true // bool |  (optional)
 	dependencyInfoOptions := []string{"DependencyInfoOptions_example"} // []string |  (optional)
+	isPublishing := true // bool | Whether to publish the report to the portal (optional) (default to false)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ReleaseGroupsAPI.QueueReleaseGroupAttributionReport(context.Background(), groupId, releaseId, format).IncludeDeepDependencies(includeDeepDependencies).IncludeDirectDependencies(includeDirectDependencies).IncludeLicenseList(includeLicenseList).IncludeLicenseScan(includeLicenseScan).IncludeProjectLicense(includeProjectLicense).IncludeCopyrightList(includeCopyrightList).IncludeFileMatches(includeFileMatches).IncludeOpenVulnerabilities(includeOpenVulnerabilities).IncludeClosedVulnerabilities(includeClosedVulnerabilities).IncludeDependencySummary(includeDependencySummary).IncludeLicenseHeaders(includeLicenseHeaders).DependencyInfoOptions(dependencyInfoOptions).Execute()
+	resp, r, err := apiClient.ReleaseGroupsAPI.QueueReleaseGroupAttributionReport(context.Background(), groupId, releaseId, format).IncludeDeepDependencies(includeDeepDependencies).IncludeDirectDependencies(includeDirectDependencies).IncludeFOSSADependencies(includeFOSSADependencies).IncludeLicenseList(includeLicenseList).IncludeLicenseScan(includeLicenseScan).IncludeProjectLicense(includeProjectLicense).IncludeCopyrightList(includeCopyrightList).IncludeFileMatches(includeFileMatches).IncludeOpenVulnerabilities(includeOpenVulnerabilities).IncludeClosedVulnerabilities(includeClosedVulnerabilities).IncludeDependencySummary(includeDependencySummary).IncludeLicenseHeaders(includeLicenseHeaders).DependencyInfoOptions(dependencyInfoOptions).IsPublishing(isPublishing).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReleaseGroupsAPI.QueueReleaseGroupAttributionReport``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1238,6 +1240,7 @@ Name | Type | Description  | Notes
 
  **includeDeepDependencies** | **bool** |  | 
  **includeDirectDependencies** | **bool** |  | 
+ **includeFOSSADependencies** | **bool** |  | 
  **includeLicenseList** | **bool** |  | 
  **includeLicenseScan** | **bool** |  | 
  **includeProjectLicense** | **bool** |  | 
@@ -1248,6 +1251,7 @@ Name | Type | Description  | Notes
  **includeDependencySummary** | **bool** |  | 
  **includeLicenseHeaders** | **bool** |  | 
  **dependencyInfoOptions** | **[]string** |  | 
+ **isPublishing** | **bool** | Whether to publish the report to the portal | [default to false]
 
 ### Return type
 

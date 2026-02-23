@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -23,6 +23,7 @@ type GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInn
 	Id *int32 `json:"id,omitempty"`
 	Name *string `json:"name,omitempty"`
 	UniqueId NullableString `json:"uniqueId,omitempty"`
+	TeamType *string `json:"teamType,omitempty"`
 }
 
 // NewGetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner instantiates a new GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner object
@@ -148,6 +149,38 @@ func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjec
 	o.UniqueId.Unset()
 }
 
+// GetTeamType returns the TeamType field value if set, zero value otherwise.
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner) GetTeamType() string {
+	if o == nil || IsNil(o.TeamType) {
+		var ret string
+		return ret
+	}
+	return *o.TeamType
+}
+
+// GetTeamTypeOk returns a tuple with the TeamType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner) GetTeamTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.TeamType) {
+		return nil, false
+	}
+	return o.TeamType, true
+}
+
+// HasTeamType returns a boolean if a field has been set.
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner) HasTeamType() bool {
+	if o != nil && !IsNil(o.TeamType) {
+		return true
+	}
+
+	return false
+}
+
+// SetTeamType gets a reference to the given string and assigns it to the TeamType field.
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner) SetTeamType(v string) {
+	o.TeamType = &v
+}
+
 func (o GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -166,6 +199,9 @@ func (o GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProject
 	}
 	if o.UniqueId.IsSet() {
 		toSerialize["uniqueId"] = o.UniqueId.Get()
+	}
+	if !IsNil(o.TeamType) {
+		toSerialize["teamType"] = o.TeamType
 	}
 	return toSerialize, nil
 }

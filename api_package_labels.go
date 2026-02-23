@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -22,6 +22,162 @@ import (
 
 // PackageLabelsAPIService PackageLabelsAPI service
 type PackageLabelsAPIService service
+
+type ApiBulkAssignPackageLabelsRequest struct {
+	ctx context.Context
+	ApiService *PackageLabelsAPIService
+	bulkAssignPackageLabelsRequest *BulkAssignPackageLabelsRequest
+}
+
+func (r ApiBulkAssignPackageLabelsRequest) BulkAssignPackageLabelsRequest(bulkAssignPackageLabelsRequest BulkAssignPackageLabelsRequest) ApiBulkAssignPackageLabelsRequest {
+	r.bulkAssignPackageLabelsRequest = &bulkAssignPackageLabelsRequest
+	return r
+}
+
+func (r ApiBulkAssignPackageLabelsRequest) Execute() (*GetPackageLabelAssignments200Response, *http.Response, error) {
+	return r.ApiService.BulkAssignPackageLabelsExecute(r)
+}
+
+/*
+BulkAssignPackageLabels Method for BulkAssignPackageLabels
+
+Assign a single Package Label to multiple packages at once.
+
+Note - This endpoint is not available for organizations on the Free plan.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiBulkAssignPackageLabelsRequest
+*/
+func (a *PackageLabelsAPIService) BulkAssignPackageLabels(ctx context.Context) ApiBulkAssignPackageLabelsRequest {
+	return ApiBulkAssignPackageLabelsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return GetPackageLabelAssignments200Response
+func (a *PackageLabelsAPIService) BulkAssignPackageLabelsExecute(r ApiBulkAssignPackageLabelsRequest) (*GetPackageLabelAssignments200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetPackageLabelAssignments200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PackageLabelsAPIService.BulkAssignPackageLabels")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/package-label-assignments/bulk"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.bulkAssignPackageLabelsRequest == nil {
+		return localVarReturnValue, nil, reportError("bulkAssignPackageLabelsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.bulkAssignPackageLabelsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
 
 type ApiCreatePackageLabelRequest struct {
 	ctx context.Context
@@ -119,7 +275,7 @@ func (a *PackageLabelsAPIService) CreatePackageLabelExecute(r ApiCreatePackageLa
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -130,7 +286,7 @@ func (a *PackageLabelsAPIService) CreatePackageLabelExecute(r ApiCreatePackageLa
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -250,7 +406,7 @@ func (a *PackageLabelsAPIService) CreatePackageLabelAssignmentsExecute(r ApiCrea
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -261,7 +417,7 @@ func (a *PackageLabelsAPIService) CreatePackageLabelAssignmentsExecute(r ApiCrea
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -272,7 +428,7 @@ func (a *PackageLabelsAPIService) CreatePackageLabelAssignmentsExecute(r ApiCrea
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -390,7 +546,7 @@ func (a *PackageLabelsAPIService) DeletePackageLabelAssignmentsExecute(r ApiDele
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -401,7 +557,7 @@ func (a *PackageLabelsAPIService) DeletePackageLabelAssignmentsExecute(r ApiDele
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -412,7 +568,7 @@ func (a *PackageLabelsAPIService) DeletePackageLabelAssignmentsExecute(r ApiDele
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -521,7 +677,7 @@ func (a *PackageLabelsAPIService) DeletePackageLabelsExecute(r ApiDeletePackageL
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -532,7 +688,7 @@ func (a *PackageLabelsAPIService) DeletePackageLabelsExecute(r ApiDeletePackageL
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -550,29 +706,29 @@ func (a *PackageLabelsAPIService) DeletePackageLabelsExecute(r ApiDeletePackageL
 type ApiGetPackageLabelAssignmentsRequest struct {
 	ctx context.Context
 	ApiService *PackageLabelsAPIService
-	packageId *string
-	packageVersion *string
-	scope *string
-	scopeId *string
+	filtersPackageId *string
+	filtersPackageVersion *string
+	filtersScope *string
+	filtersScopeId *string
 }
 
-func (r ApiGetPackageLabelAssignmentsRequest) PackageId(packageId string) ApiGetPackageLabelAssignmentsRequest {
-	r.packageId = &packageId
+func (r ApiGetPackageLabelAssignmentsRequest) FiltersPackageId(filtersPackageId string) ApiGetPackageLabelAssignmentsRequest {
+	r.filtersPackageId = &filtersPackageId
 	return r
 }
 
-func (r ApiGetPackageLabelAssignmentsRequest) PackageVersion(packageVersion string) ApiGetPackageLabelAssignmentsRequest {
-	r.packageVersion = &packageVersion
+func (r ApiGetPackageLabelAssignmentsRequest) FiltersPackageVersion(filtersPackageVersion string) ApiGetPackageLabelAssignmentsRequest {
+	r.filtersPackageVersion = &filtersPackageVersion
 	return r
 }
 
-func (r ApiGetPackageLabelAssignmentsRequest) Scope(scope string) ApiGetPackageLabelAssignmentsRequest {
-	r.scope = &scope
+func (r ApiGetPackageLabelAssignmentsRequest) FiltersScope(filtersScope string) ApiGetPackageLabelAssignmentsRequest {
+	r.filtersScope = &filtersScope
 	return r
 }
 
-func (r ApiGetPackageLabelAssignmentsRequest) ScopeId(scopeId string) ApiGetPackageLabelAssignmentsRequest {
-	r.scopeId = &scopeId
+func (r ApiGetPackageLabelAssignmentsRequest) FiltersScopeId(filtersScopeId string) ApiGetPackageLabelAssignmentsRequest {
+	r.filtersScopeId = &filtersScopeId
 	return r
 }
 
@@ -616,17 +772,17 @@ func (a *PackageLabelsAPIService) GetPackageLabelAssignmentsExecute(r ApiGetPack
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if r.packageId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "packageId", r.packageId, "form", "")
+	if r.filtersPackageId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filters[packageId]", r.filtersPackageId, "form", "")
 	}
-	if r.packageVersion != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "packageVersion", r.packageVersion, "form", "")
+	if r.filtersPackageVersion != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filters[packageVersion]", r.filtersPackageVersion, "form", "")
 	}
-	if r.scope != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scope", r.scope, "form", "")
+	if r.filtersScope != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filters[scope]", r.filtersScope, "form", "")
 	}
-	if r.scopeId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "scopeId", r.scopeId, "form", "")
+	if r.filtersScopeId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filters[scopeId]", r.filtersScopeId, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -668,7 +824,7 @@ func (a *PackageLabelsAPIService) GetPackageLabelAssignmentsExecute(r ApiGetPack
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -679,7 +835,7 @@ func (a *PackageLabelsAPIService) GetPackageLabelAssignmentsExecute(r ApiGetPack
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -690,7 +846,7 @@ func (a *PackageLabelsAPIService) GetPackageLabelAssignmentsExecute(r ApiGetPack
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -799,7 +955,7 @@ func (a *PackageLabelsAPIService) GetPackageLabelsExecute(r ApiGetPackageLabelsR
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

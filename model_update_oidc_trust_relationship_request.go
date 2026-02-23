@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -23,7 +23,7 @@ type UpdateOIDCTrustRelationshipRequest struct {
 	// Array of valid audiences for this trust relationship
 	Audiences []string `json:"audiences,omitempty"`
 	// Array of claim objects. Must contain at least one object with claim: \"sub\". Additional objects with other claims are optional. 
-	RequiredClaims []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner `json:"requiredClaims,omitempty"`
+	RequiredClaims []CreateOIDCTrustRelationshipRequestOneOfRequiredClaimsInner `json:"requiredClaims,omitempty"`
 }
 
 // NewUpdateOIDCTrustRelationshipRequest instantiates a new UpdateOIDCTrustRelationshipRequest object
@@ -76,9 +76,9 @@ func (o *UpdateOIDCTrustRelationshipRequest) SetAudiences(v []string) {
 }
 
 // GetRequiredClaims returns the RequiredClaims field value if set, zero value otherwise.
-func (o *UpdateOIDCTrustRelationshipRequest) GetRequiredClaims() []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner {
+func (o *UpdateOIDCTrustRelationshipRequest) GetRequiredClaims() []CreateOIDCTrustRelationshipRequestOneOfRequiredClaimsInner {
 	if o == nil || IsNil(o.RequiredClaims) {
-		var ret []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner
+		var ret []CreateOIDCTrustRelationshipRequestOneOfRequiredClaimsInner
 		return ret
 	}
 	return o.RequiredClaims
@@ -86,7 +86,7 @@ func (o *UpdateOIDCTrustRelationshipRequest) GetRequiredClaims() []ListOIDCTrust
 
 // GetRequiredClaimsOk returns a tuple with the RequiredClaims field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateOIDCTrustRelationshipRequest) GetRequiredClaimsOk() ([]ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner, bool) {
+func (o *UpdateOIDCTrustRelationshipRequest) GetRequiredClaimsOk() ([]CreateOIDCTrustRelationshipRequestOneOfRequiredClaimsInner, bool) {
 	if o == nil || IsNil(o.RequiredClaims) {
 		return nil, false
 	}
@@ -102,8 +102,8 @@ func (o *UpdateOIDCTrustRelationshipRequest) HasRequiredClaims() bool {
 	return false
 }
 
-// SetRequiredClaims gets a reference to the given []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner and assigns it to the RequiredClaims field.
-func (o *UpdateOIDCTrustRelationshipRequest) SetRequiredClaims(v []ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner) {
+// SetRequiredClaims gets a reference to the given []CreateOIDCTrustRelationshipRequestOneOfRequiredClaimsInner and assigns it to the RequiredClaims field.
+func (o *UpdateOIDCTrustRelationshipRequest) SetRequiredClaims(v []CreateOIDCTrustRelationshipRequestOneOfRequiredClaimsInner) {
 	o.RequiredClaims = v
 }
 

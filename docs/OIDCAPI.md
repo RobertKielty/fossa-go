@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**DeleteOIDCTrustRelationship**](OIDCAPI.md#DeleteOIDCTrustRelationship) | **Delete** /oidc/trust-relationships/{id} | 
 [**ExchangeOIDCToken**](OIDCAPI.md#ExchangeOIDCToken) | **Post** /oidc/token-exchange | 
 [**GetOIDCProvider**](OIDCAPI.md#GetOIDCProvider) | **Get** /oidc/providers/{id} | 
+[**GetOIDCProviderAvailableServiceAccounts**](OIDCAPI.md#GetOIDCProviderAvailableServiceAccounts) | **Get** /oidc/providers/{id}/available-service-accounts | 
 [**GetOIDCTrustRelationship**](OIDCAPI.md#GetOIDCTrustRelationship) | **Get** /oidc/trust-relationships/{id} | 
 [**ListOIDCProviders**](OIDCAPI.md#ListOIDCProviders) | **Get** /oidc/providers | 
 [**ListOIDCTrustRelationships**](OIDCAPI.md#ListOIDCTrustRelationships) | **Get** /oidc/trust-relationships | 
@@ -19,7 +20,7 @@ Method | HTTP request | Description
 
 ## CreateOIDCProvider
 
-> ListOIDCProviders200ResponseAllOfResultsInner CreateOIDCProvider(ctx).CreateOIDCProviderRequest(createOIDCProviderRequest).Execute()
+> CreateOIDCProvider201Response CreateOIDCProvider(ctx).CreateOIDCProviderRequest(createOIDCProviderRequest).Execute()
 
 
 
@@ -47,7 +48,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.CreateOIDCProvider``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `CreateOIDCProvider`: ListOIDCProviders200ResponseAllOfResultsInner
+	// response from `CreateOIDCProvider`: CreateOIDCProvider201Response
 	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.CreateOIDCProvider`: %v\n", resp)
 }
 ```
@@ -67,7 +68,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListOIDCProviders200ResponseAllOfResultsInner**](ListOIDCProviders200ResponseAllOfResultsInner.md)
+[**CreateOIDCProvider201Response**](CreateOIDCProvider201Response.md)
 
 ### Authorization
 
@@ -85,7 +86,7 @@ Name | Type | Description  | Notes
 
 ## CreateOIDCTrustRelationship
 
-> ListOIDCTrustRelationships200ResponseAllOfResultsInner CreateOIDCTrustRelationship(ctx).CreateOIDCTrustRelationshipRequest(createOIDCTrustRelationshipRequest).Execute()
+> CreateOIDCTrustRelationship201Response CreateOIDCTrustRelationship(ctx).CreateOIDCTrustRelationshipRequest(createOIDCTrustRelationshipRequest).Execute()
 
 
 
@@ -104,7 +105,7 @@ import (
 )
 
 func main() {
-	createOIDCTrustRelationshipRequest := openapiclient.createOIDCTrustRelationship_request{CreateOIDCTrustRelationshipRequestOneOf: openapiclient.NewCreateOIDCTrustRelationshipRequestOneOf(int32(789), int32(321), "org", []string{"Audiences_example"}, []openapiclient.ListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner{*openapiclient.NewListOIDCTrustRelationships200ResponseAllOfResultsInnerRequiredClaimsInner("sub", openapiclient.listOIDCTrustRelationships_200_response_allOf_results_inner_requiredClaims_inner_value{Bool: new(bool)})})} // CreateOIDCTrustRelationshipRequest | 
+	createOIDCTrustRelationshipRequest := openapiclient.createOIDCTrustRelationship_request{CreateOIDCTrustRelationshipRequestOneOf: openapiclient.NewCreateOIDCTrustRelationshipRequestOneOf(int32(789), int32(321), "org", []string{"Audiences_example"}, []openapiclient.CreateOIDCTrustRelationshipRequestOneOfRequiredClaimsInner{*openapiclient.NewCreateOIDCTrustRelationshipRequestOneOfRequiredClaimsInner("sub", openapiclient.listOIDCTrustRelationships_200_response_allOf_results_inner_allOf_requiredClaims_inner_value{Bool: new(bool)})})} // CreateOIDCTrustRelationshipRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -113,7 +114,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.CreateOIDCTrustRelationship``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `CreateOIDCTrustRelationship`: ListOIDCTrustRelationships200ResponseAllOfResultsInner
+	// response from `CreateOIDCTrustRelationship`: CreateOIDCTrustRelationship201Response
 	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.CreateOIDCTrustRelationship`: %v\n", resp)
 }
 ```
@@ -133,7 +134,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListOIDCTrustRelationships200ResponseAllOfResultsInner**](ListOIDCTrustRelationships200ResponseAllOfResultsInner.md)
+[**CreateOIDCTrustRelationship201Response**](CreateOIDCTrustRelationship201Response.md)
 
 ### Authorization
 
@@ -353,7 +354,7 @@ No authorization required
 
 ## GetOIDCProvider
 
-> ListOIDCProviders200ResponseAllOfResultsInner GetOIDCProvider(ctx, id).Execute()
+> CreateOIDCProvider201Response GetOIDCProvider(ctx, id).Execute()
 
 
 
@@ -381,7 +382,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.GetOIDCProvider``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetOIDCProvider`: ListOIDCProviders200ResponseAllOfResultsInner
+	// response from `GetOIDCProvider`: CreateOIDCProvider201Response
 	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.GetOIDCProvider`: %v\n", resp)
 }
 ```
@@ -405,7 +406,83 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListOIDCProviders200ResponseAllOfResultsInner**](ListOIDCProviders200ResponseAllOfResultsInner.md)
+[**CreateOIDCProvider201Response**](CreateOIDCProvider201Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetOIDCProviderAvailableServiceAccounts
+
+> GetOIDCProviderAvailableServiceAccounts200Response GetOIDCProviderAvailableServiceAccounts(ctx, id).TeamId(teamId).PageSize(pageSize).Prev(prev).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(123) // int32 | The ID of the OIDC Provider
+	teamId := int32(456) // int32 | The team ID that the service account must be a member of. Required if the user making the request only has team-level permission to manage trust relationships. If the user has organization-level permission then this parameter has no effect.  (optional)
+	pageSize := int32(20) // int32 | Number of service accounts to return (optional) (default to 10)
+	prev := int32(789) // int32 | ID of the last service account from the previous page for pagination (optional) (default to 0)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OIDCAPI.GetOIDCProviderAvailableServiceAccounts(context.Background(), id).TeamId(teamId).PageSize(pageSize).Prev(prev).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.GetOIDCProviderAvailableServiceAccounts``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetOIDCProviderAvailableServiceAccounts`: GetOIDCProviderAvailableServiceAccounts200Response
+	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.GetOIDCProviderAvailableServiceAccounts`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** | The ID of the OIDC Provider | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetOIDCProviderAvailableServiceAccountsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **teamId** | **int32** | The team ID that the service account must be a member of. Required if the user making the request only has team-level permission to manage trust relationships. If the user has organization-level permission then this parameter has no effect.  | 
+ **pageSize** | **int32** | Number of service accounts to return | [default to 10]
+ **prev** | **int32** | ID of the last service account from the previous page for pagination | [default to 0]
+
+### Return type
+
+[**GetOIDCProviderAvailableServiceAccounts200Response**](GetOIDCProviderAvailableServiceAccounts200Response.md)
 
 ### Authorization
 
@@ -423,7 +500,7 @@ Name | Type | Description  | Notes
 
 ## GetOIDCTrustRelationship
 
-> ListOIDCTrustRelationships200ResponseAllOfResultsInner GetOIDCTrustRelationship(ctx, id).Execute()
+> GetOIDCTrustRelationship200Response GetOIDCTrustRelationship(ctx, id).Execute()
 
 
 
@@ -451,7 +528,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.GetOIDCTrustRelationship``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetOIDCTrustRelationship`: ListOIDCTrustRelationships200ResponseAllOfResultsInner
+	// response from `GetOIDCTrustRelationship`: GetOIDCTrustRelationship200Response
 	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.GetOIDCTrustRelationship`: %v\n", resp)
 }
 ```
@@ -475,7 +552,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListOIDCTrustRelationships200ResponseAllOfResultsInner**](ListOIDCTrustRelationships200ResponseAllOfResultsInner.md)
+[**GetOIDCTrustRelationship200Response**](GetOIDCTrustRelationship200Response.md)
 
 ### Authorization
 
@@ -493,7 +570,7 @@ Name | Type | Description  | Notes
 
 ## ListOIDCProviders
 
-> ListOIDCProviders200Response ListOIDCProviders(ctx).PageSize(pageSize).Prev(prev).Execute()
+> ListOIDCProviders200Response ListOIDCProviders(ctx).PageSize(pageSize).Prev(prev).FilterScope(filterScope).FilterScopeId(filterScopeId).Execute()
 
 
 
@@ -514,10 +591,12 @@ import (
 func main() {
 	pageSize := int32(20) // int32 | Number of providers to return (optional) (default to 10)
 	prev := int32(123) // int32 | ID of the last provider from the previous page for pagination (optional) (default to 0)
+	filterScope := "team" // string | Filter providers by scope (org or team). When filtering by team, the `scopeId` parameter must also be provided. The org scope will only return organization-scoped providers. The team scope will return both org-scoped providers as well as team-scoped providers where the scopeId matches the team ID.  (optional)
+	filterScopeId := int32(789) // int32 | Filter providers by scope ID. Required when the `scope` parameter is `team`. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.OIDCAPI.ListOIDCProviders(context.Background()).PageSize(pageSize).Prev(prev).Execute()
+	resp, r, err := apiClient.OIDCAPI.ListOIDCProviders(context.Background()).PageSize(pageSize).Prev(prev).FilterScope(filterScope).FilterScopeId(filterScopeId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.ListOIDCProviders``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -540,6 +619,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **pageSize** | **int32** | Number of providers to return | [default to 10]
  **prev** | **int32** | ID of the last provider from the previous page for pagination | [default to 0]
+ **filterScope** | **string** | Filter providers by scope (org or team). When filtering by team, the &#x60;scopeId&#x60; parameter must also be provided. The org scope will only return organization-scoped providers. The team scope will return both org-scoped providers as well as team-scoped providers where the scopeId matches the team ID.  | 
+ **filterScopeId** | **int32** | Filter providers by scope ID. Required when the &#x60;scope&#x60; parameter is &#x60;team&#x60;. | 
 
 ### Return type
 
@@ -633,7 +714,7 @@ Name | Type | Description  | Notes
 
 ## UpdateOIDCTrustRelationship
 
-> ListOIDCTrustRelationships200ResponseAllOfResultsInner UpdateOIDCTrustRelationship(ctx, id).UpdateOIDCTrustRelationshipRequest(updateOIDCTrustRelationshipRequest).Execute()
+> CreateOIDCTrustRelationship201Response UpdateOIDCTrustRelationship(ctx, id).UpdateOIDCTrustRelationshipRequest(updateOIDCTrustRelationshipRequest).Execute()
 
 
 
@@ -662,7 +743,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.UpdateOIDCTrustRelationship``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `UpdateOIDCTrustRelationship`: ListOIDCTrustRelationships200ResponseAllOfResultsInner
+	// response from `UpdateOIDCTrustRelationship`: CreateOIDCTrustRelationship201Response
 	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.UpdateOIDCTrustRelationship`: %v\n", resp)
 }
 ```
@@ -687,7 +768,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ListOIDCTrustRelationships200ResponseAllOfResultsInner**](ListOIDCTrustRelationships200ResponseAllOfResultsInner.md)
+[**CreateOIDCTrustRelationship201Response**](CreateOIDCTrustRelationship201Response.md)
 
 ### Authorization
 

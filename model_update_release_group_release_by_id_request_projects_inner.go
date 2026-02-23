@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -23,7 +23,6 @@ type UpdateReleaseGroupReleaseByIdRequestProjectsInner struct {
 	ProjectId *string `json:"projectId,omitempty"`
 	Branch *string `json:"branch,omitempty"`
 	RevisionId *string `json:"revisionId,omitempty"`
-	ProjectGroupReleaseId *int32 `json:"projectGroupReleaseId,omitempty"`
 }
 
 // NewUpdateReleaseGroupReleaseByIdRequestProjectsInner instantiates a new UpdateReleaseGroupReleaseByIdRequestProjectsInner object
@@ -139,38 +138,6 @@ func (o *UpdateReleaseGroupReleaseByIdRequestProjectsInner) SetRevisionId(v stri
 	o.RevisionId = &v
 }
 
-// GetProjectGroupReleaseId returns the ProjectGroupReleaseId field value if set, zero value otherwise.
-func (o *UpdateReleaseGroupReleaseByIdRequestProjectsInner) GetProjectGroupReleaseId() int32 {
-	if o == nil || IsNil(o.ProjectGroupReleaseId) {
-		var ret int32
-		return ret
-	}
-	return *o.ProjectGroupReleaseId
-}
-
-// GetProjectGroupReleaseIdOk returns a tuple with the ProjectGroupReleaseId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UpdateReleaseGroupReleaseByIdRequestProjectsInner) GetProjectGroupReleaseIdOk() (*int32, bool) {
-	if o == nil || IsNil(o.ProjectGroupReleaseId) {
-		return nil, false
-	}
-	return o.ProjectGroupReleaseId, true
-}
-
-// HasProjectGroupReleaseId returns a boolean if a field has been set.
-func (o *UpdateReleaseGroupReleaseByIdRequestProjectsInner) HasProjectGroupReleaseId() bool {
-	if o != nil && !IsNil(o.ProjectGroupReleaseId) {
-		return true
-	}
-
-	return false
-}
-
-// SetProjectGroupReleaseId gets a reference to the given int32 and assigns it to the ProjectGroupReleaseId field.
-func (o *UpdateReleaseGroupReleaseByIdRequestProjectsInner) SetProjectGroupReleaseId(v int32) {
-	o.ProjectGroupReleaseId = &v
-}
-
 func (o UpdateReleaseGroupReleaseByIdRequestProjectsInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -189,9 +156,6 @@ func (o UpdateReleaseGroupReleaseByIdRequestProjectsInner) ToMap() (map[string]i
 	}
 	if !IsNil(o.RevisionId) {
 		toSerialize["revisionId"] = o.RevisionId
-	}
-	if !IsNil(o.ProjectGroupReleaseId) {
-		toSerialize["projectGroupReleaseId"] = o.ProjectGroupReleaseId
 	}
 	return toSerialize, nil
 }

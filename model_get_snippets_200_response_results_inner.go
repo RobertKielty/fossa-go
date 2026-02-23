@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -25,16 +25,20 @@ var _ MappedNullable = &GetSnippets200ResponseResultsInner{}
 type GetSnippets200ResponseResultsInner struct {
 	// Unique identifier for the snippet
 	Id string `json:"id"`
+	// Unique identifier for the snippet package
+	PackageId string `json:"packageId"`
+	// Package URL (purl) for the snippet
+	Purl string `json:"purl"`
 	// The locator for the snippet (optional)
-	Locator *string `json:"locator,omitempty"`
+	Locator string `json:"locator"`
 	// Name of the package containing the snippet
 	Package string `json:"package"`
 	// Version of the package
 	Version string `json:"version"`
-	// Type of snippet detection (snippet=partial match, file=100% match, dependency=complete copy)
+	// Type of snippet detection (snippet=partial match, file=100% match)
 	Kind string `json:"kind"`
-	// Array of path matches where this snippet was detected
-	Matches []GetSnippets200ResponseResultsInnerMatchesInner `json:"matches"`
+	// Total number of matches for this snippet
+	MatchCount int32 `json:"matchCount"`
 	// The highest match percentage across all matches
 	HighestMatchPercentage float32 `json:"highestMatchPercentage"`
 	// Release date of the package (optional)
@@ -48,7 +52,7 @@ type GetSnippets200ResponseResultsInner struct {
 	IssueCounts GetSnippets200ResponseResultsInnerIssueCounts `json:"issueCounts"`
 	RejectionDetails *GetSnippets200ResponseResultsInnerRejectionDetails `json:"rejectionDetails,omitempty"`
 	// Package labels assigned to this snippet
-	Labels []map[string]interface{} `json:"labels,omitempty"`
+	Labels []GetSnippets200ResponseResultsInnerLabelsInner `json:"labels"`
 }
 
 type _GetSnippets200ResponseResultsInner GetSnippets200ResponseResultsInner
@@ -57,16 +61,20 @@ type _GetSnippets200ResponseResultsInner GetSnippets200ResponseResultsInner
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetSnippets200ResponseResultsInner(id string, package_ string, version string, kind string, matches []GetSnippets200ResponseResultsInnerMatchesInner, highestMatchPercentage float32, licenses []GetSnippets200ResponseResultsInnerLicensesInner, issueCounts GetSnippets200ResponseResultsInnerIssueCounts) *GetSnippets200ResponseResultsInner {
+func NewGetSnippets200ResponseResultsInner(id string, packageId string, purl string, locator string, package_ string, version string, kind string, matchCount int32, highestMatchPercentage float32, licenses []GetSnippets200ResponseResultsInnerLicensesInner, issueCounts GetSnippets200ResponseResultsInnerIssueCounts, labels []GetSnippets200ResponseResultsInnerLabelsInner) *GetSnippets200ResponseResultsInner {
 	this := GetSnippets200ResponseResultsInner{}
 	this.Id = id
+	this.PackageId = packageId
+	this.Purl = purl
+	this.Locator = locator
 	this.Package = package_
 	this.Version = version
 	this.Kind = kind
-	this.Matches = matches
+	this.MatchCount = matchCount
 	this.HighestMatchPercentage = highestMatchPercentage
 	this.Licenses = licenses
 	this.IssueCounts = issueCounts
+	this.Labels = labels
 	return &this
 }
 
@@ -102,36 +110,76 @@ func (o *GetSnippets200ResponseResultsInner) SetId(v string) {
 	o.Id = v
 }
 
-// GetLocator returns the Locator field value if set, zero value otherwise.
-func (o *GetSnippets200ResponseResultsInner) GetLocator() string {
-	if o == nil || IsNil(o.Locator) {
+// GetPackageId returns the PackageId field value
+func (o *GetSnippets200ResponseResultsInner) GetPackageId() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Locator
+
+	return o.PackageId
 }
 
-// GetLocatorOk returns a tuple with the Locator field value if set, nil otherwise
+// GetPackageIdOk returns a tuple with the PackageId field value
 // and a boolean to check if the value has been set.
-func (o *GetSnippets200ResponseResultsInner) GetLocatorOk() (*string, bool) {
-	if o == nil || IsNil(o.Locator) {
+func (o *GetSnippets200ResponseResultsInner) GetPackageIdOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Locator, true
+	return &o.PackageId, true
 }
 
-// HasLocator returns a boolean if a field has been set.
-func (o *GetSnippets200ResponseResultsInner) HasLocator() bool {
-	if o != nil && !IsNil(o.Locator) {
-		return true
+// SetPackageId sets field value
+func (o *GetSnippets200ResponseResultsInner) SetPackageId(v string) {
+	o.PackageId = v
+}
+
+// GetPurl returns the Purl field value
+func (o *GetSnippets200ResponseResultsInner) GetPurl() string {
+	if o == nil {
+		var ret string
+		return ret
 	}
 
-	return false
+	return o.Purl
 }
 
-// SetLocator gets a reference to the given string and assigns it to the Locator field.
+// GetPurlOk returns a tuple with the Purl field value
+// and a boolean to check if the value has been set.
+func (o *GetSnippets200ResponseResultsInner) GetPurlOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Purl, true
+}
+
+// SetPurl sets field value
+func (o *GetSnippets200ResponseResultsInner) SetPurl(v string) {
+	o.Purl = v
+}
+
+// GetLocator returns the Locator field value
+func (o *GetSnippets200ResponseResultsInner) GetLocator() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Locator
+}
+
+// GetLocatorOk returns a tuple with the Locator field value
+// and a boolean to check if the value has been set.
+func (o *GetSnippets200ResponseResultsInner) GetLocatorOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Locator, true
+}
+
+// SetLocator sets field value
 func (o *GetSnippets200ResponseResultsInner) SetLocator(v string) {
-	o.Locator = &v
+	o.Locator = v
 }
 
 // GetPackage returns the Package field value
@@ -206,28 +254,28 @@ func (o *GetSnippets200ResponseResultsInner) SetKind(v string) {
 	o.Kind = v
 }
 
-// GetMatches returns the Matches field value
-func (o *GetSnippets200ResponseResultsInner) GetMatches() []GetSnippets200ResponseResultsInnerMatchesInner {
+// GetMatchCount returns the MatchCount field value
+func (o *GetSnippets200ResponseResultsInner) GetMatchCount() int32 {
 	if o == nil {
-		var ret []GetSnippets200ResponseResultsInnerMatchesInner
+		var ret int32
 		return ret
 	}
 
-	return o.Matches
+	return o.MatchCount
 }
 
-// GetMatchesOk returns a tuple with the Matches field value
+// GetMatchCountOk returns a tuple with the MatchCount field value
 // and a boolean to check if the value has been set.
-func (o *GetSnippets200ResponseResultsInner) GetMatchesOk() ([]GetSnippets200ResponseResultsInnerMatchesInner, bool) {
+func (o *GetSnippets200ResponseResultsInner) GetMatchCountOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.Matches, true
+	return &o.MatchCount, true
 }
 
-// SetMatches sets field value
-func (o *GetSnippets200ResponseResultsInner) SetMatches(v []GetSnippets200ResponseResultsInnerMatchesInner) {
-	o.Matches = v
+// SetMatchCount sets field value
+func (o *GetSnippets200ResponseResultsInner) SetMatchCount(v int32) {
+	o.MatchCount = v
 }
 
 // GetHighestMatchPercentage returns the HighestMatchPercentage field value
@@ -430,35 +478,27 @@ func (o *GetSnippets200ResponseResultsInner) SetRejectionDetails(v GetSnippets20
 	o.RejectionDetails = &v
 }
 
-// GetLabels returns the Labels field value if set, zero value otherwise.
-func (o *GetSnippets200ResponseResultsInner) GetLabels() []map[string]interface{} {
-	if o == nil || IsNil(o.Labels) {
-		var ret []map[string]interface{}
+// GetLabels returns the Labels field value
+func (o *GetSnippets200ResponseResultsInner) GetLabels() []GetSnippets200ResponseResultsInnerLabelsInner {
+	if o == nil {
+		var ret []GetSnippets200ResponseResultsInnerLabelsInner
 		return ret
 	}
+
 	return o.Labels
 }
 
-// GetLabelsOk returns a tuple with the Labels field value if set, nil otherwise
+// GetLabelsOk returns a tuple with the Labels field value
 // and a boolean to check if the value has been set.
-func (o *GetSnippets200ResponseResultsInner) GetLabelsOk() ([]map[string]interface{}, bool) {
-	if o == nil || IsNil(o.Labels) {
+func (o *GetSnippets200ResponseResultsInner) GetLabelsOk() ([]GetSnippets200ResponseResultsInnerLabelsInner, bool) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Labels, true
 }
 
-// HasLabels returns a boolean if a field has been set.
-func (o *GetSnippets200ResponseResultsInner) HasLabels() bool {
-	if o != nil && !IsNil(o.Labels) {
-		return true
-	}
-
-	return false
-}
-
-// SetLabels gets a reference to the given []map[string]interface{} and assigns it to the Labels field.
-func (o *GetSnippets200ResponseResultsInner) SetLabels(v []map[string]interface{}) {
+// SetLabels sets field value
+func (o *GetSnippets200ResponseResultsInner) SetLabels(v []GetSnippets200ResponseResultsInnerLabelsInner) {
 	o.Labels = v
 }
 
@@ -473,13 +513,13 @@ func (o GetSnippets200ResponseResultsInner) MarshalJSON() ([]byte, error) {
 func (o GetSnippets200ResponseResultsInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
-	if !IsNil(o.Locator) {
-		toSerialize["locator"] = o.Locator
-	}
+	toSerialize["packageId"] = o.PackageId
+	toSerialize["purl"] = o.Purl
+	toSerialize["locator"] = o.Locator
 	toSerialize["package"] = o.Package
 	toSerialize["version"] = o.Version
 	toSerialize["kind"] = o.Kind
-	toSerialize["matches"] = o.Matches
+	toSerialize["matchCount"] = o.MatchCount
 	toSerialize["highestMatchPercentage"] = o.HighestMatchPercentage
 	if !IsNil(o.ReleaseDate) {
 		toSerialize["releaseDate"] = o.ReleaseDate
@@ -495,9 +535,7 @@ func (o GetSnippets200ResponseResultsInner) ToMap() (map[string]interface{}, err
 	if !IsNil(o.RejectionDetails) {
 		toSerialize["rejectionDetails"] = o.RejectionDetails
 	}
-	if !IsNil(o.Labels) {
-		toSerialize["labels"] = o.Labels
-	}
+	toSerialize["labels"] = o.Labels
 	return toSerialize, nil
 }
 
@@ -507,13 +545,17 @@ func (o *GetSnippets200ResponseResultsInner) UnmarshalJSON(data []byte) (err err
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"id",
+		"packageId",
+		"purl",
+		"locator",
 		"package",
 		"version",
 		"kind",
-		"matches",
+		"matchCount",
 		"highestMatchPercentage",
 		"licenses",
 		"issueCounts",
+		"labels",
 	}
 
 	allProperties := make(map[string]interface{})

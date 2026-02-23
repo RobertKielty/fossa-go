@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -45,6 +45,8 @@ type GetTeamByIdV2200Response struct {
 	TeamReleaseGroupsCount *int32 `json:"teamReleaseGroupsCount,omitempty"`
 	// The number of projects associated with the team
 	TeamProjectsCount *int32 `json:"teamProjectsCount,omitempty"`
+	// The number of OIDC providers that can be accessed by members of this team. Includes both org-scoped providers and team-scoped providers where the scopeId matches the team ID. This property is only returned if the user has permission to view OIDC providers. 
+	TeamOIDCProvidersCount *int32 `json:"teamOIDCProvidersCount,omitempty"`
 }
 
 // NewGetTeamByIdV2200Response instantiates a new GetTeamByIdV2200Response object
@@ -448,6 +450,38 @@ func (o *GetTeamByIdV2200Response) SetTeamProjectsCount(v int32) {
 	o.TeamProjectsCount = &v
 }
 
+// GetTeamOIDCProvidersCount returns the TeamOIDCProvidersCount field value if set, zero value otherwise.
+func (o *GetTeamByIdV2200Response) GetTeamOIDCProvidersCount() int32 {
+	if o == nil || IsNil(o.TeamOIDCProvidersCount) {
+		var ret int32
+		return ret
+	}
+	return *o.TeamOIDCProvidersCount
+}
+
+// GetTeamOIDCProvidersCountOk returns a tuple with the TeamOIDCProvidersCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetTeamByIdV2200Response) GetTeamOIDCProvidersCountOk() (*int32, bool) {
+	if o == nil || IsNil(o.TeamOIDCProvidersCount) {
+		return nil, false
+	}
+	return o.TeamOIDCProvidersCount, true
+}
+
+// HasTeamOIDCProvidersCount returns a boolean if a field has been set.
+func (o *GetTeamByIdV2200Response) HasTeamOIDCProvidersCount() bool {
+	if o != nil && !IsNil(o.TeamOIDCProvidersCount) {
+		return true
+	}
+
+	return false
+}
+
+// SetTeamOIDCProvidersCount gets a reference to the given int32 and assigns it to the TeamOIDCProvidersCount field.
+func (o *GetTeamByIdV2200Response) SetTeamOIDCProvidersCount(v int32) {
+	o.TeamOIDCProvidersCount = &v
+}
+
 func (o GetTeamByIdV2200Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -493,6 +527,9 @@ func (o GetTeamByIdV2200Response) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.TeamProjectsCount) {
 		toSerialize["teamProjectsCount"] = o.TeamProjectsCount
+	}
+	if !IsNil(o.TeamOIDCProvidersCount) {
+		toSerialize["teamOIDCProvidersCount"] = o.TeamOIDCProvidersCount
 	}
 	return toSerialize, nil
 }

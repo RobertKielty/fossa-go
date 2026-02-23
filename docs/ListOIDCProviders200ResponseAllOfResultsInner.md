@@ -8,7 +8,8 @@ Name | Type | Description | Notes
 **OrganizationId** | **int32** | The ID of the organization this provider belongs to | 
 **Issuer** | **string** | The issuer URL of the OIDC Provider | 
 **Scope** | **string** | The scope level of the OIDC Provider | 
-**ScopeId** | **int32** | The ID associated with the scope: either the organization ID or the team ID | 
+**ScopeId** | **int32** | The team ID | 
+**TeamName** | **string** | The name of the team | 
 **CreatedAt** | **time.Time** | When the OIDC Provider was created | 
 **UpdatedAt** | **time.Time** | When the OIDC Provider was last updated | 
 
@@ -16,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewListOIDCProviders200ResponseAllOfResultsInner
 
-`func NewListOIDCProviders200ResponseAllOfResultsInner(id int32, organizationId int32, issuer string, scope string, scopeId int32, createdAt time.Time, updatedAt time.Time, ) *ListOIDCProviders200ResponseAllOfResultsInner`
+`func NewListOIDCProviders200ResponseAllOfResultsInner(id int32, organizationId int32, issuer string, scope string, scopeId int32, teamName string, createdAt time.Time, updatedAt time.Time, ) *ListOIDCProviders200ResponseAllOfResultsInner`
 
 NewListOIDCProviders200ResponseAllOfResultsInner instantiates a new ListOIDCProviders200ResponseAllOfResultsInner object
 This constructor will assign default values to properties that have it defined,
@@ -129,6 +130,26 @@ and a boolean to check if the value has been set.
 `func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetScopeId(v int32)`
 
 SetScopeId sets ScopeId field to given value.
+
+
+### GetTeamName
+
+`func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetTeamName() string`
+
+GetTeamName returns the TeamName field if non-nil, zero value otherwise.
+
+### GetTeamNameOk
+
+`func (o *ListOIDCProviders200ResponseAllOfResultsInner) GetTeamNameOk() (*string, bool)`
+
+GetTeamNameOk returns a tuple with the TeamName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTeamName
+
+`func (o *ListOIDCProviders200ResponseAllOfResultsInner) SetTeamName(v string)`
+
+SetTeamName sets TeamName field to given value.
 
 
 ### GetCreatedAt

@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -26,10 +26,14 @@ type RejectSnippetsRequest struct {
 	Path string `json:"path"`
 	// Filter by specific snippet IDs
 	Ids []string `json:"ids,omitempty"`
+	// Filter by specific snippet package IDs
+	PackageIds []string `json:"packageIds,omitempty"`
 	// Search term for filtering snippets
 	Search *string `json:"search,omitempty"`
-	// Filter by confidence levels
-	Confidence []string `json:"confidence,omitempty"`
+	// Filter by rejection status
+	RejectionStatus []string `json:"rejectionStatus,omitempty"`
+	// Filter by package labels
+	PackageLabels []string `json:"packageLabels,omitempty"`
 }
 
 type _RejectSnippetsRequest RejectSnippetsRequest
@@ -108,6 +112,38 @@ func (o *RejectSnippetsRequest) SetIds(v []string) {
 	o.Ids = v
 }
 
+// GetPackageIds returns the PackageIds field value if set, zero value otherwise.
+func (o *RejectSnippetsRequest) GetPackageIds() []string {
+	if o == nil || IsNil(o.PackageIds) {
+		var ret []string
+		return ret
+	}
+	return o.PackageIds
+}
+
+// GetPackageIdsOk returns a tuple with the PackageIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RejectSnippetsRequest) GetPackageIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.PackageIds) {
+		return nil, false
+	}
+	return o.PackageIds, true
+}
+
+// HasPackageIds returns a boolean if a field has been set.
+func (o *RejectSnippetsRequest) HasPackageIds() bool {
+	if o != nil && !IsNil(o.PackageIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetPackageIds gets a reference to the given []string and assigns it to the PackageIds field.
+func (o *RejectSnippetsRequest) SetPackageIds(v []string) {
+	o.PackageIds = v
+}
+
 // GetSearch returns the Search field value if set, zero value otherwise.
 func (o *RejectSnippetsRequest) GetSearch() string {
 	if o == nil || IsNil(o.Search) {
@@ -140,36 +176,68 @@ func (o *RejectSnippetsRequest) SetSearch(v string) {
 	o.Search = &v
 }
 
-// GetConfidence returns the Confidence field value if set, zero value otherwise.
-func (o *RejectSnippetsRequest) GetConfidence() []string {
-	if o == nil || IsNil(o.Confidence) {
+// GetRejectionStatus returns the RejectionStatus field value if set, zero value otherwise.
+func (o *RejectSnippetsRequest) GetRejectionStatus() []string {
+	if o == nil || IsNil(o.RejectionStatus) {
 		var ret []string
 		return ret
 	}
-	return o.Confidence
+	return o.RejectionStatus
 }
 
-// GetConfidenceOk returns a tuple with the Confidence field value if set, nil otherwise
+// GetRejectionStatusOk returns a tuple with the RejectionStatus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RejectSnippetsRequest) GetConfidenceOk() ([]string, bool) {
-	if o == nil || IsNil(o.Confidence) {
+func (o *RejectSnippetsRequest) GetRejectionStatusOk() ([]string, bool) {
+	if o == nil || IsNil(o.RejectionStatus) {
 		return nil, false
 	}
-	return o.Confidence, true
+	return o.RejectionStatus, true
 }
 
-// HasConfidence returns a boolean if a field has been set.
-func (o *RejectSnippetsRequest) HasConfidence() bool {
-	if o != nil && !IsNil(o.Confidence) {
+// HasRejectionStatus returns a boolean if a field has been set.
+func (o *RejectSnippetsRequest) HasRejectionStatus() bool {
+	if o != nil && !IsNil(o.RejectionStatus) {
 		return true
 	}
 
 	return false
 }
 
-// SetConfidence gets a reference to the given []string and assigns it to the Confidence field.
-func (o *RejectSnippetsRequest) SetConfidence(v []string) {
-	o.Confidence = v
+// SetRejectionStatus gets a reference to the given []string and assigns it to the RejectionStatus field.
+func (o *RejectSnippetsRequest) SetRejectionStatus(v []string) {
+	o.RejectionStatus = v
+}
+
+// GetPackageLabels returns the PackageLabels field value if set, zero value otherwise.
+func (o *RejectSnippetsRequest) GetPackageLabels() []string {
+	if o == nil || IsNil(o.PackageLabels) {
+		var ret []string
+		return ret
+	}
+	return o.PackageLabels
+}
+
+// GetPackageLabelsOk returns a tuple with the PackageLabels field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RejectSnippetsRequest) GetPackageLabelsOk() ([]string, bool) {
+	if o == nil || IsNil(o.PackageLabels) {
+		return nil, false
+	}
+	return o.PackageLabels, true
+}
+
+// HasPackageLabels returns a boolean if a field has been set.
+func (o *RejectSnippetsRequest) HasPackageLabels() bool {
+	if o != nil && !IsNil(o.PackageLabels) {
+		return true
+	}
+
+	return false
+}
+
+// SetPackageLabels gets a reference to the given []string and assigns it to the PackageLabels field.
+func (o *RejectSnippetsRequest) SetPackageLabels(v []string) {
+	o.PackageLabels = v
 }
 
 func (o RejectSnippetsRequest) MarshalJSON() ([]byte, error) {
@@ -186,11 +254,17 @@ func (o RejectSnippetsRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Ids) {
 		toSerialize["ids"] = o.Ids
 	}
+	if !IsNil(o.PackageIds) {
+		toSerialize["packageIds"] = o.PackageIds
+	}
 	if !IsNil(o.Search) {
 		toSerialize["search"] = o.Search
 	}
-	if !IsNil(o.Confidence) {
-		toSerialize["confidence"] = o.Confidence
+	if !IsNil(o.RejectionStatus) {
+		toSerialize["rejectionStatus"] = o.RejectionStatus
+	}
+	if !IsNil(o.PackageLabels) {
+		toSerialize["packageLabels"] = o.PackageLabels
 	}
 	return toSerialize, nil
 }

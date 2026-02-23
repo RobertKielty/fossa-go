@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -22,7 +22,7 @@ var _ MappedNullable = &ListOIDCTrustRelationships200Response{}
 
 // ListOIDCTrustRelationships200Response struct for ListOIDCTrustRelationships200Response
 type ListOIDCTrustRelationships200Response struct {
-	// Array of OIDC Trust Relationships
+	// Array of OIDC Trust Relationships with user, team, and provider details
 	Results []ListOIDCTrustRelationships200ResponseAllOfResultsInner `json:"results"`
 	// Number of items requested per page
 	PageSize int32 `json:"pageSize"`

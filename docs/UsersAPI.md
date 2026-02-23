@@ -5,8 +5,11 @@ All URIs are relative to *https://app.fossa.com/api*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateServiceAccount**](UsersAPI.md#CreateServiceAccount) | **Post** /users/service-accounts | 
+[**DeleteUserInvitation**](UsersAPI.md#DeleteUserInvitation) | **Delete** /user-invitations/{email} | Delete a pending user invitation by email
 [**GetAllUsers**](UsersAPI.md#GetAllUsers) | **Get** /users | 
 [**GetUser**](UsersAPI.md#GetUser) | **Get** /users/{id} | 
+[**ListUserInvitations**](UsersAPI.md#ListUserInvitations) | **Get** /user-invitations | List pending user invitations
+[**SendUserInvitation**](UsersAPI.md#SendUserInvitation) | **Post** /organizations/{id}/invite | Send an invitation to join an organization
 
 
 
@@ -70,6 +73,76 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteUserInvitation
+
+> string DeleteUserInvitation(ctx, email).Execute()
+
+Delete a pending user invitation by email
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	email := "email_example" // string | Email address of the invited user to remove.
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.DeleteUserInvitation(context.Background(), email).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.DeleteUserInvitation``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteUserInvitation`: string
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.DeleteUserInvitation`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**email** | **string** | Email address of the invited user to remove. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteUserInvitationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+**string**
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -207,6 +280,139 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListUserInvitations
+
+> []UserInvitation ListUserInvitations(ctx).Execute()
+
+List pending user invitations
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.ListUserInvitations(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.ListUserInvitations``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListUserInvitations`: []UserInvitation
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.ListUserInvitations`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListUserInvitationsRequest struct via the builder pattern
+
+
+### Return type
+
+[**[]UserInvitation**](UserInvitation.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SendUserInvitation
+
+> []UserInvitationCreateResult SendUserInvitation(ctx, id).SendUserInvitationRequest(sendUserInvitationRequest).Execute()
+
+Send an invitation to join an organization
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(56) // int32 | Organization ID.
+	sendUserInvitationRequest := *openapiclient.NewSendUserInvitationRequest([]string{"Emails_example"}) // SendUserInvitationRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.SendUserInvitation(context.Background(), id).SendUserInvitationRequest(sendUserInvitationRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.SendUserInvitation``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SendUserInvitation`: []UserInvitationCreateResult
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.SendUserInvitation`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** | Organization ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSendUserInvitationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **sendUserInvitationRequest** | [**SendUserInvitationRequest**](SendUserInvitationRequest.md) |  | 
+
+### Return type
+
+[**[]UserInvitationCreateResult**](UserInvitationCreateResult.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

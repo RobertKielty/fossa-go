@@ -4,6 +4,7 @@ All URIs are relative to *https://app.fossa.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**DeleteOrganizationSamlSettings**](OrganizationSettingsAPI.md#DeleteOrganizationSamlSettings) | **Delete** /organizations/{id}/saml | 
 [**GetOrganizationAuthenticationSettings**](OrganizationSettingsAPI.md#GetOrganizationAuthenticationSettings) | **Get** /organizations/{id}/settings/authentication | 
 [**GetOrganizationBowerSettings**](OrganizationSettingsAPI.md#GetOrganizationBowerSettings) | **Get** /organizations/{id}/settings/languages/bower | 
 [**GetOrganizationCocoapodsSettings**](OrganizationSettingsAPI.md#GetOrganizationCocoapodsSettings) | **Get** /organizations/{id}/settings/languages/pod | 
@@ -49,9 +50,78 @@ Method | HTTP request | Description
 [**UpdateOrganizationNotificationSettings**](OrganizationSettingsAPI.md#UpdateOrganizationNotificationSettings) | **Put** /organizations/{id}/settings/projects/notifications | 
 [**UpdateOrganizationProjectPrivacySettings**](OrganizationSettingsAPI.md#UpdateOrganizationProjectPrivacySettings) | **Put** /organizations/{id}/settings/projects/privacy | 
 [**UpdateOrganizationQualityIssueSettings**](OrganizationSettingsAPI.md#UpdateOrganizationQualityIssueSettings) | **Put** /organizations/{id}/settings/projects/issues/quality | 
+[**UpdateOrganizationSamlSettings**](OrganizationSettingsAPI.md#UpdateOrganizationSamlSettings) | **Put** /organizations/{id}/saml | 
 [**UpdateOrganizationSecurityIssueSettings**](OrganizationSettingsAPI.md#UpdateOrganizationSecurityIssueSettings) | **Put** /organizations/{id}/settings/projects/issues/security | 
 [**UpdateOrganizationUpdateHookSettings**](OrganizationSettingsAPI.md#UpdateOrganizationUpdateHookSettings) | **Put** /organizations/{id}/settings/projects/update-hooks | 
 
+
+
+## DeleteOrganizationSamlSettings
+
+> DeleteOrganizationSamlSettings(ctx, id).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.OrganizationSettingsAPI.DeleteOrganizationSamlSettings(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OrganizationSettingsAPI.DeleteOrganizationSamlSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteOrganizationSamlSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## GetOrganizationAuthenticationSettings
@@ -3189,6 +3259,78 @@ Name | Type | Description  | Notes
 ### Return type
 
  (empty response body)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateOrganizationSamlSettings
+
+> UpdateOrganizationSamlSettings200Response UpdateOrganizationSamlSettings(ctx, id).UpdateOrganizationSamlSettingsRequest(updateOrganizationSamlSettingsRequest).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	updateOrganizationSamlSettingsRequest := *openapiclient.NewUpdateOrganizationSamlSettingsRequest("EntryPoint_example", "Cert_example", "Audience_example") // UpdateOrganizationSamlSettingsRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OrganizationSettingsAPI.UpdateOrganizationSamlSettings(context.Background(), id).UpdateOrganizationSamlSettingsRequest(updateOrganizationSamlSettingsRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OrganizationSettingsAPI.UpdateOrganizationSamlSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateOrganizationSamlSettings`: UpdateOrganizationSamlSettings200Response
+	fmt.Fprintf(os.Stdout, "Response from `OrganizationSettingsAPI.UpdateOrganizationSamlSettings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateOrganizationSamlSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateOrganizationSamlSettingsRequest** | [**UpdateOrganizationSamlSettingsRequest**](UpdateOrganizationSamlSettingsRequest.md) |  | 
+
+### Return type
+
+[**UpdateOrganizationSamlSettings200Response**](UpdateOrganizationSamlSettings200Response.md)
 
 ### Authorization
 

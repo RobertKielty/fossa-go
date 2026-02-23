@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -22,8 +22,6 @@ var _ MappedNullable = &GetSnippets200ResponseResultsInnerIssueCountsLicensing{}
 
 // GetSnippets200ResponseResultsInnerIssueCountsLicensing struct for GetSnippets200ResponseResultsInnerIssueCountsLicensing
 type GetSnippets200ResponseResultsInnerIssueCountsLicensing struct {
-	// Number of approved issues
-	Approved int32 `json:"approved"`
 	// Number of denied issues
 	Denied int32 `json:"denied"`
 	// Number of flagged issues
@@ -38,9 +36,8 @@ type _GetSnippets200ResponseResultsInnerIssueCountsLicensing GetSnippets200Respo
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetSnippets200ResponseResultsInnerIssueCountsLicensing(approved int32, denied int32, flagged int32, unknown int32) *GetSnippets200ResponseResultsInnerIssueCountsLicensing {
+func NewGetSnippets200ResponseResultsInnerIssueCountsLicensing(denied int32, flagged int32, unknown int32) *GetSnippets200ResponseResultsInnerIssueCountsLicensing {
 	this := GetSnippets200ResponseResultsInnerIssueCountsLicensing{}
-	this.Approved = approved
 	this.Denied = denied
 	this.Flagged = flagged
 	this.Unknown = unknown
@@ -53,30 +50,6 @@ func NewGetSnippets200ResponseResultsInnerIssueCountsLicensing(approved int32, d
 func NewGetSnippets200ResponseResultsInnerIssueCountsLicensingWithDefaults() *GetSnippets200ResponseResultsInnerIssueCountsLicensing {
 	this := GetSnippets200ResponseResultsInnerIssueCountsLicensing{}
 	return &this
-}
-
-// GetApproved returns the Approved field value
-func (o *GetSnippets200ResponseResultsInnerIssueCountsLicensing) GetApproved() int32 {
-	if o == nil {
-		var ret int32
-		return ret
-	}
-
-	return o.Approved
-}
-
-// GetApprovedOk returns a tuple with the Approved field value
-// and a boolean to check if the value has been set.
-func (o *GetSnippets200ResponseResultsInnerIssueCountsLicensing) GetApprovedOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Approved, true
-}
-
-// SetApproved sets field value
-func (o *GetSnippets200ResponseResultsInnerIssueCountsLicensing) SetApproved(v int32) {
-	o.Approved = v
 }
 
 // GetDenied returns the Denied field value
@@ -161,7 +134,6 @@ func (o GetSnippets200ResponseResultsInnerIssueCountsLicensing) MarshalJSON() ([
 
 func (o GetSnippets200ResponseResultsInnerIssueCountsLicensing) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["approved"] = o.Approved
 	toSerialize["denied"] = o.Denied
 	toSerialize["flagged"] = o.Flagged
 	toSerialize["unknown"] = o.Unknown
@@ -173,7 +145,6 @@ func (o *GetSnippets200ResponseResultsInnerIssueCountsLicensing) UnmarshalJSON(d
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"approved",
 		"denied",
 		"flagged",
 		"unknown",

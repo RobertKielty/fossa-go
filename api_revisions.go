@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.36
+API version: 4.31.29
 Contact: support@fossa.com
 */
 
@@ -185,7 +185,7 @@ func (a *RevisionsAPIService) FixPlansExecute(r ApiFixPlansRequest) (*os.File, *
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -196,7 +196,7 @@ func (a *RevisionsAPIService) FixPlansExecute(r ApiFixPlansRequest) (*os.File, *
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -477,7 +477,7 @@ func (a *RevisionsAPIService) GetRevisionAttributionEmailExecute(r ApiGetRevisio
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -488,7 +488,7 @@ func (a *RevisionsAPIService) GetRevisionAttributionEmailExecute(r ApiGetRevisio
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -499,7 +499,7 @@ func (a *RevisionsAPIService) GetRevisionAttributionEmailExecute(r ApiGetRevisio
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -720,7 +720,7 @@ func (a *RevisionsAPIService) GetRevisionAttributionJSONExecute(r ApiGetRevision
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -731,7 +731,7 @@ func (a *RevisionsAPIService) GetRevisionAttributionJSONExecute(r ApiGetRevision
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -742,7 +742,381 @@ func (a *RevisionsAPIService) GetRevisionAttributionJSONExecute(r ApiGetRevision
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetRevisionDependenciesRequest struct {
+	ctx context.Context
+	ApiService *RevisionsAPIService
+	locator string
+	limit *int32
+	offset *int32
+	includeIgnored *bool
+	includeHashData *bool
+	includeLicenseText *bool
+	includeLocators *[]string
+}
+
+// Maximum number of dependencies to return (min 1, max 10000)
+func (r ApiGetRevisionDependenciesRequest) Limit(limit int32) ApiGetRevisionDependenciesRequest {
+	r.limit = &limit
+	return r
+}
+
+// Number of dependencies to skip for pagination
+func (r ApiGetRevisionDependenciesRequest) Offset(offset int32) ApiGetRevisionDependenciesRequest {
+	r.offset = &offset
+	return r
+}
+
+// Whether to include ignored dependencies in the response
+func (r ApiGetRevisionDependenciesRequest) IncludeIgnored(includeIgnored bool) ApiGetRevisionDependenciesRequest {
+	r.includeIgnored = &includeIgnored
+	return r
+}
+
+// Whether to include hash and version data for dependencies
+func (r ApiGetRevisionDependenciesRequest) IncludeHashData(includeHashData bool) ApiGetRevisionDependenciesRequest {
+	r.includeHashData = &includeHashData
+	return r
+}
+
+// Whether to include full license text in the license information
+func (r ApiGetRevisionDependenciesRequest) IncludeLicenseText(includeLicenseText bool) ApiGetRevisionDependenciesRequest {
+	r.includeLicenseText = &includeLicenseText
+	return r
+}
+
+// Array of locators to filter dependencies. Only dependencies matching these locators will be returned. Note: For large lists of locators that may exceed URL length limits, use POST /api/revisions/:locator/deps instead. 
+func (r ApiGetRevisionDependenciesRequest) IncludeLocators(includeLocators []string) ApiGetRevisionDependenciesRequest {
+	r.includeLocators = &includeLocators
+	return r
+}
+
+func (r ApiGetRevisionDependenciesRequest) Execute() ([]GetRevisionDependenciesPost200ResponseInner, *http.Response, error) {
+	return r.ApiService.GetRevisionDependenciesExecute(r)
+}
+
+/*
+GetRevisionDependencies Method for GetRevisionDependencies
+
+Retrieve dependencies for a given revision. This endpoint accepts parameters via query string.
+Be sure to chunk large requests to avoid exceeding URI/header size limites. (e.g., when filtering by a large list of locators).
+
+The endpoint returns a streaming JSON array of dependencies with detailed information including licenses, issues, and metadata.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The URL-encoded locator of the revision
+ @return ApiGetRevisionDependenciesRequest
+*/
+func (a *RevisionsAPIService) GetRevisionDependencies(ctx context.Context, locator string) ApiGetRevisionDependenciesRequest {
+	return ApiGetRevisionDependenciesRequest{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+	}
+}
+
+// Execute executes the request
+//  @return []GetRevisionDependenciesPost200ResponseInner
+func (a *RevisionsAPIService) GetRevisionDependenciesExecute(r ApiGetRevisionDependenciesRequest) ([]GetRevisionDependenciesPost200ResponseInner, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  []GetRevisionDependenciesPost200ResponseInner
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RevisionsAPIService.GetRevisionDependencies")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/revisions/{locator}/dependencies"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.offset != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "offset", r.offset, "form", "")
+	}
+	if r.includeIgnored != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "include_ignored", r.includeIgnored, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "include_ignored", defaultValue, "form", "")
+		r.includeIgnored = &defaultValue
+	}
+	if r.includeHashData != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeHashData", r.includeHashData, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeHashData", defaultValue, "form", "")
+		r.includeHashData = &defaultValue
+	}
+	if r.includeLicenseText != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "include_license_text", r.includeLicenseText, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "include_license_text", defaultValue, "form", "")
+		r.includeLicenseText = &defaultValue
+	}
+	if r.includeLocators != nil {
+		t := *r.includeLocators
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "includeLocators", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "includeLocators", t, "form", "multi")
+		}
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GetRevisionDependenciesPost404Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetRevisionDependenciesPostRequest struct {
+	ctx context.Context
+	ApiService *RevisionsAPIService
+	locator string
+	getRevisionDependenciesPostRequest *GetRevisionDependenciesPostRequest
+}
+
+// Query parameters for filtering and configuring the dependency response
+func (r ApiGetRevisionDependenciesPostRequest) GetRevisionDependenciesPostRequest(getRevisionDependenciesPostRequest GetRevisionDependenciesPostRequest) ApiGetRevisionDependenciesPostRequest {
+	r.getRevisionDependenciesPostRequest = &getRevisionDependenciesPostRequest
+	return r
+}
+
+func (r ApiGetRevisionDependenciesPostRequest) Execute() ([]GetRevisionDependenciesPost200ResponseInner, *http.Response, error) {
+	return r.ApiService.GetRevisionDependenciesPostExecute(r)
+}
+
+/*
+GetRevisionDependenciesPost Method for GetRevisionDependenciesPost
+
+Retrieve dependencies for a given revision using the V1 legacy API format. This is a POST version of the
+GET /api/revisions/:locator/dependencies endpoint that accepts parameters in the request body instead of
+query parameters. This allows for larger payloads that would exceed URI/header size limits when using query
+parameters (e.g., when filtering by a large list of locators).
+
+**Note**: This endpoint returns the V1 legacy format with streaming JSON array output. For new integrations,
+consider using the V2 API at GET /v2/revisions/{locator}/dependencies which returns a paginated response with
+a cleaner data structure.
+
+The endpoint returns a streaming JSON array of dependencies with detailed information including the
+DependencyLock, full license objects, issueTargets, and legacy metadata fields.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The URL-encoded locator of the revision
+ @return ApiGetRevisionDependenciesPostRequest
+*/
+func (a *RevisionsAPIService) GetRevisionDependenciesPost(ctx context.Context, locator string) ApiGetRevisionDependenciesPostRequest {
+	return ApiGetRevisionDependenciesPostRequest{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+	}
+}
+
+// Execute executes the request
+//  @return []GetRevisionDependenciesPost200ResponseInner
+func (a *RevisionsAPIService) GetRevisionDependenciesPostExecute(r ApiGetRevisionDependenciesPostRequest) ([]GetRevisionDependenciesPost200ResponseInner, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  []GetRevisionDependenciesPost200ResponseInner
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RevisionsAPIService.GetRevisionDependenciesPost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/revisions/{locator}/list-dependencies"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.getRevisionDependenciesPostRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v GetRevisionDependenciesPost404Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -855,7 +1229,7 @@ func (a *RevisionsAPIService) NoticeFilesExecute(r ApiNoticeFilesRequest) ([]Get
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -977,7 +1351,7 @@ func (a *RevisionsAPIService) OriginalSbomExecute(r ApiOriginalSbomRequest) (*ht
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -988,7 +1362,7 @@ func (a *RevisionsAPIService) OriginalSbomExecute(r ApiOriginalSbomRequest) (*ht
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1100,7 +1474,7 @@ func (a *RevisionsAPIService) UpdateRevisionExecute(r ApiUpdateRevisionRequest) 
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1111,7 +1485,7 @@ func (a *RevisionsAPIService) UpdateRevisionExecute(r ApiUpdateRevisionRequest) 
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetGitHubAppInstallationUrl403Response
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
