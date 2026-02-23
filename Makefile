@@ -1,5 +1,15 @@
 # FOSSA's published swagger.json - REST API definition with version info
 FOSSA_SWAGGER_REF      := https://app.fossa.com/api/api-docs/swagger.json
+OPENAPI_IMAGE          ?= docker.io/openapitools/openapi-generator-cli:latest
+CONTAINER_ENGINE       ?= podman
+
+# Podman-specific defaults (SELinux + userns). Override as needed, e.g. CONTAINER_ENGINE=docker.
+CONTAINER_VOLUME_SUFFIX :=
+CONTAINER_USERNS        :=
+ifeq ($(CONTAINER_ENGINE),podman)
+CONTAINER_VOLUME_SUFFIX := :Z
+CONTAINER_USERNS        := --userns=keep-id
+endif
 
 # where we record the last version
 API_VERSION_FILE  := api-version.txt
@@ -12,7 +22,7 @@ FOSSA_API_VERSION := $(shell curl -s $(FOSSA_SWAGGER_REF) | jq -r .info.version)
 FOSSA_MOD_VERSION := v2.0.0
 
 all: generate-go
-.PHONY: all report-fossa-version generate-go update-swagger
+.PHONY: all report-fossa-version patch-swagger generate-go update-swagger
 
 # check for upstream swagger updates and regenerate the client when needed
 update-swagger:
@@ -48,20 +58,25 @@ report-fossa-version:
 	@echo $(FOSSA_API_VERSION) > $(API_VERSION_FILE)
 	@echo "✏️ fossa-go module version will be $(FOSSA_MOD_VERSION)"
 
+# patch swagger.json with known missing endpoints
+patch-swagger:
+	@python scripts/patch_swagger.py swagger.json
+
 install-openapi-generator-cli:
 	@echo "🔍  Checking for openapitools/openapi-generator-cli…"
-	@docker image inspect openapitools/openapi-generator-cli > /dev/null 2>&1 \
+	@$(CONTAINER_ENGINE) image inspect $(OPENAPI_IMAGE) > /dev/null 2>&1 \
 		&& echo "✅ openapitools/openapi-generator-cli is already available locally." \
-		|| (echo "⬇️ Image not found locally, pulling…" && docker pull openapitools/openapi-generator-cli)
+		|| (echo "⬇️ Image not found locally, pulling…" && $(CONTAINER_ENGINE) pull $(OPENAPI_IMAGE))
 
-generate-go: install-openapi-generator-cli report-fossa-version
+generate-go: install-openapi-generator-cli report-fossa-version patch-swagger
 	@echo "🚀  Generating Go client for version $(FOSSA_API_VERSION)…"
-	docker run --rm \
+	$(CONTAINER_ENGINE) run --rm \
+	  $(CONTAINER_USERNS) \
 	  -u $$(id -u):$$(id -g) \
-	  -v "$${PWD}:/local" \
+	  -v "$${PWD}:/local$(CONTAINER_VOLUME_SUFFIX)" \
       -e JAVA_OPTS="-Dlog.level=warn" \
-	  openapitools/openapi-generator-cli generate \
-	    -i $(FOSSA_SWAGGER_REF) \
+	  $(OPENAPI_IMAGE) generate \
+	    -i /local/swagger.json \
 	    --skip-validate-spec \
 	    -g go \
 	    --additional-properties=packageName=fossa,packageVersion=$(FOSSA_MOD_VERSION) \

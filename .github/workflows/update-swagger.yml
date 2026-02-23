@@ -19,14 +19,51 @@ jobs:
           fetch-depth: 0
 
       - name: Check for upstream swagger updates
-        run: make update-swagger
+        run: make generate-go
+
+      - name: Collect metadata
+        id: meta
+        run: |
+          echo "date=$(date -u +%Y%m%d)" >> "$GITHUB_OUTPUT"
+          if [ -f api-version.txt ]; then
+            echo "api_version=$(cat api-version.txt)" >> "$GITHUB_OUTPUT"
+          fi
+          if [ -f Makefile ]; then
+            spec=$(awk -F ':=' '/^FOSSA_SWAGGER_REF/ {gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2); print $2}' Makefile | head -n1)
+            if [ -n "$spec" ]; then
+              echo "swagger_ref=$spec" >> "$GITHUB_OUTPUT"
+            fi
+            modver=$(awk -F ':=' '/^FOSSA_MOD_VERSION/ {gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2); print $2}' Makefile | head -n1)
+            if [ -n "$modver" ]; then
+              echo "mod_version=$modver" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+          image=$(awk -F '\\?=' '/^OPENAPI_IMAGE/ {gsub(/^[[:space:]]+|[[:space:]]+$/, \"\", $2); print $2}' Makefile | head -n1)
+          if [ -n "$image" ]; then
+            echo "openapi_image=$image" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v6
+        if: steps.changes.outputs.changed == 'true'
         with:
           commit-message: 'chore: update swagger spec'
           title: 'chore: update swagger spec'
           body: |
             Automated update triggered by the scheduled workflow.
-          branch: chore/update-swagger
+            API version: ${{ steps.meta.outputs.api_version }}
+            Generator image: ${{ steps.meta.outputs.openapi_image }}
+            Swagger spec: ${{ steps.meta.outputs.swagger_ref }}
+            Module version: ${{ steps.meta.outputs.mod_version }}
+            Note: the workflow patches the downloaded Swagger before codegen (see scripts/patch_swagger.py).
+          branch: chore/update-swagger-${{ steps.meta.outputs.date }}
           delete-branch: true
