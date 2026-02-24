@@ -6,7 +6,7 @@ info:
     url: fossa.com
   description: OpenAPI Specification for public FOSSA APIs
   title: FOSSA API
-  version: 4.31.29
+  version: 4.31.31
 externalDocs:
   description: product documentation and product guides
   url: https://docs.fossa.com
@@ -27819,6 +27819,36 @@ components:
           type: number
         percentile:
           type: number
+    getIssue_200_response_oneOf_allOf_customRiskScore:
+      description: |
+        Optional custom risk score for the vulnerability, only present
+        when the Custom Risk Scores feature is enabled for the organization.
+        Not available for global scope queries.
+      example:
+        score: 4.145608029883936
+        reason: reason
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        updatedBy: updatedBy
+        createdBy: createdBy
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        score:
+          type: number
+        reason:
+          type: string
+          nullable: true
+        createdBy:
+          type: string
+        updatedBy:
+          type: string
+          nullable: true
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+          nullable: true
     getIssue_200_response_oneOf_allOf_source_1:
       allOf:
       - properties:
@@ -27920,6 +27950,8 @@ components:
             type: string
           epss:
             $ref: "#/components/schemas/getIssue_200_response_oneOf_allOf_epss"
+          customRiskScore:
+            $ref: "#/components/schemas/getIssue_200_response_oneOf_allOf_customRiskScore"
       - properties:
           source:
             $ref: "#/components/schemas/getIssue_200_response_oneOf_allOf_source_1"
@@ -27981,6 +28013,13 @@ components:
           completeFixDistance: MAJOR
           partialFix: partialFix
         cve: cve
+        customRiskScore:
+          score: 4.145608029883936
+          reason: reason
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          updatedBy: updatedBy
+          createdBy: createdBy
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         details: details
         id: 0
         affectedVersionRanges:
@@ -28275,6 +28314,13 @@ components:
           completeFixDistance: MAJOR
           partialFix: partialFix
         cve: cve
+        customRiskScore:
+          score: 4.145608029883936
+          reason: reason
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          updatedBy: updatedBy
+          createdBy: createdBy
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         details: details
         id: 0
         affectedVersionRanges:
@@ -28381,6 +28427,8 @@ components:
           type: string
         epss:
           $ref: "#/components/schemas/getIssue_200_response_oneOf_allOf_epss"
+        customRiskScore:
+          $ref: "#/components/schemas/getIssue_200_response_oneOf_allOf_customRiskScore"
     getIssues_200_response_issues_oneOf_inner_1:
       properties:
         id:
@@ -28497,6 +28545,13 @@ components:
             completeFixDistance: MAJOR
             partialFix: partialFix
           cve: cve
+          customRiskScore:
+            score: 4.145608029883936
+            reason: reason
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            updatedBy: updatedBy
+            createdBy: createdBy
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           details: details
           id: 0
           affectedVersionRanges:
@@ -28584,6 +28639,13 @@ components:
             completeFixDistance: MAJOR
             partialFix: partialFix
           cve: cve
+          customRiskScore:
+            score: 4.145608029883936
+            reason: reason
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            updatedBy: updatedBy
+            createdBy: createdBy
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           details: details
           id: 0
           affectedVersionRanges:
@@ -28678,6 +28740,13 @@ components:
             completeFixDistance: MAJOR
             partialFix: partialFix
           cve: cve
+          customRiskScore:
+            score: 4.145608029883936
+            reason: reason
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            updatedBy: updatedBy
+            createdBy: createdBy
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           details: details
           id: 0
           affectedVersionRanges:
@@ -28765,6 +28834,13 @@ components:
             completeFixDistance: MAJOR
             partialFix: partialFix
           cve: cve
+          customRiskScore:
+            score: 4.145608029883936
+            reason: reason
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            updatedBy: updatedBy
+            createdBy: createdBy
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           details: details
           id: 0
           affectedVersionRanges:
