@@ -6,7 +6,7 @@ info:
     url: fossa.com
   description: OpenAPI Specification for public FOSSA APIs
   title: FOSSA API
-  version: 4.31.29
+  version: 4.31.38
 externalDocs:
   description: product documentation and product guides
   url: https://docs.fossa.com
@@ -7367,7 +7367,9 @@ paths:
       - Roles
   /teams:
     get:
-      description: Get all teams in your organization
+      deprecated: true
+      description: This endpoint is deprecated. Please use the paginated /v2/teams/
+        endpoint instead.
       operationId: getAllTeams
       responses:
         "200":
@@ -7676,6 +7678,100 @@ paths:
               schema:
                 $ref: "#/components/schemas/addLicenseConclusion_400_response"
           description: Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Server Error:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2009
+                    message: "Sorry, we've encountered an unexpected error. We've\
+                      \ recorded it. If you continue to see this, contact support\
+                      \ at support@fossa.com and include the unique reference code:\
+                      \ 00000000-0000-0000-0000-000000000000"
+                    name: InternalServerError
+                    httpStatusCode: 500
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Server Error
+      security:
+      - ApiToken: []
+      tags:
+      - Teams
+  /v2/teams:
+    get:
+      description: Get a paginated list of teams in your organization
+      operationId: getAllTeamsV2
+      parameters:
+      - description: "Page number (1-indexed, defaults to 1)"
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Number of items per page (defaults to 10, max 50)"
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          default: 10
+          maximum: 50
+          minimum: 1
+          type: integer
+        style: form
+      - description: Search term to filter teams by name (max 255)
+        explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          maxLength: 255
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                teams:
+                  value:
+                    results:
+                    - id: 1
+                      organizationId: 1
+                      name: Engineering
+                      defaultRoleId: 1
+                      autoAddUsers: false
+                      uniqueIdentifier: engineering
+                      createdAt: 2020-01-01T00:00:00Z
+                      updatedAt: 2020-01-01T00:00:00Z
+                      teamType: team
+                      teamMembersCount: 2
+                      teamReleaseGroupsCount: 0
+                      teamProjectsCount: 0
+                    - id: 2
+                      organizationId: 1
+                      name: Security
+                      defaultRoleId: 2
+                      autoAddUsers: false
+                      uniqueIdentifier: security
+                      createdAt: 2020-01-01T00:00:00Z
+                      updatedAt: 2020-01-01T00:00:00Z
+                      teamType: team
+                      teamMembersCount: 1
+                      teamReleaseGroupsCount: 1
+                      teamProjectsCount: 3
+                    pageSize: 10
+                    page: 1
+                    totalCount: 2
+              schema:
+                $ref: "#/components/schemas/getAllTeamsV2_200_response"
+          description: OK
         "500":
           content:
             application/json:
@@ -14512,7 +14608,9 @@ paths:
       - Builds
   /users:
     get:
-      description: Get all users in a user's organization
+      deprecated: true
+      description: This endpoint is deprecated. Please use the paginated /v2/users/
+        endpoint instead.
       operationId: getAllUsers
       parameters:
       - description: The numbers of users being returned
@@ -14926,6 +15024,125 @@ paths:
               schema:
                 $ref: "#/components/schemas/addLicenseConclusion_400_response"
           description: Team not found
+        "500":
+          content:
+            application/json:
+              examples:
+                Server Error:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2009
+                    message: "Sorry, we've encountered an unexpected error. We've\
+                      \ recorded it. If you continue to see this, contact support\
+                      \ at support@fossa.com and include the unique reference code:\
+                      \ 00000000-0000-0000-0000-000000000000"
+                    name: InternalServerError
+                    httpStatusCode: 500
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Server Error
+      security:
+      - ApiToken: []
+      tags:
+      - Users
+  /v2/users:
+    get:
+      description: Get a paginated list of users in your organization
+      operationId: getAllUsersV2
+      parameters:
+      - description: "Page number (1-indexed, defaults to 1)"
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Number of items per page (defaults to 10, max 50)"
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          default: 10
+          maximum: 50
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Search term to filter users by username, email, or full name\
+          \ (max 255)"
+        explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          maxLength: 255
+          type: string
+        style: form
+      - description: "Sort order for results. Use format `field_asc` or `field_desc`.\
+          \ Supported fields: username, full_name, email, created_at, last_visit."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          enum:
+          - username_asc
+          - username_desc
+          - full_name_asc
+          - full_name_desc
+          - email_asc
+          - email_desc
+          - created_at_asc
+          - created_at_desc
+          - last_visit_asc
+          - last_visit_desc
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                users:
+                  value:
+                    results:
+                    - id: 1
+                      username: jdoe
+                      email: jdoe@example.com
+                      email_verified: true
+                      demo: false
+                      super: false
+                      joined: 2020-01-01T00:00:00Z
+                      last_visit: 2024-01-01T00:00:00Z
+                      full_name: John Doe
+                      phone: null
+                      role: null
+                      organizationId: 1
+                      sso_only: false
+                      enabled: true
+                      has_set_password: true
+                      install_admin: false
+                      isServiceAccount: false
+                      createdAt: 2020-01-01T00:00:00Z
+                      updatedAt: 2024-01-01T00:00:00Z
+                      userRole:
+                        roleId: 1
+                        role:
+                          id: 1
+                          organizationId: 1
+                          isCustom: false
+                          name: Admin
+                          scope: organization
+                      teamsCount: 2
+                    pageSize: 10
+                    page: 1
+                    totalCount: 1
+              schema:
+                $ref: "#/components/schemas/getAllUsersV2_200_response"
+          description: OK
         "500":
           content:
             application/json:
@@ -27819,6 +28036,36 @@ components:
           type: number
         percentile:
           type: number
+    getIssue_200_response_oneOf_allOf_customRiskScore:
+      description: |
+        Optional custom risk score for the vulnerability, only present
+        when the Custom Risk Scores feature is enabled for the organization.
+        Not available for global scope queries.
+      example:
+        score: 4.145608029883936
+        reason: reason
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        updatedBy: updatedBy
+        createdBy: createdBy
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        score:
+          type: number
+        reason:
+          type: string
+          nullable: true
+        createdBy:
+          type: string
+        updatedBy:
+          type: string
+          nullable: true
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+          nullable: true
     getIssue_200_response_oneOf_allOf_source_1:
       allOf:
       - properties:
@@ -27920,6 +28167,8 @@ components:
             type: string
           epss:
             $ref: "#/components/schemas/getIssue_200_response_oneOf_allOf_epss"
+          customRiskScore:
+            $ref: "#/components/schemas/getIssue_200_response_oneOf_allOf_customRiskScore"
       - properties:
           source:
             $ref: "#/components/schemas/getIssue_200_response_oneOf_allOf_source_1"
@@ -27981,6 +28230,13 @@ components:
           completeFixDistance: MAJOR
           partialFix: partialFix
         cve: cve
+        customRiskScore:
+          score: 4.145608029883936
+          reason: reason
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          updatedBy: updatedBy
+          createdBy: createdBy
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         details: details
         id: 0
         affectedVersionRanges:
@@ -28275,6 +28531,13 @@ components:
           completeFixDistance: MAJOR
           partialFix: partialFix
         cve: cve
+        customRiskScore:
+          score: 4.145608029883936
+          reason: reason
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          updatedBy: updatedBy
+          createdBy: createdBy
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         details: details
         id: 0
         affectedVersionRanges:
@@ -28381,6 +28644,8 @@ components:
           type: string
         epss:
           $ref: "#/components/schemas/getIssue_200_response_oneOf_allOf_epss"
+        customRiskScore:
+          $ref: "#/components/schemas/getIssue_200_response_oneOf_allOf_customRiskScore"
     getIssues_200_response_issues_oneOf_inner_1:
       properties:
         id:
@@ -28497,6 +28762,13 @@ components:
             completeFixDistance: MAJOR
             partialFix: partialFix
           cve: cve
+          customRiskScore:
+            score: 4.145608029883936
+            reason: reason
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            updatedBy: updatedBy
+            createdBy: createdBy
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           details: details
           id: 0
           affectedVersionRanges:
@@ -28584,6 +28856,13 @@ components:
             completeFixDistance: MAJOR
             partialFix: partialFix
           cve: cve
+          customRiskScore:
+            score: 4.145608029883936
+            reason: reason
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            updatedBy: updatedBy
+            createdBy: createdBy
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           details: details
           id: 0
           affectedVersionRanges:
@@ -28678,6 +28957,13 @@ components:
             completeFixDistance: MAJOR
             partialFix: partialFix
           cve: cve
+          customRiskScore:
+            score: 4.145608029883936
+            reason: reason
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            updatedBy: updatedBy
+            createdBy: createdBy
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           details: details
           id: 0
           affectedVersionRanges:
@@ -28765,6 +29051,13 @@ components:
             completeFixDistance: MAJOR
             partialFix: partialFix
           cve: cve
+          customRiskScore:
+            score: 4.145608029883936
+            reason: reason
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            updatedBy: updatedBy
+            createdBy: createdBy
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           details: details
           id: 0
           affectedVersionRanges:
@@ -31423,6 +31716,112 @@ components:
           example: eng-team-updated
           type: string
           nullable: true
+    getAllTeamsV2_200_response_results_inner:
+      example:
+        organizationId: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        teamReleaseGroupsCount: 5
+        teamProjectsCount: 2
+        name: name
+        autoAddUsers: true
+        id: 0
+        teamType: team
+        defaultRoleId: 1
+        uniqueIdentifier: uniqueIdentifier
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+        teamMembersCount: 5
+      properties:
+        id:
+          description: The team's unique identifier
+          type: integer
+        organizationId:
+          description: The organization's unique identifier
+          type: integer
+        name:
+          description: The team's name
+          type: string
+        defaultRoleId:
+          description: The default role's unique identifier
+          type: integer
+        autoAddUsers:
+          description: Whether the team auto-adds users
+          type: boolean
+        uniqueIdentifier:
+          description: The team's unique identifier
+          type: string
+        createdAt:
+          description: The team's creation date
+          format: date-time
+          type: string
+        updatedAt:
+          description: The team's last update date
+          format: date-time
+          type: string
+        teamType:
+          description: Whether it's a normal team or a Team Group.
+          enum:
+          - team
+          - team_group
+          type: string
+        teamMembersCount:
+          description: The number of users associated with the team
+          type: integer
+        teamReleaseGroupsCount:
+          description: The number of release groups associated with the team
+          type: integer
+        teamProjectsCount:
+          description: The number of projects associated with the team
+          type: integer
+    getAllTeamsV2_200_response:
+      example:
+        pageSize: 7
+        page: 9
+        totalCount: 3
+        results:
+        - organizationId: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          teamReleaseGroupsCount: 5
+          teamProjectsCount: 2
+          name: name
+          autoAddUsers: true
+          id: 0
+          teamType: team
+          defaultRoleId: 1
+          uniqueIdentifier: uniqueIdentifier
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          teamMembersCount: 5
+        - organizationId: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          teamReleaseGroupsCount: 5
+          teamProjectsCount: 2
+          name: name
+          autoAddUsers: true
+          id: 0
+          teamType: team
+          defaultRoleId: 1
+          uniqueIdentifier: uniqueIdentifier
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          teamMembersCount: 5
+      properties:
+        results:
+          description: Array of teams
+          items:
+            $ref: "#/components/schemas/getAllTeamsV2_200_response_results_inner"
+          type: array
+        pageSize:
+          description: Number of items per page
+          type: integer
+        page:
+          description: Current page number (1-indexed)
+          type: integer
+        totalCount:
+          description: Total number of teams
+          type: integer
+      required:
+      - page
+      - pageSize
+      - results
+      - totalCount
     getTeamByIdV2_200_response:
       example:
         teamOIDCProvidersCount: 7
@@ -35304,6 +35703,379 @@ components:
       required:
       - id
       - username
+    getAllUsersV2_200_response_results_inner_userRole:
+      example:
+        role:
+          organizationId: 5
+          scope: scope
+          isCustom: true
+          name: name
+          id: 5
+        roleId: 1
+      properties:
+        roleId:
+          description: The user's Organization role ID
+          type: integer
+        role:
+          $ref: "#/components/schemas/getAllUsers_200_response_inner_userRole_role"
+      nullable: true
+    getAllUsersV2_200_response_results_inner_tokens_inner_meta:
+      example:
+        defaultSecurityPolicyId: 2
+        defaultQualityPolicyId: 7
+        pushOnly: true
+        defaultPolicyId: 5
+      properties:
+        pushOnly:
+          description: Whether the token is push only
+          type: boolean
+        defaultPolicyId:
+          description: The token's default licensing policy ID
+          type: integer
+        defaultSecurityPolicyId:
+          description: The token's default security policy ID
+          type: integer
+        defaultQualityPolicyId:
+          description: The token's default quality policy ID
+          type: integer
+      nullable: true
+    getAllUsersV2_200_response_results_inner_tokens_inner:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        meta:
+          defaultSecurityPolicyId: 2
+          defaultQualityPolicyId: 7
+          pushOnly: true
+          defaultPolicyId: 5
+        name: name
+        id: 5
+        isDisabled: true
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: The token's unique identifier
+          type: integer
+        name:
+          description: The token's name
+          type: string
+        isDisabled:
+          type: boolean
+        updatedAt:
+          description: The date the token was last updated
+          format: date-time
+          type: string
+        createdAt:
+          description: The date the token was created
+          format: date-time
+          type: string
+        meta:
+          $ref: "#/components/schemas/getAllUsersV2_200_response_results_inner_tokens_inner_meta"
+    getAllUsersV2_200_response_results_inner:
+      example:
+        role: role
+        demo: true
+        enabled: true
+        organizationId: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        last_visit: 2000-01-23T04:56:07.000+00:00
+        tokens:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          meta:
+            defaultSecurityPolicyId: 2
+            defaultQualityPolicyId: 7
+            pushOnly: true
+            defaultPolicyId: 5
+          name: name
+          id: 5
+          isDisabled: true
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          meta:
+            defaultSecurityPolicyId: 2
+            defaultQualityPolicyId: 7
+            pushOnly: true
+            defaultPolicyId: 5
+          name: name
+          id: 5
+          isDisabled: true
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        id: 0
+        email: email
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+        github:
+          avatar_url: avatar_url
+          name: name
+          email: email
+        email_verified: true
+        joined: 2000-01-23T04:56:07.000+00:00
+        install_admin: true
+        super: true
+        sso_only: true
+        full_name: full_name
+        phone: phone
+        organization:
+          access_level: access_level
+          id: 3
+          title: title
+        teamsCount: 9
+        has_set_password: true
+        userRole:
+          role:
+            organizationId: 5
+            scope: scope
+            isCustom: true
+            name: name
+            id: 5
+          roleId: 1
+        bitbucketCloud:
+          avatar_url: avatar_url
+          name: name
+          email: email
+        username: username
+        terms_agreed: 2000-01-23T04:56:07.000+00:00
+        isServiceAccount: true
+      properties:
+        id:
+          description: The user's unique identifier
+          type: integer
+        username:
+          description: The user's username
+          nullable: true
+          type: string
+        email:
+          description: The user's email address
+          nullable: true
+          type: string
+        email_verified:
+          description: Whether the user's email address has been verified
+          nullable: true
+          type: boolean
+        demo:
+          description: Whether the user is a demo user
+          type: boolean
+        super:
+          description: Whether the user is a super user
+          type: boolean
+        joined:
+          description: The date the user joined the organization
+          format: date-time
+          nullable: true
+          type: string
+        last_visit:
+          description: The date the user last visited the organization
+          format: date-time
+          nullable: true
+          type: string
+        terms_agreed:
+          description: The date the user agreed to the organization's terms
+          format: date-time
+          nullable: true
+          type: string
+        full_name:
+          description: The user's full name
+          nullable: true
+          type: string
+        phone:
+          description: The user's phone number
+          nullable: true
+          type: string
+        role:
+          description: The user's role in the organization
+          nullable: true
+          type: string
+        organizationId:
+          description: The organization the user belongs to
+          type: integer
+        sso_only:
+          description: Whether the user is SSO only
+          type: boolean
+        enabled:
+          description: Whether the user is enabled
+          type: boolean
+        has_set_password:
+          description: Whether the user has set a password
+          nullable: true
+          type: boolean
+        install_admin:
+          description: Whether the user is an install admin
+          nullable: true
+          type: boolean
+        isServiceAccount:
+          description: Whether the user is a service account
+          type: boolean
+        createdAt:
+          description: The date the user was created
+          format: date-time
+          type: string
+        updatedAt:
+          description: The date the user was last updated
+          format: date-time
+          type: string
+        userRole:
+          $ref: "#/components/schemas/getAllUsersV2_200_response_results_inner_userRole"
+        tokens:
+          items:
+            $ref: "#/components/schemas/getAllUsersV2_200_response_results_inner_tokens_inner"
+          type: array
+        teamsCount:
+          description: Number of teams the user belongs to
+          type: integer
+        organization:
+          $ref: "#/components/schemas/getAllUsers_200_response_inner_organization"
+        github:
+          $ref: "#/components/schemas/getAllUsers_200_response_inner_github"
+        bitbucketCloud:
+          $ref: "#/components/schemas/getAllUsers_200_response_inner_bitbucketCloud"
+    getAllUsersV2_200_response:
+      example:
+        pageSize: 3
+        page: 2
+        totalCount: 4
+        results:
+        - role: role
+          demo: true
+          enabled: true
+          organizationId: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          last_visit: 2000-01-23T04:56:07.000+00:00
+          tokens:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            meta:
+              defaultSecurityPolicyId: 2
+              defaultQualityPolicyId: 7
+              pushOnly: true
+              defaultPolicyId: 5
+            name: name
+            id: 5
+            isDisabled: true
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            meta:
+              defaultSecurityPolicyId: 2
+              defaultQualityPolicyId: 7
+              pushOnly: true
+              defaultPolicyId: 5
+            name: name
+            id: 5
+            isDisabled: true
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          email: email
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          github:
+            avatar_url: avatar_url
+            name: name
+            email: email
+          email_verified: true
+          joined: 2000-01-23T04:56:07.000+00:00
+          install_admin: true
+          super: true
+          sso_only: true
+          full_name: full_name
+          phone: phone
+          organization:
+            access_level: access_level
+            id: 3
+            title: title
+          teamsCount: 9
+          has_set_password: true
+          userRole:
+            role:
+              organizationId: 5
+              scope: scope
+              isCustom: true
+              name: name
+              id: 5
+            roleId: 1
+          bitbucketCloud:
+            avatar_url: avatar_url
+            name: name
+            email: email
+          username: username
+          terms_agreed: 2000-01-23T04:56:07.000+00:00
+          isServiceAccount: true
+        - role: role
+          demo: true
+          enabled: true
+          organizationId: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          last_visit: 2000-01-23T04:56:07.000+00:00
+          tokens:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            meta:
+              defaultSecurityPolicyId: 2
+              defaultQualityPolicyId: 7
+              pushOnly: true
+              defaultPolicyId: 5
+            name: name
+            id: 5
+            isDisabled: true
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            meta:
+              defaultSecurityPolicyId: 2
+              defaultQualityPolicyId: 7
+              pushOnly: true
+              defaultPolicyId: 5
+            name: name
+            id: 5
+            isDisabled: true
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          email: email
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          github:
+            avatar_url: avatar_url
+            name: name
+            email: email
+          email_verified: true
+          joined: 2000-01-23T04:56:07.000+00:00
+          install_admin: true
+          super: true
+          sso_only: true
+          full_name: full_name
+          phone: phone
+          organization:
+            access_level: access_level
+            id: 3
+            title: title
+          teamsCount: 9
+          has_set_password: true
+          userRole:
+            role:
+              organizationId: 5
+              scope: scope
+              isCustom: true
+              name: name
+              id: 5
+            roleId: 1
+          bitbucketCloud:
+            avatar_url: avatar_url
+            name: name
+            email: email
+          username: username
+          terms_agreed: 2000-01-23T04:56:07.000+00:00
+          isServiceAccount: true
+      properties:
+        results:
+          description: Array of users
+          items:
+            $ref: "#/components/schemas/getAllUsersV2_200_response_results_inner"
+          type: array
+        pageSize:
+          description: Number of items per page
+          type: integer
+        page:
+          description: Current page number (1-indexed)
+          type: integer
+        totalCount:
+          description: Total number of users
+          type: integer
+      required:
+      - page
+      - pageSize
+      - results
+      - totalCount
     getProjectDependencies_200_response_dependencies_inner_concludedLicenses_scoped:
       example:
         licenses:
