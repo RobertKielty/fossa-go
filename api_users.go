@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.31.48
 Contact: support@fossa.com
 */
 
@@ -360,10 +360,12 @@ func (r ApiGetAllUsersRequest) Execute() ([]GetAllUsers200ResponseInner, *http.R
 /*
 GetAllUsers Method for GetAllUsers
 
-Get all users in a user's organization
+This endpoint is deprecated. Please use the paginated /v2/users/ endpoint instead.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetAllUsersRequest
+
+Deprecated
 */
 func (a *UsersAPIService) GetAllUsers(ctx context.Context) ApiGetAllUsersRequest {
 	return ApiGetAllUsersRequest{
@@ -374,6 +376,7 @@ func (a *UsersAPIService) GetAllUsers(ctx context.Context) ApiGetAllUsersRequest
 
 // Execute executes the request
 //  @return []GetAllUsers200ResponseInner
+// Deprecated
 func (a *UsersAPIService) GetAllUsersExecute(r ApiGetAllUsersRequest) ([]GetAllUsers200ResponseInner, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
@@ -448,6 +451,163 @@ func (a *UsersAPIService) GetAllUsersExecute(r ApiGetAllUsersRequest) ([]GetAllU
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetAllUsersV2Request struct {
+	ctx context.Context
+	ApiService *UsersAPIService
+	page *int32
+	pageSize *int32
+	search *string
+	sort *string
+}
+
+// Page number (1-indexed, defaults to 1)
+func (r ApiGetAllUsersV2Request) Page(page int32) ApiGetAllUsersV2Request {
+	r.page = &page
+	return r
+}
+
+// Number of items per page (defaults to 10, max 50)
+func (r ApiGetAllUsersV2Request) PageSize(pageSize int32) ApiGetAllUsersV2Request {
+	r.pageSize = &pageSize
+	return r
+}
+
+// Search term to filter users by username, email, or full name (max 255)
+func (r ApiGetAllUsersV2Request) Search(search string) ApiGetAllUsersV2Request {
+	r.search = &search
+	return r
+}
+
+// Sort order for results. Use format &#x60;field_asc&#x60; or &#x60;field_desc&#x60;. Supported fields: username, full_name, email, created_at, last_visit.
+func (r ApiGetAllUsersV2Request) Sort(sort string) ApiGetAllUsersV2Request {
+	r.sort = &sort
+	return r
+}
+
+func (r ApiGetAllUsersV2Request) Execute() (*GetAllUsersV2200Response, *http.Response, error) {
+	return r.ApiService.GetAllUsersV2Execute(r)
+}
+
+/*
+GetAllUsersV2 Method for GetAllUsersV2
+
+Get a paginated list of users in your organization
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetAllUsersV2Request
+*/
+func (a *UsersAPIService) GetAllUsersV2(ctx context.Context) ApiGetAllUsersV2Request {
+	return ApiGetAllUsersV2Request{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return GetAllUsersV2200Response
+func (a *UsersAPIService) GetAllUsersV2Execute(r ApiGetAllUsersV2Request) (*GetAllUsersV2200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetAllUsersV2200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.GetAllUsersV2")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/users"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	} else {
+		var defaultValue int32 = 1
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
+		r.page = &defaultValue
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
+	} else {
+		var defaultValue int32 = 10
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", defaultValue, "form", "")
+		r.pageSize = &defaultValue
+	}
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v AddLicenseConclusion400Response
