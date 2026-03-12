@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.32.4
 Contact: support@fossa.com
 */
 
@@ -3115,6 +3115,7 @@ type ApiGetIssuesRequest struct {
 	filterProjectLabels *[]string
 	filterIdentification *[]string
 	filterSeverity *[]string
+	filterSeveritySource *[]string
 	filterFoundBefore *time.Time
 	filterFoundAfter *time.Time
 	filterHasFix *[]string
@@ -3270,6 +3271,12 @@ func (r ApiGetIssuesRequest) FilterIdentification(filterIdentification []string)
 // Filter by vuln severity (when category is \&quot;vulnerability\&quot;)
 func (r ApiGetIssuesRequest) FilterSeverity(filterSeverity []string) ApiGetIssuesRequest {
 	r.filterSeverity = &filterSeverity
+	return r
+}
+
+// Filter by severity source (when category is \&quot;vulnerability\&quot;). Use &#39;standard&#39; to filter by CVSS score, &#39;custom&#39; to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to &#39;standard&#39; when not provided. Custom risk score filtering requires the Custom Risk Scores feature to be enabled and a non-global scope. 
+func (r ApiGetIssuesRequest) FilterSeveritySource(filterSeveritySource []string) ApiGetIssuesRequest {
+	r.filterSeveritySource = &filterSeveritySource
 	return r
 }
 
@@ -3537,6 +3544,17 @@ func (a *IssuesAPIService) GetIssuesExecute(r ApiGetIssuesRequest) (*GetIssues20
 			}
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severity][]", t, "form", "multi")
+		}
+	}
+	if r.filterSeveritySource != nil {
+		t := *r.filterSeveritySource
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severitySource][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severitySource][]", t, "form", "multi")
 		}
 	}
 	if r.filterFoundBefore != nil {
@@ -5465,6 +5483,7 @@ type ApiUpdateIssuesRequest struct {
 	filterProjectLabels *[]string
 	filterIdentification *[]string
 	filterSeverity *[]string
+	filterSeveritySource *[]string
 	filterFoundAfter *time.Time
 	filterHasFix *[]string
 	filterUpgradeDistance *[]string
@@ -5599,6 +5618,12 @@ func (r ApiUpdateIssuesRequest) FilterIdentification(filterIdentification []stri
 // Filter by vuln severity (when category is \&quot;vulnerability\&quot;)
 func (r ApiUpdateIssuesRequest) FilterSeverity(filterSeverity []string) ApiUpdateIssuesRequest {
 	r.filterSeverity = &filterSeverity
+	return r
+}
+
+// Filter by severity source (when category is \&quot;vulnerability\&quot;). Use &#39;standard&#39; to filter by CVSS score, &#39;custom&#39; to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to &#39;standard&#39; when not provided. Custom risk score filtering requires the Custom Risk Scores feature to be enabled and a non-global scope. 
+func (r ApiUpdateIssuesRequest) FilterSeveritySource(filterSeveritySource []string) ApiUpdateIssuesRequest {
+	r.filterSeveritySource = &filterSeveritySource
 	return r
 }
 
@@ -5830,6 +5855,17 @@ func (a *IssuesAPIService) UpdateIssuesExecute(r ApiUpdateIssuesRequest) (*Updat
 			}
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severity][]", t, "form", "multi")
+		}
+	}
+	if r.filterSeveritySource != nil {
+		t := *r.filterSeveritySource
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severitySource][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severitySource][]", t, "form", "multi")
 		}
 	}
 	if r.filterFoundAfter != nil {
