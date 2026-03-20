@@ -26,6 +26,9 @@ Name | Type | Description | Notes
 **SbomAnalysisEnabled** | Pointer to **bool** | Enable or disable SBOM policy analysis for this project. Requires SetPolicy permission for SBOM policy type. | [optional] 
 **SnippetLicensingIssueScanningEnabled** | Pointer to **bool** | Enable or disable snippet licensing issue scanning for this project | [optional] 
 **SnippetSecurityIssueScanningEnabled** | Pointer to **bool** | Enable or disable snippet security issue scanning for this project | [optional] 
+**VendoredLicensingIssueScanningEnabled** | Pointer to **bool** | Enable or disable licensing issue scanning for vendored dependencies in this project | [optional] 
+**VendoredSecurityIssueScanningEnabled** | Pointer to **bool** | Enable or disable security issue scanning for vendored dependencies in this project | [optional] 
+**VendoredQualityIssueScanningEnabled** | Pointer to **bool** | Enable or disable quality issue scanning for vendored dependencies in this project | [optional] 
 **LicensingStatusCheckEnabled** | Pointer to **bool** | Enable or disable licensing issue CI/CD status checks | [optional] 
 **SecurityStatusCheckEnabled** | Pointer to **bool** | Enable or disable security issue CI/CD status checks | [optional] 
 **QualityStatusCheckEnabled** | Pointer to **bool** | Enable or disable quality issue CI/CD status checks | [optional] 
@@ -617,6 +620,81 @@ SetSnippetSecurityIssueScanningEnabled sets SnippetSecurityIssueScanningEnabled 
 `func (o *UpdateProjectRequest) HasSnippetSecurityIssueScanningEnabled() bool`
 
 HasSnippetSecurityIssueScanningEnabled returns a boolean if a field has been set.
+
+### GetVendoredLicensingIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) GetVendoredLicensingIssueScanningEnabled() bool`
+
+GetVendoredLicensingIssueScanningEnabled returns the VendoredLicensingIssueScanningEnabled field if non-nil, zero value otherwise.
+
+### GetVendoredLicensingIssueScanningEnabledOk
+
+`func (o *UpdateProjectRequest) GetVendoredLicensingIssueScanningEnabledOk() (*bool, bool)`
+
+GetVendoredLicensingIssueScanningEnabledOk returns a tuple with the VendoredLicensingIssueScanningEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVendoredLicensingIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) SetVendoredLicensingIssueScanningEnabled(v bool)`
+
+SetVendoredLicensingIssueScanningEnabled sets VendoredLicensingIssueScanningEnabled field to given value.
+
+### HasVendoredLicensingIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) HasVendoredLicensingIssueScanningEnabled() bool`
+
+HasVendoredLicensingIssueScanningEnabled returns a boolean if a field has been set.
+
+### GetVendoredSecurityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) GetVendoredSecurityIssueScanningEnabled() bool`
+
+GetVendoredSecurityIssueScanningEnabled returns the VendoredSecurityIssueScanningEnabled field if non-nil, zero value otherwise.
+
+### GetVendoredSecurityIssueScanningEnabledOk
+
+`func (o *UpdateProjectRequest) GetVendoredSecurityIssueScanningEnabledOk() (*bool, bool)`
+
+GetVendoredSecurityIssueScanningEnabledOk returns a tuple with the VendoredSecurityIssueScanningEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVendoredSecurityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) SetVendoredSecurityIssueScanningEnabled(v bool)`
+
+SetVendoredSecurityIssueScanningEnabled sets VendoredSecurityIssueScanningEnabled field to given value.
+
+### HasVendoredSecurityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) HasVendoredSecurityIssueScanningEnabled() bool`
+
+HasVendoredSecurityIssueScanningEnabled returns a boolean if a field has been set.
+
+### GetVendoredQualityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) GetVendoredQualityIssueScanningEnabled() bool`
+
+GetVendoredQualityIssueScanningEnabled returns the VendoredQualityIssueScanningEnabled field if non-nil, zero value otherwise.
+
+### GetVendoredQualityIssueScanningEnabledOk
+
+`func (o *UpdateProjectRequest) GetVendoredQualityIssueScanningEnabledOk() (*bool, bool)`
+
+GetVendoredQualityIssueScanningEnabledOk returns a tuple with the VendoredQualityIssueScanningEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVendoredQualityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) SetVendoredQualityIssueScanningEnabled(v bool)`
+
+SetVendoredQualityIssueScanningEnabled sets VendoredQualityIssueScanningEnabled field to given value.
+
+### HasVendoredQualityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) HasVendoredQualityIssueScanningEnabled() bool`
+
+HasVendoredQualityIssueScanningEnabled returns a boolean if a field has been set.
 
 ### GetLicensingStatusCheckEnabled
 
