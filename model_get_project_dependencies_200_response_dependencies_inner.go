@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.32.23
 Contact: support@fossa.com
 */
 
@@ -25,6 +25,7 @@ type GetProjectDependencies200ResponseDependenciesInner struct {
 	IsManual *bool `json:"isManual,omitempty"`
 	IsIgnored *bool `json:"isIgnored,omitempty"`
 	IsUnknown *bool `json:"isUnknown,omitempty"`
+	IsSnippetConversion *bool `json:"isSnippetConversion,omitempty"`
 	ConcludedLicenses *GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses `json:"concludedLicenses,omitempty"`
 	Licenses []string `json:"licenses,omitempty"`
 	DeclaredLicenses []string `json:"declaredLicenses,omitempty"`
@@ -214,6 +215,38 @@ func (o *GetProjectDependencies200ResponseDependenciesInner) HasIsUnknown() bool
 // SetIsUnknown gets a reference to the given bool and assigns it to the IsUnknown field.
 func (o *GetProjectDependencies200ResponseDependenciesInner) SetIsUnknown(v bool) {
 	o.IsUnknown = &v
+}
+
+// GetIsSnippetConversion returns the IsSnippetConversion field value if set, zero value otherwise.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetIsSnippetConversion() bool {
+	if o == nil || IsNil(o.IsSnippetConversion) {
+		var ret bool
+		return ret
+	}
+	return *o.IsSnippetConversion
+}
+
+// GetIsSnippetConversionOk returns a tuple with the IsSnippetConversion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetIsSnippetConversionOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsSnippetConversion) {
+		return nil, false
+	}
+	return o.IsSnippetConversion, true
+}
+
+// HasIsSnippetConversion returns a boolean if a field has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) HasIsSnippetConversion() bool {
+	if o != nil && !IsNil(o.IsSnippetConversion) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsSnippetConversion gets a reference to the given bool and assigns it to the IsSnippetConversion field.
+func (o *GetProjectDependencies200ResponseDependenciesInner) SetIsSnippetConversion(v bool) {
+	o.IsSnippetConversion = &v
 }
 
 // GetConcludedLicenses returns the ConcludedLicenses field value if set, zero value otherwise.
@@ -624,6 +657,9 @@ func (o GetProjectDependencies200ResponseDependenciesInner) ToMap() (map[string]
 	}
 	if !IsNil(o.IsUnknown) {
 		toSerialize["isUnknown"] = o.IsUnknown
+	}
+	if !IsNil(o.IsSnippetConversion) {
+		toSerialize["isSnippetConversion"] = o.IsSnippetConversion
 	}
 	if !IsNil(o.ConcludedLicenses) {
 		toSerialize["concludedLicenses"] = o.ConcludedLicenses
