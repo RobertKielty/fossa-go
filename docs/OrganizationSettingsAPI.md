@@ -4,6 +4,7 @@ All URIs are relative to *https://app.fossa.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**DeleteOrganizationLogo**](OrganizationSettingsAPI.md#DeleteOrganizationLogo) | **Delete** /organizations/{id}/logo | Delete organization logo
 [**DeleteOrganizationSamlSettings**](OrganizationSettingsAPI.md#DeleteOrganizationSamlSettings) | **Delete** /organizations/{id}/saml | 
 [**GetOrganizationAuthenticationSettings**](OrganizationSettingsAPI.md#GetOrganizationAuthenticationSettings) | **Get** /organizations/{id}/settings/authentication | 
 [**GetOrganizationBowerSettings**](OrganizationSettingsAPI.md#GetOrganizationBowerSettings) | **Get** /organizations/{id}/settings/languages/bower | 
@@ -50,10 +51,81 @@ Method | HTTP request | Description
 [**UpdateOrganizationNotificationSettings**](OrganizationSettingsAPI.md#UpdateOrganizationNotificationSettings) | **Put** /organizations/{id}/settings/projects/notifications | 
 [**UpdateOrganizationProjectPrivacySettings**](OrganizationSettingsAPI.md#UpdateOrganizationProjectPrivacySettings) | **Put** /organizations/{id}/settings/projects/privacy | 
 [**UpdateOrganizationQualityIssueSettings**](OrganizationSettingsAPI.md#UpdateOrganizationQualityIssueSettings) | **Put** /organizations/{id}/settings/projects/issues/quality | 
+[**UpdateOrganizationSBOMReportDefaults**](OrganizationSettingsAPI.md#UpdateOrganizationSBOMReportDefaults) | **Put** /organizations/{id}/sbomReportDefaults | Update organization SBOM report defaults
 [**UpdateOrganizationSamlSettings**](OrganizationSettingsAPI.md#UpdateOrganizationSamlSettings) | **Put** /organizations/{id}/saml | 
 [**UpdateOrganizationSecurityIssueSettings**](OrganizationSettingsAPI.md#UpdateOrganizationSecurityIssueSettings) | **Put** /organizations/{id}/settings/projects/issues/security | 
 [**UpdateOrganizationUpdateHookSettings**](OrganizationSettingsAPI.md#UpdateOrganizationUpdateHookSettings) | **Put** /organizations/{id}/settings/projects/update-hooks | 
 
+
+
+## DeleteOrganizationLogo
+
+> DeleteOrganizationLogo200Response DeleteOrganizationLogo(ctx, id).Execute()
+
+Delete organization logo
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(1234) // int32 | The organization ID.
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OrganizationSettingsAPI.DeleteOrganizationLogo(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OrganizationSettingsAPI.DeleteOrganizationLogo``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteOrganizationLogo`: DeleteOrganizationLogo200Response
+	fmt.Fprintf(os.Stdout, "Response from `OrganizationSettingsAPI.DeleteOrganizationLogo`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** | The organization ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteOrganizationLogoRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**DeleteOrganizationLogo200Response**](DeleteOrganizationLogo200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## DeleteOrganizationSamlSettings
@@ -3259,6 +3331,78 @@ Name | Type | Description  | Notes
 ### Return type
 
  (empty response body)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateOrganizationSBOMReportDefaults
+
+> UpdateOrganizationSBOMReportDefaults200Response UpdateOrganizationSBOMReportDefaults(ctx, id).UpdateOrganizationSBOMReportDefaultsRequest(updateOrganizationSBOMReportDefaultsRequest).Execute()
+
+Update organization SBOM report defaults
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(1234) // int32 | The organization ID.
+	updateOrganizationSBOMReportDefaultsRequest := *openapiclient.NewUpdateOrganizationSBOMReportDefaultsRequest() // UpdateOrganizationSBOMReportDefaultsRequest |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OrganizationSettingsAPI.UpdateOrganizationSBOMReportDefaults(context.Background(), id).UpdateOrganizationSBOMReportDefaultsRequest(updateOrganizationSBOMReportDefaultsRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OrganizationSettingsAPI.UpdateOrganizationSBOMReportDefaults``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateOrganizationSBOMReportDefaults`: UpdateOrganizationSBOMReportDefaults200Response
+	fmt.Fprintf(os.Stdout, "Response from `OrganizationSettingsAPI.UpdateOrganizationSBOMReportDefaults`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** | The organization ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateOrganizationSBOMReportDefaultsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateOrganizationSBOMReportDefaultsRequest** | [**UpdateOrganizationSBOMReportDefaultsRequest**](UpdateOrganizationSBOMReportDefaultsRequest.md) |  | 
+
+### Return type
+
+[**UpdateOrganizationSBOMReportDefaults200Response**](UpdateOrganizationSBOMReportDefaults200Response.md)
 
 ### Authorization
 
