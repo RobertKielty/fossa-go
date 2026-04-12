@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **IsManual** | Pointer to **bool** |  | [optional] 
 **IsIgnored** | Pointer to **bool** |  | [optional] 
 **IsUnknown** | Pointer to **bool** |  | [optional] 
+**IsSnippetConversion** | Pointer to **bool** |  | [optional] 
 **ConcludedLicenses** | Pointer to [**GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses**](GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses.md) |  | [optional] 
 **Licenses** | Pointer to **[]string** |  | [optional] 
 **DeclaredLicenses** | Pointer to **[]string** |  | [optional] 
@@ -165,6 +166,31 @@ SetIsUnknown sets IsUnknown field to given value.
 `func (o *GetProjectDependencies200ResponseDependenciesInner) HasIsUnknown() bool`
 
 HasIsUnknown returns a boolean if a field has been set.
+
+### GetIsSnippetConversion
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) GetIsSnippetConversion() bool`
+
+GetIsSnippetConversion returns the IsSnippetConversion field if non-nil, zero value otherwise.
+
+### GetIsSnippetConversionOk
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) GetIsSnippetConversionOk() (*bool, bool)`
+
+GetIsSnippetConversionOk returns a tuple with the IsSnippetConversion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsSnippetConversion
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) SetIsSnippetConversion(v bool)`
+
+SetIsSnippetConversion sets IsSnippetConversion field to given value.
+
+### HasIsSnippetConversion
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) HasIsSnippetConversion() bool`
+
+HasIsSnippetConversion returns a boolean if a field has been set.
 
 ### GetConcludedLicenses
 
