@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.13
 Contact: support@fossa.com
 */
 
@@ -46,7 +46,7 @@ func (r ApiCreateIssueDisputeRequest) Execute() (*CreateIssueDispute200Response,
 /*
 CreateIssueDispute Method for CreateIssueDispute
 
-Creates an issue dispute. For now it only supports licensing issues.
+Creates an issue dispute. Supports licensing and quality issue disputes. The dispute type is determined by the category of the specified issue.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param issueId ID of the issue that is being disputed.
@@ -3115,6 +3115,7 @@ type ApiGetIssuesRequest struct {
 	filterProjectLabels *[]string
 	filterIdentification *[]string
 	filterSeverity *[]string
+	filterSeveritySource *[]string
 	filterFoundBefore *time.Time
 	filterFoundAfter *time.Time
 	filterHasFix *[]string
@@ -3270,6 +3271,12 @@ func (r ApiGetIssuesRequest) FilterIdentification(filterIdentification []string)
 // Filter by vuln severity (when category is \&quot;vulnerability\&quot;)
 func (r ApiGetIssuesRequest) FilterSeverity(filterSeverity []string) ApiGetIssuesRequest {
 	r.filterSeverity = &filterSeverity
+	return r
+}
+
+// Filter by severity source (when category is \&quot;vulnerability\&quot;). Use &#39;standard&#39; to filter by CVSS score, &#39;custom&#39; to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to &#39;standard&#39; when not provided. Custom risk score filtering is not available for global scope. 
+func (r ApiGetIssuesRequest) FilterSeveritySource(filterSeveritySource []string) ApiGetIssuesRequest {
+	r.filterSeveritySource = &filterSeveritySource
 	return r
 }
 
@@ -3537,6 +3544,17 @@ func (a *IssuesAPIService) GetIssuesExecute(r ApiGetIssuesRequest) (*GetIssues20
 			}
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severity][]", t, "form", "multi")
+		}
+	}
+	if r.filterSeveritySource != nil {
+		t := *r.filterSeveritySource
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severitySource][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severitySource][]", t, "form", "multi")
 		}
 	}
 	if r.filterFoundBefore != nil {
@@ -5465,6 +5483,7 @@ type ApiUpdateIssuesRequest struct {
 	filterProjectLabels *[]string
 	filterIdentification *[]string
 	filterSeverity *[]string
+	filterSeveritySource *[]string
 	filterFoundAfter *time.Time
 	filterHasFix *[]string
 	filterUpgradeDistance *[]string
@@ -5599,6 +5618,12 @@ func (r ApiUpdateIssuesRequest) FilterIdentification(filterIdentification []stri
 // Filter by vuln severity (when category is \&quot;vulnerability\&quot;)
 func (r ApiUpdateIssuesRequest) FilterSeverity(filterSeverity []string) ApiUpdateIssuesRequest {
 	r.filterSeverity = &filterSeverity
+	return r
+}
+
+// Filter by severity source (when category is \&quot;vulnerability\&quot;). Use &#39;standard&#39; to filter by CVSS score, &#39;custom&#39; to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to &#39;standard&#39; when not provided. Custom risk score filtering is not available for global scope. 
+func (r ApiUpdateIssuesRequest) FilterSeveritySource(filterSeveritySource []string) ApiUpdateIssuesRequest {
+	r.filterSeveritySource = &filterSeveritySource
 	return r
 }
 
@@ -5830,6 +5855,17 @@ func (a *IssuesAPIService) UpdateIssuesExecute(r ApiUpdateIssuesRequest) (*Updat
 			}
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severity][]", t, "form", "multi")
+		}
+	}
+	if r.filterSeveritySource != nil {
+		t := *r.filterSeveritySource
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severitySource][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severitySource][]", t, "form", "multi")
 		}
 	}
 	if r.filterFoundAfter != nil {
