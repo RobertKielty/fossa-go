@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.19
 Contact: support@fossa.com
 */
 
@@ -13,368 +13,124 @@ package fossa
 
 import (
 	"encoding/json"
+	"fmt"
+	"gopkg.in/validator.v2"
 )
 
-// checks if the CreateIssueDispute200Response type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &CreateIssueDispute200Response{}
-
-// CreateIssueDispute200Response struct for CreateIssueDispute200Response
+// CreateIssueDispute200Response - struct for CreateIssueDispute200Response
 type CreateIssueDispute200Response struct {
-	Id *float32 `json:"id,omitempty"`
-	CreatedBy *float32 `json:"createdBy,omitempty"`
-	CreatedAt *string `json:"createdAt,omitempty"`
-	LicenseId *string `json:"licenseId,omitempty"`
-	DisputedIssueId *float32 `json:"disputedIssueId,omitempty"`
-	// The reason why this issue is being disputed.
-	Reason *string `json:"reason,omitempty"`
-	Comment *string `json:"comment,omitempty"`
-	ResolvedAt *string `json:"resolvedAt,omitempty"`
-	ResolvedBy *float32 `json:"resolvedBy,omitempty"`
+	LicenseDisputeResponse *LicenseDisputeResponse
+	QualityDisputeResponse *QualityDisputeResponse
 }
 
-// NewCreateIssueDispute200Response instantiates a new CreateIssueDispute200Response object
-// This constructor will assign default values to properties that have it defined,
-// and makes sure properties required by API are set, but the set of arguments
-// will change when the set of required properties is changed
-func NewCreateIssueDispute200Response() *CreateIssueDispute200Response {
-	this := CreateIssueDispute200Response{}
-	return &this
-}
-
-// NewCreateIssueDispute200ResponseWithDefaults instantiates a new CreateIssueDispute200Response object
-// This constructor will only assign default values to properties that have it defined,
-// but it doesn't guarantee that properties required by API are set
-func NewCreateIssueDispute200ResponseWithDefaults() *CreateIssueDispute200Response {
-	this := CreateIssueDispute200Response{}
-	return &this
-}
-
-// GetId returns the Id field value if set, zero value otherwise.
-func (o *CreateIssueDispute200Response) GetId() float32 {
-	if o == nil || IsNil(o.Id) {
-		var ret float32
-		return ret
+// LicenseDisputeResponseAsCreateIssueDispute200Response is a convenience function that returns LicenseDisputeResponse wrapped in CreateIssueDispute200Response
+func LicenseDisputeResponseAsCreateIssueDispute200Response(v *LicenseDisputeResponse) CreateIssueDispute200Response {
+	return CreateIssueDispute200Response{
+		LicenseDisputeResponse: v,
 	}
-	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateIssueDispute200Response) GetIdOk() (*float32, bool) {
-	if o == nil || IsNil(o.Id) {
-		return nil, false
+// QualityDisputeResponseAsCreateIssueDispute200Response is a convenience function that returns QualityDisputeResponse wrapped in CreateIssueDispute200Response
+func QualityDisputeResponseAsCreateIssueDispute200Response(v *QualityDisputeResponse) CreateIssueDispute200Response {
+	return CreateIssueDispute200Response{
+		QualityDisputeResponse: v,
 	}
-	return o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *CreateIssueDispute200Response) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
+
+// Unmarshal JSON data into one of the pointers in the struct
+func (dst *CreateIssueDispute200Response) UnmarshalJSON(data []byte) error {
+	var err error
+	match := 0
+	// try to unmarshal data into LicenseDisputeResponse
+	err = newStrictDecoder(data).Decode(&dst.LicenseDisputeResponse)
+	if err == nil {
+		jsonLicenseDisputeResponse, _ := json.Marshal(dst.LicenseDisputeResponse)
+		if string(jsonLicenseDisputeResponse) == "{}" { // empty struct
+			dst.LicenseDisputeResponse = nil
+		} else {
+			if err = validator.Validate(dst.LicenseDisputeResponse); err != nil {
+				dst.LicenseDisputeResponse = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.LicenseDisputeResponse = nil
 	}
 
-	return false
-}
-
-// SetId gets a reference to the given float32 and assigns it to the Id field.
-func (o *CreateIssueDispute200Response) SetId(v float32) {
-	o.Id = &v
-}
-
-// GetCreatedBy returns the CreatedBy field value if set, zero value otherwise.
-func (o *CreateIssueDispute200Response) GetCreatedBy() float32 {
-	if o == nil || IsNil(o.CreatedBy) {
-		var ret float32
-		return ret
-	}
-	return *o.CreatedBy
-}
-
-// GetCreatedByOk returns a tuple with the CreatedBy field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateIssueDispute200Response) GetCreatedByOk() (*float32, bool) {
-	if o == nil || IsNil(o.CreatedBy) {
-		return nil, false
-	}
-	return o.CreatedBy, true
-}
-
-// HasCreatedBy returns a boolean if a field has been set.
-func (o *CreateIssueDispute200Response) HasCreatedBy() bool {
-	if o != nil && !IsNil(o.CreatedBy) {
-		return true
+	// try to unmarshal data into QualityDisputeResponse
+	err = newStrictDecoder(data).Decode(&dst.QualityDisputeResponse)
+	if err == nil {
+		jsonQualityDisputeResponse, _ := json.Marshal(dst.QualityDisputeResponse)
+		if string(jsonQualityDisputeResponse) == "{}" { // empty struct
+			dst.QualityDisputeResponse = nil
+		} else {
+			if err = validator.Validate(dst.QualityDisputeResponse); err != nil {
+				dst.QualityDisputeResponse = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.QualityDisputeResponse = nil
 	}
 
-	return false
+	if match > 1 { // more than 1 match
+		// reset to nil
+		dst.LicenseDisputeResponse = nil
+		dst.QualityDisputeResponse = nil
+
+		return fmt.Errorf("data matches more than one schema in oneOf(CreateIssueDispute200Response)")
+	} else if match == 1 {
+		return nil // exactly one match
+	} else { // no match
+		return fmt.Errorf("data failed to match schemas in oneOf(CreateIssueDispute200Response)")
+	}
 }
 
-// SetCreatedBy gets a reference to the given float32 and assigns it to the CreatedBy field.
-func (o *CreateIssueDispute200Response) SetCreatedBy(v float32) {
-	o.CreatedBy = &v
+// Marshal data from the first non-nil pointers in the struct to JSON
+func (src CreateIssueDispute200Response) MarshalJSON() ([]byte, error) {
+	if src.LicenseDisputeResponse != nil {
+		return json.Marshal(&src.LicenseDisputeResponse)
+	}
+
+	if src.QualityDisputeResponse != nil {
+		return json.Marshal(&src.QualityDisputeResponse)
+	}
+
+	return nil, nil // no data in oneOf schemas
 }
 
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
-func (o *CreateIssueDispute200Response) GetCreatedAt() string {
-	if o == nil || IsNil(o.CreatedAt) {
-		var ret string
-		return ret
+// Get the actual instance
+func (obj *CreateIssueDispute200Response) GetActualInstance() (interface{}) {
+	if obj == nil {
+		return nil
 	}
-	return *o.CreatedAt
+	if obj.LicenseDisputeResponse != nil {
+		return obj.LicenseDisputeResponse
+	}
+
+	if obj.QualityDisputeResponse != nil {
+		return obj.QualityDisputeResponse
+	}
+
+	// all schemas are nil
+	return nil
 }
 
-// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateIssueDispute200Response) GetCreatedAtOk() (*string, bool) {
-	if o == nil || IsNil(o.CreatedAt) {
-		return nil, false
-	}
-	return o.CreatedAt, true
-}
-
-// HasCreatedAt returns a boolean if a field has been set.
-func (o *CreateIssueDispute200Response) HasCreatedAt() bool {
-	if o != nil && !IsNil(o.CreatedAt) {
-		return true
+// Get the actual instance value
+func (obj CreateIssueDispute200Response) GetActualInstanceValue() (interface{}) {
+	if obj.LicenseDisputeResponse != nil {
+		return *obj.LicenseDisputeResponse
 	}
 
-	return false
-}
-
-// SetCreatedAt gets a reference to the given string and assigns it to the CreatedAt field.
-func (o *CreateIssueDispute200Response) SetCreatedAt(v string) {
-	o.CreatedAt = &v
-}
-
-// GetLicenseId returns the LicenseId field value if set, zero value otherwise.
-func (o *CreateIssueDispute200Response) GetLicenseId() string {
-	if o == nil || IsNil(o.LicenseId) {
-		var ret string
-		return ret
-	}
-	return *o.LicenseId
-}
-
-// GetLicenseIdOk returns a tuple with the LicenseId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateIssueDispute200Response) GetLicenseIdOk() (*string, bool) {
-	if o == nil || IsNil(o.LicenseId) {
-		return nil, false
-	}
-	return o.LicenseId, true
-}
-
-// HasLicenseId returns a boolean if a field has been set.
-func (o *CreateIssueDispute200Response) HasLicenseId() bool {
-	if o != nil && !IsNil(o.LicenseId) {
-		return true
+	if obj.QualityDisputeResponse != nil {
+		return *obj.QualityDisputeResponse
 	}
 
-	return false
-}
-
-// SetLicenseId gets a reference to the given string and assigns it to the LicenseId field.
-func (o *CreateIssueDispute200Response) SetLicenseId(v string) {
-	o.LicenseId = &v
-}
-
-// GetDisputedIssueId returns the DisputedIssueId field value if set, zero value otherwise.
-func (o *CreateIssueDispute200Response) GetDisputedIssueId() float32 {
-	if o == nil || IsNil(o.DisputedIssueId) {
-		var ret float32
-		return ret
-	}
-	return *o.DisputedIssueId
-}
-
-// GetDisputedIssueIdOk returns a tuple with the DisputedIssueId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateIssueDispute200Response) GetDisputedIssueIdOk() (*float32, bool) {
-	if o == nil || IsNil(o.DisputedIssueId) {
-		return nil, false
-	}
-	return o.DisputedIssueId, true
-}
-
-// HasDisputedIssueId returns a boolean if a field has been set.
-func (o *CreateIssueDispute200Response) HasDisputedIssueId() bool {
-	if o != nil && !IsNil(o.DisputedIssueId) {
-		return true
-	}
-
-	return false
-}
-
-// SetDisputedIssueId gets a reference to the given float32 and assigns it to the DisputedIssueId field.
-func (o *CreateIssueDispute200Response) SetDisputedIssueId(v float32) {
-	o.DisputedIssueId = &v
-}
-
-// GetReason returns the Reason field value if set, zero value otherwise.
-func (o *CreateIssueDispute200Response) GetReason() string {
-	if o == nil || IsNil(o.Reason) {
-		var ret string
-		return ret
-	}
-	return *o.Reason
-}
-
-// GetReasonOk returns a tuple with the Reason field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateIssueDispute200Response) GetReasonOk() (*string, bool) {
-	if o == nil || IsNil(o.Reason) {
-		return nil, false
-	}
-	return o.Reason, true
-}
-
-// HasReason returns a boolean if a field has been set.
-func (o *CreateIssueDispute200Response) HasReason() bool {
-	if o != nil && !IsNil(o.Reason) {
-		return true
-	}
-
-	return false
-}
-
-// SetReason gets a reference to the given string and assigns it to the Reason field.
-func (o *CreateIssueDispute200Response) SetReason(v string) {
-	o.Reason = &v
-}
-
-// GetComment returns the Comment field value if set, zero value otherwise.
-func (o *CreateIssueDispute200Response) GetComment() string {
-	if o == nil || IsNil(o.Comment) {
-		var ret string
-		return ret
-	}
-	return *o.Comment
-}
-
-// GetCommentOk returns a tuple with the Comment field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateIssueDispute200Response) GetCommentOk() (*string, bool) {
-	if o == nil || IsNil(o.Comment) {
-		return nil, false
-	}
-	return o.Comment, true
-}
-
-// HasComment returns a boolean if a field has been set.
-func (o *CreateIssueDispute200Response) HasComment() bool {
-	if o != nil && !IsNil(o.Comment) {
-		return true
-	}
-
-	return false
-}
-
-// SetComment gets a reference to the given string and assigns it to the Comment field.
-func (o *CreateIssueDispute200Response) SetComment(v string) {
-	o.Comment = &v
-}
-
-// GetResolvedAt returns the ResolvedAt field value if set, zero value otherwise.
-func (o *CreateIssueDispute200Response) GetResolvedAt() string {
-	if o == nil || IsNil(o.ResolvedAt) {
-		var ret string
-		return ret
-	}
-	return *o.ResolvedAt
-}
-
-// GetResolvedAtOk returns a tuple with the ResolvedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateIssueDispute200Response) GetResolvedAtOk() (*string, bool) {
-	if o == nil || IsNil(o.ResolvedAt) {
-		return nil, false
-	}
-	return o.ResolvedAt, true
-}
-
-// HasResolvedAt returns a boolean if a field has been set.
-func (o *CreateIssueDispute200Response) HasResolvedAt() bool {
-	if o != nil && !IsNil(o.ResolvedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetResolvedAt gets a reference to the given string and assigns it to the ResolvedAt field.
-func (o *CreateIssueDispute200Response) SetResolvedAt(v string) {
-	o.ResolvedAt = &v
-}
-
-// GetResolvedBy returns the ResolvedBy field value if set, zero value otherwise.
-func (o *CreateIssueDispute200Response) GetResolvedBy() float32 {
-	if o == nil || IsNil(o.ResolvedBy) {
-		var ret float32
-		return ret
-	}
-	return *o.ResolvedBy
-}
-
-// GetResolvedByOk returns a tuple with the ResolvedBy field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateIssueDispute200Response) GetResolvedByOk() (*float32, bool) {
-	if o == nil || IsNil(o.ResolvedBy) {
-		return nil, false
-	}
-	return o.ResolvedBy, true
-}
-
-// HasResolvedBy returns a boolean if a field has been set.
-func (o *CreateIssueDispute200Response) HasResolvedBy() bool {
-	if o != nil && !IsNil(o.ResolvedBy) {
-		return true
-	}
-
-	return false
-}
-
-// SetResolvedBy gets a reference to the given float32 and assigns it to the ResolvedBy field.
-func (o *CreateIssueDispute200Response) SetResolvedBy(v float32) {
-	o.ResolvedBy = &v
-}
-
-func (o CreateIssueDispute200Response) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
-func (o CreateIssueDispute200Response) ToMap() (map[string]interface{}, error) {
-	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.CreatedBy) {
-		toSerialize["createdBy"] = o.CreatedBy
-	}
-	if !IsNil(o.CreatedAt) {
-		toSerialize["createdAt"] = o.CreatedAt
-	}
-	if !IsNil(o.LicenseId) {
-		toSerialize["licenseId"] = o.LicenseId
-	}
-	if !IsNil(o.DisputedIssueId) {
-		toSerialize["disputedIssueId"] = o.DisputedIssueId
-	}
-	if !IsNil(o.Reason) {
-		toSerialize["reason"] = o.Reason
-	}
-	if !IsNil(o.Comment) {
-		toSerialize["comment"] = o.Comment
-	}
-	if !IsNil(o.ResolvedAt) {
-		toSerialize["resolvedAt"] = o.ResolvedAt
-	}
-	if !IsNil(o.ResolvedBy) {
-		toSerialize["resolvedBy"] = o.ResolvedBy
-	}
-	return toSerialize, nil
+	// all schemas are nil
+	return nil
 }
 
 type NullableCreateIssueDispute200Response struct {
