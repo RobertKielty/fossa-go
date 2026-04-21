@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.22
 Contact: support@fossa.com
 */
 
@@ -304,20 +304,6 @@ func (a *ReportOptionsAPIService) DeleteReportOptionByIdExecute(r ApiDeleteRepor
 type ApiGetAllReportOptionsRequest struct {
 	ctx context.Context
 	ApiService *ReportOptionsAPIService
-	page *int32
-	pageSize *int32
-}
-
-// The page number for pagination (1-indexed)
-func (r ApiGetAllReportOptionsRequest) Page(page int32) ApiGetAllReportOptionsRequest {
-	r.page = &page
-	return r
-}
-
-// The number of items per page
-func (r ApiGetAllReportOptionsRequest) PageSize(pageSize int32) ApiGetAllReportOptionsRequest {
-	r.pageSize = &pageSize
-	return r
 }
 
 func (r ApiGetAllReportOptionsRequest) Execute() (*GetAllReportOptions200Response, *http.Response, error) {
@@ -360,20 +346,6 @@ func (a *ReportOptionsAPIService) GetAllReportOptionsExecute(r ApiGetAllReportOp
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if r.page != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
-	} else {
-		var defaultValue int32 = 1
-		parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
-		r.page = &defaultValue
-	}
-	if r.pageSize != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
-	} else {
-		var defaultValue int32 = 50
-		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", defaultValue, "form", "")
-		r.pageSize = &defaultValue
-	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -412,17 +384,6 @@ func (a *ReportOptionsAPIService) GetAllReportOptionsExecute(r ApiGetAllReportOp
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v AddLicenseConclusion400Response
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
 			var v AddLicenseConclusion400Response
