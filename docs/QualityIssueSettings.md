@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **ProjectDefaultQualityIssueScanningEnabled** | Pointer to **bool** |  | [optional] 
 **ProjectDefaultQualityStatusCheckEnabled** | Pointer to **bool** |  | [optional] 
 **ProjectDefaultStatusCheckFilterQuality** | Pointer to **int32** |  | [optional] 
+**ProjectDefaultVendoredQualityIssueScanningEnabled** | Pointer to **bool** | Enable or disable quality issue scanning for vendored dependencies by default for projects in the organization | [optional] 
 
 ## Methods
 
@@ -127,6 +128,31 @@ SetProjectDefaultStatusCheckFilterQuality sets ProjectDefaultStatusCheckFilterQu
 `func (o *QualityIssueSettings) HasProjectDefaultStatusCheckFilterQuality() bool`
 
 HasProjectDefaultStatusCheckFilterQuality returns a boolean if a field has been set.
+
+### GetProjectDefaultVendoredQualityIssueScanningEnabled
+
+`func (o *QualityIssueSettings) GetProjectDefaultVendoredQualityIssueScanningEnabled() bool`
+
+GetProjectDefaultVendoredQualityIssueScanningEnabled returns the ProjectDefaultVendoredQualityIssueScanningEnabled field if non-nil, zero value otherwise.
+
+### GetProjectDefaultVendoredQualityIssueScanningEnabledOk
+
+`func (o *QualityIssueSettings) GetProjectDefaultVendoredQualityIssueScanningEnabledOk() (*bool, bool)`
+
+GetProjectDefaultVendoredQualityIssueScanningEnabledOk returns a tuple with the ProjectDefaultVendoredQualityIssueScanningEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectDefaultVendoredQualityIssueScanningEnabled
+
+`func (o *QualityIssueSettings) SetProjectDefaultVendoredQualityIssueScanningEnabled(v bool)`
+
+SetProjectDefaultVendoredQualityIssueScanningEnabled sets ProjectDefaultVendoredQualityIssueScanningEnabled field to given value.
+
+### HasProjectDefaultVendoredQualityIssueScanningEnabled
+
+`func (o *QualityIssueSettings) HasProjectDefaultVendoredQualityIssueScanningEnabled() bool`
+
+HasProjectDefaultVendoredQualityIssueScanningEnabled returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
