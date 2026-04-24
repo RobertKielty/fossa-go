@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.27
 Contact: support@fossa.com
 */
 
@@ -42,7 +42,7 @@ var (
 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
 )
 
-// APIClient manages communication with the FOSSA API API v4.31.29
+// APIClient manages communication with the FOSSA API API v4.33.27
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
