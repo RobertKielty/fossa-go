@@ -6,7 +6,7 @@ info:
     url: fossa.com
   description: OpenAPI Specification for public FOSSA APIs
   title: FOSSA API
-  version: 4.31.29
+  version: 4.33.30
 externalDocs:
   description: product documentation and product guides
   url: https://docs.fossa.com
@@ -2280,7 +2280,9 @@ paths:
       - Issues
   /v2/issues/{issueId}/disputes:
     post:
-      description: Creates an issue dispute. For now it only supports licensing issues.
+      description: Creates an issue dispute. Supports licensing and quality issue
+        disputes. The dispute type is determined by the category of the specified
+        issue.
       operationId: createIssueDispute
       parameters:
       - description: ID of the issue that is being disputed.
@@ -2749,6 +2751,20 @@ paths:
             type: string
           type: array
         style: form
+      - description: |
+          Filter by severity source (when category is "vulnerability"). Use 'standard' to filter by CVSS score, 'custom' to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to 'standard' when not provided. Custom risk score filtering is not available for global scope.
+        explode: true
+        in: query
+        name: "filter[severitySource][]"
+        required: false
+        schema:
+          items:
+            enum:
+            - standard
+            - custom
+            type: string
+          type: array
+        style: form
       - description: Include only issues found on before a given ISO timestamp.  Only
           available to premium users
         explode: true
@@ -2879,6 +2895,49 @@ paths:
         required: false
         schema:
           $ref: "#/components/schemas/getIssueStatuses_filter_issueSource____parameter"
+        style: form
+      - description: Filter by CVSS attack vector (when category is "vulnerability")
+        explode: true
+        in: query
+        name: "filter[cvssAttackVector][]"
+        required: false
+        schema:
+          items:
+            enum:
+            - network
+            - adjacent
+            - local
+            - physical
+            type: string
+          type: array
+        style: form
+      - description: "Filter by CVSS attack complexity (when category is \"vulnerability\"\
+          ). For CVSS v4, this includes the Attack Requirements (AT) metric."
+        explode: true
+        in: query
+        name: "filter[cvssAttackComplexity][]"
+        required: false
+        schema:
+          items:
+            enum:
+            - low
+            - high
+            type: string
+          type: array
+        style: form
+      - description: Filter by CVSS privileges required (when category is "vulnerability")
+        explode: true
+        in: query
+        name: "filter[cvssPrivilegesRequired][]"
+        required: false
+        schema:
+          items:
+            enum:
+            - none
+            - low
+            - high
+            type: string
+          type: array
         style: form
       - description: |
           Sort by package name, when the issue was created, or severity (when category is "vulnerability")
@@ -3491,6 +3550,20 @@ paths:
             type: string
           type: array
         style: form
+      - description: |
+          Filter by severity source (when category is "vulnerability"). Use 'standard' to filter by CVSS score, 'custom' to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to 'standard' when not provided. Custom risk score filtering is not available for global scope.
+        explode: true
+        in: query
+        name: "filter[severitySource][]"
+        required: false
+        schema:
+          items:
+            enum:
+            - standard
+            - custom
+            type: string
+          type: array
+        style: form
       - description: Include only issues found on after a given ISO timestamp.  Only
           available to premium users
         explode: true
@@ -3600,6 +3673,49 @@ paths:
         required: false
         schema:
           $ref: "#/components/schemas/getIssueStatuses_filter_issueSource____parameter"
+        style: form
+      - description: Filter by CVSS attack vector (when category is "vulnerability")
+        explode: true
+        in: query
+        name: "filter[cvssAttackVector][]"
+        required: false
+        schema:
+          items:
+            enum:
+            - network
+            - adjacent
+            - local
+            - physical
+            type: string
+          type: array
+        style: form
+      - description: "Filter by CVSS attack complexity (when category is \"vulnerability\"\
+          ). For CVSS v4, this includes the Attack Requirements (AT) metric."
+        explode: true
+        in: query
+        name: "filter[cvssAttackComplexity][]"
+        required: false
+        schema:
+          items:
+            enum:
+            - low
+            - high
+            type: string
+          type: array
+        style: form
+      - description: Filter by CVSS privileges required (when category is "vulnerability")
+        explode: true
+        in: query
+        name: "filter[cvssPrivilegesRequired][]"
+        required: false
+        schema:
+          items:
+            enum:
+            - none
+            - low
+            - high
+            type: string
+          type: array
         style: form
       requestBody:
         content:
@@ -5690,6 +5806,8 @@ paths:
 
         ### Feature Flags
         - `securityIssueScanningEnabled` and `qualityIssueScanningEnabled` can only be modified if the organization has the respective features enabled.
+        - `quickImportVendoredDetectionEnabled` can only be modified if the organization has both quick import vendored detection and vendored dependency detection features enabled.
+        - `quickImportSnippetDetectionEnabled` can only be modified if the organization has both quick import snippet detection and snippet detection features enabled.
 
         ### Issue Tracker Fields
         - When updating `issueTrackerCustomFields`, boolean values in the `isRequired` field may be stringified and will be automatically converted.
@@ -5960,8 +6078,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: the number of revisions to skip for pagination (used with "count"
-          query parameter)
+      - description: the number of revisions to skip per ref (branch or tag) for pagination.
         explode: true
         in: query
         name: offset
@@ -5969,7 +6086,8 @@ paths:
         schema:
           type: number
         style: form
-      - description: the number of revisions to return (maximum of 1000)
+      - description: "the number of revisions to return per ref (branch or tag), max\
+          \ 1000."
         explode: true
         in: query
         name: count
@@ -7367,7 +7485,9 @@ paths:
       - Roles
   /teams:
     get:
-      description: Get all teams in your organization
+      deprecated: true
+      description: This endpoint is deprecated. Please use the paginated /v2/teams/
+        endpoint instead.
       operationId: getAllTeams
       responses:
         "200":
@@ -7676,6 +7796,100 @@ paths:
               schema:
                 $ref: "#/components/schemas/addLicenseConclusion_400_response"
           description: Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Server Error:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2009
+                    message: "Sorry, we've encountered an unexpected error. We've\
+                      \ recorded it. If you continue to see this, contact support\
+                      \ at support@fossa.com and include the unique reference code:\
+                      \ 00000000-0000-0000-0000-000000000000"
+                    name: InternalServerError
+                    httpStatusCode: 500
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Server Error
+      security:
+      - ApiToken: []
+      tags:
+      - Teams
+  /v2/teams:
+    get:
+      description: Get a paginated list of teams in your organization
+      operationId: getAllTeamsV2
+      parameters:
+      - description: "Page number (1-indexed, defaults to 1)"
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Number of items per page (defaults to 10, max 50)"
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          default: 10
+          maximum: 50
+          minimum: 1
+          type: integer
+        style: form
+      - description: Search term to filter teams by name (max 255)
+        explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          maxLength: 255
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                teams:
+                  value:
+                    results:
+                    - id: 1
+                      organizationId: 1
+                      name: Engineering
+                      defaultRoleId: 1
+                      autoAddUsers: false
+                      uniqueIdentifier: engineering
+                      createdAt: 2020-01-01T00:00:00Z
+                      updatedAt: 2020-01-01T00:00:00Z
+                      teamType: team
+                      teamMembersCount: 2
+                      teamReleaseGroupsCount: 0
+                      teamProjectsCount: 0
+                    - id: 2
+                      organizationId: 1
+                      name: Security
+                      defaultRoleId: 2
+                      autoAddUsers: false
+                      uniqueIdentifier: security
+                      createdAt: 2020-01-01T00:00:00Z
+                      updatedAt: 2020-01-01T00:00:00Z
+                      teamType: team
+                      teamMembersCount: 1
+                      teamReleaseGroupsCount: 1
+                      teamProjectsCount: 3
+                    pageSize: 10
+                    page: 1
+                    totalCount: 2
+              schema:
+                $ref: "#/components/schemas/getAllTeamsV2_200_response"
+          description: OK
         "500":
           content:
             application/json:
@@ -14222,6 +14436,119 @@ paths:
       tags:
       - Revisions
       - Dependencies
+  /revisions/{locator}/scans:
+    get:
+      description: |
+        Retrieve a paginated list of scans for a given revision, ordered by scan time descending, with ties broken by id DESC for deterministic pagination.
+        Scans are filtered to the organization that owns the revision's project, so public and private projects behave consistently.
+        Requires an authenticated user.
+      operationId: getRevisionScans
+      parameters:
+      - description: The URL-encoded locator of the revision
+        example: custom%2B1234%2Fmy-project%24abcd1234
+        explode: false
+        in: path
+        name: locator
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The 1-indexed page of results to return
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          example: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: The number of scans to return per page (maximum 50)
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          default: 10
+          example: 10
+          maximum: 50
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/getRevisionScans_200_response"
+          description: A paginated list of revision scans.
+        "400":
+          content:
+            application/json:
+              examples:
+                badRequest:
+                  summary: Invalid pagination parameters
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2003
+                    message: "Validation error: Invalid input: expected number, received\
+                      \ NaN at \"page\""
+                    name: BadRequestError
+                    httpStatusCode: 400
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Invalid pagination parameters
+        "401":
+          content:
+            application/json:
+              examples:
+                Bad API Token:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2010
+                    message: API token is invalid
+                    name: UnauthorizedError
+                    httpStatusCode: 401
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              examples:
+                notFound:
+                  summary: Revision not found
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2004
+                    message: This revision does not exist.
+                    name: NotFoundError
+                    httpStatusCode: 404
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Revision not found
+        "500":
+          content:
+            application/json:
+              examples:
+                Server Error:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2009
+                    message: "Sorry, we've encountered an unexpected error. We've\
+                      \ recorded it. If you continue to see this, contact support\
+                      \ at support@fossa.com and include the unique reference code:\
+                      \ 00000000-0000-0000-0000-000000000000"
+                    name: InternalServerError
+                    httpStatusCode: 500
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Server Error
+      security:
+      - ApiToken: []
+      tags:
+      - Revisions
   /builds:
     get:
       description: Retrieves a list of builds.
@@ -14512,7 +14839,9 @@ paths:
       - Builds
   /users:
     get:
-      description: Get all users in a user's organization
+      deprecated: true
+      description: This endpoint is deprecated. Please use the paginated /v2/users/
+        endpoint instead.
       operationId: getAllUsers
       parameters:
       - description: The numbers of users being returned
@@ -14947,6 +15276,125 @@ paths:
       - ApiToken: []
       tags:
       - Users
+  /v2/users:
+    get:
+      description: Get a paginated list of users in your organization
+      operationId: getAllUsersV2
+      parameters:
+      - description: "Page number (1-indexed, defaults to 1)"
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Number of items per page (defaults to 10, max 50)"
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          default: 10
+          maximum: 50
+          minimum: 1
+          type: integer
+        style: form
+      - description: "Search term to filter users by username, email, or full name\
+          \ (max 255)"
+        explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          maxLength: 255
+          type: string
+        style: form
+      - description: "Sort order for results. Use format `field_asc` or `field_desc`.\
+          \ Supported fields: username, full_name, email, created_at, last_visit."
+        explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          enum:
+          - username_asc
+          - username_desc
+          - full_name_asc
+          - full_name_desc
+          - email_asc
+          - email_desc
+          - created_at_asc
+          - created_at_desc
+          - last_visit_asc
+          - last_visit_desc
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                users:
+                  value:
+                    results:
+                    - id: 1
+                      username: jdoe
+                      email: jdoe@example.com
+                      email_verified: true
+                      demo: false
+                      super: false
+                      joined: 2020-01-01T00:00:00Z
+                      last_visit: 2024-01-01T00:00:00Z
+                      full_name: John Doe
+                      phone: null
+                      role: null
+                      organizationId: 1
+                      sso_only: false
+                      enabled: true
+                      has_set_password: true
+                      install_admin: false
+                      isServiceAccount: false
+                      createdAt: 2020-01-01T00:00:00Z
+                      updatedAt: 2024-01-01T00:00:00Z
+                      userRole:
+                        roleId: 1
+                        role:
+                          id: 1
+                          organizationId: 1
+                          isCustom: false
+                          name: Admin
+                          scope: organization
+                      teamsCount: 2
+                    pageSize: 10
+                    page: 1
+                    totalCount: 1
+              schema:
+                $ref: "#/components/schemas/getAllUsersV2_200_response"
+          description: OK
+        "500":
+          content:
+            application/json:
+              examples:
+                Server Error:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2009
+                    message: "Sorry, we've encountered an unexpected error. We've\
+                      \ recorded it. If you continue to see this, contact support\
+                      \ at support@fossa.com and include the unique reference code:\
+                      \ 00000000-0000-0000-0000-000000000000"
+                    name: InternalServerError
+                    httpStatusCode: 500
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Server Error
+      security:
+      - ApiToken: []
+      tags:
+      - Users
   /v2/revisions/{locator}/dependencies:
     get:
       description: Get the dependencies for a given project revision
@@ -15091,6 +15539,75 @@ paths:
             type: string
           type: array
         style: form
+      - description: Filter release group dependencies by root projects
+        explode: true
+        in: query
+        name: "rootProjects[]"
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: Filter dependencies by package label IDs
+        explode: true
+        in: query
+        name: "packageLabels[]"
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: Filter to vendored dependencies found under this path prefix.
+          Only supported on project scope.
+        explode: true
+        in: query
+        name: vendoredPath
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Include resolution notes in issue data
+        explode: true
+        in: query
+        name: includeResolutionNotes
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include full license text in license data
+        explode: true
+        in: query
+        name: includeLicenseText
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include copyright information in license data
+        explode: true
+        in: query
+        name: includeCopyright
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include license match details in license data
+        explode: true
+        in: query
+        name: includeMatches
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include download URL in package data
+        explode: true
+        in: query
+        name: includeDownloadUrl
+        required: false
+        schema:
+          type: boolean
+        style: form
       - description: The specific page of data to return
         explode: true
         in: query
@@ -15126,6 +15643,7 @@ paths:
                       isManual: false
                       isIgnored: false
                       isUnknown: false
+                      isSnippetConversion: false
                       concludedLicenses:
                         scoped:
                           licenses:
@@ -15172,6 +15690,7 @@ paths:
                       isManual: false
                       isIgnored: false
                       isUnknown: false
+                      isSnippetConversion: false
                       concludedLicenses:
                         scoped:
                           licenses:
@@ -15273,6 +15792,46 @@ paths:
         schema:
           type: string
         style: simple
+      - description: Include resolution notes in issue data
+        explode: true
+        in: query
+        name: includeResolutionNotes
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include full license text in license data
+        explode: true
+        in: query
+        name: includeLicenseText
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include copyright information in license data
+        explode: true
+        in: query
+        name: includeCopyright
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include license match details in license data
+        explode: true
+        in: query
+        name: includeMatches
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include download URL in package data
+        explode: true
+        in: query
+        name: includeDownloadUrl
+        required: false
+        schema:
+          type: boolean
+        style: form
       responses:
         "200":
           content:
@@ -15286,6 +15845,7 @@ paths:
                       isManual: false
                       isIgnored: false
                       isUnknown: false
+                      isSnippetConversion: false
                       concludedLicenses:
                         scoped:
                           licenses:
@@ -15527,6 +16087,46 @@ paths:
         schema:
           type: string
         style: simple
+      - description: Include resolution notes in issue data
+        explode: true
+        in: query
+        name: includeResolutionNotes
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include full license text in license data
+        explode: true
+        in: query
+        name: includeLicenseText
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include copyright information in license data
+        explode: true
+        in: query
+        name: includeCopyright
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include license match details in license data
+        explode: true
+        in: query
+        name: includeMatches
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include download URL in package data
+        explode: true
+        in: query
+        name: includeDownloadUrl
+        required: false
+        schema:
+          type: boolean
+        style: form
       responses:
         "200":
           content:
@@ -15540,6 +16140,7 @@ paths:
                       isManual: false
                       isIgnored: false
                       isUnknown: false
+                      isSnippetConversion: false
                       concludedLicenses:
                         scoped:
                           licenses:
@@ -15948,6 +16549,65 @@ paths:
             type: string
           type: array
         style: form
+      - description: Filter dependencies by package label IDs
+        explode: true
+        in: query
+        name: "packageLabels[]"
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: Filter to vendored dependencies found under this path prefix.
+          Only supported on project scope.
+        explode: true
+        in: query
+        name: vendoredPath
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Include resolution notes in issue data
+        explode: true
+        in: query
+        name: includeResolutionNotes
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include full license text in license data
+        explode: true
+        in: query
+        name: includeLicenseText
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include copyright information in license data
+        explode: true
+        in: query
+        name: includeCopyright
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include license match details in license data
+        explode: true
+        in: query
+        name: includeMatches
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include download URL in package data
+        explode: true
+        in: query
+        name: includeDownloadUrl
+        required: false
+        schema:
+          type: boolean
+        style: form
       - description: The specific page of data to return
         explode: true
         in: query
@@ -15983,6 +16643,7 @@ paths:
                       isManual: false
                       isIgnored: false
                       isUnknown: false
+                      isSnippetConversion: false
                       concludedLicenses:
                         scoped:
                           licenses:
@@ -16029,6 +16690,7 @@ paths:
                       isManual: false
                       isIgnored: false
                       isUnknown: false
+                      isSnippetConversion: false
                       concludedLicenses:
                         scoped:
                           licenses:
@@ -16138,6 +16800,46 @@ paths:
         schema:
           type: string
         style: simple
+      - description: Include resolution notes in issue data
+        explode: true
+        in: query
+        name: includeResolutionNotes
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include full license text in license data
+        explode: true
+        in: query
+        name: includeLicenseText
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include copyright information in license data
+        explode: true
+        in: query
+        name: includeCopyright
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include license match details in license data
+        explode: true
+        in: query
+        name: includeMatches
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: Include download URL in package data
+        explode: true
+        in: query
+        name: includeDownloadUrl
+        required: false
+        schema:
+          type: boolean
+        style: form
       responses:
         "200":
           content:
@@ -16151,6 +16853,7 @@ paths:
                       isManual: false
                       isIgnored: false
                       isUnknown: false
+                      isSnippetConversion: false
                       concludedLicenses:
                         scoped:
                           licenses:
@@ -16938,6 +17641,203 @@ paths:
       - ApiToken: []
       tags:
       - Organization Settings
+  /organizations/{id}/settings/projects/quick-import-scan-methods:
+    get:
+      description: Get default quick import scan methods settings for an organization
+      operationId: getOrganizationProjectScanMethodsSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                projectDefaultQuickImportVendoredDetectionEnabled: false
+                projectDefaultQuickImportSnippetDetectionEnabled: false
+              schema:
+                $ref: "#/components/schemas/getOrganizationProjectScanMethodsSettings_200_response"
+          description: OK
+        "401":
+          content:
+            application/json:
+              examples:
+                Bad API Token:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2010
+                    message: API token is invalid
+                    name: UnauthorizedError
+                    httpStatusCode: 401
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              examples:
+                Forbidden:
+                  value:
+                    message: Forbidden
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                No Organization Found:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2004
+                    message: Organization not found.
+                    name: NotFoundError
+                    httpStatusCode: 404
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: NotFound
+      security:
+      - ApiToken: []
+      tags:
+      - Organization Settings
+    patch:
+      description: Propagate quick import scan methods settings to all projects in
+        the organization
+      operationId: propagateOrganizationProjectScanMethodsSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+            - projectDefaultQuickImportVendoredDetectionEnabled
+            schema:
+              items:
+                enum:
+                - projectDefaultQuickImportVendoredDetectionEnabled
+                - projectDefaultQuickImportSnippetDetectionEnabled
+                type: string
+              type: array
+      responses:
+        "204":
+          description: No content
+        "401":
+          content:
+            application/json:
+              examples:
+                Bad API Token:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2010
+                    message: API token is invalid
+                    name: UnauthorizedError
+                    httpStatusCode: 401
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              examples:
+                Forbidden:
+                  value:
+                    message: Forbidden
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                No Organization Found:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2004
+                    message: Organization not found.
+                    name: NotFoundError
+                    httpStatusCode: 404
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: NotFound
+      security:
+      - ApiToken: []
+      tags:
+      - Organization Settings
+    put:
+      description: Update default quick import scan methods settings for an organization
+      operationId: updateOrganizationProjectScanMethodsSettings
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              projectDefaultQuickImportVendoredDetectionEnabled: true
+              projectDefaultQuickImportSnippetDetectionEnabled: false
+            schema:
+              $ref: "#/components/schemas/updateOrganizationProjectScanMethodsSettings_request"
+      responses:
+        "204":
+          description: No content
+        "401":
+          content:
+            application/json:
+              examples:
+                Bad API Token:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2010
+                    message: API token is invalid
+                    name: UnauthorizedError
+                    httpStatusCode: 401
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              examples:
+                Forbidden:
+                  value:
+                    message: Forbidden
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                No Organization Found:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2004
+                    message: Organization not found.
+                    name: NotFoundError
+                    httpStatusCode: 404
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: NotFound
+      security:
+      - ApiToken: []
+      tags:
+      - Organization Settings
   /organizations/{id}/settings/projects/github-status-checks:
     get:
       description: Get github status check settings for an organization
@@ -17157,6 +18057,7 @@ paths:
                 projectDefaultLicensingStatusCheckEnabled: true
                 projectDefaultStatusCheckFilterLicensing: 1
                 projectDefaultSnippetLicensingIssueScanningEnabled: true
+                projectDefaultVendoredLicensingIssueScanningEnabled: false
               schema:
                 $ref: "#/components/schemas/getOrganizationLicensingIssueSettings_200_response"
           description: OK
@@ -17224,6 +18125,7 @@ paths:
                 - projectDefaultLicensingStatusCheckEnabled
                 - projectDefaultStatusCheckFilterLicensing
                 - projectDefaultSnippetLicensingIssueScanningEnabled
+                - projectDefaultVendoredLicensingIssueScanningEnabled
                 type: string
               type: array
       responses:
@@ -17370,6 +18272,7 @@ paths:
                     projectDefaultSecurityStatusCheckEnabled: true
                     projectDefaultStatusCheckFilterVulnerability: 4
                     projectDefaultSnippetSecurityIssueScanningEnabled: false
+                    projectDefaultVendoredSecurityIssueScanningEnabled: false
               schema:
                 $ref: "#/components/schemas/getOrganizationSecurityIssueSettings_200_response"
           description: OK
@@ -17431,6 +18334,7 @@ paths:
             - projectDefaultSecurityStatusCheckEnabled
             - projectDefaultStatusCheckFilterVulnerability
             - projectDefaultSnippetSecurityIssueScanningEnabled
+            - projectDefaultVendoredSecurityIssueScanningEnabled
             schema:
               items:
                 enum:
@@ -17439,6 +18343,7 @@ paths:
                 - projectDefaultSecurityStatusCheckEnabled
                 - projectDefaultStatusCheckFilterVulnerability
                 - projectDefaultSnippetSecurityIssueScanningEnabled
+                - projectDefaultVendoredSecurityIssueScanningEnabled
                 type: string
               type: array
       responses:
@@ -17508,6 +18413,7 @@ paths:
                   projectDefaultSecurityStatusCheckEnabled: true
                   projectDefaultStatusCheckFilterVulnerability: 4
                   projectDefaultSnippetSecurityIssueScanningEnabled: false
+                  projectDefaultVendoredSecurityIssueScanningEnabled: false
             schema:
               $ref: "#/components/schemas/getOrganizationSecurityIssueSettings_200_response"
       responses:
@@ -17592,6 +18498,7 @@ paths:
                     projectDefaultQualityIssueScanningEnabled: true
                     projectDefaultQualityStatusCheckEnabled: true
                     projectDefaultStatusCheckFilterQuality: 1
+                    projectDefaultVendoredQualityIssueScanningEnabled: false
               schema:
                 $ref: "#/components/schemas/getOrganizationQualityIssueSettings_200_response"
           description: OK
@@ -17656,6 +18563,7 @@ paths:
             - projectDefaultQualityIssueScanningEnabled
             - projectDefaultQualityStatusCheckEnabled
             - projectDefaultStatusCheckFilterQuality
+            - projectDefaultVendoredQualityIssueScanningEnabled
             schema:
               items:
                 enum:
@@ -17663,6 +18571,7 @@ paths:
                 - projectDefaultQualityIssueScanningEnabled
                 - projectDefaultQualityStatusCheckEnabled
                 - projectDefaultStatusCheckFilterQuality
+                - projectDefaultVendoredQualityIssueScanningEnabled
                 type: string
               type: array
       responses:
@@ -17731,6 +18640,7 @@ paths:
                   projectDefaultQualityIssueScanningEnabled: true
                   projectDefaultQualityStatusCheckEnabled: true
                   projectDefaultStatusCheckFilterQuality: 1
+                  projectDefaultVendoredQualityIssueScanningEnabled: false
             schema:
               $ref: "#/components/schemas/getOrganizationQualityIssueSettings_200_response"
       responses:
@@ -21576,36 +22486,12 @@ paths:
       description: Get all saved report options for the authenticated user's organization.
         Requires permission to create reports for any project or release group.
       operationId: getAllReportOptions
-      parameters:
-      - description: The page number for pagination (1-indexed)
-        example: 1
-        explode: true
-        in: query
-        name: page
-        required: false
-        schema:
-          default: 1
-          minimum: 1
-          type: integer
-        style: form
-      - description: The number of items per page
-        example: 50
-        explode: true
-        in: query
-        name: pageSize
-        required: false
-        schema:
-          default: 50
-          maximum: 50
-          minimum: 1
-          type: integer
-        style: form
       responses:
         "200":
           content:
             application/json:
               examples:
-                Paginated report options:
+                Report options:
                   value:
                     results:
                     - id: 1
@@ -21626,7 +22512,6 @@ paths:
                           packageLabels: []
                         dependencyData:
                           projects: true
-                          name: true
                           authors: false
                           description: true
                           homepage: false
@@ -21666,7 +22551,6 @@ paths:
                           - 2
                         dependencyData:
                           projects: true
-                          name: true
                           authors: true
                           description: true
                           homepage: true
@@ -21686,26 +22570,9 @@ paths:
                           fullLicenseText: true
                       createdAt: 2024-01-16T14:20:00.000Z
                       updatedAt: 2024-01-16T14:20:00.000Z
-                    page: 1
-                    pageSize: 50
-                    total: 2
               schema:
                 $ref: "#/components/schemas/getAllReportOptions_200_response"
-          description: A paginated list of saved report options
-        "400":
-          content:
-            application/json:
-              examples:
-                Invalid page parameter:
-                  value:
-                    uuid: 00000000-0000-0000-0000-000000000000
-                    code: 2003
-                    message: page must be a positive integer
-                    name: BadRequestError
-                    httpStatusCode: 400
-              schema:
-                $ref: "#/components/schemas/addLicenseConclusion_400_response"
-          description: Bad Request
+          description: A list of saved report options
         "401":
           content:
             application/json:
@@ -21767,7 +22634,6 @@ paths:
                       packageLabels: []
                     dependencyData:
                       projects: true
-                      name: true
                       authors: false
                       description: true
                       homepage: false
@@ -21806,7 +22672,6 @@ paths:
                       - 3
                     dependencyData:
                       projects: true
-                      name: true
                       authors: true
                       description: true
                       homepage: true
@@ -21852,7 +22717,6 @@ paths:
                         packageLabels: []
                       dependencyData:
                         projects: true
-                        name: true
                         authors: false
                         description: true
                         homepage: false
@@ -21894,7 +22758,6 @@ paths:
                         - 2
                       dependencyData:
                         projects: true
-                        name: true
                         authors: true
                         description: true
                         homepage: true
@@ -21915,7 +22778,7 @@ paths:
                     createdAt: 2024-01-16T14:20:00.000Z
                     updatedAt: 2024-01-16T14:20:00.000Z
               schema:
-                $ref: "#/components/schemas/getAllReportOptions_200_response_results_inner"
+                $ref: "#/components/schemas/createReportOption_201_response"
           description: Report option created successfully
         "400":
           content:
@@ -22188,7 +23051,6 @@ paths:
                         packageLabels: []
                       dependencyData:
                         projects: true
-                        name: true
                         authors: false
                         description: true
                         homepage: false
@@ -22209,7 +23071,7 @@ paths:
                     createdAt: 2024-01-15T10:30:00.000Z
                     updatedAt: 2024-01-15T10:30:00.000Z
               schema:
-                $ref: "#/components/schemas/getAllReportOptions_200_response_results_inner"
+                $ref: "#/components/schemas/createReportOption_201_response"
           description: Report option updated successfully
         "400":
           content:
@@ -22910,6 +23772,199 @@ paths:
           description: Unprocessable Entity
       security:
       - ApiToken: []
+      tags:
+      - Organization Settings
+  /organizations/{id}/logo:
+    delete:
+      description: |
+        Deletes the organization's logo from S3 storage and clears the image reference in the database.
+
+        Requires the **Organization > Edit General Settings** permission.
+      operationId: deleteOrganizationLogo
+      parameters:
+      - description: The organization ID.
+        example: 1234
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                Success:
+                  value:
+                    success: true
+              schema:
+                $ref: "#/components/schemas/deleteOrganizationLogo_200_response"
+          description: Logo successfully deleted
+        "401":
+          content:
+            application/json:
+              examples:
+                Bad API Token:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2010
+                    message: API token is invalid
+                    name: UnauthorizedError
+                    httpStatusCode: 401
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              examples:
+                No permission:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2005
+                    message: User does not have permission to view this resource
+                    name: ForbiddenError
+                    httpStatusCode: 403
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Forbidden
+      security:
+      - ApiToken: []
+      summary: Delete organization logo
+      tags:
+      - Organization Settings
+  /organizations/{id}/sbomReportDefaults:
+    put:
+      description: |
+        Updates organization-level defaults used for SBOM report author metadata.
+
+        These values are used as fallback metadata when SBOM report requests omit
+        `authorName`, `authorEmail`, or `supplier` query parameters.
+
+        Requires a premium subscription.
+      operationId: updateOrganizationSBOMReportDefaults
+      parameters:
+      - description: The organization ID.
+        example: 1234
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            examples:
+              UpdateSBOMReportDefaults:
+                value:
+                  sbomReportAuthorName: SBOM Team
+                  sbomReportAuthorEmail: sbom@example.com
+                  sbomReportSupplier: FOSSA
+            schema:
+              $ref: "#/components/schemas/updateOrganizationSBOMReportDefaults_request"
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                UpdatedSBOMReportDefaults:
+                  value:
+                    sbomReportAuthorName: SBOM Team
+                    sbomReportAuthorEmail: sbom@example.com
+                    sbomReportSupplier: FOSSA
+              schema:
+                $ref: "#/components/schemas/updateOrganizationSBOMReportDefaults_200_response"
+          description: OK
+        "400":
+          content:
+            application/json:
+              examples:
+                Bad Request:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2003
+                    message: Invalid request
+                    name: BadRequestError
+                    httpStatusCode: 400
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              examples:
+                Bad API Token:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2010
+                    message: API token is invalid
+                    name: UnauthorizedError
+                    httpStatusCode: 401
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              examples:
+                No permission:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2005
+                    message: User does not have permission to view this resource
+                    name: ForbiddenError
+                    httpStatusCode: 403
+                Insufficient subscription:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2005
+                    message: User not permissioned for feature. Feature requires "premium"
+                      subscription access level.
+                    name: ForbiddenError
+                    httpStatusCode: 403
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: "Forbidden — the user lacks the required permission, or the\
+            \ organization does not have a premium subscription."
+        "404":
+          content:
+            application/json:
+              examples:
+                No Organization Found:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2004
+                    message: Organization not found.
+                    name: NotFoundError
+                    httpStatusCode: 404
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: NotFound
+        "500":
+          content:
+            application/json:
+              examples:
+                Server Error:
+                  value:
+                    uuid: 00000000-0000-0000-0000-000000000000
+                    code: 2009
+                    message: "Sorry, we've encountered an unexpected error. We've\
+                      \ recorded it. If you continue to see this, contact support\
+                      \ at support@fossa.com and include the unique reference code:\
+                      \ 00000000-0000-0000-0000-000000000000"
+                    name: InternalServerError
+                    httpStatusCode: 500
+              schema:
+                $ref: "#/components/schemas/addLicenseConclusion_400_response"
+          description: Server Error
+      security:
+      - ApiToken: []
+      summary: Update organization SBOM report defaults
       tags:
       - Organization Settings
   /organizations/{id}/saml:
@@ -26258,12 +27313,14 @@ components:
         projectDefaultSecurityStatusCheckEnabled: true
         projectDefaultStatusCheckFilterVulnerability: 4
         projectDefaultSnippetSecurityIssueScanningEnabled: false
+        projectDefaultVendoredSecurityIssueScanningEnabled: false
     QualityIssueSettings:
       value:
         defaultQualityPolicyId: 1
         projectDefaultQualityIssueScanningEnabled: true
         projectDefaultQualityStatusCheckEnabled: true
         projectDefaultStatusCheckFilterQuality: 1
+        projectDefaultVendoredQualityIssueScanningEnabled: false
     ContainerIssueSettings:
       value:
         projectDefaultExcludeBaseLayerIssuesLicensing: true
@@ -26658,6 +27715,10 @@ components:
           description: Enable or disable snippet licensing issue scanning by default
             for projects in the organization
           type: boolean
+        projectDefaultVendoredLicensingIssueScanningEnabled:
+          description: Enable or disable licensing issue scanning for vendored dependencies
+            by default for projects in the organization
+          type: boolean
     SecurityIssueSettings:
       properties:
         defaultSecurityPolicyId:
@@ -26672,6 +27733,10 @@ components:
           description: Enable or disable snippet security issue scanning by default
             for projects in the organization
           type: boolean
+        projectDefaultVendoredSecurityIssueScanningEnabled:
+          description: Enable or disable security issue scanning for vendored dependencies
+            by default for projects in the organization
+          type: boolean
     QualityIssueSettings:
       properties:
         defaultQualityPolicyId:
@@ -26682,6 +27747,10 @@ components:
           type: boolean
         projectDefaultStatusCheckFilterQuality:
           type: integer
+        projectDefaultVendoredQualityIssueScanningEnabled:
+          description: Enable or disable quality issue scanning for vendored dependencies
+            by default for projects in the organization
+          type: boolean
     ContainerIssueSettings:
       properties:
         projectDefaultExcludeBaseLayerIssuesLicensing:
@@ -27819,6 +28888,35 @@ components:
           type: number
         percentile:
           type: number
+    getIssue_200_response_oneOf_allOf_customRiskScore:
+      description: |
+        Optional custom risk score for the vulnerability.
+        Not available for global scope queries.
+      example:
+        score: 4.145608029883936
+        reason: reason
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        updatedBy: updatedBy
+        createdBy: createdBy
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        score:
+          type: number
+        reason:
+          type: string
+          nullable: true
+        createdBy:
+          type: string
+        updatedBy:
+          type: string
+          nullable: true
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+          nullable: true
     getIssue_200_response_oneOf_allOf_source_1:
       allOf:
       - properties:
@@ -27920,6 +29018,8 @@ components:
             type: string
           epss:
             $ref: "#/components/schemas/getIssue_200_response_oneOf_allOf_epss"
+          customRiskScore:
+            $ref: "#/components/schemas/getIssue_200_response_oneOf_allOf_customRiskScore"
       - properties:
           source:
             $ref: "#/components/schemas/getIssue_200_response_oneOf_allOf_source_1"
@@ -27981,6 +29081,13 @@ components:
           completeFixDistance: MAJOR
           partialFix: partialFix
         cve: cve
+        customRiskScore:
+          score: 4.145608029883936
+          reason: reason
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          updatedBy: updatedBy
+          createdBy: createdBy
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         details: details
         id: 0
         affectedVersionRanges:
@@ -28126,52 +29233,116 @@ components:
     createIssueDispute_request:
       properties:
         reason:
-          description: The reason why this issue is being disputed.
+          description: "The reason why this issue is being disputed. License dispute\
+            \ reasons: INCORRECT_DEPENDENCY_VERSION_REPORTED, LICENSE_DETECTION_FALSE_POSITIVE,\
+            \ MULTI_OR_DUAL_LICENSED, INCORRECT_LICENSE_CONCLUSION. Quality dispute\
+            \ reasons: INCORRECT_STALENESS_REPORTED, INCORRECTLY_FLAGGED_ABANDONWARE,\
+            \ INCORRECTLY_FLAGGED_EMPTY."
           enum:
           - INCORRECT_DEPENDENCY_VERSION_REPORTED
           - LICENSE_DETECTION_FALSE_POSITIVE
           - MULTI_OR_DUAL_LICENSED
+          - INCORRECT_LICENSE_CONCLUSION
+          - INCORRECT_STALENESS_REPORTED
+          - INCORRECTLY_FLAGGED_ABANDONWARE
+          - INCORRECTLY_FLAGGED_EMPTY
           type: string
         comment:
           description: Any additional information that is important for this dispute.
           type: string
-    createIssueDispute_200_response:
+      required:
+      - reason
+    LicenseDisputeResponse:
       example:
-        createdAt: 2000-01-23
+        createdAt: 2000-01-23T04:56:07.000+00:00
         reason: INCORRECT_DEPENDENCY_VERSION_REPORTED
-        resolvedAt: 2000-01-23
-        createdBy: 6.027456183070403
-        disputedIssueId: 1.4658129805029452
-        resolvedBy: 5.962133916683182
+        resolvedAt: 2000-01-23T04:56:07.000+00:00
+        createdBy: 6
+        disputedIssueId: 1
+        resolvedBy: 5
         comment: comment
-        id: 0.8008281904610115
+        id: 0
         licenseId: licenseId
       properties:
         id:
-          type: number
+          type: integer
         createdBy:
-          type: number
+          type: integer
         createdAt:
-          format: date
+          format: date-time
           type: string
         licenseId:
           type: string
         disputedIssueId:
-          type: number
+          type: integer
         reason:
-          description: The reason why this issue is being disputed.
           enum:
           - INCORRECT_DEPENDENCY_VERSION_REPORTED
           - LICENSE_DETECTION_FALSE_POSITIVE
           - MULTI_OR_DUAL_LICENSED
+          - INCORRECT_LICENSE_CONCLUSION
           type: string
         comment:
           type: string
         resolvedAt:
-          format: date
+          format: date-time
           type: string
+          nullable: true
         resolvedBy:
-          type: number
+          type: integer
+          nullable: true
+      required:
+      - comment
+      - createdAt
+      - createdBy
+      - disputedIssueId
+      - id
+      - licenseId
+      - reason
+      - resolvedAt
+      - resolvedBy
+      title: LicenseDisputeResponse
+    QualityDisputeResponse:
+      properties:
+        id:
+          type: integer
+        createdBy:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        disputedIssueId:
+          type: integer
+        reason:
+          enum:
+          - INCORRECT_STALENESS_REPORTED
+          - INCORRECTLY_FLAGGED_ABANDONWARE
+          - INCORRECTLY_FLAGGED_EMPTY
+          type: string
+        comment:
+          type: string
+          nullable: true
+        resolvedAt:
+          format: date-time
+          type: string
+          nullable: true
+        resolvedBy:
+          type: integer
+          nullable: true
+      required:
+      - comment
+      - createdAt
+      - createdBy
+      - disputedIssueId
+      - id
+      - reason
+      - resolvedAt
+      - resolvedBy
+      title: QualityDisputeResponse
+    createIssueDispute_200_response:
+      oneOf:
+      - $ref: "#/components/schemas/LicenseDisputeResponse"
+      - $ref: "#/components/schemas/QualityDisputeResponse"
     getIssueAffectedProjects_200_response_inner:
       example:
         revisionId: revisionId
@@ -28275,6 +29446,13 @@ components:
           completeFixDistance: MAJOR
           partialFix: partialFix
         cve: cve
+        customRiskScore:
+          score: 4.145608029883936
+          reason: reason
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          updatedBy: updatedBy
+          createdBy: createdBy
+          updatedAt: 2000-01-23T04:56:07.000+00:00
         details: details
         id: 0
         affectedVersionRanges:
@@ -28381,6 +29559,8 @@ components:
           type: string
         epss:
           $ref: "#/components/schemas/getIssue_200_response_oneOf_allOf_epss"
+        customRiskScore:
+          $ref: "#/components/schemas/getIssue_200_response_oneOf_allOf_customRiskScore"
     getIssues_200_response_issues_oneOf_inner_1:
       properties:
         id:
@@ -28497,6 +29677,13 @@ components:
             completeFixDistance: MAJOR
             partialFix: partialFix
           cve: cve
+          customRiskScore:
+            score: 4.145608029883936
+            reason: reason
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            updatedBy: updatedBy
+            createdBy: createdBy
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           details: details
           id: 0
           affectedVersionRanges:
@@ -28584,6 +29771,13 @@ components:
             completeFixDistance: MAJOR
             partialFix: partialFix
           cve: cve
+          customRiskScore:
+            score: 4.145608029883936
+            reason: reason
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            updatedBy: updatedBy
+            createdBy: createdBy
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           details: details
           id: 0
           affectedVersionRanges:
@@ -28678,6 +29872,13 @@ components:
             completeFixDistance: MAJOR
             partialFix: partialFix
           cve: cve
+          customRiskScore:
+            score: 4.145608029883936
+            reason: reason
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            updatedBy: updatedBy
+            createdBy: createdBy
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           details: details
           id: 0
           affectedVersionRanges:
@@ -28765,6 +29966,13 @@ components:
             completeFixDistance: MAJOR
             partialFix: partialFix
           cve: cve
+          customRiskScore:
+            score: 4.145608029883936
+            reason: reason
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            updatedBy: updatedBy
+            createdBy: createdBy
+            updatedAt: 2000-01-23T04:56:07.000+00:00
           details: details
           id: 0
           affectedVersionRanges:
@@ -29490,11 +30698,6 @@ components:
           - Inline_mitigations_already_exist
           - incorrect_data_found
           - other
-          type: string
-        reachability:
-          enum:
-          - reachable
-          - unknown
           type: string
         cwes:
           items:
@@ -30333,6 +31536,33 @@ components:
             project
           example: false
           type: boolean
+        vendoredLicensingIssueScanningEnabled:
+          description: Enable or disable licensing issue scanning for vendored dependencies
+            in this project
+          example: false
+          type: boolean
+        vendoredSecurityIssueScanningEnabled:
+          description: Enable or disable security issue scanning for vendored dependencies
+            in this project
+          example: false
+          type: boolean
+        vendoredQualityIssueScanningEnabled:
+          description: Enable or disable quality issue scanning for vendored dependencies
+            in this project
+          example: false
+          type: boolean
+        quickImportVendoredDetectionEnabled:
+          description: |
+            Enable or disable vendored dependency detection during quick imports for this project.
+            Can only be modified if the organization has quick import vendored detection and vendored dependency detection features enabled.
+          example: false
+          type: boolean
+        quickImportSnippetDetectionEnabled:
+          description: |
+            Enable or disable snippet detection during quick imports for this project.
+            Can only be modified if the organization has quick import snippet detection and snippet detection features enabled.
+          example: false
+          type: boolean
         licensingStatusCheckEnabled:
           description: Enable or disable licensing issue CI/CD status checks
           example: true
@@ -30451,7 +31681,7 @@ components:
             Columns to display in the Bill of Materials (BOM) report.
             Available options: All, Name, Version, Type, License, DirectLicense, DirectLicenseOrigin,
             DeepLicense, DeepLicenseOrigin, Description, Homepage, PrimaryLanguage, SourceLocation,
-            ReleasePublishDate, OriginId, Tags, ComponentComment, Reachability
+            ReleasePublishDate, OriginId, Tags, ComponentComment
           example:
           - Name
           - Version
@@ -30476,7 +31706,6 @@ components:
             - OriginId
             - Tags
             - ComponentComment
-            - Reachability
             type: string
           type: array
           nullable: true
@@ -31423,6 +32652,112 @@ components:
           example: eng-team-updated
           type: string
           nullable: true
+    getAllTeamsV2_200_response_results_inner:
+      example:
+        organizationId: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        teamReleaseGroupsCount: 5
+        teamProjectsCount: 2
+        name: name
+        autoAddUsers: true
+        id: 0
+        teamType: team
+        defaultRoleId: 1
+        uniqueIdentifier: uniqueIdentifier
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+        teamMembersCount: 5
+      properties:
+        id:
+          description: The team's unique identifier
+          type: integer
+        organizationId:
+          description: The organization's unique identifier
+          type: integer
+        name:
+          description: The team's name
+          type: string
+        defaultRoleId:
+          description: The default role's unique identifier
+          type: integer
+        autoAddUsers:
+          description: Whether the team auto-adds users
+          type: boolean
+        uniqueIdentifier:
+          description: The team's unique identifier
+          type: string
+        createdAt:
+          description: The team's creation date
+          format: date-time
+          type: string
+        updatedAt:
+          description: The team's last update date
+          format: date-time
+          type: string
+        teamType:
+          description: Whether it's a normal team or a Team Group.
+          enum:
+          - team
+          - team_group
+          type: string
+        teamMembersCount:
+          description: The number of users associated with the team
+          type: integer
+        teamReleaseGroupsCount:
+          description: The number of release groups associated with the team
+          type: integer
+        teamProjectsCount:
+          description: The number of projects associated with the team
+          type: integer
+    getAllTeamsV2_200_response:
+      example:
+        pageSize: 7
+        page: 9
+        totalCount: 3
+        results:
+        - organizationId: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          teamReleaseGroupsCount: 5
+          teamProjectsCount: 2
+          name: name
+          autoAddUsers: true
+          id: 0
+          teamType: team
+          defaultRoleId: 1
+          uniqueIdentifier: uniqueIdentifier
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          teamMembersCount: 5
+        - organizationId: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          teamReleaseGroupsCount: 5
+          teamProjectsCount: 2
+          name: name
+          autoAddUsers: true
+          id: 0
+          teamType: team
+          defaultRoleId: 1
+          uniqueIdentifier: uniqueIdentifier
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          teamMembersCount: 5
+      properties:
+        results:
+          description: Array of teams
+          items:
+            $ref: "#/components/schemas/getAllTeamsV2_200_response_results_inner"
+          type: array
+        pageSize:
+          description: Number of items per page
+          type: integer
+        page:
+          description: Current page number (1-indexed)
+          type: integer
+        totalCount:
+          description: Total number of teams
+          type: integer
+      required:
+      - page
+      - pageSize
+      - results
+      - totalCount
     getTeamByIdV2_200_response:
       example:
         teamOIDCProvidersCount: 7
@@ -34768,6 +36103,112 @@ components:
       properties:
         error:
           type: string
+    getRevisionScans_200_response_results_inner:
+      example:
+        revisionId: revisionId
+        organizationId: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        licensingPolicyVersionId: 5
+        securityPolicyVersionId: 5
+        scanned_at: 2000-01-23T04:56:07.000+00:00
+        id: 0
+        scanType: project
+        releaseScanId: 1
+        qualityPolicyVersionId: 2
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Unique identifier for the scan
+          type: integer
+        scanned_at:
+          description: Timestamp when the scan was performed
+          format: date-time
+          type: string
+        scanType:
+          description: The scan type. This endpoint only returns project scans.
+          enum:
+          - project
+          type: string
+        revisionId:
+          description: The locator of the revision the scan belongs to
+          type: string
+          nullable: true
+        organizationId:
+          description: The organization that owns the scan
+          type: integer
+          nullable: true
+        releaseScanId:
+          description: "Associated release scan identifier, if any"
+          type: integer
+          nullable: true
+        licensingPolicyVersionId:
+          description: The licensing policy version used during this scan
+          type: integer
+          nullable: true
+        securityPolicyVersionId:
+          description: The security policy version used during this scan
+          type: integer
+          nullable: true
+        qualityPolicyVersionId:
+          description: The quality policy version used during this scan
+          type: integer
+          nullable: true
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+    getRevisionScans_200_response:
+      example:
+        pageSize: 10
+        page: 1
+        totalCount: 42
+        results:
+        - revisionId: revisionId
+          organizationId: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          licensingPolicyVersionId: 5
+          securityPolicyVersionId: 5
+          scanned_at: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          scanType: project
+          releaseScanId: 1
+          qualityPolicyVersionId: 2
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - revisionId: revisionId
+          organizationId: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          licensingPolicyVersionId: 5
+          securityPolicyVersionId: 5
+          scanned_at: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          scanType: project
+          releaseScanId: 1
+          qualityPolicyVersionId: 2
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        results:
+          items:
+            $ref: "#/components/schemas/getRevisionScans_200_response_results_inner"
+          type: array
+        page:
+          description: The current page number
+          example: 1
+          type: integer
+        pageSize:
+          description: The number of items requested per page
+          example: 10
+          type: integer
+        totalCount:
+          description: The total number of scans matching the query across all pages
+          example: 42
+          type: integer
+      required:
+      - page
+      - pageSize
+      - results
+      - totalCount
     getBuilds_200_response_inner_revision:
       description: The revision for the build
       example:
@@ -35304,6 +36745,379 @@ components:
       required:
       - id
       - username
+    getAllUsersV2_200_response_results_inner_userRole:
+      example:
+        role:
+          organizationId: 5
+          scope: scope
+          isCustom: true
+          name: name
+          id: 5
+        roleId: 1
+      properties:
+        roleId:
+          description: The user's Organization role ID
+          type: integer
+        role:
+          $ref: "#/components/schemas/getAllUsers_200_response_inner_userRole_role"
+      nullable: true
+    getAllUsersV2_200_response_results_inner_tokens_inner_meta:
+      example:
+        defaultSecurityPolicyId: 2
+        defaultQualityPolicyId: 7
+        pushOnly: true
+        defaultPolicyId: 5
+      properties:
+        pushOnly:
+          description: Whether the token is push only
+          type: boolean
+        defaultPolicyId:
+          description: The token's default licensing policy ID
+          type: integer
+        defaultSecurityPolicyId:
+          description: The token's default security policy ID
+          type: integer
+        defaultQualityPolicyId:
+          description: The token's default quality policy ID
+          type: integer
+      nullable: true
+    getAllUsersV2_200_response_results_inner_tokens_inner:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        meta:
+          defaultSecurityPolicyId: 2
+          defaultQualityPolicyId: 7
+          pushOnly: true
+          defaultPolicyId: 5
+        name: name
+        id: 5
+        isDisabled: true
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: The token's unique identifier
+          type: integer
+        name:
+          description: The token's name
+          type: string
+        isDisabled:
+          type: boolean
+        updatedAt:
+          description: The date the token was last updated
+          format: date-time
+          type: string
+        createdAt:
+          description: The date the token was created
+          format: date-time
+          type: string
+        meta:
+          $ref: "#/components/schemas/getAllUsersV2_200_response_results_inner_tokens_inner_meta"
+    getAllUsersV2_200_response_results_inner:
+      example:
+        role: role
+        demo: true
+        enabled: true
+        organizationId: 6
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        last_visit: 2000-01-23T04:56:07.000+00:00
+        tokens:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          meta:
+            defaultSecurityPolicyId: 2
+            defaultQualityPolicyId: 7
+            pushOnly: true
+            defaultPolicyId: 5
+          name: name
+          id: 5
+          isDisabled: true
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          meta:
+            defaultSecurityPolicyId: 2
+            defaultQualityPolicyId: 7
+            pushOnly: true
+            defaultPolicyId: 5
+          name: name
+          id: 5
+          isDisabled: true
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        id: 0
+        email: email
+        updatedAt: 2000-01-23T04:56:07.000+00:00
+        github:
+          avatar_url: avatar_url
+          name: name
+          email: email
+        email_verified: true
+        joined: 2000-01-23T04:56:07.000+00:00
+        install_admin: true
+        super: true
+        sso_only: true
+        full_name: full_name
+        phone: phone
+        organization:
+          access_level: access_level
+          id: 3
+          title: title
+        teamsCount: 9
+        has_set_password: true
+        userRole:
+          role:
+            organizationId: 5
+            scope: scope
+            isCustom: true
+            name: name
+            id: 5
+          roleId: 1
+        bitbucketCloud:
+          avatar_url: avatar_url
+          name: name
+          email: email
+        username: username
+        terms_agreed: 2000-01-23T04:56:07.000+00:00
+        isServiceAccount: true
+      properties:
+        id:
+          description: The user's unique identifier
+          type: integer
+        username:
+          description: The user's username
+          nullable: true
+          type: string
+        email:
+          description: The user's email address
+          nullable: true
+          type: string
+        email_verified:
+          description: Whether the user's email address has been verified
+          nullable: true
+          type: boolean
+        demo:
+          description: Whether the user is a demo user
+          type: boolean
+        super:
+          description: Whether the user is a super user
+          type: boolean
+        joined:
+          description: The date the user joined the organization
+          format: date-time
+          nullable: true
+          type: string
+        last_visit:
+          description: The date the user last visited the organization
+          format: date-time
+          nullable: true
+          type: string
+        terms_agreed:
+          description: The date the user agreed to the organization's terms
+          format: date-time
+          nullable: true
+          type: string
+        full_name:
+          description: The user's full name
+          nullable: true
+          type: string
+        phone:
+          description: The user's phone number
+          nullable: true
+          type: string
+        role:
+          description: The user's role in the organization
+          nullable: true
+          type: string
+        organizationId:
+          description: The organization the user belongs to
+          type: integer
+        sso_only:
+          description: Whether the user is SSO only
+          type: boolean
+        enabled:
+          description: Whether the user is enabled
+          type: boolean
+        has_set_password:
+          description: Whether the user has set a password
+          nullable: true
+          type: boolean
+        install_admin:
+          description: Whether the user is an install admin
+          nullable: true
+          type: boolean
+        isServiceAccount:
+          description: Whether the user is a service account
+          type: boolean
+        createdAt:
+          description: The date the user was created
+          format: date-time
+          type: string
+        updatedAt:
+          description: The date the user was last updated
+          format: date-time
+          type: string
+        userRole:
+          $ref: "#/components/schemas/getAllUsersV2_200_response_results_inner_userRole"
+        tokens:
+          items:
+            $ref: "#/components/schemas/getAllUsersV2_200_response_results_inner_tokens_inner"
+          type: array
+        teamsCount:
+          description: Number of teams the user belongs to
+          type: integer
+        organization:
+          $ref: "#/components/schemas/getAllUsers_200_response_inner_organization"
+        github:
+          $ref: "#/components/schemas/getAllUsers_200_response_inner_github"
+        bitbucketCloud:
+          $ref: "#/components/schemas/getAllUsers_200_response_inner_bitbucketCloud"
+    getAllUsersV2_200_response:
+      example:
+        pageSize: 3
+        page: 2
+        totalCount: 4
+        results:
+        - role: role
+          demo: true
+          enabled: true
+          organizationId: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          last_visit: 2000-01-23T04:56:07.000+00:00
+          tokens:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            meta:
+              defaultSecurityPolicyId: 2
+              defaultQualityPolicyId: 7
+              pushOnly: true
+              defaultPolicyId: 5
+            name: name
+            id: 5
+            isDisabled: true
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            meta:
+              defaultSecurityPolicyId: 2
+              defaultQualityPolicyId: 7
+              pushOnly: true
+              defaultPolicyId: 5
+            name: name
+            id: 5
+            isDisabled: true
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          email: email
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          github:
+            avatar_url: avatar_url
+            name: name
+            email: email
+          email_verified: true
+          joined: 2000-01-23T04:56:07.000+00:00
+          install_admin: true
+          super: true
+          sso_only: true
+          full_name: full_name
+          phone: phone
+          organization:
+            access_level: access_level
+            id: 3
+            title: title
+          teamsCount: 9
+          has_set_password: true
+          userRole:
+            role:
+              organizationId: 5
+              scope: scope
+              isCustom: true
+              name: name
+              id: 5
+            roleId: 1
+          bitbucketCloud:
+            avatar_url: avatar_url
+            name: name
+            email: email
+          username: username
+          terms_agreed: 2000-01-23T04:56:07.000+00:00
+          isServiceAccount: true
+        - role: role
+          demo: true
+          enabled: true
+          organizationId: 6
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          last_visit: 2000-01-23T04:56:07.000+00:00
+          tokens:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            meta:
+              defaultSecurityPolicyId: 2
+              defaultQualityPolicyId: 7
+              pushOnly: true
+              defaultPolicyId: 5
+            name: name
+            id: 5
+            isDisabled: true
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            meta:
+              defaultSecurityPolicyId: 2
+              defaultQualityPolicyId: 7
+              pushOnly: true
+              defaultPolicyId: 5
+            name: name
+            id: 5
+            isDisabled: true
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          id: 0
+          email: email
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+          github:
+            avatar_url: avatar_url
+            name: name
+            email: email
+          email_verified: true
+          joined: 2000-01-23T04:56:07.000+00:00
+          install_admin: true
+          super: true
+          sso_only: true
+          full_name: full_name
+          phone: phone
+          organization:
+            access_level: access_level
+            id: 3
+            title: title
+          teamsCount: 9
+          has_set_password: true
+          userRole:
+            role:
+              organizationId: 5
+              scope: scope
+              isCustom: true
+              name: name
+              id: 5
+            roleId: 1
+          bitbucketCloud:
+            avatar_url: avatar_url
+            name: name
+            email: email
+          username: username
+          terms_agreed: 2000-01-23T04:56:07.000+00:00
+          isServiceAccount: true
+      properties:
+        results:
+          description: Array of users
+          items:
+            $ref: "#/components/schemas/getAllUsersV2_200_response_results_inner"
+          type: array
+        pageSize:
+          description: Number of items per page
+          type: integer
+        page:
+          description: Current page number (1-indexed)
+          type: integer
+        totalCount:
+          description: Total number of users
+          type: integer
+      required:
+      - page
+      - pageSize
+      - results
+      - totalCount
     getProjectDependencies_200_response_dependencies_inner_concludedLicenses_scoped:
       example:
         licenses:
@@ -35492,6 +37306,7 @@ components:
         - vendoredPaths
         - vendoredPaths
         locator: locator
+        isSnippetConversion: true
         status:
           analyzing: true
           unsupported: true
@@ -35507,6 +37322,8 @@ components:
         isIgnored:
           type: boolean
         isUnknown:
+          type: boolean
+        isSnippetConversion:
           type: boolean
         concludedLicenses:
           $ref: "#/components/schemas/getProjectDependencies_200_response_dependencies_inner_concludedLicenses"
@@ -35627,6 +37444,7 @@ components:
           - vendoredPaths
           - vendoredPaths
           locator: locator
+          isSnippetConversion: true
           status:
             analyzing: true
             unsupported: true
@@ -35709,6 +37527,7 @@ components:
           - vendoredPaths
           - vendoredPaths
           locator: locator
+          isSnippetConversion: true
           status:
             analyzing: true
             unsupported: true
@@ -35801,6 +37620,7 @@ components:
           - vendoredPaths
           - vendoredPaths
           locator: locator
+          isSnippetConversion: true
           status:
             analyzing: true
             unsupported: true
@@ -36099,6 +37919,24 @@ components:
           - private
           type: string
           nullable: true
+    getOrganizationProjectScanMethodsSettings_200_response:
+      example:
+        projectDefaultQuickImportSnippetDetectionEnabled: true
+        projectDefaultQuickImportVendoredDetectionEnabled: true
+      properties:
+        projectDefaultQuickImportVendoredDetectionEnabled:
+          type: boolean
+        projectDefaultQuickImportSnippetDetectionEnabled:
+          type: boolean
+    updateOrganizationProjectScanMethodsSettings_request:
+      properties:
+        projectDefaultQuickImportVendoredDetectionEnabled:
+          type: boolean
+        projectDefaultQuickImportSnippetDetectionEnabled:
+          type: boolean
+      required:
+      - projectDefaultQuickImportSnippetDetectionEnabled
+      - projectDefaultQuickImportVendoredDetectionEnabled
     getOrganizationGithubStatusCheckSettings_200_response:
       example:
         projectDefaultProvidedIntegrationhookTimeout: 6.027456183070403
@@ -36118,6 +37956,7 @@ components:
       example:
         projectDefaultSnippetLicensingIssueScanningEnabled: true
         projectDefaultLicensingIssueScanningEnabled: true
+        projectDefaultVendoredLicensingIssueScanningEnabled: true
         projectDefaultLicensingStatusCheckEnabled: true
         projectDefaultStatusCheckFilterLicensing: 6
         defaultPolicyId: 0
@@ -36134,11 +37973,16 @@ components:
           description: Enable or disable snippet licensing issue scanning by default
             for projects in the organization
           type: boolean
+        projectDefaultVendoredLicensingIssueScanningEnabled:
+          description: Enable or disable licensing issue scanning for vendored dependencies
+            by default for projects in the organization
+          type: boolean
     getOrganizationSecurityIssueSettings_200_response:
       example:
         projectDefaultSnippetSecurityIssueScanningEnabled: true
         projectDefaultSecurityIssueScanningEnabled: true
         defaultSecurityPolicyId: 0
+        projectDefaultVendoredSecurityIssueScanningEnabled: true
         projectDefaultSecurityStatusCheckEnabled: true
         projectDefaultStatusCheckFilterVulnerability: 6
       properties:
@@ -36154,10 +37998,15 @@ components:
           description: Enable or disable snippet security issue scanning by default
             for projects in the organization
           type: boolean
+        projectDefaultVendoredSecurityIssueScanningEnabled:
+          description: Enable or disable security issue scanning for vendored dependencies
+            by default for projects in the organization
+          type: boolean
     getOrganizationQualityIssueSettings_200_response:
       example:
         projectDefaultQualityIssueScanningEnabled: true
         projectDefaultStatusCheckFilterQuality: 6
+        projectDefaultVendoredQualityIssueScanningEnabled: true
         defaultQualityPolicyId: 0
         projectDefaultQualityStatusCheckEnabled: true
       properties:
@@ -36169,6 +38018,10 @@ components:
           type: boolean
         projectDefaultStatusCheckFilterQuality:
           type: integer
+        projectDefaultVendoredQualityIssueScanningEnabled:
+          description: Enable or disable quality issue scanning for vendored dependencies
+            by default for projects in the organization
+          type: boolean
     getOrganizationContainerIssueSettings_200_response:
       example:
         projectDefaultExcludeBaseLayerIssuesQuality: true
@@ -38635,7 +40488,6 @@ components:
         licenseFileMatches: true
         packageLabels: true
         noticeFiles: true
-        name: true
         filePaths: true
         authors: true
         homepage: true
@@ -38643,9 +40495,6 @@ components:
         projects:
           description: "For release group reports, show which projects the dependency\
             \ is present in"
-          type: boolean
-        name:
-          description: The name of the dependency
           type: boolean
         authors:
           description: The authors of the dependency
@@ -38741,7 +40590,6 @@ components:
           licenseFileMatches: true
           packageLabels: true
           noticeFiles: true
-          name: true
           filePaths: true
           authors: true
           homepage: true
@@ -38796,7 +40644,6 @@ components:
             licenseFileMatches: true
             packageLabels: true
             noticeFiles: true
-            name: true
             filePaths: true
             authors: true
             homepage: true
@@ -38848,9 +40695,6 @@ components:
       - updatedAt
     getAllReportOptions_200_response:
       example:
-        total: 100
-        pageSize: 50
-        page: 1
         results:
         - organizationId: 100
           createdAt: 2024-01-15T10:30:00.000Z
@@ -38874,7 +40718,6 @@ components:
               licenseFileMatches: true
               packageLabels: true
               noticeFiles: true
-              name: true
               filePaths: true
               authors: true
               homepage: true
@@ -38914,7 +40757,6 @@ components:
               licenseFileMatches: true
               packageLabels: true
               noticeFiles: true
-              name: true
               filePaths: true
               authors: true
               homepage: true
@@ -38937,23 +40779,156 @@ components:
           items:
             $ref: "#/components/schemas/getAllReportOptions_200_response_results_inner"
           type: array
-        page:
-          description: Current page number
-          example: 1
-          type: integer
-        pageSize:
-          description: Number of items per page
-          example: 50
-          type: integer
-        total:
-          description: Total number of report options
-          example: 100
-          type: integer
       required:
-      - page
-      - pageSize
       - results
-      - total
+    createReportOption_request_options_dependencyData:
+      description: Controls which dependency data fields are included
+      example:
+        declaredLicenses: true
+        licenseUrl: true
+        projects: true
+        issueResolutionNotes: true
+        copyrights: true
+        downloadUrl: true
+        description: true
+        fullLicenseText: true
+        packageManager: true
+        dependencyPaths: true
+        discoveredLicenses: true
+        concludedLicenses: true
+        licenseFileMatches: true
+        packageLabels: true
+        noticeFiles: true
+        filePaths: true
+        authors: true
+        homepage: true
+      properties:
+        projects:
+          description: "For release group reports, show which projects the dependency\
+            \ is present in"
+          type: boolean
+        authors:
+          description: The authors of the dependency
+          type: boolean
+        description:
+          description: The description of the dependency
+          type: boolean
+        homepage:
+          description: The homepage of the dependency
+          type: boolean
+        packageManager:
+          description: The package manager of the dependency
+          type: boolean
+        downloadUrl:
+          description: The download URL of the dependency
+          type: boolean
+        concludedLicenses:
+          description: The concluded licenses of the dependency
+          type: boolean
+        declaredLicenses:
+          description: The declared licenses of the dependency
+          type: boolean
+        discoveredLicenses:
+          description: The discovered licenses of the dependency
+          type: boolean
+        copyrights:
+          description: The copyrights of the dependency
+          type: boolean
+        licenseUrl:
+          description: The license URL of the dependency
+          type: boolean
+        licenseFileMatches:
+          description: The list of files that the license was discovered in
+          type: boolean
+        issueResolutionNotes:
+          description: Issue resolution notes
+          type: boolean
+        packageLabels:
+          description: Package labels
+          type: boolean
+        dependencyPaths:
+          description: The origin paths of the dependency (what files the dependency
+            was defined/found in)
+          type: boolean
+        filePaths:
+          description: The paths_to of the dependency (the chain of dependencies that
+            brought it into the project)
+          type: boolean
+        noticeFiles:
+          description: Notice files
+          type: boolean
+        fullLicenseText:
+          description: Full license text
+          type: boolean
+      required:
+      - authors
+      - concludedLicenses
+      - copyrights
+      - declaredLicenses
+      - dependencyPaths
+      - description
+      - discoveredLicenses
+      - downloadUrl
+      - filePaths
+      - fullLicenseText
+      - homepage
+      - issueResolutionNotes
+      - licenseFileMatches
+      - licenseUrl
+      - noticeFiles
+      - packageLabels
+      - packageManager
+      - projects
+    createReportOption_request_options:
+      description: Configuration options for customizing report generation
+      example:
+        toggles:
+          useHashAndVersionData: true
+        dependencyData:
+          declaredLicenses: true
+          licenseUrl: true
+          projects: true
+          issueResolutionNotes: true
+          copyrights: true
+          downloadUrl: true
+          description: true
+          fullLicenseText: true
+          packageManager: true
+          dependencyPaths: true
+          discoveredLicenses: true
+          concludedLicenses: true
+          licenseFileMatches: true
+          packageLabels: true
+          noticeFiles: true
+          filePaths: true
+          authors: true
+          homepage: true
+        excludeFields:
+          packageLabels:
+          - 0
+          - 0
+        sections:
+          snippetDependencies: true
+          deepDependencies: true
+          projectDeclaredLicenses: true
+          directDependencies: true
+          licenseList: true
+          copyrightList: true
+          firstPartyLicenses: true
+      properties:
+        sections:
+          $ref: "#/components/schemas/getAllReportOptions_200_response_results_inner_options_sections"
+        toggles:
+          $ref: "#/components/schemas/getAllReportOptions_200_response_results_inner_options_toggles"
+        excludeFields:
+          $ref: "#/components/schemas/getAllReportOptions_200_response_results_inner_options_excludeFields"
+        dependencyData:
+          $ref: "#/components/schemas/createReportOption_request_options_dependencyData"
+      required:
+      - dependencyData
+      - excludeFields
+      - sections
+      - toggles
     createReportOption_request:
       description: Request body for creating a new report option
       properties:
@@ -38965,10 +40940,84 @@ components:
           minLength: 1
           type: string
         options:
-          $ref: "#/components/schemas/getAllReportOptions_200_response_results_inner_options"
+          $ref: "#/components/schemas/createReportOption_request_options"
       required:
       - name
       - options
+    createReportOption_201_response:
+      description: A saved report configuration template
+      example:
+        organizationId: 100
+        createdAt: 2024-01-15T10:30:00.000Z
+        name: My Custom Report
+        options:
+          toggles:
+            useHashAndVersionData: true
+          dependencyData:
+            declaredLicenses: true
+            licenseUrl: true
+            projects: true
+            issueResolutionNotes: true
+            copyrights: true
+            downloadUrl: true
+            description: true
+            fullLicenseText: true
+            packageManager: true
+            dependencyPaths: true
+            discoveredLicenses: true
+            concludedLicenses: true
+            licenseFileMatches: true
+            packageLabels: true
+            noticeFiles: true
+            filePaths: true
+            authors: true
+            homepage: true
+          excludeFields:
+            packageLabels:
+            - 0
+            - 0
+          sections:
+            snippetDependencies: true
+            deepDependencies: true
+            projectDeclaredLicenses: true
+            directDependencies: true
+            licenseList: true
+            copyrightList: true
+            firstPartyLicenses: true
+        id: 1
+        updatedAt: 2024-01-15T10:30:00.000Z
+      properties:
+        id:
+          description: Unique identifier for the report option
+          example: 1
+          type: integer
+        name:
+          description: Name of the saved report option
+          example: My Custom Report
+          type: string
+        organizationId:
+          description: ID of the organization that owns this report option
+          example: 100
+          type: integer
+        options:
+          $ref: "#/components/schemas/createReportOption_request_options"
+        createdAt:
+          description: Timestamp when the report option was created
+          example: 2024-01-15T10:30:00.000Z
+          format: date-time
+          type: string
+        updatedAt:
+          description: Timestamp when the report option was last updated
+          example: 2024-01-15T10:30:00.000Z
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - name
+      - options
+      - organizationId
+      - updatedAt
     updateReportOptionById_request_options_sections:
       description: Controls which sections are included in the report
       properties:
@@ -39003,8 +41052,6 @@ components:
       description: Controls which dependency data fields are included
       properties:
         projects:
-          type: boolean
-        name:
           type: boolean
         authors:
           type: boolean
@@ -39294,6 +41341,46 @@ components:
           type: string
         disableInvite:
           type: boolean
+    deleteOrganizationLogo_200_response:
+      example:
+        success: true
+      properties:
+        success:
+          description: Indicates the logo was successfully deleted.
+          type: boolean
+      required:
+      - success
+    updateOrganizationSBOMReportDefaults_request:
+      additionalProperties: {}
+      properties:
+        sbomReportAuthorName:
+          type: string
+          nullable: true
+        sbomReportAuthorEmail:
+          type: string
+          nullable: true
+        sbomReportSupplier:
+          type: string
+          nullable: true
+    updateOrganizationSBOMReportDefaults_200_response:
+      example:
+        sbomReportAuthorName: sbomReportAuthorName
+        sbomReportAuthorEmail: sbomReportAuthorEmail
+        sbomReportSupplier: sbomReportSupplier
+      properties:
+        sbomReportAuthorName:
+          type: string
+          nullable: true
+        sbomReportAuthorEmail:
+          type: string
+          nullable: true
+        sbomReportSupplier:
+          type: string
+          nullable: true
+      required:
+      - sbomReportAuthorEmail
+      - sbomReportAuthorName
+      - sbomReportSupplier
     updateOrganizationSamlSettings_request:
       properties:
         entryPoint:
