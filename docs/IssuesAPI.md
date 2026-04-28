@@ -52,7 +52,7 @@ import (
 
 func main() {
 	issueId := int32(56) // int32 | ID of the issue that is being disputed.
-	createIssueDisputeRequest := *openapiclient.NewCreateIssueDisputeRequest() // CreateIssueDisputeRequest | 
+	createIssueDisputeRequest := *openapiclient.NewCreateIssueDisputeRequest("Reason_example") // CreateIssueDisputeRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -1171,7 +1171,7 @@ Name | Type | Description  | Notes
 
 ## GetIssues
 
-> GetIssues200Response GetIssues(ctx).Category(category).ScopeType(scopeType).Csv(csv).IncludeDirectDependencyOriginPaths(includeDirectDependencyOriginPaths).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterCwes(filterCwes).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundBefore(filterFoundBefore).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterEpss(filterEpss).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).Sort(sort).Page(page).Count(count).Execute()
+> GetIssues200Response GetIssues(ctx).Category(category).ScopeType(scopeType).Csv(csv).IncludeDirectDependencyOriginPaths(includeDirectDependencyOriginPaths).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterCwes(filterCwes).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterSeveritySource(filterSeveritySource).FilterFoundBefore(filterFoundBefore).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterEpss(filterEpss).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).FilterCvssAttackVector(filterCvssAttackVector).FilterCvssAttackComplexity(filterCvssAttackComplexity).FilterCvssPrivilegesRequired(filterCvssPrivilegesRequired).Sort(sort).Page(page).Count(count).Execute()
 
 
 
@@ -1215,6 +1215,7 @@ func main() {
 	filterProjectLabels := []string{"Inner_example"} // []string | Filter by specific project labels (optional)
 	filterIdentification := []string{"FilterIdentification_example"} // []string | Filter by license identification (when category is \"licensing\") (optional)
 	filterSeverity := []string{"FilterSeverity_example"} // []string | Filter by vuln severity (when category is \"vulnerability\") (optional)
+	filterSeveritySource := []string{"FilterSeveritySource_example"} // []string | Filter by severity source (when category is \"vulnerability\"). Use 'standard' to filter by CVSS score, 'custom' to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to 'standard' when not provided. Custom risk score filtering is not available for global scope.  (optional)
 	filterFoundBefore := time.Now() // time.Time | Include only issues found on before a given ISO timestamp.  Only available to premium users (optional)
 	filterFoundAfter := time.Now() // time.Time | Include only issues found on after a given ISO timestamp.  Only available to premium users (optional)
 	filterHasFix := []string{"FilterHasFix_example"} // []string | Filter by vuln fixability (when category is \"vulnerability\") (optional)
@@ -1224,13 +1225,16 @@ func main() {
 	filterEpss := *openapiclient.NewGetIssueDiffComparisonSummariesFilterEpssParameter() // GetIssueDiffComparisonSummariesFilterEpssParameter | Filter by epss 'score' or 'percentile'. All fields are required.  Only available to premium users. (optional)
 	filterConfidence := []string{"FilterConfidence_example"} // []string | Filter issues by their binary dependency confidence level(s) (optional)
 	filterIssueSource := openapiclient.getIssueStatuses_filter_issueSource____parameter{ArrayOfString: new([]string)} // GetIssueStatusesFilterIssueSourceParameter | Filter by issue source. Use 'dependency' and 'snippet' to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use 'managed-dependency' and 'vendored-dependency' to filter dependency issues by whether the dependency is managed or vendored.  (optional)
+	filterCvssAttackVector := []string{"FilterCvssAttackVector_example"} // []string | Filter by CVSS attack vector (when category is \"vulnerability\") (optional)
+	filterCvssAttackComplexity := []string{"FilterCvssAttackComplexity_example"} // []string | Filter by CVSS attack complexity (when category is \"vulnerability\"). For CVSS v4, this includes the Attack Requirements (AT) metric. (optional)
+	filterCvssPrivilegesRequired := []string{"FilterCvssPrivilegesRequired_example"} // []string | Filter by CVSS privileges required (when category is \"vulnerability\") (optional)
 	sort := "sort_example" // string | Sort by package name, when the issue was created, or severity (when category is \"vulnerability\")  (optional)
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
 	count := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 20)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IssuesAPI.GetIssues(context.Background()).Category(category).ScopeType(scopeType).Csv(csv).IncludeDirectDependencyOriginPaths(includeDirectDependencyOriginPaths).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterCwes(filterCwes).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundBefore(filterFoundBefore).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterEpss(filterEpss).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).Sort(sort).Page(page).Count(count).Execute()
+	resp, r, err := apiClient.IssuesAPI.GetIssues(context.Background()).Category(category).ScopeType(scopeType).Csv(csv).IncludeDirectDependencyOriginPaths(includeDirectDependencyOriginPaths).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterCwes(filterCwes).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterSeveritySource(filterSeveritySource).FilterFoundBefore(filterFoundBefore).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterEpss(filterEpss).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).FilterCvssAttackVector(filterCvssAttackVector).FilterCvssAttackComplexity(filterCvssAttackComplexity).FilterCvssPrivilegesRequired(filterCvssPrivilegesRequired).Sort(sort).Page(page).Count(count).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.GetIssues``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1275,6 +1279,7 @@ Name | Type | Description  | Notes
  **filterProjectLabels** | **[]string** | Filter by specific project labels | 
  **filterIdentification** | **[]string** | Filter by license identification (when category is \&quot;licensing\&quot;) | 
  **filterSeverity** | **[]string** | Filter by vuln severity (when category is \&quot;vulnerability\&quot;) | 
+ **filterSeveritySource** | **[]string** | Filter by severity source (when category is \&quot;vulnerability\&quot;). Use &#39;standard&#39; to filter by CVSS score, &#39;custom&#39; to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to &#39;standard&#39; when not provided. Custom risk score filtering is not available for global scope.  | 
  **filterFoundBefore** | **time.Time** | Include only issues found on before a given ISO timestamp.  Only available to premium users | 
  **filterFoundAfter** | **time.Time** | Include only issues found on after a given ISO timestamp.  Only available to premium users | 
  **filterHasFix** | **[]string** | Filter by vuln fixability (when category is \&quot;vulnerability\&quot;) | 
@@ -1284,6 +1289,9 @@ Name | Type | Description  | Notes
  **filterEpss** | [**GetIssueDiffComparisonSummariesFilterEpssParameter**](GetIssueDiffComparisonSummariesFilterEpssParameter.md) | Filter by epss &#39;score&#39; or &#39;percentile&#39;. All fields are required.  Only available to premium users. | 
  **filterConfidence** | **[]string** | Filter issues by their binary dependency confidence level(s) | 
  **filterIssueSource** | [**GetIssueStatusesFilterIssueSourceParameter**](GetIssueStatusesFilterIssueSourceParameter.md) | Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored.  | 
+ **filterCvssAttackVector** | **[]string** | Filter by CVSS attack vector (when category is \&quot;vulnerability\&quot;) | 
+ **filterCvssAttackComplexity** | **[]string** | Filter by CVSS attack complexity (when category is \&quot;vulnerability\&quot;). For CVSS v4, this includes the Attack Requirements (AT) metric. | 
+ **filterCvssPrivilegesRequired** | **[]string** | Filter by CVSS privileges required (when category is \&quot;vulnerability\&quot;) | 
  **sort** | **string** | Sort by package name, when the issue was created, or severity (when category is \&quot;vulnerability\&quot;)  | 
  **page** | **int32** | The specific page of data to return | [default to 1]
  **count** | **int32** | The number of items to return in each page of results | [default to 20]
@@ -1901,7 +1909,7 @@ Name | Type | Description  | Notes
 
 ## UpdateIssues
 
-> UpdateIssues200Response UpdateIssues(ctx).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).UpdateIssuesRequest(updateIssuesRequest).Execute()
+> UpdateIssues200Response UpdateIssues(ctx).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterSeveritySource(filterSeveritySource).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).FilterCvssAttackVector(filterCvssAttackVector).FilterCvssAttackComplexity(filterCvssAttackComplexity).FilterCvssPrivilegesRequired(filterCvssPrivilegesRequired).UpdateIssuesRequest(updateIssuesRequest).Execute()
 
 
 
@@ -1942,6 +1950,7 @@ func main() {
 	filterProjectLabels := []string{"Inner_example"} // []string | Filter by specific project labels (optional)
 	filterIdentification := []string{"FilterIdentification_example"} // []string | Filter by license identification (when category is \"licensing\") (optional)
 	filterSeverity := []string{"FilterSeverity_example"} // []string | Filter by vuln severity (when category is \"vulnerability\") (optional)
+	filterSeveritySource := []string{"FilterSeveritySource_example"} // []string | Filter by severity source (when category is \"vulnerability\"). Use 'standard' to filter by CVSS score, 'custom' to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to 'standard' when not provided. Custom risk score filtering is not available for global scope.  (optional)
 	filterFoundAfter := time.Now() // time.Time | Include only issues found on after a given ISO timestamp.  Only available to premium users (optional)
 	filterHasFix := []string{"FilterHasFix_example"} // []string | Filter by vuln fixability (when category is \"vulnerability\") (optional)
 	filterUpgradeDistance := []string{"FilterUpgradeDistance_example"} // []string | Filter by vuln upgrade distance (when category is \"vulnerability\") (optional)
@@ -1950,11 +1959,14 @@ func main() {
 	filterLicenses := []string{"Inner_example"} // []string | Filter by issues affected by a set of license ID's (when category is \"licensing\") (optional)
 	filterConfidence := []string{"FilterConfidence_example"} // []string | Filter issues by their binary dependency confidence level(s) (optional)
 	filterIssueSource := openapiclient.getIssueStatuses_filter_issueSource____parameter{ArrayOfString: new([]string)} // GetIssueStatusesFilterIssueSourceParameter | Filter by issue source. Use 'dependency' and 'snippet' to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use 'managed-dependency' and 'vendored-dependency' to filter dependency issues by whether the dependency is managed or vendored.  (optional)
+	filterCvssAttackVector := []string{"FilterCvssAttackVector_example"} // []string | Filter by CVSS attack vector (when category is \"vulnerability\") (optional)
+	filterCvssAttackComplexity := []string{"FilterCvssAttackComplexity_example"} // []string | Filter by CVSS attack complexity (when category is \"vulnerability\"). For CVSS v4, this includes the Attack Requirements (AT) metric. (optional)
+	filterCvssPrivilegesRequired := []string{"FilterCvssPrivilegesRequired_example"} // []string | Filter by CVSS privileges required (when category is \"vulnerability\") (optional)
 	updateIssuesRequest := openapiclient.updateIssues_request{UpdateIssuesRequestOneOf: openapiclient.NewUpdateIssuesRequestOneOf()} // UpdateIssuesRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IssuesAPI.UpdateIssues(context.Background()).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).UpdateIssuesRequest(updateIssuesRequest).Execute()
+	resp, r, err := apiClient.IssuesAPI.UpdateIssues(context.Background()).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterSeveritySource(filterSeveritySource).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).FilterCvssAttackVector(filterCvssAttackVector).FilterCvssAttackComplexity(filterCvssAttackComplexity).FilterCvssPrivilegesRequired(filterCvssPrivilegesRequired).UpdateIssuesRequest(updateIssuesRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.UpdateIssues``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1996,6 +2008,7 @@ Name | Type | Description  | Notes
  **filterProjectLabels** | **[]string** | Filter by specific project labels | 
  **filterIdentification** | **[]string** | Filter by license identification (when category is \&quot;licensing\&quot;) | 
  **filterSeverity** | **[]string** | Filter by vuln severity (when category is \&quot;vulnerability\&quot;) | 
+ **filterSeveritySource** | **[]string** | Filter by severity source (when category is \&quot;vulnerability\&quot;). Use &#39;standard&#39; to filter by CVSS score, &#39;custom&#39; to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to &#39;standard&#39; when not provided. Custom risk score filtering is not available for global scope.  | 
  **filterFoundAfter** | **time.Time** | Include only issues found on after a given ISO timestamp.  Only available to premium users | 
  **filterHasFix** | **[]string** | Filter by vuln fixability (when category is \&quot;vulnerability\&quot;) | 
  **filterUpgradeDistance** | **[]string** | Filter by vuln upgrade distance (when category is \&quot;vulnerability\&quot;) | 
@@ -2004,6 +2017,9 @@ Name | Type | Description  | Notes
  **filterLicenses** | **[]string** | Filter by issues affected by a set of license ID&#39;s (when category is \&quot;licensing\&quot;) | 
  **filterConfidence** | **[]string** | Filter issues by their binary dependency confidence level(s) | 
  **filterIssueSource** | [**GetIssueStatusesFilterIssueSourceParameter**](GetIssueStatusesFilterIssueSourceParameter.md) | Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored.  | 
+ **filterCvssAttackVector** | **[]string** | Filter by CVSS attack vector (when category is \&quot;vulnerability\&quot;) | 
+ **filterCvssAttackComplexity** | **[]string** | Filter by CVSS attack complexity (when category is \&quot;vulnerability\&quot;). For CVSS v4, this includes the Attack Requirements (AT) metric. | 
+ **filterCvssPrivilegesRequired** | **[]string** | Filter by CVSS privileges required (when category is \&quot;vulnerability\&quot;) | 
  **updateIssuesRequest** | [**UpdateIssuesRequest**](UpdateIssuesRequest.md) |  | 
 
 ### Return type
