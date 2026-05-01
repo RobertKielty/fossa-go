@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.38
 Contact: support@fossa.com
 */
 
@@ -23,12 +23,6 @@ var _ MappedNullable = &GetAllReportOptions200Response{}
 // GetAllReportOptions200Response struct for GetAllReportOptions200Response
 type GetAllReportOptions200Response struct {
 	Results []GetAllReportOptions200ResponseResultsInner `json:"results"`
-	// Current page number
-	Page int32 `json:"page"`
-	// Number of items per page
-	PageSize int32 `json:"pageSize"`
-	// Total number of report options
-	Total int32 `json:"total"`
 }
 
 type _GetAllReportOptions200Response GetAllReportOptions200Response
@@ -37,12 +31,9 @@ type _GetAllReportOptions200Response GetAllReportOptions200Response
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetAllReportOptions200Response(results []GetAllReportOptions200ResponseResultsInner, page int32, pageSize int32, total int32) *GetAllReportOptions200Response {
+func NewGetAllReportOptions200Response(results []GetAllReportOptions200ResponseResultsInner) *GetAllReportOptions200Response {
 	this := GetAllReportOptions200Response{}
 	this.Results = results
-	this.Page = page
-	this.PageSize = pageSize
-	this.Total = total
 	return &this
 }
 
@@ -78,78 +69,6 @@ func (o *GetAllReportOptions200Response) SetResults(v []GetAllReportOptions200Re
 	o.Results = v
 }
 
-// GetPage returns the Page field value
-func (o *GetAllReportOptions200Response) GetPage() int32 {
-	if o == nil {
-		var ret int32
-		return ret
-	}
-
-	return o.Page
-}
-
-// GetPageOk returns a tuple with the Page field value
-// and a boolean to check if the value has been set.
-func (o *GetAllReportOptions200Response) GetPageOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Page, true
-}
-
-// SetPage sets field value
-func (o *GetAllReportOptions200Response) SetPage(v int32) {
-	o.Page = v
-}
-
-// GetPageSize returns the PageSize field value
-func (o *GetAllReportOptions200Response) GetPageSize() int32 {
-	if o == nil {
-		var ret int32
-		return ret
-	}
-
-	return o.PageSize
-}
-
-// GetPageSizeOk returns a tuple with the PageSize field value
-// and a boolean to check if the value has been set.
-func (o *GetAllReportOptions200Response) GetPageSizeOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.PageSize, true
-}
-
-// SetPageSize sets field value
-func (o *GetAllReportOptions200Response) SetPageSize(v int32) {
-	o.PageSize = v
-}
-
-// GetTotal returns the Total field value
-func (o *GetAllReportOptions200Response) GetTotal() int32 {
-	if o == nil {
-		var ret int32
-		return ret
-	}
-
-	return o.Total
-}
-
-// GetTotalOk returns a tuple with the Total field value
-// and a boolean to check if the value has been set.
-func (o *GetAllReportOptions200Response) GetTotalOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Total, true
-}
-
-// SetTotal sets field value
-func (o *GetAllReportOptions200Response) SetTotal(v int32) {
-	o.Total = v
-}
-
 func (o GetAllReportOptions200Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -161,9 +80,6 @@ func (o GetAllReportOptions200Response) MarshalJSON() ([]byte, error) {
 func (o GetAllReportOptions200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["results"] = o.Results
-	toSerialize["page"] = o.Page
-	toSerialize["pageSize"] = o.PageSize
-	toSerialize["total"] = o.Total
 	return toSerialize, nil
 }
 
@@ -173,9 +89,6 @@ func (o *GetAllReportOptions200Response) UnmarshalJSON(data []byte) (err error) 
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"results",
-		"page",
-		"pageSize",
-		"total",
 	}
 
 	allProperties := make(map[string]interface{})
