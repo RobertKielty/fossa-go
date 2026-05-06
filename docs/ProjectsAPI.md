@@ -638,8 +638,8 @@ import (
 
 func main() {
 	locator := "locator_example" // string | the url-encoded locator of the project - matched by substring
-	offset := float32(8.14) // float32 | the number of revisions to skip for pagination (used with \"count\" query parameter) (optional)
-	count := float32(8.14) // float32 | the number of revisions to return (maximum of 1000) (optional)
+	offset := float32(8.14) // float32 | the number of revisions to skip per ref (branch or tag) for pagination. (optional)
+	count := float32(8.14) // float32 | the number of revisions to return per ref (branch or tag), max 1000. (optional)
 	resolved := true // bool | If true, we will only return Revisions that have been successfully analyzed by FOSSA (resolved) (optional)
 	refs := []string{"Inner_example"} // []string | the list of branches or tags being requested (optional)
 	refsType := "refsType_example" // string | Specify whether the list should be tags OR branches (optional)
@@ -673,8 +673,8 @@ Other parameters are passed through a pointer to a apiGetProjectRevisionsRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **offset** | **float32** | the number of revisions to skip for pagination (used with \&quot;count\&quot; query parameter) | 
- **count** | **float32** | the number of revisions to return (maximum of 1000) | 
+ **offset** | **float32** | the number of revisions to skip per ref (branch or tag) for pagination. | 
+ **count** | **float32** | the number of revisions to return per ref (branch or tag), max 1000. | 
  **resolved** | **bool** | If true, we will only return Revisions that have been successfully analyzed by FOSSA (resolved) | 
  **refs** | **[]string** | the list of branches or tags being requested | 
  **refsType** | **string** | Specify whether the list should be tags OR branches | 
