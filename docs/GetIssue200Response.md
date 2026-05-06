@@ -30,6 +30,7 @@ Name | Type | Description | Notes
 **References** | Pointer to **[]string** |  | [optional] 
 **Exploitability** | Pointer to **string** |  | [optional] 
 **Epss** | Pointer to [**GetIssue200ResponseOneOfAllOfEpss**](GetIssue200ResponseOneOfAllOfEpss.md) |  | [optional] 
+**CustomRiskScore** | Pointer to [**GetIssue200ResponseOneOfAllOfCustomRiskScore**](GetIssue200ResponseOneOfAllOfCustomRiskScore.md) |  | [optional] 
 **License** | Pointer to **string** |  | [optional] 
 **QualityRule** | Pointer to [**GetIssue200ResponseOneOf2AllOfQualityRule**](GetIssue200ResponseOneOf2AllOfQualityRule.md) |  | [optional] 
 
@@ -701,6 +702,31 @@ SetEpss sets Epss field to given value.
 `func (o *GetIssue200Response) HasEpss() bool`
 
 HasEpss returns a boolean if a field has been set.
+
+### GetCustomRiskScore
+
+`func (o *GetIssue200Response) GetCustomRiskScore() GetIssue200ResponseOneOfAllOfCustomRiskScore`
+
+GetCustomRiskScore returns the CustomRiskScore field if non-nil, zero value otherwise.
+
+### GetCustomRiskScoreOk
+
+`func (o *GetIssue200Response) GetCustomRiskScoreOk() (*GetIssue200ResponseOneOfAllOfCustomRiskScore, bool)`
+
+GetCustomRiskScoreOk returns a tuple with the CustomRiskScore field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomRiskScore
+
+`func (o *GetIssue200Response) SetCustomRiskScore(v GetIssue200ResponseOneOfAllOfCustomRiskScore)`
+
+SetCustomRiskScore sets CustomRiskScore field to given value.
+
+### HasCustomRiskScore
+
+`func (o *GetIssue200Response) HasCustomRiskScore() bool`
+
+HasCustomRiskScore returns a boolean if a field has been set.
 
 ### GetLicense
 

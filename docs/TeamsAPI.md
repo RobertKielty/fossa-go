@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**GetAddableTeamProjectsAndReleaseGroups**](TeamsAPI.md#GetAddableTeamProjectsAndReleaseGroups) | **Get** /teams/{id}/addable-projects-and-release-groups | 
 [**GetAddableTeamUsers**](TeamsAPI.md#GetAddableTeamUsers) | **Get** /teams/{id}/members/addable | 
 [**GetAllTeams**](TeamsAPI.md#GetAllTeams) | **Get** /teams | 
+[**GetAllTeamsV2**](TeamsAPI.md#GetAllTeamsV2) | **Get** /v2/teams | 
 [**GetTeamByIdV2**](TeamsAPI.md#GetTeamByIdV2) | **Get** /v2/teams/{id} | 
 [**GetTeamMembers**](TeamsAPI.md#GetTeamMembers) | **Get** /teams/{id}/members | 
 [**GetTeamProjects**](TeamsAPI.md#GetTeamProjects) | **Get** /teams/{id}/projects | 
@@ -499,6 +500,76 @@ Other parameters are passed through a pointer to a apiGetAllTeamsRequest struct 
 ### Return type
 
 [**[]GetAllTeams200ResponseInner**](GetAllTeams200ResponseInner.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetAllTeamsV2
+
+> GetAllTeamsV2200Response GetAllTeamsV2(ctx).Page(page).PageSize(pageSize).Search(search).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	page := int32(56) // int32 | Page number (1-indexed, defaults to 1) (optional) (default to 1)
+	pageSize := int32(56) // int32 | Number of items per page (defaults to 10, max 50) (optional) (default to 10)
+	search := "search_example" // string | Search term to filter teams by name (max 255) (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.TeamsAPI.GetAllTeamsV2(context.Background()).Page(page).PageSize(pageSize).Search(search).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TeamsAPI.GetAllTeamsV2``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAllTeamsV2`: GetAllTeamsV2200Response
+	fmt.Fprintf(os.Stdout, "Response from `TeamsAPI.GetAllTeamsV2`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAllTeamsV2Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **page** | **int32** | Page number (1-indexed, defaults to 1) | [default to 1]
+ **pageSize** | **int32** | Number of items per page (defaults to 10, max 50) | [default to 10]
+ **search** | **string** | Search term to filter teams by name (max 255) | 
+
+### Return type
+
+[**GetAllTeamsV2200Response**](GetAllTeamsV2200Response.md)
 
 ### Authorization
 
