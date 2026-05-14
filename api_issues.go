@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.57
 Contact: support@fossa.com
 */
 
@@ -46,7 +46,7 @@ func (r ApiCreateIssueDisputeRequest) Execute() (*CreateIssueDispute200Response,
 /*
 CreateIssueDispute Method for CreateIssueDispute
 
-Creates an issue dispute. For now it only supports licensing issues.
+Creates an issue dispute. Supports licensing and quality issue disputes. The dispute type is determined by the category of the specified issue.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param issueId ID of the issue that is being disputed.
@@ -3115,6 +3115,7 @@ type ApiGetIssuesRequest struct {
 	filterProjectLabels *[]string
 	filterIdentification *[]string
 	filterSeverity *[]string
+	filterSeveritySource *[]string
 	filterFoundBefore *time.Time
 	filterFoundAfter *time.Time
 	filterHasFix *[]string
@@ -3124,6 +3125,9 @@ type ApiGetIssuesRequest struct {
 	filterEpss *GetIssueDiffComparisonSummariesFilterEpssParameter
 	filterConfidence *[]string
 	filterIssueSource *GetIssueStatusesFilterIssueSourceParameter
+	filterCvssAttackVector *[]string
+	filterCvssAttackComplexity *[]string
+	filterCvssPrivilegesRequired *[]string
 	sort *string
 	page *int32
 	count *int32
@@ -3273,6 +3277,12 @@ func (r ApiGetIssuesRequest) FilterSeverity(filterSeverity []string) ApiGetIssue
 	return r
 }
 
+// Filter by severity source (when category is \&quot;vulnerability\&quot;). Use &#39;standard&#39; to filter by CVSS score, &#39;custom&#39; to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to &#39;standard&#39; when not provided. Custom risk score filtering is not available for global scope. 
+func (r ApiGetIssuesRequest) FilterSeveritySource(filterSeveritySource []string) ApiGetIssuesRequest {
+	r.filterSeveritySource = &filterSeveritySource
+	return r
+}
+
 // Include only issues found on before a given ISO timestamp.  Only available to premium users
 func (r ApiGetIssuesRequest) FilterFoundBefore(filterFoundBefore time.Time) ApiGetIssuesRequest {
 	r.filterFoundBefore = &filterFoundBefore
@@ -3324,6 +3334,24 @@ func (r ApiGetIssuesRequest) FilterConfidence(filterConfidence []string) ApiGetI
 // Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored. 
 func (r ApiGetIssuesRequest) FilterIssueSource(filterIssueSource GetIssueStatusesFilterIssueSourceParameter) ApiGetIssuesRequest {
 	r.filterIssueSource = &filterIssueSource
+	return r
+}
+
+// Filter by CVSS attack vector (when category is \&quot;vulnerability\&quot;)
+func (r ApiGetIssuesRequest) FilterCvssAttackVector(filterCvssAttackVector []string) ApiGetIssuesRequest {
+	r.filterCvssAttackVector = &filterCvssAttackVector
+	return r
+}
+
+// Filter by CVSS attack complexity (when category is \&quot;vulnerability\&quot;). For CVSS v4, this includes the Attack Requirements (AT) metric.
+func (r ApiGetIssuesRequest) FilterCvssAttackComplexity(filterCvssAttackComplexity []string) ApiGetIssuesRequest {
+	r.filterCvssAttackComplexity = &filterCvssAttackComplexity
+	return r
+}
+
+// Filter by CVSS privileges required (when category is \&quot;vulnerability\&quot;)
+func (r ApiGetIssuesRequest) FilterCvssPrivilegesRequired(filterCvssPrivilegesRequired []string) ApiGetIssuesRequest {
+	r.filterCvssPrivilegesRequired = &filterCvssPrivilegesRequired
 	return r
 }
 
@@ -3539,6 +3567,17 @@ func (a *IssuesAPIService) GetIssuesExecute(r ApiGetIssuesRequest) (*GetIssues20
 			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severity][]", t, "form", "multi")
 		}
 	}
+	if r.filterSeveritySource != nil {
+		t := *r.filterSeveritySource
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severitySource][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severitySource][]", t, "form", "multi")
+		}
+	}
 	if r.filterFoundBefore != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[foundBefore]", r.filterFoundBefore, "form", "")
 	}
@@ -3605,6 +3644,39 @@ func (a *IssuesAPIService) GetIssuesExecute(r ApiGetIssuesRequest) (*GetIssues20
 	}
 	if r.filterIssueSource != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[issueSource][]", r.filterIssueSource, "form", "")
+	}
+	if r.filterCvssAttackVector != nil {
+		t := *r.filterCvssAttackVector
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssAttackVector][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssAttackVector][]", t, "form", "multi")
+		}
+	}
+	if r.filterCvssAttackComplexity != nil {
+		t := *r.filterCvssAttackComplexity
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssAttackComplexity][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssAttackComplexity][]", t, "form", "multi")
+		}
+	}
+	if r.filterCvssPrivilegesRequired != nil {
+		t := *r.filterCvssPrivilegesRequired
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssPrivilegesRequired][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssPrivilegesRequired][]", t, "form", "multi")
+		}
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
@@ -5465,6 +5537,7 @@ type ApiUpdateIssuesRequest struct {
 	filterProjectLabels *[]string
 	filterIdentification *[]string
 	filterSeverity *[]string
+	filterSeveritySource *[]string
 	filterFoundAfter *time.Time
 	filterHasFix *[]string
 	filterUpgradeDistance *[]string
@@ -5473,6 +5546,9 @@ type ApiUpdateIssuesRequest struct {
 	filterLicenses *[]string
 	filterConfidence *[]string
 	filterIssueSource *GetIssueStatusesFilterIssueSourceParameter
+	filterCvssAttackVector *[]string
+	filterCvssAttackComplexity *[]string
+	filterCvssPrivilegesRequired *[]string
 	updateIssuesRequest *UpdateIssuesRequest
 }
 
@@ -5602,6 +5678,12 @@ func (r ApiUpdateIssuesRequest) FilterSeverity(filterSeverity []string) ApiUpdat
 	return r
 }
 
+// Filter by severity source (when category is \&quot;vulnerability\&quot;). Use &#39;standard&#39; to filter by CVSS score, &#39;custom&#39; to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to &#39;standard&#39; when not provided. Custom risk score filtering is not available for global scope. 
+func (r ApiUpdateIssuesRequest) FilterSeveritySource(filterSeveritySource []string) ApiUpdateIssuesRequest {
+	r.filterSeveritySource = &filterSeveritySource
+	return r
+}
+
 // Include only issues found on after a given ISO timestamp.  Only available to premium users
 func (r ApiUpdateIssuesRequest) FilterFoundAfter(filterFoundAfter time.Time) ApiUpdateIssuesRequest {
 	r.filterFoundAfter = &filterFoundAfter
@@ -5647,6 +5729,24 @@ func (r ApiUpdateIssuesRequest) FilterConfidence(filterConfidence []string) ApiU
 // Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored. 
 func (r ApiUpdateIssuesRequest) FilterIssueSource(filterIssueSource GetIssueStatusesFilterIssueSourceParameter) ApiUpdateIssuesRequest {
 	r.filterIssueSource = &filterIssueSource
+	return r
+}
+
+// Filter by CVSS attack vector (when category is \&quot;vulnerability\&quot;)
+func (r ApiUpdateIssuesRequest) FilterCvssAttackVector(filterCvssAttackVector []string) ApiUpdateIssuesRequest {
+	r.filterCvssAttackVector = &filterCvssAttackVector
+	return r
+}
+
+// Filter by CVSS attack complexity (when category is \&quot;vulnerability\&quot;). For CVSS v4, this includes the Attack Requirements (AT) metric.
+func (r ApiUpdateIssuesRequest) FilterCvssAttackComplexity(filterCvssAttackComplexity []string) ApiUpdateIssuesRequest {
+	r.filterCvssAttackComplexity = &filterCvssAttackComplexity
+	return r
+}
+
+// Filter by CVSS privileges required (when category is \&quot;vulnerability\&quot;)
+func (r ApiUpdateIssuesRequest) FilterCvssPrivilegesRequired(filterCvssPrivilegesRequired []string) ApiUpdateIssuesRequest {
+	r.filterCvssPrivilegesRequired = &filterCvssPrivilegesRequired
 	return r
 }
 
@@ -5832,6 +5932,17 @@ func (a *IssuesAPIService) UpdateIssuesExecute(r ApiUpdateIssuesRequest) (*Updat
 			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severity][]", t, "form", "multi")
 		}
 	}
+	if r.filterSeveritySource != nil {
+		t := *r.filterSeveritySource
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severitySource][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severitySource][]", t, "form", "multi")
+		}
+	}
 	if r.filterFoundAfter != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[foundAfter]", r.filterFoundAfter, "form", "")
 	}
@@ -5903,6 +6014,39 @@ func (a *IssuesAPIService) UpdateIssuesExecute(r ApiUpdateIssuesRequest) (*Updat
 	}
 	if r.filterIssueSource != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[issueSource][]", r.filterIssueSource, "form", "")
+	}
+	if r.filterCvssAttackVector != nil {
+		t := *r.filterCvssAttackVector
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssAttackVector][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssAttackVector][]", t, "form", "multi")
+		}
+	}
+	if r.filterCvssAttackComplexity != nil {
+		t := *r.filterCvssAttackComplexity
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssAttackComplexity][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssAttackComplexity][]", t, "form", "multi")
+		}
+	}
+	if r.filterCvssPrivilegesRequired != nil {
+		t := *r.filterCvssPrivilegesRequired
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssPrivilegesRequired][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssPrivilegesRequired][]", t, "form", "multi")
+		}
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
