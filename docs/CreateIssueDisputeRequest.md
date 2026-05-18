@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Reason** | Pointer to **string** | The reason why this issue is being disputed. | [optional] 
+**Reason** | **string** | The reason why this issue is being disputed. License dispute reasons: INCORRECT_DEPENDENCY_VERSION_REPORTED, LICENSE_DETECTION_FALSE_POSITIVE, MULTI_OR_DUAL_LICENSED, INCORRECT_LICENSE_CONCLUSION. Quality dispute reasons: INCORRECT_STALENESS_REPORTED, INCORRECTLY_FLAGGED_ABANDONWARE, INCORRECTLY_FLAGGED_EMPTY. | 
 **Comment** | Pointer to **string** | Any additional information that is important for this dispute. | [optional] 
 
 ## Methods
 
 ### NewCreateIssueDisputeRequest
 
-`func NewCreateIssueDisputeRequest() *CreateIssueDisputeRequest`
+`func NewCreateIssueDisputeRequest(reason string, ) *CreateIssueDisputeRequest`
 
 NewCreateIssueDisputeRequest instantiates a new CreateIssueDisputeRequest object
 This constructor will assign default values to properties that have it defined,
@@ -45,11 +45,6 @@ and a boolean to check if the value has been set.
 
 SetReason sets Reason field to given value.
 
-### HasReason
-
-`func (o *CreateIssueDisputeRequest) HasReason() bool`
-
-HasReason returns a boolean if a field has been set.
 
 ### GetComment
 
