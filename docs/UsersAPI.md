@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**CreateServiceAccount**](UsersAPI.md#CreateServiceAccount) | **Post** /users/service-accounts | 
 [**DeleteUserInvitation**](UsersAPI.md#DeleteUserInvitation) | **Delete** /user-invitations/{email} | Delete a pending user invitation by email
 [**GetAllUsers**](UsersAPI.md#GetAllUsers) | **Get** /users | 
+[**GetAllUsersV2**](UsersAPI.md#GetAllUsersV2) | **Get** /v2/users | 
 [**GetUser**](UsersAPI.md#GetUser) | **Get** /users/{id} | 
 [**ListUserInvitations**](UsersAPI.md#ListUserInvitations) | **Get** /user-invitations | List pending user invitations
 [**SendUserInvitation**](UsersAPI.md#SendUserInvitation) | **Post** /organizations/{id}/invite | Send an invitation to join an organization
@@ -202,6 +203,78 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**[]GetAllUsers200ResponseInner**](GetAllUsers200ResponseInner.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetAllUsersV2
+
+> GetAllUsersV2200Response GetAllUsersV2(ctx).Page(page).PageSize(pageSize).Search(search).Sort(sort).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	page := int32(56) // int32 | Page number (1-indexed, defaults to 1) (optional) (default to 1)
+	pageSize := int32(56) // int32 | Number of items per page (defaults to 10, max 50) (optional) (default to 10)
+	search := "search_example" // string | Search term to filter users by username, email, or full name (max 255) (optional)
+	sort := "sort_example" // string | Sort order for results. Use format `field_asc` or `field_desc`. Supported fields: username, full_name, email, created_at, last_visit. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.GetAllUsersV2(context.Background()).Page(page).PageSize(pageSize).Search(search).Sort(sort).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.GetAllUsersV2``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAllUsersV2`: GetAllUsersV2200Response
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.GetAllUsersV2`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAllUsersV2Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **page** | **int32** | Page number (1-indexed, defaults to 1) | [default to 1]
+ **pageSize** | **int32** | Number of items per page (defaults to 10, max 50) | [default to 10]
+ **search** | **string** | Search term to filter users by username, email, or full name (max 255) | 
+ **sort** | **string** | Sort order for results. Use format &#x60;field_asc&#x60; or &#x60;field_desc&#x60;. Supported fields: username, full_name, email, created_at, last_visit. | 
+
+### Return type
+
+[**GetAllUsersV2200Response**](GetAllUsersV2200Response.md)
 
 ### Authorization
 

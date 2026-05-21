@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.63
 Contact: support@fossa.com
 */
 
@@ -13,6 +13,8 @@ package fossa
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the CreateIssueDisputeRequest type satisfies the MappedNullable interface at compile time
@@ -20,18 +22,21 @@ var _ MappedNullable = &CreateIssueDisputeRequest{}
 
 // CreateIssueDisputeRequest struct for CreateIssueDisputeRequest
 type CreateIssueDisputeRequest struct {
-	// The reason why this issue is being disputed.
-	Reason *string `json:"reason,omitempty"`
+	// The reason why this issue is being disputed. License dispute reasons: INCORRECT_DEPENDENCY_VERSION_REPORTED, LICENSE_DETECTION_FALSE_POSITIVE, MULTI_OR_DUAL_LICENSED, INCORRECT_LICENSE_CONCLUSION. Quality dispute reasons: INCORRECT_STALENESS_REPORTED, INCORRECTLY_FLAGGED_ABANDONWARE, INCORRECTLY_FLAGGED_EMPTY.
+	Reason string `json:"reason"`
 	// Any additional information that is important for this dispute.
 	Comment *string `json:"comment,omitempty"`
 }
+
+type _CreateIssueDisputeRequest CreateIssueDisputeRequest
 
 // NewCreateIssueDisputeRequest instantiates a new CreateIssueDisputeRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateIssueDisputeRequest() *CreateIssueDisputeRequest {
+func NewCreateIssueDisputeRequest(reason string) *CreateIssueDisputeRequest {
 	this := CreateIssueDisputeRequest{}
+	this.Reason = reason
 	return &this
 }
 
@@ -43,36 +48,28 @@ func NewCreateIssueDisputeRequestWithDefaults() *CreateIssueDisputeRequest {
 	return &this
 }
 
-// GetReason returns the Reason field value if set, zero value otherwise.
+// GetReason returns the Reason field value
 func (o *CreateIssueDisputeRequest) GetReason() string {
-	if o == nil || IsNil(o.Reason) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Reason
+
+	return o.Reason
 }
 
-// GetReasonOk returns a tuple with the Reason field value if set, nil otherwise
+// GetReasonOk returns a tuple with the Reason field value
 // and a boolean to check if the value has been set.
 func (o *CreateIssueDisputeRequest) GetReasonOk() (*string, bool) {
-	if o == nil || IsNil(o.Reason) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Reason, true
+	return &o.Reason, true
 }
 
-// HasReason returns a boolean if a field has been set.
-func (o *CreateIssueDisputeRequest) HasReason() bool {
-	if o != nil && !IsNil(o.Reason) {
-		return true
-	}
-
-	return false
-}
-
-// SetReason gets a reference to the given string and assigns it to the Reason field.
+// SetReason sets field value
 func (o *CreateIssueDisputeRequest) SetReason(v string) {
-	o.Reason = &v
+	o.Reason = v
 }
 
 // GetComment returns the Comment field value if set, zero value otherwise.
@@ -117,13 +114,48 @@ func (o CreateIssueDisputeRequest) MarshalJSON() ([]byte, error) {
 
 func (o CreateIssueDisputeRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Reason) {
-		toSerialize["reason"] = o.Reason
-	}
+	toSerialize["reason"] = o.Reason
 	if !IsNil(o.Comment) {
 		toSerialize["comment"] = o.Comment
 	}
 	return toSerialize, nil
+}
+
+func (o *CreateIssueDisputeRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"reason",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateIssueDisputeRequest := _CreateIssueDisputeRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateIssueDisputeRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateIssueDisputeRequest(varCreateIssueDisputeRequest)
+
+	return err
 }
 
 type NullableCreateIssueDisputeRequest struct {
