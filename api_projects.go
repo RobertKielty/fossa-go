@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.65
 Contact: support@fossa.com
 */
 
@@ -1331,13 +1331,13 @@ type ApiGetProjectRevisionsRequest struct {
 	source *string
 }
 
-// the number of revisions to skip for pagination (used with \&quot;count\&quot; query parameter)
+// the number of revisions to skip per ref (branch or tag) for pagination.
 func (r ApiGetProjectRevisionsRequest) Offset(offset float32) ApiGetProjectRevisionsRequest {
 	r.offset = &offset
 	return r
 }
 
-// the number of revisions to return (maximum of 1000)
+// the number of revisions to return per ref (branch or tag), max 1000.
 func (r ApiGetProjectRevisionsRequest) Count(count float32) ApiGetProjectRevisionsRequest {
 	r.count = &count
 	return r
@@ -2281,6 +2281,8 @@ Most fields require Edit permission on the project. The following fields require
 
 ### Feature Flags
 - `securityIssueScanningEnabled` and `qualityIssueScanningEnabled` can only be modified if the organization has the respective features enabled.
+- `quickImportVendoredDetectionEnabled` can only be modified if the organization has both quick import vendored detection and vendored dependency detection features enabled.
+- `quickImportSnippetDetectionEnabled` can only be modified if the organization has both quick import snippet detection and snippet detection features enabled.
 
 ### Issue Tracker Fields
 - When updating `issueTrackerCustomFields`, boolean values in the `isRequired` field may be stringified and will be automatically converted.
