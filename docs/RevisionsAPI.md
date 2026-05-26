@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**GetRevisionAttributionJSON**](RevisionsAPI.md#GetRevisionAttributionJSON) | **Get** /revisions/{locator}/attribution/json | 
 [**GetRevisionDependencies**](RevisionsAPI.md#GetRevisionDependencies) | **Get** /revisions/{locator}/dependencies | 
 [**GetRevisionDependenciesPost**](RevisionsAPI.md#GetRevisionDependenciesPost) | **Post** /revisions/{locator}/list-dependencies | 
+[**GetRevisionScans**](RevisionsAPI.md#GetRevisionScans) | **Get** /revisions/{locator}/scans | 
 [**NoticeFiles**](RevisionsAPI.md#NoticeFiles) | **Get** /revisions/{locator}/notice-files | 
 [**OriginalSbom**](RevisionsAPI.md#OriginalSbom) | **Get** /revisions/{locator}/original-sbom | 
 [**UpdateRevision**](RevisionsAPI.md#UpdateRevision) | **Patch** /revisions/{locator} | 
@@ -438,6 +439,80 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetRevisionScans
+
+> GetRevisionScans200Response GetRevisionScans(ctx, locator).Page(page).PageSize(pageSize).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	locator := "custom%2B1234%2Fmy-project%24abcd1234" // string | The URL-encoded locator of the revision
+	page := int32(1) // int32 | The 1-indexed page of results to return (optional) (default to 1)
+	pageSize := int32(10) // int32 | The number of scans to return per page (maximum 50) (optional) (default to 10)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.RevisionsAPI.GetRevisionScans(context.Background(), locator).Page(page).PageSize(pageSize).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `RevisionsAPI.GetRevisionScans``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetRevisionScans`: GetRevisionScans200Response
+	fmt.Fprintf(os.Stdout, "Response from `RevisionsAPI.GetRevisionScans`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**locator** | **string** | The URL-encoded locator of the revision | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetRevisionScansRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **page** | **int32** | The 1-indexed page of results to return | [default to 1]
+ **pageSize** | **int32** | The number of scans to return per page (maximum 50) | [default to 10]
+
+### Return type
+
+[**GetRevisionScans200Response**](GetRevisionScans200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
