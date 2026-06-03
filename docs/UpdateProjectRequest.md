@@ -26,6 +26,11 @@ Name | Type | Description | Notes
 **SbomAnalysisEnabled** | Pointer to **bool** | Enable or disable SBOM policy analysis for this project. Requires SetPolicy permission for SBOM policy type. | [optional] 
 **SnippetLicensingIssueScanningEnabled** | Pointer to **bool** | Enable or disable snippet licensing issue scanning for this project | [optional] 
 **SnippetSecurityIssueScanningEnabled** | Pointer to **bool** | Enable or disable snippet security issue scanning for this project | [optional] 
+**VendoredLicensingIssueScanningEnabled** | Pointer to **bool** | Enable or disable licensing issue scanning for vendored dependencies in this project | [optional] 
+**VendoredSecurityIssueScanningEnabled** | Pointer to **bool** | Enable or disable security issue scanning for vendored dependencies in this project | [optional] 
+**VendoredQualityIssueScanningEnabled** | Pointer to **bool** | Enable or disable quality issue scanning for vendored dependencies in this project | [optional] 
+**QuickImportVendoredDetectionEnabled** | Pointer to **bool** | Enable or disable vendored dependency detection during quick imports for this project. Can only be modified if the organization has quick import vendored detection and vendored dependency detection features enabled.  | [optional] 
+**QuickImportSnippetDetectionEnabled** | Pointer to **bool** | Enable or disable snippet detection during quick imports for this project. Can only be modified if the organization has quick import snippet detection and snippet detection features enabled.  | [optional] 
 **LicensingStatusCheckEnabled** | Pointer to **bool** | Enable or disable licensing issue CI/CD status checks | [optional] 
 **SecurityStatusCheckEnabled** | Pointer to **bool** | Enable or disable security issue CI/CD status checks | [optional] 
 **QualityStatusCheckEnabled** | Pointer to **bool** | Enable or disable quality issue CI/CD status checks | [optional] 
@@ -43,7 +48,7 @@ Name | Type | Description | Notes
 **UseGlobalTrackerSettings** | Pointer to **bool** | Whether to use organization-level issue tracker settings instead of project-specific settings | [optional] 
 **TransitiveExcludes** | Pointer to **[]string** | List of dependency locators to exclude from analysis. Removing items from this array is logged as \&quot;un-ignoring\&quot; dependencies. Format: \&quot;fetcher+package$revision\&quot; (e.g., \&quot;npm+lodash$4.17.21\&quot;)  | [optional] 
 **ReportCustomText** | Pointer to **string** | Custom text to include in attribution reports for this project | [optional] 
-**BomColumnSettings** | Pointer to **[]string** | Columns to display in the Bill of Materials (BOM) report. Available options: All, Name, Version, Type, License, DirectLicense, DirectLicenseOrigin, DeepLicense, DeepLicenseOrigin, Description, Homepage, PrimaryLanguage, SourceLocation, ReleasePublishDate, OriginId, Tags, ComponentComment, Reachability  | [optional] 
+**BomColumnSettings** | Pointer to **[]string** | Columns to display in the Bill of Materials (BOM) report. Available options: All, Name, Version, Type, License, DirectLicense, DirectLicenseOrigin, DeepLicense, DeepLicenseOrigin, Description, Homepage, PrimaryLanguage, SourceLocation, ReleasePublishDate, OriginId, Tags, ComponentComment  | [optional] 
 **BomPublicId** | Pointer to **string** | Public identifier for accessing the project&#39;s attribution report | [optional] 
 **Labels** | Pointer to **[]int32** | Array of label IDs to associate with this project. This replaces all existing labels. Labels must exist in the organization before being assigned.  | [optional] 
 **Filters** | Pointer to [**UpdateProjectRequestFilters**](UpdateProjectRequestFilters.md) |  | [optional] 
@@ -617,6 +622,131 @@ SetSnippetSecurityIssueScanningEnabled sets SnippetSecurityIssueScanningEnabled 
 `func (o *UpdateProjectRequest) HasSnippetSecurityIssueScanningEnabled() bool`
 
 HasSnippetSecurityIssueScanningEnabled returns a boolean if a field has been set.
+
+### GetVendoredLicensingIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) GetVendoredLicensingIssueScanningEnabled() bool`
+
+GetVendoredLicensingIssueScanningEnabled returns the VendoredLicensingIssueScanningEnabled field if non-nil, zero value otherwise.
+
+### GetVendoredLicensingIssueScanningEnabledOk
+
+`func (o *UpdateProjectRequest) GetVendoredLicensingIssueScanningEnabledOk() (*bool, bool)`
+
+GetVendoredLicensingIssueScanningEnabledOk returns a tuple with the VendoredLicensingIssueScanningEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVendoredLicensingIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) SetVendoredLicensingIssueScanningEnabled(v bool)`
+
+SetVendoredLicensingIssueScanningEnabled sets VendoredLicensingIssueScanningEnabled field to given value.
+
+### HasVendoredLicensingIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) HasVendoredLicensingIssueScanningEnabled() bool`
+
+HasVendoredLicensingIssueScanningEnabled returns a boolean if a field has been set.
+
+### GetVendoredSecurityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) GetVendoredSecurityIssueScanningEnabled() bool`
+
+GetVendoredSecurityIssueScanningEnabled returns the VendoredSecurityIssueScanningEnabled field if non-nil, zero value otherwise.
+
+### GetVendoredSecurityIssueScanningEnabledOk
+
+`func (o *UpdateProjectRequest) GetVendoredSecurityIssueScanningEnabledOk() (*bool, bool)`
+
+GetVendoredSecurityIssueScanningEnabledOk returns a tuple with the VendoredSecurityIssueScanningEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVendoredSecurityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) SetVendoredSecurityIssueScanningEnabled(v bool)`
+
+SetVendoredSecurityIssueScanningEnabled sets VendoredSecurityIssueScanningEnabled field to given value.
+
+### HasVendoredSecurityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) HasVendoredSecurityIssueScanningEnabled() bool`
+
+HasVendoredSecurityIssueScanningEnabled returns a boolean if a field has been set.
+
+### GetVendoredQualityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) GetVendoredQualityIssueScanningEnabled() bool`
+
+GetVendoredQualityIssueScanningEnabled returns the VendoredQualityIssueScanningEnabled field if non-nil, zero value otherwise.
+
+### GetVendoredQualityIssueScanningEnabledOk
+
+`func (o *UpdateProjectRequest) GetVendoredQualityIssueScanningEnabledOk() (*bool, bool)`
+
+GetVendoredQualityIssueScanningEnabledOk returns a tuple with the VendoredQualityIssueScanningEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVendoredQualityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) SetVendoredQualityIssueScanningEnabled(v bool)`
+
+SetVendoredQualityIssueScanningEnabled sets VendoredQualityIssueScanningEnabled field to given value.
+
+### HasVendoredQualityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) HasVendoredQualityIssueScanningEnabled() bool`
+
+HasVendoredQualityIssueScanningEnabled returns a boolean if a field has been set.
+
+### GetQuickImportVendoredDetectionEnabled
+
+`func (o *UpdateProjectRequest) GetQuickImportVendoredDetectionEnabled() bool`
+
+GetQuickImportVendoredDetectionEnabled returns the QuickImportVendoredDetectionEnabled field if non-nil, zero value otherwise.
+
+### GetQuickImportVendoredDetectionEnabledOk
+
+`func (o *UpdateProjectRequest) GetQuickImportVendoredDetectionEnabledOk() (*bool, bool)`
+
+GetQuickImportVendoredDetectionEnabledOk returns a tuple with the QuickImportVendoredDetectionEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetQuickImportVendoredDetectionEnabled
+
+`func (o *UpdateProjectRequest) SetQuickImportVendoredDetectionEnabled(v bool)`
+
+SetQuickImportVendoredDetectionEnabled sets QuickImportVendoredDetectionEnabled field to given value.
+
+### HasQuickImportVendoredDetectionEnabled
+
+`func (o *UpdateProjectRequest) HasQuickImportVendoredDetectionEnabled() bool`
+
+HasQuickImportVendoredDetectionEnabled returns a boolean if a field has been set.
+
+### GetQuickImportSnippetDetectionEnabled
+
+`func (o *UpdateProjectRequest) GetQuickImportSnippetDetectionEnabled() bool`
+
+GetQuickImportSnippetDetectionEnabled returns the QuickImportSnippetDetectionEnabled field if non-nil, zero value otherwise.
+
+### GetQuickImportSnippetDetectionEnabledOk
+
+`func (o *UpdateProjectRequest) GetQuickImportSnippetDetectionEnabledOk() (*bool, bool)`
+
+GetQuickImportSnippetDetectionEnabledOk returns a tuple with the QuickImportSnippetDetectionEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetQuickImportSnippetDetectionEnabled
+
+`func (o *UpdateProjectRequest) SetQuickImportSnippetDetectionEnabled(v bool)`
+
+SetQuickImportSnippetDetectionEnabled sets QuickImportSnippetDetectionEnabled field to given value.
+
+### HasQuickImportSnippetDetectionEnabled
+
+`func (o *UpdateProjectRequest) HasQuickImportSnippetDetectionEnabled() bool`
+
+HasQuickImportSnippetDetectionEnabled returns a boolean if a field has been set.
 
 ### GetLicensingStatusCheckEnabled
 
