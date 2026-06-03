@@ -19,13 +19,13 @@ Name | Type | Description | Notes
 **Licenses** | [**[]GetSnippets200ResponseResultsInnerLicensesInner**](GetSnippets200ResponseResultsInnerLicensesInner.md) | Array of licenses associated with the snippet | 
 **IssueCounts** | [**GetSnippets200ResponseResultsInnerIssueCounts**](GetSnippets200ResponseResultsInnerIssueCounts.md) |  | 
 **RejectionDetails** | Pointer to [**GetSnippets200ResponseResultsInnerRejectionDetails**](GetSnippets200ResponseResultsInnerRejectionDetails.md) |  | [optional] 
-**Labels** | [**[]GetSnippets200ResponseResultsInnerLabelsInner**](GetSnippets200ResponseResultsInnerLabelsInner.md) | Package labels assigned to this snippet | 
+**Labels** | [**[]GetProjectDependencies200ResponseDependenciesInnerLabelsInner**](GetProjectDependencies200ResponseDependenciesInnerLabelsInner.md) | Package labels assigned to this snippet | 
 
 ## Methods
 
 ### NewGetSnippets200ResponseResultsInner
 
-`func NewGetSnippets200ResponseResultsInner(id string, packageId string, purl string, locator string, package_ string, version string, kind string, matchCount int32, highestMatchPercentage float32, licenses []GetSnippets200ResponseResultsInnerLicensesInner, issueCounts GetSnippets200ResponseResultsInnerIssueCounts, labels []GetSnippets200ResponseResultsInnerLabelsInner, ) *GetSnippets200ResponseResultsInner`
+`func NewGetSnippets200ResponseResultsInner(id string, packageId string, purl string, locator string, package_ string, version string, kind string, matchCount int32, highestMatchPercentage float32, licenses []GetSnippets200ResponseResultsInnerLicensesInner, issueCounts GetSnippets200ResponseResultsInnerIssueCounts, labels []GetProjectDependencies200ResponseDependenciesInnerLabelsInner, ) *GetSnippets200ResponseResultsInner`
 
 NewGetSnippets200ResponseResultsInner instantiates a new GetSnippets200ResponseResultsInner object
 This constructor will assign default values to properties that have it defined,
@@ -362,20 +362,20 @@ HasRejectionDetails returns a boolean if a field has been set.
 
 ### GetLabels
 
-`func (o *GetSnippets200ResponseResultsInner) GetLabels() []GetSnippets200ResponseResultsInnerLabelsInner`
+`func (o *GetSnippets200ResponseResultsInner) GetLabels() []GetProjectDependencies200ResponseDependenciesInnerLabelsInner`
 
 GetLabels returns the Labels field if non-nil, zero value otherwise.
 
 ### GetLabelsOk
 
-`func (o *GetSnippets200ResponseResultsInner) GetLabelsOk() (*[]GetSnippets200ResponseResultsInnerLabelsInner, bool)`
+`func (o *GetSnippets200ResponseResultsInner) GetLabelsOk() (*[]GetProjectDependencies200ResponseDependenciesInnerLabelsInner, bool)`
 
 GetLabelsOk returns a tuple with the Labels field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLabels
 
-`func (o *GetSnippets200ResponseResultsInner) SetLabels(v []GetSnippets200ResponseResultsInnerLabelsInner)`
+`func (o *GetSnippets200ResponseResultsInner) SetLabels(v []GetProjectDependencies200ResponseDependenciesInnerLabelsInner)`
 
 SetLabels sets Labels field to given value.
 
