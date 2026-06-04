@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.81
 Contact: support@fossa.com
 */
 
@@ -28,7 +28,7 @@ type CreateRoleRequest struct {
 	Name string `json:"name"`
 	// Description of the role
 	Description string `json:"description"`
-	// List of permissions for this role
+	// List of permissions for this role. Each entry must be a permission that exists in the system (see `GET /api/roles/all-permissions`) and is valid for the role's `scope`; otherwise the request is rejected with a `400`. 
 	Permissions []CreateRoleRequestPermissionsInner `json:"permissions,omitempty"`
 }
 
