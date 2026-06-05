@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.83
 Contact: support@fossa.com
 */
 
@@ -160,11 +160,11 @@ type ApiCreateReleaseGroupReleasesRequest struct {
 	ctx context.Context
 	ApiService *ReleaseGroupsAPIService
 	groupId int32
-	createReleaseGroupReleasesRequest *CreateReleaseGroupReleasesRequest
+	createReleaseGroupRequestRelease *CreateReleaseGroupRequestRelease
 }
 
-func (r ApiCreateReleaseGroupReleasesRequest) CreateReleaseGroupReleasesRequest(createReleaseGroupReleasesRequest CreateReleaseGroupReleasesRequest) ApiCreateReleaseGroupReleasesRequest {
-	r.createReleaseGroupReleasesRequest = &createReleaseGroupReleasesRequest
+func (r ApiCreateReleaseGroupReleasesRequest) CreateReleaseGroupRequestRelease(createReleaseGroupRequestRelease CreateReleaseGroupRequestRelease) ApiCreateReleaseGroupReleasesRequest {
+	r.createReleaseGroupRequestRelease = &createReleaseGroupRequestRelease
 	return r
 }
 
@@ -210,8 +210,8 @@ func (a *ReleaseGroupsAPIService) CreateReleaseGroupReleasesExecute(r ApiCreateR
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.createReleaseGroupReleasesRequest == nil {
-		return localVarReturnValue, nil, reportError("createReleaseGroupReleasesRequest is required and must be specified")
+	if r.createReleaseGroupRequestRelease == nil {
+		return localVarReturnValue, nil, reportError("createReleaseGroupRequestRelease is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -232,7 +232,7 @@ func (a *ReleaseGroupsAPIService) CreateReleaseGroupReleasesExecute(r ApiCreateR
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.createReleaseGroupReleasesRequest
+	localVarPostBody = r.createReleaseGroupRequestRelease
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

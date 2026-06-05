@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.83
 Contact: support@fossa.com
 */
 
@@ -36,7 +36,7 @@ func (r ApiAddTeamsToTeamGroupRequest) AddTeamsToTeamGroupRequest(addTeamsToTeam
 	return r
 }
 
-func (r ApiAddTeamsToTeamGroupRequest) Execute() (*AddTeamsToTeamGroup200Response, *http.Response, error) {
+func (r ApiAddTeamsToTeamGroupRequest) Execute() (*GetTeamGroups200ResponseInner, *http.Response, error) {
 	return r.ApiService.AddTeamsToTeamGroupExecute(r)
 }
 
@@ -58,13 +58,13 @@ func (a *TeamGroupsAPIService) AddTeamsToTeamGroup(ctx context.Context, id int32
 }
 
 // Execute executes the request
-//  @return AddTeamsToTeamGroup200Response
-func (a *TeamGroupsAPIService) AddTeamsToTeamGroupExecute(r ApiAddTeamsToTeamGroupRequest) (*AddTeamsToTeamGroup200Response, *http.Response, error) {
+//  @return GetTeamGroups200ResponseInner
+func (a *TeamGroupsAPIService) AddTeamsToTeamGroupExecute(r ApiAddTeamsToTeamGroupRequest) (*GetTeamGroups200ResponseInner, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *AddTeamsToTeamGroup200Response
+		localVarReturnValue  *GetTeamGroups200ResponseInner
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TeamGroupsAPIService.AddTeamsToTeamGroup")
@@ -867,11 +867,11 @@ type ApiUpdateTeamGroupRequest struct {
 	ctx context.Context
 	ApiService *TeamGroupsAPIService
 	id int32
-	updateTeamGroupRequest *UpdateTeamGroupRequest
+	createTeamGroupRequest *CreateTeamGroupRequest
 }
 
-func (r ApiUpdateTeamGroupRequest) UpdateTeamGroupRequest(updateTeamGroupRequest UpdateTeamGroupRequest) ApiUpdateTeamGroupRequest {
-	r.updateTeamGroupRequest = &updateTeamGroupRequest
+func (r ApiUpdateTeamGroupRequest) CreateTeamGroupRequest(createTeamGroupRequest CreateTeamGroupRequest) ApiUpdateTeamGroupRequest {
+	r.createTeamGroupRequest = &createTeamGroupRequest
 	return r
 }
 
@@ -917,8 +917,8 @@ func (a *TeamGroupsAPIService) UpdateTeamGroupExecute(r ApiUpdateTeamGroupReques
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.updateTeamGroupRequest == nil {
-		return localVarReturnValue, nil, reportError("updateTeamGroupRequest is required and must be specified")
+	if r.createTeamGroupRequest == nil {
+		return localVarReturnValue, nil, reportError("createTeamGroupRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -939,7 +939,7 @@ func (a *TeamGroupsAPIService) UpdateTeamGroupExecute(r ApiUpdateTeamGroupReques
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.updateTeamGroupRequest
+	localVarPostBody = r.createTeamGroupRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
