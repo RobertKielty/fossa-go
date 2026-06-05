@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.83
 Contact: support@fossa.com
 */
 
@@ -865,7 +865,7 @@ func (r ApiGetSnippetCountRequest) PackageLabels(packageLabels []string) ApiGetS
 	return r
 }
 
-func (r ApiGetSnippetCountRequest) Execute() (*GetSnippetCount200Response, *http.Response, error) {
+func (r ApiGetSnippetCountRequest) Execute() (*UpdateIssues200Response, *http.Response, error) {
 	return r.ApiService.GetSnippetCountExecute(r)
 }
 
@@ -887,13 +887,13 @@ func (a *SnippetsAPIService) GetSnippetCount(ctx context.Context, locator string
 }
 
 // Execute executes the request
-//  @return GetSnippetCount200Response
-func (a *SnippetsAPIService) GetSnippetCountExecute(r ApiGetSnippetCountRequest) (*GetSnippetCount200Response, *http.Response, error) {
+//  @return UpdateIssues200Response
+func (a *SnippetsAPIService) GetSnippetCountExecute(r ApiGetSnippetCountRequest) (*UpdateIssues200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetSnippetCount200Response
+		localVarReturnValue  *UpdateIssues200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SnippetsAPIService.GetSnippetCount")
