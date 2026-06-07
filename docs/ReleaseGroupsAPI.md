@@ -94,7 +94,7 @@ Name | Type | Description  | Notes
 
 ## CreateReleaseGroupReleases
 
-> CreateReleaseGroup200Response CreateReleaseGroupReleases(ctx, groupId).CreateReleaseGroupReleasesRequest(createReleaseGroupReleasesRequest).Execute()
+> CreateReleaseGroup200Response CreateReleaseGroupReleases(ctx, groupId).CreateReleaseGroupRequestRelease(createReleaseGroupRequestRelease).Execute()
 
 
 
@@ -114,11 +114,11 @@ import (
 
 func main() {
 	groupId := int32(56) // int32 | The ID of the release group
-	createReleaseGroupReleasesRequest := *openapiclient.NewCreateReleaseGroupReleasesRequest() // CreateReleaseGroupReleasesRequest | 
+	createReleaseGroupRequestRelease := *openapiclient.NewCreateReleaseGroupRequestRelease() // CreateReleaseGroupRequestRelease | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ReleaseGroupsAPI.CreateReleaseGroupReleases(context.Background(), groupId).CreateReleaseGroupReleasesRequest(createReleaseGroupReleasesRequest).Execute()
+	resp, r, err := apiClient.ReleaseGroupsAPI.CreateReleaseGroupReleases(context.Background(), groupId).CreateReleaseGroupRequestRelease(createReleaseGroupRequestRelease).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReleaseGroupsAPI.CreateReleaseGroupReleases``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -144,7 +144,7 @@ Other parameters are passed through a pointer to a apiCreateReleaseGroupReleases
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **createReleaseGroupReleasesRequest** | [**CreateReleaseGroupReleasesRequest**](CreateReleaseGroupReleasesRequest.md) |  | 
+ **createReleaseGroupRequestRelease** | [**CreateReleaseGroupRequestRelease**](CreateReleaseGroupRequestRelease.md) |  | 
 
 ### Return type
 
