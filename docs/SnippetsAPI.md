@@ -296,7 +296,7 @@ No authorization required
 
 ## GetSnippetCount
 
-> GetSnippetCount200Response GetSnippetCount(ctx, locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).Execute()
+> UpdateIssues200Response GetSnippetCount(ctx, locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).Execute()
 
 Get snippet count
 
@@ -330,7 +330,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `SnippetsAPI.GetSnippetCount``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetSnippetCount`: GetSnippetCount200Response
+	// response from `GetSnippetCount`: UpdateIssues200Response
 	fmt.Fprintf(os.Stdout, "Response from `SnippetsAPI.GetSnippetCount`: %v\n", resp)
 }
 ```
@@ -360,7 +360,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetSnippetCount200Response**](GetSnippetCount200Response.md)
+[**UpdateIssues200Response**](UpdateIssues200Response.md)
 
 ### Authorization
 
