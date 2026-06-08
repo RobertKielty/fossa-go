@@ -117,7 +117,7 @@ func main() {
 	type_ := "type__example" // string | Filter by project type. (optional)
 	isPublic := true // bool | Filter by project being public or private. (optional)
 	labels := []string{"Inner_example"} // []string | Filter by project labels. (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
+	teamId := []openapiclient.GetIssueCountsTeamIdParameterInner{openapiclient.getIssueCounts_teamId_parameter_inner{Float32: new(float32)}} // []GetIssueCountsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
 	latestScan := int32(56) // int32 | Filter by last policy scan within N days. (optional)
 	lastRevisionWithin := int32(56) // int32 | Filter by last revision analyzed within N days. (optional)
 	locators := openapiclient.deleteProjects_locators_parameter{ArrayOfString: new([]string)} // DeleteProjectsLocatorsParameter | The list of locators for the projects to delete. If \"all\" is provided, then all projects that meet the provided filters will be deleted.  (optional)
@@ -147,7 +147,7 @@ Name | Type | Description  | Notes
  **type_** | **string** | Filter by project type. | 
  **isPublic** | **bool** | Filter by project being public or private. | 
  **labels** | **[]string** | Filter by project labels. | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
+ **teamId** | [**[]GetIssueCountsTeamIdParameterInner**](GetIssueCountsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
  **latestScan** | **int32** | Filter by last policy scan within N days. | 
  **lastRevisionWithin** | **int32** | Filter by last revision analyzed within N days. | 
  **locators** | [**DeleteProjectsLocatorsParameter**](DeleteProjectsLocatorsParameter.md) | The list of locators for the projects to delete. If \&quot;all\&quot; is provided, then all projects that meet the provided filters will be deleted.  | 
@@ -192,7 +192,7 @@ import (
 
 func main() {
 	title := "title_example" // string | Filter by release group name. (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned release groups. (optional)
+	teamId := []openapiclient.GetIssueCountsTeamIdParameterInner{openapiclient.getIssueCounts_teamId_parameter_inner{Float32: new(float32)}} // []GetIssueCountsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned release groups. (optional)
 	latestScan := int32(56) // int32 | Filter by last policy scan within N days. (optional)
 	ids := openapiclient.deleteReleaseGroups_ids_parameter{ArrayOfInt32: new([]int32)} // DeleteReleaseGroupsIdsParameter | The list of ids for the release groups to delete. If \"all\" is provided, then all release groups that meet the provided filters will be deleted.  (optional)
 
@@ -218,7 +218,7 @@ Other parameters are passed through a pointer to a apiDeleteReleaseGroupsRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **title** | **string** | Filter by release group name. | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups. | 
+ **teamId** | [**[]GetIssueCountsTeamIdParameterInner**](GetIssueCountsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups. | 
  **latestScan** | **int32** | Filter by last policy scan within N days. | 
  **ids** | [**DeleteReleaseGroupsIdsParameter**](DeleteReleaseGroupsIdsParameter.md) | The list of ids for the release groups to delete. If \&quot;all\&quot; is provided, then all release groups that meet the provided filters will be deleted.  | 
 
@@ -638,8 +638,8 @@ import (
 
 func main() {
 	locator := "locator_example" // string | the url-encoded locator of the project - matched by substring
-	offset := float32(8.14) // float32 | the number of revisions to skip for pagination (used with \"count\" query parameter) (optional)
-	count := float32(8.14) // float32 | the number of revisions to return (maximum of 1000) (optional)
+	offset := float32(8.14) // float32 | the number of revisions to skip per ref (branch or tag) for pagination. (optional)
+	count := float32(8.14) // float32 | the number of revisions to return per ref (branch or tag), max 1000. (optional)
 	resolved := true // bool | If true, we will only return Revisions that have been successfully analyzed by FOSSA (resolved) (optional)
 	refs := []string{"Inner_example"} // []string | the list of branches or tags being requested (optional)
 	refsType := "refsType_example" // string | Specify whether the list should be tags OR branches (optional)
@@ -673,8 +673,8 @@ Other parameters are passed through a pointer to a apiGetProjectRevisionsRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **offset** | **float32** | the number of revisions to skip for pagination (used with \&quot;count\&quot; query parameter) | 
- **count** | **float32** | the number of revisions to return (maximum of 1000) | 
+ **offset** | **float32** | the number of revisions to skip per ref (branch or tag) for pagination. | 
+ **count** | **float32** | the number of revisions to return per ref (branch or tag), max 1000. | 
  **resolved** | **bool** | If true, we will only return Revisions that have been successfully analyzed by FOSSA (resolved) | 
  **refs** | **[]string** | the list of branches or tags being requested | 
  **refsType** | **string** | Specify whether the list should be tags OR branches | 
@@ -726,7 +726,7 @@ func main() {
 	type_ := "type__example" // string | Filter by project type. (optional)
 	isPublic := true // bool | Filter by project being public or private. (optional)
 	labels := []string{"Inner_example"} // []string | Filter by project labels. (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
+	teamId := []openapiclient.GetIssueCountsTeamIdParameterInner{openapiclient.getIssueCounts_teamId_parameter_inner{Float32: new(float32)}} // []GetIssueCountsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
 	latestScan := int32(56) // int32 | Filter by last policy scan within N days. (optional)
 	lastRevisionWithin := int32(56) // int32 | Filter by last revision analyzed within N days. (optional)
 	locators := []string{"Inner_example"} // []string | Filter by project locators (exact match). (optional)
@@ -764,7 +764,7 @@ Name | Type | Description  | Notes
  **type_** | **string** | Filter by project type. | 
  **isPublic** | **bool** | Filter by project being public or private. | 
  **labels** | **[]string** | Filter by project labels. | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
+ **teamId** | [**[]GetIssueCountsTeamIdParameterInner**](GetIssueCountsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
  **latestScan** | **int32** | Filter by last policy scan within N days. | 
  **lastRevisionWithin** | **int32** | Filter by last revision analyzed within N days. | 
  **locators** | **[]string** | Filter by project locators (exact match). | 
@@ -876,7 +876,7 @@ func main() {
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
 	count := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 10)
 	title := "title_example" // string | Filter by release group name. (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned release groups. (optional)
+	teamId := []openapiclient.GetIssueCountsTeamIdParameterInner{openapiclient.getIssueCounts_teamId_parameter_inner{Float32: new(float32)}} // []GetIssueCountsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned release groups. (optional)
 	latestScan := int32(56) // int32 | Filter by last policy scan within N days. (optional)
 	lastRevisionWithin := int32(56) // int32 | Filter by last revision analyzed within N days. (optional)
 	isPublic := true // bool | Filter by whether the release group is public on the portal. (optional)
@@ -908,7 +908,7 @@ Name | Type | Description  | Notes
  **page** | **int32** | The specific page of data to return | [default to 1]
  **count** | **int32** | The number of items to return in each page of results | [default to 10]
  **title** | **string** | Filter by release group name. | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups. | 
+ **teamId** | [**[]GetIssueCountsTeamIdParameterInner**](GetIssueCountsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups. | 
  **latestScan** | **int32** | Filter by last policy scan within N days. | 
  **lastRevisionWithin** | **int32** | Filter by last revision analyzed within N days. | 
  **isPublic** | **bool** | Filter by whether the release group is public on the portal. | 
@@ -1100,7 +1100,7 @@ func main() {
 	type_ := "type__example" // string | Filter by project type. (optional)
 	isPublic := true // bool | Filter by project being public or private. (optional)
 	labels := []string{"Inner_example"} // []string | Filter by project labels. (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
+	teamId := []openapiclient.GetIssueCountsTeamIdParameterInner{openapiclient.getIssueCounts_teamId_parameter_inner{Float32: new(float32)}} // []GetIssueCountsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
 	latestScan := int32(56) // int32 | Filter by last policy scan within N days. (optional)
 	lastRevisionWithin := int32(56) // int32 | Filter by last revision analyzed within N days. (optional)
 
@@ -1133,7 +1133,7 @@ Name | Type | Description  | Notes
  **type_** | **string** | Filter by project type. | 
  **isPublic** | **bool** | Filter by project being public or private. | 
  **labels** | **[]string** | Filter by project labels. | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
+ **teamId** | [**[]GetIssueCountsTeamIdParameterInner**](GetIssueCountsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
  **latestScan** | **int32** | Filter by last policy scan within N days. | 
  **lastRevisionWithin** | **int32** | Filter by last revision analyzed within N days. | 
 
@@ -1182,7 +1182,7 @@ func main() {
 	type_ := "type__example" // string | Filter by project type. (optional)
 	isPublic := true // bool | Filter by project being public or private. (optional)
 	labels := []string{"Inner_example"} // []string | Filter by project labels. (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
+	teamId := []openapiclient.GetIssueCountsTeamIdParameterInner{openapiclient.getIssueCounts_teamId_parameter_inner{Float32: new(float32)}} // []GetIssueCountsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
 	latestScan := int32(56) // int32 | Filter by last policy scan within N days. (optional)
 	lastRevisionWithin := int32(56) // int32 | Filter by last revision analyzed within N days. (optional)
 
@@ -1215,7 +1215,7 @@ Name | Type | Description  | Notes
  **type_** | **string** | Filter by project type. | 
  **isPublic** | **bool** | Filter by project being public or private. | 
  **labels** | **[]string** | Filter by project labels. | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
+ **teamId** | [**[]GetIssueCountsTeamIdParameterInner**](GetIssueCountsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
  **latestScan** | **int32** | Filter by last policy scan within N days. | 
  **lastRevisionWithin** | **int32** | Filter by last revision analyzed within N days. | 
 
@@ -1261,7 +1261,7 @@ func main() {
 	policyId := float32(8.14) // float32 | The ID of the policy you want to apply to projects.
 	ids := openapiclient.updateReleaseGroupsPolicies_ids_parameter{ArrayOfFloat32: new([]float32)} // UpdateReleaseGroupsPoliciesIdsParameter | The list of IDs for the release groups to update. If \"all\" is provided, then all release groups that meet the provided filters will have the label applied. 
 	title := "title_example" // string | Filter by release group name. (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned release groups. (optional)
+	teamId := []openapiclient.GetIssueCountsTeamIdParameterInner{openapiclient.getIssueCounts_teamId_parameter_inner{Float32: new(float32)}} // []GetIssueCountsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned release groups. (optional)
 	latestScan := int32(56) // int32 | Filter by last policy scan within N days. (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -1288,7 +1288,7 @@ Name | Type | Description  | Notes
  **policyId** | **float32** | The ID of the policy you want to apply to projects. | 
  **ids** | [**UpdateReleaseGroupsPoliciesIdsParameter**](UpdateReleaseGroupsPoliciesIdsParameter.md) | The list of IDs for the release groups to update. If \&quot;all\&quot; is provided, then all release groups that meet the provided filters will have the label applied.  | 
  **title** | **string** | Filter by release group name. | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups. | 
+ **teamId** | [**[]GetIssueCountsTeamIdParameterInner**](GetIssueCountsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups. | 
  **latestScan** | **int32** | Filter by last policy scan within N days. | 
 
 ### Return type
