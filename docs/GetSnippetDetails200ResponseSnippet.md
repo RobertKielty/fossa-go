@@ -19,14 +19,14 @@ Name | Type | Description | Notes
 **Licenses** | [**[]GetSnippets200ResponseResultsInnerLicensesInner**](GetSnippets200ResponseResultsInnerLicensesInner.md) | Array of licenses associated with the snippet | 
 **IssueCounts** | [**GetSnippets200ResponseResultsInnerIssueCounts**](GetSnippets200ResponseResultsInnerIssueCounts.md) |  | 
 **RejectionDetails** | Pointer to [**GetSnippets200ResponseResultsInnerRejectionDetails**](GetSnippets200ResponseResultsInnerRejectionDetails.md) |  | [optional] 
-**Labels** | [**[]GetSnippets200ResponseResultsInnerLabelsInner**](GetSnippets200ResponseResultsInnerLabelsInner.md) | Package labels assigned to this snippet | 
+**Labels** | [**[]GetProjectDependencies200ResponseDependenciesInnerLabelsInner**](GetProjectDependencies200ResponseDependenciesInnerLabelsInner.md) | Package labels assigned to this snippet | 
 **OtherVersions** | Pointer to [**[]GetSnippetDetails200ResponseSnippetOtherVersionsInner**](GetSnippetDetails200ResponseSnippetOtherVersionsInner.md) | Other versions of the package where this snippet was detected | [optional] 
 
 ## Methods
 
 ### NewGetSnippetDetails200ResponseSnippet
 
-`func NewGetSnippetDetails200ResponseSnippet(id string, packageId string, purl string, locator string, package_ string, version string, kind string, matches []GetSnippetDetails200ResponseSnippetMatchesInner, highestMatchPercentage float32, licenses []GetSnippets200ResponseResultsInnerLicensesInner, issueCounts GetSnippets200ResponseResultsInnerIssueCounts, labels []GetSnippets200ResponseResultsInnerLabelsInner, ) *GetSnippetDetails200ResponseSnippet`
+`func NewGetSnippetDetails200ResponseSnippet(id string, packageId string, purl string, locator string, package_ string, version string, kind string, matches []GetSnippetDetails200ResponseSnippetMatchesInner, highestMatchPercentage float32, licenses []GetSnippets200ResponseResultsInnerLicensesInner, issueCounts GetSnippets200ResponseResultsInnerIssueCounts, labels []GetProjectDependencies200ResponseDependenciesInnerLabelsInner, ) *GetSnippetDetails200ResponseSnippet`
 
 NewGetSnippetDetails200ResponseSnippet instantiates a new GetSnippetDetails200ResponseSnippet object
 This constructor will assign default values to properties that have it defined,
@@ -363,20 +363,20 @@ HasRejectionDetails returns a boolean if a field has been set.
 
 ### GetLabels
 
-`func (o *GetSnippetDetails200ResponseSnippet) GetLabels() []GetSnippets200ResponseResultsInnerLabelsInner`
+`func (o *GetSnippetDetails200ResponseSnippet) GetLabels() []GetProjectDependencies200ResponseDependenciesInnerLabelsInner`
 
 GetLabels returns the Labels field if non-nil, zero value otherwise.
 
 ### GetLabelsOk
 
-`func (o *GetSnippetDetails200ResponseSnippet) GetLabelsOk() (*[]GetSnippets200ResponseResultsInnerLabelsInner, bool)`
+`func (o *GetSnippetDetails200ResponseSnippet) GetLabelsOk() (*[]GetProjectDependencies200ResponseDependenciesInnerLabelsInner, bool)`
 
 GetLabelsOk returns a tuple with the Labels field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLabels
 
-`func (o *GetSnippetDetails200ResponseSnippet) SetLabels(v []GetSnippets200ResponseResultsInnerLabelsInner)`
+`func (o *GetSnippetDetails200ResponseSnippet) SetLabels(v []GetProjectDependencies200ResponseDependenciesInnerLabelsInner)`
 
 SetLabels sets Labels field to given value.
 
