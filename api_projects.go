@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.85
 Contact: support@fossa.com
 */
 
@@ -156,7 +156,7 @@ type ApiDeleteProjectsRequest struct {
 	type_ *string
 	isPublic *bool
 	labels *[]string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *[]GetIssueCountsTeamIdParameterInner
 	latestScan *int32
 	lastRevisionWithin *int32
 	locators *DeleteProjectsLocatorsParameter
@@ -187,7 +187,7 @@ func (r ApiDeleteProjectsRequest) Labels(labels []string) ApiDeleteProjectsReque
 }
 
 // Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects.
-func (r ApiDeleteProjectsRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiDeleteProjectsRequest {
+func (r ApiDeleteProjectsRequest) TeamId(teamId []GetIssueCountsTeamIdParameterInner) ApiDeleteProjectsRequest {
 	r.teamId = &teamId
 	return r
 }
@@ -347,7 +347,7 @@ type ApiDeleteReleaseGroupsRequest struct {
 	ctx context.Context
 	ApiService *ProjectsAPIService
 	title *string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *[]GetIssueCountsTeamIdParameterInner
 	latestScan *int32
 	ids *DeleteReleaseGroupsIdsParameter
 }
@@ -359,7 +359,7 @@ func (r ApiDeleteReleaseGroupsRequest) Title(title string) ApiDeleteReleaseGroup
 }
 
 // Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups.
-func (r ApiDeleteReleaseGroupsRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiDeleteReleaseGroupsRequest {
+func (r ApiDeleteReleaseGroupsRequest) TeamId(teamId []GetIssueCountsTeamIdParameterInner) ApiDeleteReleaseGroupsRequest {
 	r.teamId = &teamId
 	return r
 }
@@ -1331,13 +1331,13 @@ type ApiGetProjectRevisionsRequest struct {
 	source *string
 }
 
-// the number of revisions to skip for pagination (used with \&quot;count\&quot; query parameter)
+// the number of revisions to skip per ref (branch or tag) for pagination.
 func (r ApiGetProjectRevisionsRequest) Offset(offset float32) ApiGetProjectRevisionsRequest {
 	r.offset = &offset
 	return r
 }
 
-// the number of revisions to return (maximum of 1000)
+// the number of revisions to return per ref (branch or tag), max 1000.
 func (r ApiGetProjectRevisionsRequest) Count(count float32) ApiGetProjectRevisionsRequest {
 	r.count = &count
 	return r
@@ -1543,7 +1543,7 @@ type ApiGetProjectsRequest struct {
 	type_ *string
 	isPublic *bool
 	labels *[]string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *[]GetIssueCountsTeamIdParameterInner
 	latestScan *int32
 	lastRevisionWithin *int32
 	locators *[]string
@@ -1595,7 +1595,7 @@ func (r ApiGetProjectsRequest) Labels(labels []string) ApiGetProjectsRequest {
 }
 
 // Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects.
-func (r ApiGetProjectsRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiGetProjectsRequest {
+func (r ApiGetProjectsRequest) TeamId(teamId []GetIssueCountsTeamIdParameterInner) ApiGetProjectsRequest {
 	r.teamId = &teamId
 	return r
 }
@@ -1930,7 +1930,7 @@ type ApiGetReleaseGroupsRequest struct {
 	page *int32
 	count *int32
 	title *string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *[]GetIssueCountsTeamIdParameterInner
 	latestScan *int32
 	lastRevisionWithin *int32
 	isPublic *bool
@@ -1961,7 +1961,7 @@ func (r ApiGetReleaseGroupsRequest) Title(title string) ApiGetReleaseGroupsReque
 }
 
 // Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups.
-func (r ApiGetReleaseGroupsRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiGetReleaseGroupsRequest {
+func (r ApiGetReleaseGroupsRequest) TeamId(teamId []GetIssueCountsTeamIdParameterInner) ApiGetReleaseGroupsRequest {
 	r.teamId = &teamId
 	return r
 }
@@ -2281,6 +2281,8 @@ Most fields require Edit permission on the project. The following fields require
 
 ### Feature Flags
 - `securityIssueScanningEnabled` and `qualityIssueScanningEnabled` can only be modified if the organization has the respective features enabled.
+- `quickImportVendoredDetectionEnabled` can only be modified if the organization has both quick import vendored detection and vendored dependency detection features enabled.
+- `quickImportSnippetDetectionEnabled` can only be modified if the organization has both quick import snippet detection and snippet detection features enabled.
 
 ### Issue Tracker Fields
 - When updating `issueTrackerCustomFields`, boolean values in the `isRequired` field may be stringified and will be automatically converted.
@@ -2444,7 +2446,7 @@ type ApiUpdateProjectsLabelsRequest struct {
 	type_ *string
 	isPublic *bool
 	labels *[]string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *[]GetIssueCountsTeamIdParameterInner
 	latestScan *int32
 	lastRevisionWithin *int32
 }
@@ -2486,7 +2488,7 @@ func (r ApiUpdateProjectsLabelsRequest) Labels(labels []string) ApiUpdateProject
 }
 
 // Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects.
-func (r ApiUpdateProjectsLabelsRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiUpdateProjectsLabelsRequest {
+func (r ApiUpdateProjectsLabelsRequest) TeamId(teamId []GetIssueCountsTeamIdParameterInner) ApiUpdateProjectsLabelsRequest {
 	r.teamId = &teamId
 	return r
 }
@@ -2661,7 +2663,7 @@ type ApiUpdateProjectsPoliciesRequest struct {
 	type_ *string
 	isPublic *bool
 	labels *[]string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *[]GetIssueCountsTeamIdParameterInner
 	latestScan *int32
 	lastRevisionWithin *int32
 }
@@ -2703,7 +2705,7 @@ func (r ApiUpdateProjectsPoliciesRequest) Labels(labels []string) ApiUpdateProje
 }
 
 // Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects.
-func (r ApiUpdateProjectsPoliciesRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiUpdateProjectsPoliciesRequest {
+func (r ApiUpdateProjectsPoliciesRequest) TeamId(teamId []GetIssueCountsTeamIdParameterInner) ApiUpdateProjectsPoliciesRequest {
 	r.teamId = &teamId
 	return r
 }
@@ -2875,7 +2877,7 @@ type ApiUpdateReleaseGroupsPoliciesRequest struct {
 	policyId *float32
 	ids *UpdateReleaseGroupsPoliciesIdsParameter
 	title *string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *[]GetIssueCountsTeamIdParameterInner
 	latestScan *int32
 }
 
@@ -2898,7 +2900,7 @@ func (r ApiUpdateReleaseGroupsPoliciesRequest) Title(title string) ApiUpdateRele
 }
 
 // Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups.
-func (r ApiUpdateReleaseGroupsPoliciesRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiUpdateReleaseGroupsPoliciesRequest {
+func (r ApiUpdateReleaseGroupsPoliciesRequest) TeamId(teamId []GetIssueCountsTeamIdParameterInner) ApiUpdateReleaseGroupsPoliciesRequest {
 	r.teamId = &teamId
 	return r
 }

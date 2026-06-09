@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 ## GetReleaseComponentsCount
 
-> GetReleaseComponentsCount200Response GetReleaseComponentsCount(ctx, releaseGroupId, releaseId).Execute()
+> GetRevisionComponentsCount200Response GetReleaseComponentsCount(ctx, releaseGroupId, releaseId).Execute()
 
 
 
@@ -48,7 +48,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `BinaryAPI.GetReleaseComponentsCount``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetReleaseComponentsCount`: GetReleaseComponentsCount200Response
+	// response from `GetReleaseComponentsCount`: GetRevisionComponentsCount200Response
 	fmt.Fprintf(os.Stdout, "Response from `BinaryAPI.GetReleaseComponentsCount`: %v\n", resp)
 }
 ```
@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetReleaseComponentsCount200Response**](GetReleaseComponentsCount200Response.md)
+[**GetRevisionComponentsCount200Response**](GetRevisionComponentsCount200Response.md)
 
 ### Authorization
 
