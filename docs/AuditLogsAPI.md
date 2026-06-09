@@ -190,7 +190,7 @@ Name | Type | Description  | Notes
 
 ## GetAuditLogsExport
 
-> GetAuditLogsExport201Response GetAuditLogsExport(ctx).GetAuditLogsExportRequest(getAuditLogsExportRequest).Execute()
+> GetPackageIndexExport201Response GetAuditLogsExport(ctx).GetAuditLogsExportRequest(getAuditLogsExportRequest).Execute()
 
 
 
@@ -219,7 +219,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuditLogsAPI.GetAuditLogsExport``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetAuditLogsExport`: GetAuditLogsExport201Response
+	// response from `GetAuditLogsExport`: GetPackageIndexExport201Response
 	fmt.Fprintf(os.Stdout, "Response from `AuditLogsAPI.GetAuditLogsExport`: %v\n", resp)
 }
 ```
@@ -239,7 +239,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetAuditLogsExport201Response**](GetAuditLogsExport201Response.md)
+[**GetPackageIndexExport201Response**](GetPackageIndexExport201Response.md)
 
 ### Authorization
 

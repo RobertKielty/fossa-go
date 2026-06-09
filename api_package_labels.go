@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.85
 Contact: support@fossa.com
 */
 
@@ -586,11 +586,11 @@ func (a *PackageLabelsAPIService) DeletePackageLabelAssignmentsExecute(r ApiDele
 type ApiDeletePackageLabelsRequest struct {
 	ctx context.Context
 	ApiService *PackageLabelsAPIService
-	deletePackageLabelsRequest *DeletePackageLabelsRequest
+	addReleaseGroupsToTeamRequest *AddReleaseGroupsToTeamRequest
 }
 
-func (r ApiDeletePackageLabelsRequest) DeletePackageLabelsRequest(deletePackageLabelsRequest DeletePackageLabelsRequest) ApiDeletePackageLabelsRequest {
-	r.deletePackageLabelsRequest = &deletePackageLabelsRequest
+func (r ApiDeletePackageLabelsRequest) AddReleaseGroupsToTeamRequest(addReleaseGroupsToTeamRequest AddReleaseGroupsToTeamRequest) ApiDeletePackageLabelsRequest {
+	r.addReleaseGroupsToTeamRequest = &addReleaseGroupsToTeamRequest
 	return r
 }
 
@@ -631,8 +631,8 @@ func (a *PackageLabelsAPIService) DeletePackageLabelsExecute(r ApiDeletePackageL
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.deletePackageLabelsRequest == nil {
-		return nil, reportError("deletePackageLabelsRequest is required and must be specified")
+	if r.addReleaseGroupsToTeamRequest == nil {
+		return nil, reportError("addReleaseGroupsToTeamRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -653,7 +653,7 @@ func (a *PackageLabelsAPIService) DeletePackageLabelsExecute(r ApiDeletePackageL
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.deletePackageLabelsRequest
+	localVarPostBody = r.addReleaseGroupsToTeamRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err
