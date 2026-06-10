@@ -7,21 +7,22 @@ Name | Type | Description | Notes
 **Id** | **string** |  | 
 **Title** | **string** |  | 
 **Branch** | **string** |  | 
-**Version** | Pointer to **string** |  | [optional] 
+**Version** | Pointer to **NullableString** |  | [optional] 
 **Type** | **string** |  | 
 **Public** | **bool** |  | 
+**OriginOrganizationName** | Pointer to **NullableString** |  | [optional] 
 **Url** | Pointer to **string** |  | [optional] 
 **Scanned** | Pointer to **time.Time** |  | [optional] 
 **LastAnalyzed** | Pointer to **time.Time** |  | [optional] 
-**Teams** | [**[]GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner**](GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner.md) |  | 
-**LatestRevision** | Pointer to [**GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfLatestRevision**](GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfLatestRevision.md) |  | [optional] 
+**Teams** | [**[]GetProjects200ResponseProjectsInnerAllOfAllOfTeamsInner**](GetProjects200ResponseProjectsInnerAllOfAllOfTeamsInner.md) |  | 
+**LatestRevision** | Pointer to [**GetProjects200ResponseProjectsInnerAllOfAllOfLatestRevision**](GetProjects200ResponseProjectsInnerAllOfAllOfLatestRevision.md) |  | [optional] 
 **LatestBuildStatus** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
 ### NewGetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner
 
-`func NewGetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner(id string, title string, branch string, type_ string, public bool, teams []GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner, ) *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner`
+`func NewGetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner(id string, title string, branch string, type_ string, public bool, teams []GetProjects200ResponseProjectsInnerAllOfAllOfTeamsInner, ) *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner`
 
 NewGetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner instantiates a new GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner object
 This constructor will assign default values to properties that have it defined,
@@ -121,6 +122,16 @@ SetVersion sets Version field to given value.
 
 HasVersion returns a boolean if a field has been set.
 
+### SetVersionNil
+
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) SetVersionNil(b bool)`
+
+ SetVersionNil sets the value for Version to be an explicit nil
+
+### UnsetVersion
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) UnsetVersion()`
+
+UnsetVersion ensures that no value is present for Version, not even an explicit nil
 ### GetType
 
 `func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetType() string`
@@ -161,6 +172,41 @@ and a boolean to check if the value has been set.
 SetPublic sets Public field to given value.
 
 
+### GetOriginOrganizationName
+
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetOriginOrganizationName() string`
+
+GetOriginOrganizationName returns the OriginOrganizationName field if non-nil, zero value otherwise.
+
+### GetOriginOrganizationNameOk
+
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetOriginOrganizationNameOk() (*string, bool)`
+
+GetOriginOrganizationNameOk returns a tuple with the OriginOrganizationName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOriginOrganizationName
+
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) SetOriginOrganizationName(v string)`
+
+SetOriginOrganizationName sets OriginOrganizationName field to given value.
+
+### HasOriginOrganizationName
+
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) HasOriginOrganizationName() bool`
+
+HasOriginOrganizationName returns a boolean if a field has been set.
+
+### SetOriginOrganizationNameNil
+
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) SetOriginOrganizationNameNil(b bool)`
+
+ SetOriginOrganizationNameNil sets the value for OriginOrganizationName to be an explicit nil
+
+### UnsetOriginOrganizationName
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) UnsetOriginOrganizationName()`
+
+UnsetOriginOrganizationName ensures that no value is present for OriginOrganizationName, not even an explicit nil
 ### GetUrl
 
 `func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetUrl() string`
@@ -238,40 +284,40 @@ HasLastAnalyzed returns a boolean if a field has been set.
 
 ### GetTeams
 
-`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetTeams() []GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner`
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetTeams() []GetProjects200ResponseProjectsInnerAllOfAllOfTeamsInner`
 
 GetTeams returns the Teams field if non-nil, zero value otherwise.
 
 ### GetTeamsOk
 
-`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetTeamsOk() (*[]GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner, bool)`
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetTeamsOk() (*[]GetProjects200ResponseProjectsInnerAllOfAllOfTeamsInner, bool)`
 
 GetTeamsOk returns a tuple with the Teams field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTeams
 
-`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) SetTeams(v []GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner)`
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) SetTeams(v []GetProjects200ResponseProjectsInnerAllOfAllOfTeamsInner)`
 
 SetTeams sets Teams field to given value.
 
 
 ### GetLatestRevision
 
-`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetLatestRevision() GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfLatestRevision`
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetLatestRevision() GetProjects200ResponseProjectsInnerAllOfAllOfLatestRevision`
 
 GetLatestRevision returns the LatestRevision field if non-nil, zero value otherwise.
 
 ### GetLatestRevisionOk
 
-`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetLatestRevisionOk() (*GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfLatestRevision, bool)`
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetLatestRevisionOk() (*GetProjects200ResponseProjectsInnerAllOfAllOfLatestRevision, bool)`
 
 GetLatestRevisionOk returns a tuple with the LatestRevision field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLatestRevision
 
-`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) SetLatestRevision(v GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfLatestRevision)`
+`func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) SetLatestRevision(v GetProjects200ResponseProjectsInnerAllOfAllOfLatestRevision)`
 
 SetLatestRevision sets LatestRevision field to given value.
 

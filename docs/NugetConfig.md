@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Sources** | Pointer to [**[]GetOrganizationNugetSettings200ResponseSourcesInner**](GetOrganizationNugetSettings200ResponseSourcesInner.md) | List of configured Nuget Feeds | [optional] 
+**Sources** | Pointer to [**[]GetOrganizationRubyGemsSettings200ResponseSourcesInner**](GetOrganizationRubyGemsSettings200ResponseSourcesInner.md) | List of configured Nuget Feeds | [optional] 
 
 ## Methods
 
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetSources
 
-`func (o *NugetConfig) GetSources() []GetOrganizationNugetSettings200ResponseSourcesInner`
+`func (o *NugetConfig) GetSources() []GetOrganizationRubyGemsSettings200ResponseSourcesInner`
 
 GetSources returns the Sources field if non-nil, zero value otherwise.
 
 ### GetSourcesOk
 
-`func (o *NugetConfig) GetSourcesOk() (*[]GetOrganizationNugetSettings200ResponseSourcesInner, bool)`
+`func (o *NugetConfig) GetSourcesOk() (*[]GetOrganizationRubyGemsSettings200ResponseSourcesInner, bool)`
 
 GetSourcesOk returns a tuple with the Sources field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSources
 
-`func (o *NugetConfig) SetSources(v []GetOrganizationNugetSettings200ResponseSourcesInner)`
+`func (o *NugetConfig) SetSources(v []GetOrganizationRubyGemsSettings200ResponseSourcesInner)`
 
 SetSources sets Sources field to given value.
 
