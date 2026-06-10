@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.87
 Contact: support@fossa.com
 */
 
@@ -26,14 +26,15 @@ type GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInn
 	Id string `json:"id"`
 	Title string `json:"title"`
 	Branch string `json:"branch"`
-	Version *string `json:"version,omitempty"`
+	Version NullableString `json:"version,omitempty"`
 	Type string `json:"type"`
 	Public bool `json:"public"`
+	OriginOrganizationName NullableString `json:"originOrganizationName,omitempty"`
 	Url *string `json:"url,omitempty"`
 	Scanned *time.Time `json:"scanned,omitempty"`
 	LastAnalyzed *time.Time `json:"lastAnalyzed,omitempty"`
-	Teams []GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner `json:"teams"`
-	LatestRevision *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfLatestRevision `json:"latestRevision,omitempty"`
+	Teams []GetProjects200ResponseProjectsInnerAllOfAllOfTeamsInner `json:"teams"`
+	LatestRevision *GetProjects200ResponseProjectsInnerAllOfAllOfLatestRevision `json:"latestRevision,omitempty"`
 	LatestBuildStatus *string `json:"latestBuildStatus,omitempty"`
 }
 
@@ -43,7 +44,7 @@ type _GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectIn
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner(id string, title string, branch string, type_ string, public bool, teams []GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner) *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner {
+func NewGetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner(id string, title string, branch string, type_ string, public bool, teams []GetProjects200ResponseProjectsInnerAllOfAllOfTeamsInner) *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner {
 	this := GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner{}
 	this.Id = id
 	this.Title = title
@@ -134,36 +135,46 @@ func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjec
 	o.Branch = v
 }
 
-// GetVersion returns the Version field value if set, zero value otherwise.
+// GetVersion returns the Version field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetVersion() string {
-	if o == nil || IsNil(o.Version) {
+	if o == nil || IsNil(o.Version.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.Version
+	return *o.Version.Get()
 }
 
 // GetVersionOk returns a tuple with the Version field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetVersionOk() (*string, bool) {
-	if o == nil || IsNil(o.Version) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Version, true
+	return o.Version.Get(), o.Version.IsSet()
 }
 
 // HasVersion returns a boolean if a field has been set.
 func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) HasVersion() bool {
-	if o != nil && !IsNil(o.Version) {
+	if o != nil && o.Version.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetVersion gets a reference to the given string and assigns it to the Version field.
+// SetVersion gets a reference to the given NullableString and assigns it to the Version field.
 func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) SetVersion(v string) {
-	o.Version = &v
+	o.Version.Set(&v)
+}
+// SetVersionNil sets the value for Version to be an explicit nil
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) SetVersionNil() {
+	o.Version.Set(nil)
+}
+
+// UnsetVersion ensures that no value is present for Version, not even an explicit nil
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) UnsetVersion() {
+	o.Version.Unset()
 }
 
 // GetType returns the Type field value
@@ -212,6 +223,48 @@ func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjec
 // SetPublic sets field value
 func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) SetPublic(v bool) {
 	o.Public = v
+}
+
+// GetOriginOrganizationName returns the OriginOrganizationName field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetOriginOrganizationName() string {
+	if o == nil || IsNil(o.OriginOrganizationName.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.OriginOrganizationName.Get()
+}
+
+// GetOriginOrganizationNameOk returns a tuple with the OriginOrganizationName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetOriginOrganizationNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OriginOrganizationName.Get(), o.OriginOrganizationName.IsSet()
+}
+
+// HasOriginOrganizationName returns a boolean if a field has been set.
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) HasOriginOrganizationName() bool {
+	if o != nil && o.OriginOrganizationName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOriginOrganizationName gets a reference to the given NullableString and assigns it to the OriginOrganizationName field.
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) SetOriginOrganizationName(v string) {
+	o.OriginOrganizationName.Set(&v)
+}
+// SetOriginOrganizationNameNil sets the value for OriginOrganizationName to be an explicit nil
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) SetOriginOrganizationNameNil() {
+	o.OriginOrganizationName.Set(nil)
+}
+
+// UnsetOriginOrganizationName ensures that no value is present for OriginOrganizationName, not even an explicit nil
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) UnsetOriginOrganizationName() {
+	o.OriginOrganizationName.Unset()
 }
 
 // GetUrl returns the Url field value if set, zero value otherwise.
@@ -311,9 +364,9 @@ func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjec
 }
 
 // GetTeams returns the Teams field value
-func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetTeams() []GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner {
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetTeams() []GetProjects200ResponseProjectsInnerAllOfAllOfTeamsInner {
 	if o == nil {
-		var ret []GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner
+		var ret []GetProjects200ResponseProjectsInnerAllOfAllOfTeamsInner
 		return ret
 	}
 
@@ -322,7 +375,7 @@ func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjec
 
 // GetTeamsOk returns a tuple with the Teams field value
 // and a boolean to check if the value has been set.
-func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetTeamsOk() ([]GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner, bool) {
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetTeamsOk() ([]GetProjects200ResponseProjectsInnerAllOfAllOfTeamsInner, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -330,14 +383,14 @@ func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjec
 }
 
 // SetTeams sets field value
-func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) SetTeams(v []GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfTeamsInner) {
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) SetTeams(v []GetProjects200ResponseProjectsInnerAllOfAllOfTeamsInner) {
 	o.Teams = v
 }
 
 // GetLatestRevision returns the LatestRevision field value if set, zero value otherwise.
-func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetLatestRevision() GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfLatestRevision {
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetLatestRevision() GetProjects200ResponseProjectsInnerAllOfAllOfLatestRevision {
 	if o == nil || IsNil(o.LatestRevision) {
-		var ret GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfLatestRevision
+		var ret GetProjects200ResponseProjectsInnerAllOfAllOfLatestRevision
 		return ret
 	}
 	return *o.LatestRevision
@@ -345,7 +398,7 @@ func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjec
 
 // GetLatestRevisionOk returns a tuple with the LatestRevision field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetLatestRevisionOk() (*GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfLatestRevision, bool) {
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) GetLatestRevisionOk() (*GetProjects200ResponseProjectsInnerAllOfAllOfLatestRevision, bool) {
 	if o == nil || IsNil(o.LatestRevision) {
 		return nil, false
 	}
@@ -361,8 +414,8 @@ func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjec
 	return false
 }
 
-// SetLatestRevision gets a reference to the given GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfLatestRevision and assigns it to the LatestRevision field.
-func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) SetLatestRevision(v GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInnerAllOfLatestRevision) {
+// SetLatestRevision gets a reference to the given GetProjects200ResponseProjectsInnerAllOfAllOfLatestRevision and assigns it to the LatestRevision field.
+func (o *GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProjectInner) SetLatestRevision(v GetProjects200ResponseProjectsInnerAllOfAllOfLatestRevision) {
 	o.LatestRevision = &v
 }
 
@@ -411,11 +464,14 @@ func (o GetReleaseGroupReleaseById200ResponseInnerAllOfProjectsInnerAllOfProject
 	toSerialize["id"] = o.Id
 	toSerialize["title"] = o.Title
 	toSerialize["branch"] = o.Branch
-	if !IsNil(o.Version) {
-		toSerialize["version"] = o.Version
+	if o.Version.IsSet() {
+		toSerialize["version"] = o.Version.Get()
 	}
 	toSerialize["type"] = o.Type
 	toSerialize["public"] = o.Public
+	if o.OriginOrganizationName.IsSet() {
+		toSerialize["originOrganizationName"] = o.OriginOrganizationName.Get()
+	}
 	if !IsNil(o.Url) {
 		toSerialize["url"] = o.Url
 	}
