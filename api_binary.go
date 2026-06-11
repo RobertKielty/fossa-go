@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.88
 Contact: support@fossa.com
 */
 
@@ -31,7 +31,7 @@ type ApiGetReleaseComponentsCountRequest struct {
 	releaseId float32
 }
 
-func (r ApiGetReleaseComponentsCountRequest) Execute() (*GetReleaseComponentsCount200Response, *http.Response, error) {
+func (r ApiGetReleaseComponentsCountRequest) Execute() (*GetRevisionComponentsCount200Response, *http.Response, error) {
 	return r.ApiService.GetReleaseComponentsCountExecute(r)
 }
 
@@ -55,13 +55,13 @@ func (a *BinaryAPIService) GetReleaseComponentsCount(ctx context.Context, releas
 }
 
 // Execute executes the request
-//  @return GetReleaseComponentsCount200Response
-func (a *BinaryAPIService) GetReleaseComponentsCountExecute(r ApiGetReleaseComponentsCountRequest) (*GetReleaseComponentsCount200Response, *http.Response, error) {
+//  @return GetRevisionComponentsCount200Response
+func (a *BinaryAPIService) GetReleaseComponentsCountExecute(r ApiGetReleaseComponentsCountRequest) (*GetRevisionComponentsCount200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetReleaseComponentsCount200Response
+		localVarReturnValue  *GetRevisionComponentsCount200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BinaryAPIService.GetReleaseComponentsCount")

@@ -278,7 +278,7 @@ No authorization required
 
 ## DeletePackageLabels
 
-> DeletePackageLabels(ctx).DeletePackageLabelsRequest(deletePackageLabelsRequest).Execute()
+> DeletePackageLabels(ctx).AddReleaseGroupsToTeamRequest(addReleaseGroupsToTeamRequest).Execute()
 
 
 
@@ -297,11 +297,11 @@ import (
 )
 
 func main() {
-	deletePackageLabelsRequest := *openapiclient.NewDeletePackageLabelsRequest([]int32{int32(123)}) // DeletePackageLabelsRequest | 
+	addReleaseGroupsToTeamRequest := *openapiclient.NewAddReleaseGroupsToTeamRequest([]int32{int32(123)}) // AddReleaseGroupsToTeamRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.PackageLabelsAPI.DeletePackageLabels(context.Background()).DeletePackageLabelsRequest(deletePackageLabelsRequest).Execute()
+	r, err := apiClient.PackageLabelsAPI.DeletePackageLabels(context.Background()).AddReleaseGroupsToTeamRequest(addReleaseGroupsToTeamRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `PackageLabelsAPI.DeletePackageLabels``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -320,7 +320,7 @@ Other parameters are passed through a pointer to a apiDeletePackageLabelsRequest
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **deletePackageLabelsRequest** | [**DeletePackageLabelsRequest**](DeletePackageLabelsRequest.md) |  | 
+ **addReleaseGroupsToTeamRequest** | [**AddReleaseGroupsToTeamRequest**](AddReleaseGroupsToTeamRequest.md) |  | 
 
 ### Return type
 

@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.88
 Contact: support@fossa.com
 */
 
@@ -22,7 +22,8 @@ var _ MappedNullable = &GetIssueCounts200Response{}
 
 // GetIssueCounts200Response struct for GetIssueCounts200Response
 type GetIssueCounts200Response struct {
-	Counts GetIssueCounts200ResponseCounts `json:"counts"`
+	// An array of daily issue count summaries.
+	Counts []GetIssueCounts200ResponseCountsInner `json:"counts"`
 	TotalProjects int32 `json:"totalProjects"`
 	Licensing *GetIssueCounts200ResponseLicensing `json:"licensing,omitempty"`
 	Vulnerability *GetIssueCounts200ResponseVulnerability `json:"vulnerability,omitempty"`
@@ -35,7 +36,7 @@ type _GetIssueCounts200Response GetIssueCounts200Response
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetIssueCounts200Response(counts GetIssueCounts200ResponseCounts, totalProjects int32) *GetIssueCounts200Response {
+func NewGetIssueCounts200Response(counts []GetIssueCounts200ResponseCountsInner, totalProjects int32) *GetIssueCounts200Response {
 	this := GetIssueCounts200Response{}
 	this.Counts = counts
 	this.TotalProjects = totalProjects
@@ -51,9 +52,9 @@ func NewGetIssueCounts200ResponseWithDefaults() *GetIssueCounts200Response {
 }
 
 // GetCounts returns the Counts field value
-func (o *GetIssueCounts200Response) GetCounts() GetIssueCounts200ResponseCounts {
+func (o *GetIssueCounts200Response) GetCounts() []GetIssueCounts200ResponseCountsInner {
 	if o == nil {
-		var ret GetIssueCounts200ResponseCounts
+		var ret []GetIssueCounts200ResponseCountsInner
 		return ret
 	}
 
@@ -62,15 +63,15 @@ func (o *GetIssueCounts200Response) GetCounts() GetIssueCounts200ResponseCounts 
 
 // GetCountsOk returns a tuple with the Counts field value
 // and a boolean to check if the value has been set.
-func (o *GetIssueCounts200Response) GetCountsOk() (*GetIssueCounts200ResponseCounts, bool) {
+func (o *GetIssueCounts200Response) GetCountsOk() ([]GetIssueCounts200ResponseCountsInner, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Counts, true
+	return o.Counts, true
 }
 
 // SetCounts sets field value
-func (o *GetIssueCounts200Response) SetCounts(v GetIssueCounts200ResponseCounts) {
+func (o *GetIssueCounts200Response) SetCounts(v []GetIssueCounts200ResponseCountsInner) {
 	o.Counts = v
 }
 

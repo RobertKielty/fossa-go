@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.88
 Contact: support@fossa.com
 */
 
@@ -18,9 +18,9 @@ import (
 // checks if the BuildRequestSelectedTeamsInnerOneOf type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &BuildRequestSelectedTeamsInnerOneOf{}
 
-// BuildRequestSelectedTeamsInnerOneOf A team ID
+// BuildRequestSelectedTeamsInnerOneOf A team name
 type BuildRequestSelectedTeamsInnerOneOf struct {
-	Id *int32 `json:"id,omitempty"`
+	Name *string `json:"name,omitempty"`
 }
 
 // NewBuildRequestSelectedTeamsInnerOneOf instantiates a new BuildRequestSelectedTeamsInnerOneOf object
@@ -40,36 +40,36 @@ func NewBuildRequestSelectedTeamsInnerOneOfWithDefaults() *BuildRequestSelectedT
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
-func (o *BuildRequestSelectedTeamsInnerOneOf) GetId() int32 {
-	if o == nil || IsNil(o.Id) {
-		var ret int32
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *BuildRequestSelectedTeamsInnerOneOf) GetName() string {
+	if o == nil || IsNil(o.Name) {
+		var ret string
 		return ret
 	}
-	return *o.Id
+	return *o.Name
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BuildRequestSelectedTeamsInnerOneOf) GetIdOk() (*int32, bool) {
-	if o == nil || IsNil(o.Id) {
+func (o *BuildRequestSelectedTeamsInnerOneOf) GetNameOk() (*string, bool) {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return o.Id, true
+	return o.Name, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *BuildRequestSelectedTeamsInnerOneOf) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
+// HasName returns a boolean if a field has been set.
+func (o *BuildRequestSelectedTeamsInnerOneOf) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
 		return true
 	}
 
 	return false
 }
 
-// SetId gets a reference to the given int32 and assigns it to the Id field.
-func (o *BuildRequestSelectedTeamsInnerOneOf) SetId(v int32) {
-	o.Id = &v
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *BuildRequestSelectedTeamsInnerOneOf) SetName(v string) {
+	o.Name = &v
 }
 
 func (o BuildRequestSelectedTeamsInnerOneOf) MarshalJSON() ([]byte, error) {
@@ -82,8 +82,8 @@ func (o BuildRequestSelectedTeamsInnerOneOf) MarshalJSON() ([]byte, error) {
 
 func (o BuildRequestSelectedTeamsInnerOneOf) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
 	}
 	return toSerialize, nil
 }
