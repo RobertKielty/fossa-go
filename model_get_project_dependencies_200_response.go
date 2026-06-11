@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.33.88
 Contact: support@fossa.com
 */
 
@@ -21,7 +21,8 @@ var _ MappedNullable = &GetProjectDependencies200Response{}
 // GetProjectDependencies200Response struct for GetProjectDependencies200Response
 type GetProjectDependencies200Response struct {
 	Dependencies []GetProjectDependencies200ResponseDependenciesInner `json:"dependencies,omitempty"`
-	Count *int32 `json:"count,omitempty"`
+	// The total number of dependencies matching the filters, across all pages.
+	Total *int32 `json:"total,omitempty"`
 }
 
 // NewGetProjectDependencies200Response instantiates a new GetProjectDependencies200Response object
@@ -73,36 +74,36 @@ func (o *GetProjectDependencies200Response) SetDependencies(v []GetProjectDepend
 	o.Dependencies = v
 }
 
-// GetCount returns the Count field value if set, zero value otherwise.
-func (o *GetProjectDependencies200Response) GetCount() int32 {
-	if o == nil || IsNil(o.Count) {
+// GetTotal returns the Total field value if set, zero value otherwise.
+func (o *GetProjectDependencies200Response) GetTotal() int32 {
+	if o == nil || IsNil(o.Total) {
 		var ret int32
 		return ret
 	}
-	return *o.Count
+	return *o.Total
 }
 
-// GetCountOk returns a tuple with the Count field value if set, nil otherwise
+// GetTotalOk returns a tuple with the Total field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetProjectDependencies200Response) GetCountOk() (*int32, bool) {
-	if o == nil || IsNil(o.Count) {
+func (o *GetProjectDependencies200Response) GetTotalOk() (*int32, bool) {
+	if o == nil || IsNil(o.Total) {
 		return nil, false
 	}
-	return o.Count, true
+	return o.Total, true
 }
 
-// HasCount returns a boolean if a field has been set.
-func (o *GetProjectDependencies200Response) HasCount() bool {
-	if o != nil && !IsNil(o.Count) {
+// HasTotal returns a boolean if a field has been set.
+func (o *GetProjectDependencies200Response) HasTotal() bool {
+	if o != nil && !IsNil(o.Total) {
 		return true
 	}
 
 	return false
 }
 
-// SetCount gets a reference to the given int32 and assigns it to the Count field.
-func (o *GetProjectDependencies200Response) SetCount(v int32) {
-	o.Count = &v
+// SetTotal gets a reference to the given int32 and assigns it to the Total field.
+func (o *GetProjectDependencies200Response) SetTotal(v int32) {
+	o.Total = &v
 }
 
 func (o GetProjectDependencies200Response) MarshalJSON() ([]byte, error) {
@@ -118,8 +119,8 @@ func (o GetProjectDependencies200Response) ToMap() (map[string]interface{}, erro
 	if !IsNil(o.Dependencies) {
 		toSerialize["dependencies"] = o.Dependencies
 	}
-	if !IsNil(o.Count) {
-		toSerialize["count"] = o.Count
+	if !IsNil(o.Total) {
+		toSerialize["total"] = o.Total
 	}
 	return toSerialize, nil
 }

@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **int32** |  | [optional] 
+**Name** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -25,30 +25,30 @@ NewBuildRequestSelectedTeamsInnerOneOfWithDefaults instantiates a new BuildReque
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetName
 
-`func (o *BuildRequestSelectedTeamsInnerOneOf) GetId() int32`
+`func (o *BuildRequestSelectedTeamsInnerOneOf) GetName() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetName returns the Name field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetNameOk
 
-`func (o *BuildRequestSelectedTeamsInnerOneOf) GetIdOk() (*int32, bool)`
+`func (o *BuildRequestSelectedTeamsInnerOneOf) GetNameOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetName
 
-`func (o *BuildRequestSelectedTeamsInnerOneOf) SetId(v int32)`
+`func (o *BuildRequestSelectedTeamsInnerOneOf) SetName(v string)`
 
-SetId sets Id field to given value.
+SetName sets Name field to given value.
 
-### HasId
+### HasName
 
-`func (o *BuildRequestSelectedTeamsInnerOneOf) HasId() bool`
+`func (o *BuildRequestSelectedTeamsInnerOneOf) HasName() bool`
 
-HasId returns a boolean if a field has been set.
+HasName returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
