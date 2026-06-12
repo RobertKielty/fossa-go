@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.0
 Contact: support@fossa.com
 */
 
@@ -23,7 +23,7 @@ type GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner struct 
 	Title *string `json:"title,omitempty"`
 	Revision *string `json:"revision,omitempty"`
 	Branch *string `json:"branch,omitempty"`
-	Conclusions *GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses `json:"conclusions,omitempty"`
+	Conclusions *GetProjectDependencies200ResponseDependenciesInnerConclusions `json:"conclusions,omitempty"`
 }
 
 // NewGetProjectDependencies200ResponseDependenciesInnerRootProjectsInner instantiates a new GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner object
@@ -140,9 +140,9 @@ func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) Se
 }
 
 // GetConclusions returns the Conclusions field value if set, zero value otherwise.
-func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) GetConclusions() GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses {
+func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) GetConclusions() GetProjectDependencies200ResponseDependenciesInnerConclusions {
 	if o == nil || IsNil(o.Conclusions) {
-		var ret GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses
+		var ret GetProjectDependencies200ResponseDependenciesInnerConclusions
 		return ret
 	}
 	return *o.Conclusions
@@ -150,7 +150,7 @@ func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) Ge
 
 // GetConclusionsOk returns a tuple with the Conclusions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) GetConclusionsOk() (*GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses, bool) {
+func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) GetConclusionsOk() (*GetProjectDependencies200ResponseDependenciesInnerConclusions, bool) {
 	if o == nil || IsNil(o.Conclusions) {
 		return nil, false
 	}
@@ -166,8 +166,8 @@ func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) Ha
 	return false
 }
 
-// SetConclusions gets a reference to the given GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses and assigns it to the Conclusions field.
-func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) SetConclusions(v GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses) {
+// SetConclusions gets a reference to the given GetProjectDependencies200ResponseDependenciesInnerConclusions and assigns it to the Conclusions field.
+func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) SetConclusions(v GetProjectDependencies200ResponseDependenciesInnerConclusions) {
 	o.Conclusions = &v
 }
 
