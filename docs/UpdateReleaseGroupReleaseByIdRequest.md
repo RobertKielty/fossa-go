@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Title** | **string** |  | 
-**Projects** | Pointer to [**[]UpdateReleaseGroupReleaseByIdRequestProjectsInner**](UpdateReleaseGroupReleaseByIdRequestProjectsInner.md) |  | [optional] 
+**Projects** | Pointer to [**[]CreateReleaseGroupRequestReleaseProjectsInner**](CreateReleaseGroupRequestReleaseProjectsInner.md) |  | [optional] 
 **ProjectsToDelete** | Pointer to **[]string** |  | [optional] 
 
 ## Methods
@@ -49,20 +49,20 @@ SetTitle sets Title field to given value.
 
 ### GetProjects
 
-`func (o *UpdateReleaseGroupReleaseByIdRequest) GetProjects() []UpdateReleaseGroupReleaseByIdRequestProjectsInner`
+`func (o *UpdateReleaseGroupReleaseByIdRequest) GetProjects() []CreateReleaseGroupRequestReleaseProjectsInner`
 
 GetProjects returns the Projects field if non-nil, zero value otherwise.
 
 ### GetProjectsOk
 
-`func (o *UpdateReleaseGroupReleaseByIdRequest) GetProjectsOk() (*[]UpdateReleaseGroupReleaseByIdRequestProjectsInner, bool)`
+`func (o *UpdateReleaseGroupReleaseByIdRequest) GetProjectsOk() (*[]CreateReleaseGroupRequestReleaseProjectsInner, bool)`
 
 GetProjectsOk returns a tuple with the Projects field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetProjects
 
-`func (o *UpdateReleaseGroupReleaseByIdRequest) SetProjects(v []UpdateReleaseGroupReleaseByIdRequestProjectsInner)`
+`func (o *UpdateReleaseGroupReleaseByIdRequest) SetProjects(v []CreateReleaseGroupRequestReleaseProjectsInner)`
 
 SetProjects sets Projects field to given value.
 
