@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 ## GetReleaseComponentsCount
 
-> GetReleaseComponentsCount200Response GetReleaseComponentsCount(ctx, releaseGroupId, releaseId).Execute()
+> GetRevisionComponentsCount200Response GetReleaseComponentsCount(ctx, releaseGroupId, releaseId).Execute()
 
 
 
@@ -48,7 +48,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `BinaryAPI.GetReleaseComponentsCount``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetReleaseComponentsCount`: GetReleaseComponentsCount200Response
+	// response from `GetReleaseComponentsCount`: GetRevisionComponentsCount200Response
 	fmt.Fprintf(os.Stdout, "Response from `BinaryAPI.GetReleaseComponentsCount`: %v\n", resp)
 }
 ```
@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetReleaseComponentsCount200Response**](GetReleaseComponentsCount200Response.md)
+[**GetRevisionComponentsCount200Response**](GetRevisionComponentsCount200Response.md)
 
 ### Authorization
 
@@ -92,7 +92,7 @@ Name | Type | Description  | Notes
 
 ## GetReleaseComponentsPaths
 
-> GetRevisionComponentsPaths200Response GetReleaseComponentsPaths(ctx, releaseGroupId, releaseId).Path(path).Execute()
+> GetRevisionComponentsPaths200Response GetReleaseComponentsPaths(ctx, releaseGroupId, releaseId).Path(path).Search(search).Execute()
 
 
 
@@ -114,10 +114,11 @@ func main() {
 	releaseGroupId := float32(8.14) // float32 | Release group id
 	releaseId := float32(8.14) // float32 | Release id
 	path := "path_example" // string | Path to find components at (optional)
+	search := "search_example" // string | Filter the results to dependencies whose title matches this search string. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.BinaryAPI.GetReleaseComponentsPaths(context.Background(), releaseGroupId, releaseId).Path(path).Execute()
+	resp, r, err := apiClient.BinaryAPI.GetReleaseComponentsPaths(context.Background(), releaseGroupId, releaseId).Path(path).Search(search).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `BinaryAPI.GetReleaseComponentsPaths``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -146,6 +147,7 @@ Name | Type | Description  | Notes
 
 
  **path** | **string** | Path to find components at | 
+ **search** | **string** | Filter the results to dependencies whose title matches this search string. | 
 
 ### Return type
 
@@ -167,7 +169,7 @@ Name | Type | Description  | Notes
 
 ## GetReleaseDependencyConfidence
 
-> map[string]interface{} GetReleaseDependencyConfidence(ctx, releaseId).Execute()
+> GetRevisionDependencyConfidence200Response GetReleaseDependencyConfidence(ctx, releaseId).Execute()
 
 
 
@@ -195,7 +197,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `BinaryAPI.GetReleaseDependencyConfidence``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetReleaseDependencyConfidence`: map[string]interface{}
+	// response from `GetReleaseDependencyConfidence`: GetRevisionDependencyConfidence200Response
 	fmt.Fprintf(os.Stdout, "Response from `BinaryAPI.GetReleaseDependencyConfidence`: %v\n", resp)
 }
 ```
@@ -219,7 +221,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**map[string]interface{}**
+[**GetRevisionDependencyConfidence200Response**](GetRevisionDependencyConfidence200Response.md)
 
 ### Authorization
 
@@ -237,7 +239,7 @@ Name | Type | Description  | Notes
 
 ## GetRevisionComponentMatches
 
-> GetRevisionComponentMatches200Response GetRevisionComponentMatches(ctx, revisionLocator, componentId).Execute()
+> GetRevisionComponentMatches200Response GetRevisionComponentMatches(ctx, revisionLocator, componentId).Page(page).PageSize(pageSize).Execute()
 
 
 
@@ -258,10 +260,12 @@ import (
 func main() {
 	revisionLocator := "revisionLocator_example" // string | Binary Decomposition project revision
 	componentId := "componentId_example" // string | The ID of the component
+	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
+	pageSize := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 10)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.BinaryAPI.GetRevisionComponentMatches(context.Background(), revisionLocator, componentId).Execute()
+	resp, r, err := apiClient.BinaryAPI.GetRevisionComponentMatches(context.Background(), revisionLocator, componentId).Page(page).PageSize(pageSize).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `BinaryAPI.GetRevisionComponentMatches``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -289,6 +293,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **page** | **int32** | The specific page of data to return | [default to 1]
+ **pageSize** | **int32** | The number of items to return in each page of results | [default to 10]
 
 ### Return type
 
@@ -380,7 +386,7 @@ Name | Type | Description  | Notes
 
 ## GetRevisionComponentsPaths
 
-> GetRevisionComponentsPaths200Response GetRevisionComponentsPaths(ctx, revisionLocator).Path(path).Execute()
+> GetRevisionComponentsPaths200Response GetRevisionComponentsPaths(ctx, revisionLocator).Path(path).Search(search).Execute()
 
 
 
@@ -401,10 +407,11 @@ import (
 func main() {
 	revisionLocator := "revisionLocator_example" // string | Binary Decomposition project revision
 	path := "path_example" // string | Path to find components at (optional)
+	search := "search_example" // string | Filter the results to dependencies whose title matches this search string. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.BinaryAPI.GetRevisionComponentsPaths(context.Background(), revisionLocator).Path(path).Execute()
+	resp, r, err := apiClient.BinaryAPI.GetRevisionComponentsPaths(context.Background(), revisionLocator).Path(path).Search(search).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `BinaryAPI.GetRevisionComponentsPaths``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -431,6 +438,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **path** | **string** | Path to find components at | 
+ **search** | **string** | Filter the results to dependencies whose title matches this search string. | 
 
 ### Return type
 
@@ -452,7 +460,7 @@ Name | Type | Description  | Notes
 
 ## GetRevisionDependencyComponents
 
-> GetRevisionDependencyComponents200Response GetRevisionDependencyComponents(ctx, revisionLocator, dependencyLocator).Execute()
+> GetRevisionDependencyComponents200Response GetRevisionDependencyComponents(ctx, revisionLocator, dependencyLocator).Page(page).PageSize(pageSize).Execute()
 
 
 
@@ -473,10 +481,12 @@ import (
 func main() {
 	revisionLocator := "revisionLocator_example" // string | Binary Decomposition project revision
 	dependencyLocator := "dependencyLocator_example" // string | Dependency revision
+	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
+	pageSize := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 10)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.BinaryAPI.GetRevisionDependencyComponents(context.Background(), revisionLocator, dependencyLocator).Execute()
+	resp, r, err := apiClient.BinaryAPI.GetRevisionDependencyComponents(context.Background(), revisionLocator, dependencyLocator).Page(page).PageSize(pageSize).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `BinaryAPI.GetRevisionDependencyComponents``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -504,6 +514,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **page** | **int32** | The specific page of data to return | [default to 1]
+ **pageSize** | **int32** | The number of items to return in each page of results | [default to 10]
 
 ### Return type
 
@@ -525,7 +537,7 @@ Name | Type | Description  | Notes
 
 ## GetRevisionDependencyConfidence
 
-> map[string]interface{} GetRevisionDependencyConfidence(ctx, revisionLocator).Execute()
+> GetRevisionDependencyConfidence200Response GetRevisionDependencyConfidence(ctx, revisionLocator).Execute()
 
 
 
@@ -553,7 +565,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `BinaryAPI.GetRevisionDependencyConfidence``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetRevisionDependencyConfidence`: map[string]interface{}
+	// response from `GetRevisionDependencyConfidence`: GetRevisionDependencyConfidence200Response
 	fmt.Fprintf(os.Stdout, "Response from `BinaryAPI.GetRevisionDependencyConfidence`: %v\n", resp)
 }
 ```
@@ -577,7 +589,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**map[string]interface{}**
+[**GetRevisionDependencyConfidence200Response**](GetRevisionDependencyConfidence200Response.md)
 
 ### Authorization
 
@@ -595,7 +607,7 @@ Name | Type | Description  | Notes
 
 ## GetSingleReleaseDependencyConfidence
 
-> map[string]interface{} GetSingleReleaseDependencyConfidence(ctx, releaseId, dependencyLocator).Execute()
+> GetRevisionDependencyConfidence200Response GetSingleReleaseDependencyConfidence(ctx, releaseId, dependencyLocator).Execute()
 
 
 
@@ -624,7 +636,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `BinaryAPI.GetSingleReleaseDependencyConfidence``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetSingleReleaseDependencyConfidence`: map[string]interface{}
+	// response from `GetSingleReleaseDependencyConfidence`: GetRevisionDependencyConfidence200Response
 	fmt.Fprintf(os.Stdout, "Response from `BinaryAPI.GetSingleReleaseDependencyConfidence`: %v\n", resp)
 }
 ```
@@ -650,7 +662,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**map[string]interface{}**
+[**GetRevisionDependencyConfidence200Response**](GetRevisionDependencyConfidence200Response.md)
 
 ### Authorization
 
@@ -668,7 +680,7 @@ Name | Type | Description  | Notes
 
 ## GetSingleRevisionDependencyConfidence
 
-> map[string]interface{} GetSingleRevisionDependencyConfidence(ctx, revisionLocator, dependencyLocator).Execute()
+> GetRevisionDependencyConfidence200Response GetSingleRevisionDependencyConfidence(ctx, revisionLocator, dependencyLocator).Execute()
 
 
 
@@ -697,7 +709,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `BinaryAPI.GetSingleRevisionDependencyConfidence``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetSingleRevisionDependencyConfidence`: map[string]interface{}
+	// response from `GetSingleRevisionDependencyConfidence`: GetRevisionDependencyConfidence200Response
 	fmt.Fprintf(os.Stdout, "Response from `BinaryAPI.GetSingleRevisionDependencyConfidence`: %v\n", resp)
 }
 ```
@@ -723,7 +735,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**map[string]interface{}**
+[**GetRevisionDependencyConfidence200Response**](GetRevisionDependencyConfidence200Response.md)
 
 ### Authorization
 
