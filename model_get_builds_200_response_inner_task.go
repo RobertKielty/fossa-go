@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.0
 Contact: support@fossa.com
 */
 
@@ -35,6 +35,8 @@ type GetBuilds200ResponseInnerTask struct {
 	AttemptNumber *int32 `json:"attempt_number,omitempty"`
 	// The maximum number of retries for the task
 	MaxRetries *int32 `json:"maxRetries,omitempty"`
+	// The date and time the task is scheduled to start
+	ScheduledStartTime NullableTime `json:"scheduledStartTime,omitempty"`
 }
 
 // NewGetBuilds200ResponseInnerTask instantiates a new GetBuilds200ResponseInnerTask object
@@ -278,6 +280,48 @@ func (o *GetBuilds200ResponseInnerTask) SetMaxRetries(v int32) {
 	o.MaxRetries = &v
 }
 
+// GetScheduledStartTime returns the ScheduledStartTime field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetBuilds200ResponseInnerTask) GetScheduledStartTime() time.Time {
+	if o == nil || IsNil(o.ScheduledStartTime.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.ScheduledStartTime.Get()
+}
+
+// GetScheduledStartTimeOk returns a tuple with the ScheduledStartTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetBuilds200ResponseInnerTask) GetScheduledStartTimeOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ScheduledStartTime.Get(), o.ScheduledStartTime.IsSet()
+}
+
+// HasScheduledStartTime returns a boolean if a field has been set.
+func (o *GetBuilds200ResponseInnerTask) HasScheduledStartTime() bool {
+	if o != nil && o.ScheduledStartTime.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetScheduledStartTime gets a reference to the given NullableTime and assigns it to the ScheduledStartTime field.
+func (o *GetBuilds200ResponseInnerTask) SetScheduledStartTime(v time.Time) {
+	o.ScheduledStartTime.Set(&v)
+}
+// SetScheduledStartTimeNil sets the value for ScheduledStartTime to be an explicit nil
+func (o *GetBuilds200ResponseInnerTask) SetScheduledStartTimeNil() {
+	o.ScheduledStartTime.Set(nil)
+}
+
+// UnsetScheduledStartTime ensures that no value is present for ScheduledStartTime, not even an explicit nil
+func (o *GetBuilds200ResponseInnerTask) UnsetScheduledStartTime() {
+	o.ScheduledStartTime.Unset()
+}
+
 func (o GetBuilds200ResponseInnerTask) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -308,6 +352,9 @@ func (o GetBuilds200ResponseInnerTask) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.MaxRetries) {
 		toSerialize["maxRetries"] = o.MaxRetries
+	}
+	if o.ScheduledStartTime.IsSet() {
+		toSerialize["scheduledStartTime"] = o.ScheduledStartTime.Get()
 	}
 	return toSerialize, nil
 }
