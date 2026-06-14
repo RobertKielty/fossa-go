@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **int32** | Team ID | [optional] 
-**Users** | Pointer to [**[]UpdateTeamUsers200ResponseUsersInner**](UpdateTeamUsers200ResponseUsersInner.md) | Updated list of team users | [optional] 
+**Users** | Pointer to [**[]GetAllTeams200ResponseInnerTeamUsersInner**](GetAllTeams200ResponseInnerTeamUsersInner.md) | Updated list of team users | [optional] 
 
 ## Methods
 
@@ -53,20 +53,20 @@ HasId returns a boolean if a field has been set.
 
 ### GetUsers
 
-`func (o *UpdateTeamUsers200Response) GetUsers() []UpdateTeamUsers200ResponseUsersInner`
+`func (o *UpdateTeamUsers200Response) GetUsers() []GetAllTeams200ResponseInnerTeamUsersInner`
 
 GetUsers returns the Users field if non-nil, zero value otherwise.
 
 ### GetUsersOk
 
-`func (o *UpdateTeamUsers200Response) GetUsersOk() (*[]UpdateTeamUsers200ResponseUsersInner, bool)`
+`func (o *UpdateTeamUsers200Response) GetUsersOk() (*[]GetAllTeams200ResponseInnerTeamUsersInner, bool)`
 
 GetUsersOk returns a tuple with the Users field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUsers
 
-`func (o *UpdateTeamUsers200Response) SetUsers(v []UpdateTeamUsers200ResponseUsersInner)`
+`func (o *UpdateTeamUsers200Response) SetUsers(v []GetAllTeams200ResponseInnerTeamUsersInner)`
 
 SetUsers sets Users field to given value.
 

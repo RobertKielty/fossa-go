@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.0
 Contact: support@fossa.com
 */
 
@@ -38,7 +38,7 @@ type ApiGetAuditLogsRequest struct {
 	actions *[]string
 	topics *[]string
 	topicActions *[]string
-	startingAfter *time.Time
+	startingAfter *string
 	endingBefore *string
 }
 
@@ -102,8 +102,8 @@ func (r ApiGetAuditLogsRequest) TopicActions(topicActions []string) ApiGetAuditL
 	return r
 }
 
-// The id to start after to filter audit logs to
-func (r ApiGetAuditLogsRequest) StartingAfter(startingAfter time.Time) ApiGetAuditLogsRequest {
+// The audit log row id to start after (exclusive). Used as a cursor for pagination.
+func (r ApiGetAuditLogsRequest) StartingAfter(startingAfter string) ApiGetAuditLogsRequest {
 	r.startingAfter = &startingAfter
 	return r
 }
@@ -310,7 +310,7 @@ type ApiGetAuditLogsCountRequest struct {
 	actions *[]string
 	topics *[]string
 	topicActions *[]string
-	startingAfter *time.Time
+	startingAfter *string
 	endingBefore *string
 }
 
@@ -374,8 +374,8 @@ func (r ApiGetAuditLogsCountRequest) TopicActions(topicActions []string) ApiGetA
 	return r
 }
 
-// The id to start after to filter audit logs to
-func (r ApiGetAuditLogsCountRequest) StartingAfter(startingAfter time.Time) ApiGetAuditLogsCountRequest {
+// The audit log row id to start after (exclusive). Used as a cursor for pagination.
+func (r ApiGetAuditLogsCountRequest) StartingAfter(startingAfter string) ApiGetAuditLogsCountRequest {
 	r.startingAfter = &startingAfter
 	return r
 }
@@ -580,7 +580,7 @@ func (r ApiGetAuditLogsExportRequest) GetAuditLogsExportRequest(getAuditLogsExpo
 	return r
 }
 
-func (r ApiGetAuditLogsExportRequest) Execute() (*GetAuditLogsExport201Response, *http.Response, error) {
+func (r ApiGetAuditLogsExportRequest) Execute() (*GetPackageIndexExport201Response, *http.Response, error) {
 	return r.ApiService.GetAuditLogsExportExecute(r)
 }
 
@@ -600,13 +600,13 @@ func (a *AuditLogsAPIService) GetAuditLogsExport(ctx context.Context) ApiGetAudi
 }
 
 // Execute executes the request
-//  @return GetAuditLogsExport201Response
-func (a *AuditLogsAPIService) GetAuditLogsExportExecute(r ApiGetAuditLogsExportRequest) (*GetAuditLogsExport201Response, *http.Response, error) {
+//  @return GetPackageIndexExport201Response
+func (a *AuditLogsAPIService) GetAuditLogsExportExecute(r ApiGetAuditLogsExportRequest) (*GetPackageIndexExport201Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetAuditLogsExport201Response
+		localVarReturnValue  *GetPackageIndexExport201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuditLogsAPIService.GetAuditLogsExport")
