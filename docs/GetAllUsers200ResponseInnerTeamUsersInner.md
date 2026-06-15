@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **RoleId** | Pointer to **int32** | The user&#39;s role ID | [optional] 
-**Team** | Pointer to [**GetAllUsers200ResponseInnerTeamUsersInnerTeam**](GetAllUsers200ResponseInnerTeamUsersInnerTeam.md) |  | [optional] 
+**Team** | Pointer to [**GetAllReleaseGroupTeams200ResponseTeamsInner**](GetAllReleaseGroupTeams200ResponseTeamsInner.md) |  | [optional] 
 
 ## Methods
 
@@ -53,20 +53,20 @@ HasRoleId returns a boolean if a field has been set.
 
 ### GetTeam
 
-`func (o *GetAllUsers200ResponseInnerTeamUsersInner) GetTeam() GetAllUsers200ResponseInnerTeamUsersInnerTeam`
+`func (o *GetAllUsers200ResponseInnerTeamUsersInner) GetTeam() GetAllReleaseGroupTeams200ResponseTeamsInner`
 
 GetTeam returns the Team field if non-nil, zero value otherwise.
 
 ### GetTeamOk
 
-`func (o *GetAllUsers200ResponseInnerTeamUsersInner) GetTeamOk() (*GetAllUsers200ResponseInnerTeamUsersInnerTeam, bool)`
+`func (o *GetAllUsers200ResponseInnerTeamUsersInner) GetTeamOk() (*GetAllReleaseGroupTeams200ResponseTeamsInner, bool)`
 
 GetTeamOk returns a tuple with the Team field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTeam
 
-`func (o *GetAllUsers200ResponseInnerTeamUsersInner) SetTeam(v GetAllUsers200ResponseInnerTeamUsersInnerTeam)`
+`func (o *GetAllUsers200ResponseInnerTeamUsersInner) SetTeam(v GetAllReleaseGroupTeams200ResponseTeamsInner)`
 
 SetTeam sets Team field to given value.
 

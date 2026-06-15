@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Repositories** | Pointer to [**[]GetOrganizationPipSettings200ResponseRepositoriesInner**](GetOrganizationPipSettings200ResponseRepositoriesInner.md) | List of configured Pip Repositories | [optional] 
+**Repositories** | Pointer to [**[]GetOrganizationRubyGemsSettings200ResponseSourcesInner**](GetOrganizationRubyGemsSettings200ResponseSourcesInner.md) | List of configured Pip Repositories | [optional] 
 
 ## Methods
 
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetRepositories
 
-`func (o *PipConfig) GetRepositories() []GetOrganizationPipSettings200ResponseRepositoriesInner`
+`func (o *PipConfig) GetRepositories() []GetOrganizationRubyGemsSettings200ResponseSourcesInner`
 
 GetRepositories returns the Repositories field if non-nil, zero value otherwise.
 
 ### GetRepositoriesOk
 
-`func (o *PipConfig) GetRepositoriesOk() (*[]GetOrganizationPipSettings200ResponseRepositoriesInner, bool)`
+`func (o *PipConfig) GetRepositoriesOk() (*[]GetOrganizationRubyGemsSettings200ResponseSourcesInner, bool)`
 
 GetRepositoriesOk returns a tuple with the Repositories field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRepositories
 
-`func (o *PipConfig) SetRepositories(v []GetOrganizationPipSettings200ResponseRepositoriesInner)`
+`func (o *PipConfig) SetRepositories(v []GetOrganizationRubyGemsSettings200ResponseSourcesInner)`
 
 SetRepositories sets Repositories field to given value.
 
