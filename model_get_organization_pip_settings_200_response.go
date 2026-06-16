@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.1
 Contact: support@fossa.com
 */
 
@@ -21,7 +21,7 @@ var _ MappedNullable = &GetOrganizationPipSettings200Response{}
 // GetOrganizationPipSettings200Response struct for GetOrganizationPipSettings200Response
 type GetOrganizationPipSettings200Response struct {
 	// List of configured Pip Repositories
-	Repositories []GetOrganizationPipSettings200ResponseRepositoriesInner `json:"repositories,omitempty"`
+	Repositories []GetOrganizationRubyGemsSettings200ResponseSourcesInner `json:"repositories,omitempty"`
 }
 
 // NewGetOrganizationPipSettings200Response instantiates a new GetOrganizationPipSettings200Response object
@@ -42,9 +42,9 @@ func NewGetOrganizationPipSettings200ResponseWithDefaults() *GetOrganizationPipS
 }
 
 // GetRepositories returns the Repositories field value if set, zero value otherwise.
-func (o *GetOrganizationPipSettings200Response) GetRepositories() []GetOrganizationPipSettings200ResponseRepositoriesInner {
+func (o *GetOrganizationPipSettings200Response) GetRepositories() []GetOrganizationRubyGemsSettings200ResponseSourcesInner {
 	if o == nil || IsNil(o.Repositories) {
-		var ret []GetOrganizationPipSettings200ResponseRepositoriesInner
+		var ret []GetOrganizationRubyGemsSettings200ResponseSourcesInner
 		return ret
 	}
 	return o.Repositories
@@ -52,7 +52,7 @@ func (o *GetOrganizationPipSettings200Response) GetRepositories() []GetOrganizat
 
 // GetRepositoriesOk returns a tuple with the Repositories field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetOrganizationPipSettings200Response) GetRepositoriesOk() ([]GetOrganizationPipSettings200ResponseRepositoriesInner, bool) {
+func (o *GetOrganizationPipSettings200Response) GetRepositoriesOk() ([]GetOrganizationRubyGemsSettings200ResponseSourcesInner, bool) {
 	if o == nil || IsNil(o.Repositories) {
 		return nil, false
 	}
@@ -68,8 +68,8 @@ func (o *GetOrganizationPipSettings200Response) HasRepositories() bool {
 	return false
 }
 
-// SetRepositories gets a reference to the given []GetOrganizationPipSettings200ResponseRepositoriesInner and assigns it to the Repositories field.
-func (o *GetOrganizationPipSettings200Response) SetRepositories(v []GetOrganizationPipSettings200ResponseRepositoriesInner) {
+// SetRepositories gets a reference to the given []GetOrganizationRubyGemsSettings200ResponseSourcesInner and assigns it to the Repositories field.
+func (o *GetOrganizationPipSettings200Response) SetRepositories(v []GetOrganizationRubyGemsSettings200ResponseSourcesInner) {
 	o.Repositories = v
 }
 

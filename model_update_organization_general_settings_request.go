@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.1
 Contact: support@fossa.com
 */
 
@@ -21,11 +21,17 @@ var _ MappedNullable = &UpdateOrganizationGeneralSettingsRequest{}
 // UpdateOrganizationGeneralSettingsRequest struct for UpdateOrganizationGeneralSettingsRequest
 type UpdateOrganizationGeneralSettingsRequest struct {
 	Labels []string `json:"labels,omitempty"`
+	// Package label names to set on the organization.
+	PackageLabels []string `json:"packageLabels,omitempty"`
 	Title *string `json:"title,omitempty"`
 	Email *string `json:"email,omitempty"`
 	DefaultRoleId *int32 `json:"defaultRoleId,omitempty"`
 	DependencySignatures *string `json:"dependencySignatures,omitempty"`
 	DisableNonCustomTeamUserRoles *bool `json:"disableNonCustomTeamUserRoles,omitempty"`
+	// Number of days to retain source code from snippet matches. Must be between 1 and 30, or a 400 is returned.
+	SnippetSourceCodeRetentionDays *int32 `json:"snippetSourceCodeRetentionDays,omitempty"`
+	// Whether the license-concluded workflow is enabled for the organization.
+	LicenseConcludedEnabled *bool `json:"licenseConcludedEnabled,omitempty"`
 }
 
 // NewUpdateOrganizationGeneralSettingsRequest instantiates a new UpdateOrganizationGeneralSettingsRequest object
@@ -75,6 +81,38 @@ func (o *UpdateOrganizationGeneralSettingsRequest) HasLabels() bool {
 // SetLabels gets a reference to the given []string and assigns it to the Labels field.
 func (o *UpdateOrganizationGeneralSettingsRequest) SetLabels(v []string) {
 	o.Labels = v
+}
+
+// GetPackageLabels returns the PackageLabels field value if set, zero value otherwise.
+func (o *UpdateOrganizationGeneralSettingsRequest) GetPackageLabels() []string {
+	if o == nil || IsNil(o.PackageLabels) {
+		var ret []string
+		return ret
+	}
+	return o.PackageLabels
+}
+
+// GetPackageLabelsOk returns a tuple with the PackageLabels field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateOrganizationGeneralSettingsRequest) GetPackageLabelsOk() ([]string, bool) {
+	if o == nil || IsNil(o.PackageLabels) {
+		return nil, false
+	}
+	return o.PackageLabels, true
+}
+
+// HasPackageLabels returns a boolean if a field has been set.
+func (o *UpdateOrganizationGeneralSettingsRequest) HasPackageLabels() bool {
+	if o != nil && !IsNil(o.PackageLabels) {
+		return true
+	}
+
+	return false
+}
+
+// SetPackageLabels gets a reference to the given []string and assigns it to the PackageLabels field.
+func (o *UpdateOrganizationGeneralSettingsRequest) SetPackageLabels(v []string) {
+	o.PackageLabels = v
 }
 
 // GetTitle returns the Title field value if set, zero value otherwise.
@@ -237,6 +275,70 @@ func (o *UpdateOrganizationGeneralSettingsRequest) SetDisableNonCustomTeamUserRo
 	o.DisableNonCustomTeamUserRoles = &v
 }
 
+// GetSnippetSourceCodeRetentionDays returns the SnippetSourceCodeRetentionDays field value if set, zero value otherwise.
+func (o *UpdateOrganizationGeneralSettingsRequest) GetSnippetSourceCodeRetentionDays() int32 {
+	if o == nil || IsNil(o.SnippetSourceCodeRetentionDays) {
+		var ret int32
+		return ret
+	}
+	return *o.SnippetSourceCodeRetentionDays
+}
+
+// GetSnippetSourceCodeRetentionDaysOk returns a tuple with the SnippetSourceCodeRetentionDays field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateOrganizationGeneralSettingsRequest) GetSnippetSourceCodeRetentionDaysOk() (*int32, bool) {
+	if o == nil || IsNil(o.SnippetSourceCodeRetentionDays) {
+		return nil, false
+	}
+	return o.SnippetSourceCodeRetentionDays, true
+}
+
+// HasSnippetSourceCodeRetentionDays returns a boolean if a field has been set.
+func (o *UpdateOrganizationGeneralSettingsRequest) HasSnippetSourceCodeRetentionDays() bool {
+	if o != nil && !IsNil(o.SnippetSourceCodeRetentionDays) {
+		return true
+	}
+
+	return false
+}
+
+// SetSnippetSourceCodeRetentionDays gets a reference to the given int32 and assigns it to the SnippetSourceCodeRetentionDays field.
+func (o *UpdateOrganizationGeneralSettingsRequest) SetSnippetSourceCodeRetentionDays(v int32) {
+	o.SnippetSourceCodeRetentionDays = &v
+}
+
+// GetLicenseConcludedEnabled returns the LicenseConcludedEnabled field value if set, zero value otherwise.
+func (o *UpdateOrganizationGeneralSettingsRequest) GetLicenseConcludedEnabled() bool {
+	if o == nil || IsNil(o.LicenseConcludedEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.LicenseConcludedEnabled
+}
+
+// GetLicenseConcludedEnabledOk returns a tuple with the LicenseConcludedEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateOrganizationGeneralSettingsRequest) GetLicenseConcludedEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.LicenseConcludedEnabled) {
+		return nil, false
+	}
+	return o.LicenseConcludedEnabled, true
+}
+
+// HasLicenseConcludedEnabled returns a boolean if a field has been set.
+func (o *UpdateOrganizationGeneralSettingsRequest) HasLicenseConcludedEnabled() bool {
+	if o != nil && !IsNil(o.LicenseConcludedEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetLicenseConcludedEnabled gets a reference to the given bool and assigns it to the LicenseConcludedEnabled field.
+func (o *UpdateOrganizationGeneralSettingsRequest) SetLicenseConcludedEnabled(v bool) {
+	o.LicenseConcludedEnabled = &v
+}
+
 func (o UpdateOrganizationGeneralSettingsRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -249,6 +351,9 @@ func (o UpdateOrganizationGeneralSettingsRequest) ToMap() (map[string]interface{
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Labels) {
 		toSerialize["labels"] = o.Labels
+	}
+	if !IsNil(o.PackageLabels) {
+		toSerialize["packageLabels"] = o.PackageLabels
 	}
 	if !IsNil(o.Title) {
 		toSerialize["title"] = o.Title
@@ -264,6 +369,12 @@ func (o UpdateOrganizationGeneralSettingsRequest) ToMap() (map[string]interface{
 	}
 	if !IsNil(o.DisableNonCustomTeamUserRoles) {
 		toSerialize["disableNonCustomTeamUserRoles"] = o.DisableNonCustomTeamUserRoles
+	}
+	if !IsNil(o.SnippetSourceCodeRetentionDays) {
+		toSerialize["snippetSourceCodeRetentionDays"] = o.SnippetSourceCodeRetentionDays
+	}
+	if !IsNil(o.LicenseConcludedEnabled) {
+		toSerialize["licenseConcludedEnabled"] = o.LicenseConcludedEnabled
 	}
 	return toSerialize, nil
 }
