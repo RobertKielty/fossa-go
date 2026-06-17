@@ -66,7 +66,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiToken](../README.md#ApiToken)
 
 ### HTTP request headers
 
@@ -134,12 +134,12 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiToken](../README.md#ApiToken)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -204,7 +204,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiToken](../README.md#ApiToken)
 
 ### HTTP request headers
 
@@ -270,7 +270,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiToken](../README.md#ApiToken)
 
 ### HTTP request headers
 
@@ -342,7 +342,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiToken](../README.md#ApiToken)
 
 ### HTTP request headers
 
