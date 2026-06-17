@@ -17,8 +17,9 @@ Name | Type | Description | Notes
 **Headers** | Pointer to **map[string]string** | HTTP headers to pass along when authenticating to the Jira site | [optional] 
 **IssueTypes** | Pointer to **[]string** | Available issue types to use when exporting tickets | [optional] 
 **Labels** | Pointer to **[]string** | Available labels to include when exporting tickets. Corresponds to a label in Jira | [optional] 
+**Components** | Pointer to [**[]PatchJiraConfigurationRequestComponentsInner**](PatchJiraConfigurationRequestComponentsInner.md) | Available Jira components to include when exporting tickets. Components can be made required in Jira and are passed by ID when creating issues. | [optional] 
 **JiraProjectIds** | Pointer to **[]string** | Available Jira Projects to export to from FOSSA | [optional] 
-**CustomFields** | Pointer to [**map[string]PatchJiraConfigurationRequestCustomFieldsValue**](PatchJiraConfigurationRequestCustomFieldsValue.md) | a dictionary of custom fields | [optional] 
+**CustomFields** | Pointer to [**map[string]UpdateProjectRequestIssueTrackerCustomFieldsValue**](UpdateProjectRequestIssueTrackerCustomFieldsValue.md) | a dictionary of custom fields | [optional] 
 **DefaultLicensingProject** | Pointer to **NullableString** | The Jira Project to default to when exporting licensing issues | [optional] 
 **DefaultSecurityProject** | Pointer to **NullableString** | The Jira Project to default to when exporting security issues | [optional] 
 **DefaultQualityProject** | Pointer to **NullableString** | The Jira Project to default to when exporting quality issues | [optional] 
@@ -398,6 +399,41 @@ HasLabels returns a boolean if a field has been set.
 `func (o *Jira) UnsetLabels()`
 
 UnsetLabels ensures that no value is present for Labels, not even an explicit nil
+### GetComponents
+
+`func (o *Jira) GetComponents() []PatchJiraConfigurationRequestComponentsInner`
+
+GetComponents returns the Components field if non-nil, zero value otherwise.
+
+### GetComponentsOk
+
+`func (o *Jira) GetComponentsOk() (*[]PatchJiraConfigurationRequestComponentsInner, bool)`
+
+GetComponentsOk returns a tuple with the Components field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetComponents
+
+`func (o *Jira) SetComponents(v []PatchJiraConfigurationRequestComponentsInner)`
+
+SetComponents sets Components field to given value.
+
+### HasComponents
+
+`func (o *Jira) HasComponents() bool`
+
+HasComponents returns a boolean if a field has been set.
+
+### SetComponentsNil
+
+`func (o *Jira) SetComponentsNil(b bool)`
+
+ SetComponentsNil sets the value for Components to be an explicit nil
+
+### UnsetComponents
+`func (o *Jira) UnsetComponents()`
+
+UnsetComponents ensures that no value is present for Components, not even an explicit nil
 ### GetJiraProjectIds
 
 `func (o *Jira) GetJiraProjectIds() []string`
@@ -435,20 +471,20 @@ HasJiraProjectIds returns a boolean if a field has been set.
 UnsetJiraProjectIds ensures that no value is present for JiraProjectIds, not even an explicit nil
 ### GetCustomFields
 
-`func (o *Jira) GetCustomFields() map[string]PatchJiraConfigurationRequestCustomFieldsValue`
+`func (o *Jira) GetCustomFields() map[string]UpdateProjectRequestIssueTrackerCustomFieldsValue`
 
 GetCustomFields returns the CustomFields field if non-nil, zero value otherwise.
 
 ### GetCustomFieldsOk
 
-`func (o *Jira) GetCustomFieldsOk() (*map[string]PatchJiraConfigurationRequestCustomFieldsValue, bool)`
+`func (o *Jira) GetCustomFieldsOk() (*map[string]UpdateProjectRequestIssueTrackerCustomFieldsValue, bool)`
 
 GetCustomFieldsOk returns a tuple with the CustomFields field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCustomFields
 
-`func (o *Jira) SetCustomFields(v map[string]PatchJiraConfigurationRequestCustomFieldsValue)`
+`func (o *Jira) SetCustomFields(v map[string]UpdateProjectRequestIssueTrackerCustomFieldsValue)`
 
 SetCustomFields sets CustomFields field to given value.
 

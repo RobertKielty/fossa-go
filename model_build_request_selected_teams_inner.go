@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.4
 Contact: support@fossa.com
 */
 
@@ -20,7 +20,7 @@ import (
 // BuildRequestSelectedTeamsInner - struct for BuildRequestSelectedTeamsInner
 type BuildRequestSelectedTeamsInner struct {
 	BuildRequestSelectedTeamsInnerOneOf *BuildRequestSelectedTeamsInnerOneOf
-	BuildRequestSelectedTeamsInnerOneOf1 *BuildRequestSelectedTeamsInnerOneOf1
+	GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner *GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner
 }
 
 // BuildRequestSelectedTeamsInnerOneOfAsBuildRequestSelectedTeamsInner is a convenience function that returns BuildRequestSelectedTeamsInnerOneOf wrapped in BuildRequestSelectedTeamsInner
@@ -30,10 +30,10 @@ func BuildRequestSelectedTeamsInnerOneOfAsBuildRequestSelectedTeamsInner(v *Buil
 	}
 }
 
-// BuildRequestSelectedTeamsInnerOneOf1AsBuildRequestSelectedTeamsInner is a convenience function that returns BuildRequestSelectedTeamsInnerOneOf1 wrapped in BuildRequestSelectedTeamsInner
-func BuildRequestSelectedTeamsInnerOneOf1AsBuildRequestSelectedTeamsInner(v *BuildRequestSelectedTeamsInnerOneOf1) BuildRequestSelectedTeamsInner {
+// GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInnerAsBuildRequestSelectedTeamsInner is a convenience function that returns GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner wrapped in BuildRequestSelectedTeamsInner
+func GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInnerAsBuildRequestSelectedTeamsInner(v *GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner) BuildRequestSelectedTeamsInner {
 	return BuildRequestSelectedTeamsInner{
-		BuildRequestSelectedTeamsInnerOneOf1: v,
+		GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner: v,
 	}
 }
 
@@ -59,27 +59,27 @@ func (dst *BuildRequestSelectedTeamsInner) UnmarshalJSON(data []byte) error {
 		dst.BuildRequestSelectedTeamsInnerOneOf = nil
 	}
 
-	// try to unmarshal data into BuildRequestSelectedTeamsInnerOneOf1
-	err = newStrictDecoder(data).Decode(&dst.BuildRequestSelectedTeamsInnerOneOf1)
+	// try to unmarshal data into GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner
+	err = newStrictDecoder(data).Decode(&dst.GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner)
 	if err == nil {
-		jsonBuildRequestSelectedTeamsInnerOneOf1, _ := json.Marshal(dst.BuildRequestSelectedTeamsInnerOneOf1)
-		if string(jsonBuildRequestSelectedTeamsInnerOneOf1) == "{}" { // empty struct
-			dst.BuildRequestSelectedTeamsInnerOneOf1 = nil
+		jsonGetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner, _ := json.Marshal(dst.GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner)
+		if string(jsonGetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner) == "{}" { // empty struct
+			dst.GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner = nil
 		} else {
-			if err = validator.Validate(dst.BuildRequestSelectedTeamsInnerOneOf1); err != nil {
-				dst.BuildRequestSelectedTeamsInnerOneOf1 = nil
+			if err = validator.Validate(dst.GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner); err != nil {
+				dst.GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner = nil
 			} else {
 				match++
 			}
 		}
 	} else {
-		dst.BuildRequestSelectedTeamsInnerOneOf1 = nil
+		dst.GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner = nil
 	}
 
 	if match > 1 { // more than 1 match
 		// reset to nil
 		dst.BuildRequestSelectedTeamsInnerOneOf = nil
-		dst.BuildRequestSelectedTeamsInnerOneOf1 = nil
+		dst.GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner = nil
 
 		return fmt.Errorf("data matches more than one schema in oneOf(BuildRequestSelectedTeamsInner)")
 	} else if match == 1 {
@@ -95,8 +95,8 @@ func (src BuildRequestSelectedTeamsInner) MarshalJSON() ([]byte, error) {
 		return json.Marshal(&src.BuildRequestSelectedTeamsInnerOneOf)
 	}
 
-	if src.BuildRequestSelectedTeamsInnerOneOf1 != nil {
-		return json.Marshal(&src.BuildRequestSelectedTeamsInnerOneOf1)
+	if src.GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner != nil {
+		return json.Marshal(&src.GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner)
 	}
 
 	return nil, nil // no data in oneOf schemas
@@ -111,8 +111,8 @@ func (obj *BuildRequestSelectedTeamsInner) GetActualInstance() (interface{}) {
 		return obj.BuildRequestSelectedTeamsInnerOneOf
 	}
 
-	if obj.BuildRequestSelectedTeamsInnerOneOf1 != nil {
-		return obj.BuildRequestSelectedTeamsInnerOneOf1
+	if obj.GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner != nil {
+		return obj.GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner
 	}
 
 	// all schemas are nil
@@ -125,8 +125,8 @@ func (obj BuildRequestSelectedTeamsInner) GetActualInstanceValue() (interface{})
 		return *obj.BuildRequestSelectedTeamsInnerOneOf
 	}
 
-	if obj.BuildRequestSelectedTeamsInnerOneOf1 != nil {
-		return *obj.BuildRequestSelectedTeamsInnerOneOf1
+	if obj.GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner != nil {
+		return *obj.GetReleaseGroupReleaseScans200ResponseInnerAllOfRevisionScansInner
 	}
 
 	// all schemas are nil
