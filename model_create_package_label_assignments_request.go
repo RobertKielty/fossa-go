@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.6
 Contact: support@fossa.com
 */
 
@@ -27,11 +27,11 @@ type CreatePackageLabelAssignmentsRequest struct {
 	// The version of the package to assign labels to or blank for all versions.
 	PackageVersion *string `json:"packageVersion,omitempty"`
 	// The scope of the package label assignment.
-	Scope *string `json:"scope,omitempty"`
+	Scope string `json:"scope"`
 	// The ID of the scope to assign labels to.
 	ScopeId *string `json:"scopeId,omitempty"`
 	// The IDs of the labels to assign to the package.
-	LabelIds []int32 `json:"labelIds,omitempty"`
+	LabelIds []int32 `json:"labelIds"`
 }
 
 type _CreatePackageLabelAssignmentsRequest CreatePackageLabelAssignmentsRequest
@@ -40,9 +40,11 @@ type _CreatePackageLabelAssignmentsRequest CreatePackageLabelAssignmentsRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreatePackageLabelAssignmentsRequest(packageId string) *CreatePackageLabelAssignmentsRequest {
+func NewCreatePackageLabelAssignmentsRequest(packageId string, scope string, labelIds []int32) *CreatePackageLabelAssignmentsRequest {
 	this := CreatePackageLabelAssignmentsRequest{}
 	this.PackageId = packageId
+	this.Scope = scope
+	this.LabelIds = labelIds
 	return &this
 }
 
@@ -110,36 +112,28 @@ func (o *CreatePackageLabelAssignmentsRequest) SetPackageVersion(v string) {
 	o.PackageVersion = &v
 }
 
-// GetScope returns the Scope field value if set, zero value otherwise.
+// GetScope returns the Scope field value
 func (o *CreatePackageLabelAssignmentsRequest) GetScope() string {
-	if o == nil || IsNil(o.Scope) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Scope
+
+	return o.Scope
 }
 
-// GetScopeOk returns a tuple with the Scope field value if set, nil otherwise
+// GetScopeOk returns a tuple with the Scope field value
 // and a boolean to check if the value has been set.
 func (o *CreatePackageLabelAssignmentsRequest) GetScopeOk() (*string, bool) {
-	if o == nil || IsNil(o.Scope) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Scope, true
+	return &o.Scope, true
 }
 
-// HasScope returns a boolean if a field has been set.
-func (o *CreatePackageLabelAssignmentsRequest) HasScope() bool {
-	if o != nil && !IsNil(o.Scope) {
-		return true
-	}
-
-	return false
-}
-
-// SetScope gets a reference to the given string and assigns it to the Scope field.
+// SetScope sets field value
 func (o *CreatePackageLabelAssignmentsRequest) SetScope(v string) {
-	o.Scope = &v
+	o.Scope = v
 }
 
 // GetScopeId returns the ScopeId field value if set, zero value otherwise.
@@ -174,34 +168,26 @@ func (o *CreatePackageLabelAssignmentsRequest) SetScopeId(v string) {
 	o.ScopeId = &v
 }
 
-// GetLabelIds returns the LabelIds field value if set, zero value otherwise.
+// GetLabelIds returns the LabelIds field value
 func (o *CreatePackageLabelAssignmentsRequest) GetLabelIds() []int32 {
-	if o == nil || IsNil(o.LabelIds) {
+	if o == nil {
 		var ret []int32
 		return ret
 	}
+
 	return o.LabelIds
 }
 
-// GetLabelIdsOk returns a tuple with the LabelIds field value if set, nil otherwise
+// GetLabelIdsOk returns a tuple with the LabelIds field value
 // and a boolean to check if the value has been set.
 func (o *CreatePackageLabelAssignmentsRequest) GetLabelIdsOk() ([]int32, bool) {
-	if o == nil || IsNil(o.LabelIds) {
+	if o == nil {
 		return nil, false
 	}
 	return o.LabelIds, true
 }
 
-// HasLabelIds returns a boolean if a field has been set.
-func (o *CreatePackageLabelAssignmentsRequest) HasLabelIds() bool {
-	if o != nil && !IsNil(o.LabelIds) {
-		return true
-	}
-
-	return false
-}
-
-// SetLabelIds gets a reference to the given []int32 and assigns it to the LabelIds field.
+// SetLabelIds sets field value
 func (o *CreatePackageLabelAssignmentsRequest) SetLabelIds(v []int32) {
 	o.LabelIds = v
 }
@@ -220,15 +206,11 @@ func (o CreatePackageLabelAssignmentsRequest) ToMap() (map[string]interface{}, e
 	if !IsNil(o.PackageVersion) {
 		toSerialize["packageVersion"] = o.PackageVersion
 	}
-	if !IsNil(o.Scope) {
-		toSerialize["scope"] = o.Scope
-	}
+	toSerialize["scope"] = o.Scope
 	if !IsNil(o.ScopeId) {
 		toSerialize["scopeId"] = o.ScopeId
 	}
-	if !IsNil(o.LabelIds) {
-		toSerialize["labelIds"] = o.LabelIds
-	}
+	toSerialize["labelIds"] = o.LabelIds
 	return toSerialize, nil
 }
 
@@ -238,6 +220,8 @@ func (o *CreatePackageLabelAssignmentsRequest) UnmarshalJSON(data []byte) (err e
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"packageId",
+		"scope",
+		"labelIds",
 	}
 
 	allProperties := make(map[string]interface{})
