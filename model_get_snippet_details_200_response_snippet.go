@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.6
 Contact: support@fossa.com
 */
 
@@ -37,6 +37,8 @@ type GetSnippetDetails200ResponseSnippet struct {
 	Version string `json:"version"`
 	// Type of snippet detection (snippet=partial match, file=100% match)
 	Kind string `json:"kind"`
+	// Total number of matches for this snippet
+	MatchCount int32 `json:"matchCount"`
 	// Array of path matches where this snippet was detected
 	Matches []GetSnippetDetails200ResponseSnippetMatchesInner `json:"matches"`
 	// The highest match percentage across all matches
@@ -52,9 +54,13 @@ type GetSnippetDetails200ResponseSnippet struct {
 	IssueCounts GetSnippets200ResponseResultsInnerIssueCounts `json:"issueCounts"`
 	RejectionDetails *GetSnippets200ResponseResultsInnerRejectionDetails `json:"rejectionDetails,omitempty"`
 	// Package labels assigned to this snippet
-	Labels []GetSnippets200ResponseResultsInnerLabelsInner `json:"labels"`
+	Labels []GetProjectDependencies200ResponseDependenciesInnerLabelsInner `json:"labels"`
 	// Other versions of the package where this snippet was detected
 	OtherVersions []GetSnippetDetails200ResponseSnippetOtherVersionsInner `json:"otherVersions,omitempty"`
+	// Whether the snippet exists as a vendored dependency
+	IsVendored bool `json:"isVendored"`
+	// Whether the snippet has been converted to a vendored dependency
+	IsConverted bool `json:"isConverted"`
 }
 
 type _GetSnippetDetails200ResponseSnippet GetSnippetDetails200ResponseSnippet
@@ -63,7 +69,7 @@ type _GetSnippetDetails200ResponseSnippet GetSnippetDetails200ResponseSnippet
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetSnippetDetails200ResponseSnippet(id string, packageId string, purl string, locator string, package_ string, version string, kind string, matches []GetSnippetDetails200ResponseSnippetMatchesInner, highestMatchPercentage float32, licenses []GetSnippets200ResponseResultsInnerLicensesInner, issueCounts GetSnippets200ResponseResultsInnerIssueCounts, labels []GetSnippets200ResponseResultsInnerLabelsInner) *GetSnippetDetails200ResponseSnippet {
+func NewGetSnippetDetails200ResponseSnippet(id string, packageId string, purl string, locator string, package_ string, version string, kind string, matchCount int32, matches []GetSnippetDetails200ResponseSnippetMatchesInner, highestMatchPercentage float32, licenses []GetSnippets200ResponseResultsInnerLicensesInner, issueCounts GetSnippets200ResponseResultsInnerIssueCounts, labels []GetProjectDependencies200ResponseDependenciesInnerLabelsInner, isVendored bool, isConverted bool) *GetSnippetDetails200ResponseSnippet {
 	this := GetSnippetDetails200ResponseSnippet{}
 	this.Id = id
 	this.PackageId = packageId
@@ -72,11 +78,14 @@ func NewGetSnippetDetails200ResponseSnippet(id string, packageId string, purl st
 	this.Package = package_
 	this.Version = version
 	this.Kind = kind
+	this.MatchCount = matchCount
 	this.Matches = matches
 	this.HighestMatchPercentage = highestMatchPercentage
 	this.Licenses = licenses
 	this.IssueCounts = issueCounts
 	this.Labels = labels
+	this.IsVendored = isVendored
+	this.IsConverted = isConverted
 	return &this
 }
 
@@ -254,6 +263,30 @@ func (o *GetSnippetDetails200ResponseSnippet) GetKindOk() (*string, bool) {
 // SetKind sets field value
 func (o *GetSnippetDetails200ResponseSnippet) SetKind(v string) {
 	o.Kind = v
+}
+
+// GetMatchCount returns the MatchCount field value
+func (o *GetSnippetDetails200ResponseSnippet) GetMatchCount() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.MatchCount
+}
+
+// GetMatchCountOk returns a tuple with the MatchCount field value
+// and a boolean to check if the value has been set.
+func (o *GetSnippetDetails200ResponseSnippet) GetMatchCountOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.MatchCount, true
+}
+
+// SetMatchCount sets field value
+func (o *GetSnippetDetails200ResponseSnippet) SetMatchCount(v int32) {
+	o.MatchCount = v
 }
 
 // GetMatches returns the Matches field value
@@ -481,9 +514,9 @@ func (o *GetSnippetDetails200ResponseSnippet) SetRejectionDetails(v GetSnippets2
 }
 
 // GetLabels returns the Labels field value
-func (o *GetSnippetDetails200ResponseSnippet) GetLabels() []GetSnippets200ResponseResultsInnerLabelsInner {
+func (o *GetSnippetDetails200ResponseSnippet) GetLabels() []GetProjectDependencies200ResponseDependenciesInnerLabelsInner {
 	if o == nil {
-		var ret []GetSnippets200ResponseResultsInnerLabelsInner
+		var ret []GetProjectDependencies200ResponseDependenciesInnerLabelsInner
 		return ret
 	}
 
@@ -492,7 +525,7 @@ func (o *GetSnippetDetails200ResponseSnippet) GetLabels() []GetSnippets200Respon
 
 // GetLabelsOk returns a tuple with the Labels field value
 // and a boolean to check if the value has been set.
-func (o *GetSnippetDetails200ResponseSnippet) GetLabelsOk() ([]GetSnippets200ResponseResultsInnerLabelsInner, bool) {
+func (o *GetSnippetDetails200ResponseSnippet) GetLabelsOk() ([]GetProjectDependencies200ResponseDependenciesInnerLabelsInner, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -500,7 +533,7 @@ func (o *GetSnippetDetails200ResponseSnippet) GetLabelsOk() ([]GetSnippets200Res
 }
 
 // SetLabels sets field value
-func (o *GetSnippetDetails200ResponseSnippet) SetLabels(v []GetSnippets200ResponseResultsInnerLabelsInner) {
+func (o *GetSnippetDetails200ResponseSnippet) SetLabels(v []GetProjectDependencies200ResponseDependenciesInnerLabelsInner) {
 	o.Labels = v
 }
 
@@ -536,6 +569,54 @@ func (o *GetSnippetDetails200ResponseSnippet) SetOtherVersions(v []GetSnippetDet
 	o.OtherVersions = v
 }
 
+// GetIsVendored returns the IsVendored field value
+func (o *GetSnippetDetails200ResponseSnippet) GetIsVendored() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.IsVendored
+}
+
+// GetIsVendoredOk returns a tuple with the IsVendored field value
+// and a boolean to check if the value has been set.
+func (o *GetSnippetDetails200ResponseSnippet) GetIsVendoredOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.IsVendored, true
+}
+
+// SetIsVendored sets field value
+func (o *GetSnippetDetails200ResponseSnippet) SetIsVendored(v bool) {
+	o.IsVendored = v
+}
+
+// GetIsConverted returns the IsConverted field value
+func (o *GetSnippetDetails200ResponseSnippet) GetIsConverted() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.IsConverted
+}
+
+// GetIsConvertedOk returns a tuple with the IsConverted field value
+// and a boolean to check if the value has been set.
+func (o *GetSnippetDetails200ResponseSnippet) GetIsConvertedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.IsConverted, true
+}
+
+// SetIsConverted sets field value
+func (o *GetSnippetDetails200ResponseSnippet) SetIsConverted(v bool) {
+	o.IsConverted = v
+}
+
 func (o GetSnippetDetails200ResponseSnippet) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -553,6 +634,7 @@ func (o GetSnippetDetails200ResponseSnippet) ToMap() (map[string]interface{}, er
 	toSerialize["package"] = o.Package
 	toSerialize["version"] = o.Version
 	toSerialize["kind"] = o.Kind
+	toSerialize["matchCount"] = o.MatchCount
 	toSerialize["matches"] = o.Matches
 	toSerialize["highestMatchPercentage"] = o.HighestMatchPercentage
 	if !IsNil(o.ReleaseDate) {
@@ -573,6 +655,8 @@ func (o GetSnippetDetails200ResponseSnippet) ToMap() (map[string]interface{}, er
 	if !IsNil(o.OtherVersions) {
 		toSerialize["otherVersions"] = o.OtherVersions
 	}
+	toSerialize["isVendored"] = o.IsVendored
+	toSerialize["isConverted"] = o.IsConverted
 	return toSerialize, nil
 }
 
@@ -588,11 +672,14 @@ func (o *GetSnippetDetails200ResponseSnippet) UnmarshalJSON(data []byte) (err er
 		"package",
 		"version",
 		"kind",
+		"matchCount",
 		"matches",
 		"highestMatchPercentage",
 		"licenses",
 		"issueCounts",
 		"labels",
+		"isVendored",
+		"isConverted",
 	}
 
 	allProperties := make(map[string]interface{})
