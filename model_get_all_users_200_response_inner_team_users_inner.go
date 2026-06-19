@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.8
 Contact: support@fossa.com
 */
 
@@ -22,7 +22,7 @@ var _ MappedNullable = &GetAllUsers200ResponseInnerTeamUsersInner{}
 type GetAllUsers200ResponseInnerTeamUsersInner struct {
 	// The user's role ID
 	RoleId *int32 `json:"roleId,omitempty"`
-	Team *GetAllUsers200ResponseInnerTeamUsersInnerTeam `json:"team,omitempty"`
+	Team *GetAllReleaseGroupTeams200ResponseTeamsInner `json:"team,omitempty"`
 }
 
 // NewGetAllUsers200ResponseInnerTeamUsersInner instantiates a new GetAllUsers200ResponseInnerTeamUsersInner object
@@ -75,9 +75,9 @@ func (o *GetAllUsers200ResponseInnerTeamUsersInner) SetRoleId(v int32) {
 }
 
 // GetTeam returns the Team field value if set, zero value otherwise.
-func (o *GetAllUsers200ResponseInnerTeamUsersInner) GetTeam() GetAllUsers200ResponseInnerTeamUsersInnerTeam {
+func (o *GetAllUsers200ResponseInnerTeamUsersInner) GetTeam() GetAllReleaseGroupTeams200ResponseTeamsInner {
 	if o == nil || IsNil(o.Team) {
-		var ret GetAllUsers200ResponseInnerTeamUsersInnerTeam
+		var ret GetAllReleaseGroupTeams200ResponseTeamsInner
 		return ret
 	}
 	return *o.Team
@@ -85,7 +85,7 @@ func (o *GetAllUsers200ResponseInnerTeamUsersInner) GetTeam() GetAllUsers200Resp
 
 // GetTeamOk returns a tuple with the Team field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetAllUsers200ResponseInnerTeamUsersInner) GetTeamOk() (*GetAllUsers200ResponseInnerTeamUsersInnerTeam, bool) {
+func (o *GetAllUsers200ResponseInnerTeamUsersInner) GetTeamOk() (*GetAllReleaseGroupTeams200ResponseTeamsInner, bool) {
 	if o == nil || IsNil(o.Team) {
 		return nil, false
 	}
@@ -101,8 +101,8 @@ func (o *GetAllUsers200ResponseInnerTeamUsersInner) HasTeam() bool {
 	return false
 }
 
-// SetTeam gets a reference to the given GetAllUsers200ResponseInnerTeamUsersInnerTeam and assigns it to the Team field.
-func (o *GetAllUsers200ResponseInnerTeamUsersInner) SetTeam(v GetAllUsers200ResponseInnerTeamUsersInnerTeam) {
+// SetTeam gets a reference to the given GetAllReleaseGroupTeams200ResponseTeamsInner and assigns it to the Team field.
+func (o *GetAllUsers200ResponseInnerTeamUsersInner) SetTeam(v GetAllReleaseGroupTeams200ResponseTeamsInner) {
 	o.Team = &v
 }
 

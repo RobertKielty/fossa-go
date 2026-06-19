@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.8
 Contact: support@fossa.com
 */
 
@@ -21,7 +21,7 @@ var _ MappedNullable = &GetIssueCounts200ResponseQuality{}
 // GetIssueCounts200ResponseQuality struct for GetIssueCounts200ResponseQuality
 type GetIssueCounts200ResponseQuality struct {
 	Type *GetIssueCounts200ResponseQualityType `json:"type,omitempty"`
-	Status *GetIssueCounts200ResponseQualityStatus `json:"status,omitempty"`
+	Status *GetIssueCounts200ResponseLicensingStatus `json:"status,omitempty"`
 }
 
 // NewGetIssueCounts200ResponseQuality instantiates a new GetIssueCounts200ResponseQuality object
@@ -74,9 +74,9 @@ func (o *GetIssueCounts200ResponseQuality) SetType(v GetIssueCounts200ResponseQu
 }
 
 // GetStatus returns the Status field value if set, zero value otherwise.
-func (o *GetIssueCounts200ResponseQuality) GetStatus() GetIssueCounts200ResponseQualityStatus {
+func (o *GetIssueCounts200ResponseQuality) GetStatus() GetIssueCounts200ResponseLicensingStatus {
 	if o == nil || IsNil(o.Status) {
-		var ret GetIssueCounts200ResponseQualityStatus
+		var ret GetIssueCounts200ResponseLicensingStatus
 		return ret
 	}
 	return *o.Status
@@ -84,7 +84,7 @@ func (o *GetIssueCounts200ResponseQuality) GetStatus() GetIssueCounts200Response
 
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetIssueCounts200ResponseQuality) GetStatusOk() (*GetIssueCounts200ResponseQualityStatus, bool) {
+func (o *GetIssueCounts200ResponseQuality) GetStatusOk() (*GetIssueCounts200ResponseLicensingStatus, bool) {
 	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
@@ -100,8 +100,8 @@ func (o *GetIssueCounts200ResponseQuality) HasStatus() bool {
 	return false
 }
 
-// SetStatus gets a reference to the given GetIssueCounts200ResponseQualityStatus and assigns it to the Status field.
-func (o *GetIssueCounts200ResponseQuality) SetStatus(v GetIssueCounts200ResponseQualityStatus) {
+// SetStatus gets a reference to the given GetIssueCounts200ResponseLicensingStatus and assigns it to the Status field.
+func (o *GetIssueCounts200ResponseQuality) SetStatus(v GetIssueCounts200ResponseLicensingStatus) {
 	o.Status = &v
 }
 

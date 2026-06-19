@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.8
 Contact: support@fossa.com
 */
 
@@ -13,6 +13,8 @@ package fossa
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the DeletePackageLabelAssignmentsRequest type satisfies the MappedNullable interface at compile time
@@ -21,15 +23,18 @@ var _ MappedNullable = &DeletePackageLabelAssignmentsRequest{}
 // DeletePackageLabelAssignmentsRequest struct for DeletePackageLabelAssignmentsRequest
 type DeletePackageLabelAssignmentsRequest struct {
 	// The IDs of the package label assignments to delete.
-	AssignmentLabelIds []int32 `json:"assignmentLabelIds,omitempty"`
+	AssignmentIds []int32 `json:"assignmentIds"`
 }
+
+type _DeletePackageLabelAssignmentsRequest DeletePackageLabelAssignmentsRequest
 
 // NewDeletePackageLabelAssignmentsRequest instantiates a new DeletePackageLabelAssignmentsRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewDeletePackageLabelAssignmentsRequest() *DeletePackageLabelAssignmentsRequest {
+func NewDeletePackageLabelAssignmentsRequest(assignmentIds []int32) *DeletePackageLabelAssignmentsRequest {
 	this := DeletePackageLabelAssignmentsRequest{}
+	this.AssignmentIds = assignmentIds
 	return &this
 }
 
@@ -41,36 +46,28 @@ func NewDeletePackageLabelAssignmentsRequestWithDefaults() *DeletePackageLabelAs
 	return &this
 }
 
-// GetAssignmentLabelIds returns the AssignmentLabelIds field value if set, zero value otherwise.
-func (o *DeletePackageLabelAssignmentsRequest) GetAssignmentLabelIds() []int32 {
-	if o == nil || IsNil(o.AssignmentLabelIds) {
+// GetAssignmentIds returns the AssignmentIds field value
+func (o *DeletePackageLabelAssignmentsRequest) GetAssignmentIds() []int32 {
+	if o == nil {
 		var ret []int32
 		return ret
 	}
-	return o.AssignmentLabelIds
+
+	return o.AssignmentIds
 }
 
-// GetAssignmentLabelIdsOk returns a tuple with the AssignmentLabelIds field value if set, nil otherwise
+// GetAssignmentIdsOk returns a tuple with the AssignmentIds field value
 // and a boolean to check if the value has been set.
-func (o *DeletePackageLabelAssignmentsRequest) GetAssignmentLabelIdsOk() ([]int32, bool) {
-	if o == nil || IsNil(o.AssignmentLabelIds) {
+func (o *DeletePackageLabelAssignmentsRequest) GetAssignmentIdsOk() ([]int32, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.AssignmentLabelIds, true
+	return o.AssignmentIds, true
 }
 
-// HasAssignmentLabelIds returns a boolean if a field has been set.
-func (o *DeletePackageLabelAssignmentsRequest) HasAssignmentLabelIds() bool {
-	if o != nil && !IsNil(o.AssignmentLabelIds) {
-		return true
-	}
-
-	return false
-}
-
-// SetAssignmentLabelIds gets a reference to the given []int32 and assigns it to the AssignmentLabelIds field.
-func (o *DeletePackageLabelAssignmentsRequest) SetAssignmentLabelIds(v []int32) {
-	o.AssignmentLabelIds = v
+// SetAssignmentIds sets field value
+func (o *DeletePackageLabelAssignmentsRequest) SetAssignmentIds(v []int32) {
+	o.AssignmentIds = v
 }
 
 func (o DeletePackageLabelAssignmentsRequest) MarshalJSON() ([]byte, error) {
@@ -83,10 +80,45 @@ func (o DeletePackageLabelAssignmentsRequest) MarshalJSON() ([]byte, error) {
 
 func (o DeletePackageLabelAssignmentsRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.AssignmentLabelIds) {
-		toSerialize["assignmentLabelIds"] = o.AssignmentLabelIds
-	}
+	toSerialize["assignmentIds"] = o.AssignmentIds
 	return toSerialize, nil
+}
+
+func (o *DeletePackageLabelAssignmentsRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"assignmentIds",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varDeletePackageLabelAssignmentsRequest := _DeletePackageLabelAssignmentsRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varDeletePackageLabelAssignmentsRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = DeletePackageLabelAssignmentsRequest(varDeletePackageLabelAssignmentsRequest)
+
+	return err
 }
 
 type NullableDeletePackageLabelAssignmentsRequest struct {
