@@ -17,7 +17,7 @@ Method | HTTP request | Description
 
 ## AddTeamsToTeamGroup
 
-> AddTeamsToTeamGroup200Response AddTeamsToTeamGroup(ctx, id).AddTeamsToTeamGroupRequest(addTeamsToTeamGroupRequest).Execute()
+> GetTeamGroups200ResponseInner AddTeamsToTeamGroup(ctx, id).AddTeamsToTeamGroupRequest(addTeamsToTeamGroupRequest).Execute()
 
 
 
@@ -46,7 +46,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `TeamGroupsAPI.AddTeamsToTeamGroup``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `AddTeamsToTeamGroup`: AddTeamsToTeamGroup200Response
+	// response from `AddTeamsToTeamGroup`: GetTeamGroups200ResponseInner
 	fmt.Fprintf(os.Stdout, "Response from `TeamGroupsAPI.AddTeamsToTeamGroup`: %v\n", resp)
 }
 ```
@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AddTeamsToTeamGroup200Response**](AddTeamsToTeamGroup200Response.md)
+[**GetTeamGroups200ResponseInner**](GetTeamGroups200ResponseInner.md)
 
 ### Authorization
 
@@ -425,7 +425,7 @@ Name | Type | Description  | Notes
 
 ## UpdateTeamGroup
 
-> UpdateTeamGroup200Response UpdateTeamGroup(ctx, id).UpdateTeamGroupRequest(updateTeamGroupRequest).Execute()
+> UpdateTeamGroup200Response UpdateTeamGroup(ctx, id).CreateTeamGroupRequest(createTeamGroupRequest).Execute()
 
 
 
@@ -445,11 +445,11 @@ import (
 
 func main() {
 	id := int32(56) // int32 | ID of the team group to update
-	updateTeamGroupRequest := *openapiclient.NewUpdateTeamGroupRequest("Updated Engineering Team Group", int32(3)) // UpdateTeamGroupRequest | 
+	createTeamGroupRequest := *openapiclient.NewCreateTeamGroupRequest("Engineering Team Group", int32(2)) // CreateTeamGroupRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TeamGroupsAPI.UpdateTeamGroup(context.Background(), id).UpdateTeamGroupRequest(updateTeamGroupRequest).Execute()
+	resp, r, err := apiClient.TeamGroupsAPI.UpdateTeamGroup(context.Background(), id).CreateTeamGroupRequest(createTeamGroupRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TeamGroupsAPI.UpdateTeamGroup``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -475,7 +475,7 @@ Other parameters are passed through a pointer to a apiUpdateTeamGroupRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **updateTeamGroupRequest** | [**UpdateTeamGroupRequest**](UpdateTeamGroupRequest.md) |  | 
+ **createTeamGroupRequest** | [**CreateTeamGroupRequest**](CreateTeamGroupRequest.md) |  | 
 
 ### Return type
 
@@ -517,7 +517,7 @@ import (
 
 func main() {
 	id := int32(56) // int32 | ID of the team group
-	updateTeamGroupUsersRequest := *openapiclient.NewUpdateTeamGroupUsersRequest("add", []openapiclient.UpdateTeamGroupUsersRequestUsersInner{*openapiclient.NewUpdateTeamGroupUsersRequestUsersInner(int32(123))}) // UpdateTeamGroupUsersRequest | 
+	updateTeamGroupUsersRequest := *openapiclient.NewUpdateTeamGroupUsersRequest("add", []openapiclient.UpdateTeamUsersRequestUsersInner{*openapiclient.NewUpdateTeamUsersRequestUsersInner(int32(123))}) // UpdateTeamGroupUsersRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
