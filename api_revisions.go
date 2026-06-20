@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.8
 Contact: support@fossa.com
 */
 
@@ -35,8 +35,12 @@ type ApiFixPlansRequest struct {
 	bundle *bool
 	excludeQuickWins *bool
 	excludeHighPriority *bool
-	excludedLowPriority *bool
+	excludeLowPriority *bool
 	excludeOutdatedDependencies *bool
+	demo *bool
+	includeTransitiveVulns *bool
+	deduplicateOutdatedDeps *bool
+	includeMalware *bool
 }
 
 // Whether to preview the report (default is false)
@@ -70,14 +74,38 @@ func (r ApiFixPlansRequest) ExcludeHighPriority(excludeHighPriority bool) ApiFix
 }
 
 // Whether to exclude Low Priority section (default is false)
-func (r ApiFixPlansRequest) ExcludedLowPriority(excludedLowPriority bool) ApiFixPlansRequest {
-	r.excludedLowPriority = &excludedLowPriority
+func (r ApiFixPlansRequest) ExcludeLowPriority(excludeLowPriority bool) ApiFixPlansRequest {
+	r.excludeLowPriority = &excludeLowPriority
 	return r
 }
 
 // Whether to exclude Outdated Dependencies section (default is false)
 func (r ApiFixPlansRequest) ExcludeOutdatedDependencies(excludeOutdatedDependencies bool) ApiFixPlansRequest {
 	r.excludeOutdatedDependencies = &excludeOutdatedDependencies
+	return r
+}
+
+// Whether to generate the report in demo mode (default is false)
+func (r ApiFixPlansRequest) Demo(demo bool) ApiFixPlansRequest {
+	r.demo = &demo
+	return r
+}
+
+// Whether to include transitive vulnerabilities (default is false)
+func (r ApiFixPlansRequest) IncludeTransitiveVulns(includeTransitiveVulns bool) ApiFixPlansRequest {
+	r.includeTransitiveVulns = &includeTransitiveVulns
+	return r
+}
+
+// Whether to deduplicate outdated dependencies (default is false)
+func (r ApiFixPlansRequest) DeduplicateOutdatedDeps(deduplicateOutdatedDeps bool) ApiFixPlansRequest {
+	r.deduplicateOutdatedDeps = &deduplicateOutdatedDeps
+	return r
+}
+
+// Whether to include malware findings (default is false). Only takes effect when the organization has the malware-issues feature enabled. 
+func (r ApiFixPlansRequest) IncludeMalware(includeMalware bool) ApiFixPlansRequest {
+	r.includeMalware = &includeMalware
 	return r
 }
 
@@ -139,11 +167,23 @@ func (a *RevisionsAPIService) FixPlansExecute(r ApiFixPlansRequest) (*os.File, *
 	if r.excludeHighPriority != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeHighPriority", r.excludeHighPriority, "form", "")
 	}
-	if r.excludedLowPriority != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "excludedLowPriority", r.excludedLowPriority, "form", "")
+	if r.excludeLowPriority != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeLowPriority", r.excludeLowPriority, "form", "")
 	}
 	if r.excludeOutdatedDependencies != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeOutdatedDependencies", r.excludeOutdatedDependencies, "form", "")
+	}
+	if r.demo != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "demo", r.demo, "form", "")
+	}
+	if r.includeTransitiveVulns != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeTransitiveVulns", r.includeTransitiveVulns, "form", "")
+	}
+	if r.deduplicateOutdatedDeps != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deduplicateOutdatedDeps", r.deduplicateOutdatedDeps, "form", "")
+	}
+	if r.includeMalware != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeMalware", r.includeMalware, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -239,7 +279,7 @@ type ApiGetRevisionAttributionEmailRequest struct {
 	includeDependencySummary *bool
 	includeLicenseHeaders *bool
 	includePackageLabels *bool
-	excludePackageLabels *[]string
+	excludeFields *GetRevisionAttributionEmailExcludeFieldsParameter
 }
 
 // The public ID
@@ -332,9 +372,9 @@ func (r ApiGetRevisionAttributionEmailRequest) IncludePackageLabels(includePacka
 	return r
 }
 
-// Exclude dependencies with particular package labels from the report
-func (r ApiGetRevisionAttributionEmailRequest) ExcludePackageLabels(excludePackageLabels []string) ApiGetRevisionAttributionEmailRequest {
-	r.excludePackageLabels = &excludePackageLabels
+// Object controlling which dependencies are excluded from the report. The only supported nested field is &#x60;packageLabels&#x60;: a non-empty array of package-label values; dependencies carrying any of these labels are excluded from the report. 
+func (r ApiGetRevisionAttributionEmailRequest) ExcludeFields(excludeFields GetRevisionAttributionEmailExcludeFieldsParameter) ApiGetRevisionAttributionEmailRequest {
+	r.excludeFields = &excludeFields
 	return r
 }
 
@@ -426,16 +466,8 @@ func (a *RevisionsAPIService) GetRevisionAttributionEmailExecute(r ApiGetRevisio
 	if r.includePackageLabels != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", r.includePackageLabels, "form", "")
 	}
-	if r.excludePackageLabels != nil {
-		t := *r.excludePackageLabels
-		if reflect.TypeOf(t).Kind() == reflect.Slice {
-			s := reflect.ValueOf(t)
-			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "excludePackageLabels", s.Index(i).Interface(), "form", "multi")
-			}
-		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "excludePackageLabels", t, "form", "multi")
-		}
+	if r.excludeFields != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeFields", r.excludeFields, "deepObject", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -536,7 +568,7 @@ type ApiGetRevisionAttributionJSONRequest struct {
 	includeClosedVulnerabilities *bool
 	includeNoticeFiles *bool
 	includePackageLabels *bool
-	excludePackageLabels *[]string
+	excludeFields *GetRevisionAttributionEmailExcludeFieldsParameter
 }
 
 // Whether to preview the report (default is false)
@@ -593,9 +625,9 @@ func (r ApiGetRevisionAttributionJSONRequest) IncludePackageLabels(includePackag
 	return r
 }
 
-// Exclude dependencies with particular package labels from the report
-func (r ApiGetRevisionAttributionJSONRequest) ExcludePackageLabels(excludePackageLabels []string) ApiGetRevisionAttributionJSONRequest {
-	r.excludePackageLabels = &excludePackageLabels
+// Object controlling which dependencies are excluded from the report. The only supported nested field is &#x60;packageLabels&#x60;: a non-empty array of package-label values; dependencies carrying any of these labels are excluded from the report.  The server parses the query string with the &#x60;qs&#x60; library, so the array is sent using bracket-and-index notation rather than standard OpenAPI &#x60;deepObject&#x60; serialization. For example, to exclude two labels send (before URL-encoding): &#x60;excludeFields[packageLabels][0]&#x3D;internal&amp;excludeFields[packageLabels][1]&#x3D;vendored&#x60;. 
+func (r ApiGetRevisionAttributionJSONRequest) ExcludeFields(excludeFields GetRevisionAttributionEmailExcludeFieldsParameter) ApiGetRevisionAttributionJSONRequest {
+	r.excludeFields = &excludeFields
 	return r
 }
 
@@ -606,7 +638,10 @@ func (r ApiGetRevisionAttributionJSONRequest) Execute() (*GetRevisionAttribution
 /*
 GetRevisionAttributionJSON Method for GetRevisionAttributionJSON
 
-Return a JSON report of a revision's attribution
+Return a JSON report of a revision's attribution.
+
+**Requires a Premium subscription.** Organizations below the Premium access level receive a `403`.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param locator the url-encoded locator of the revision
@@ -669,16 +704,8 @@ func (a *RevisionsAPIService) GetRevisionAttributionJSONExecute(r ApiGetRevision
 	if r.includePackageLabels != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", r.includePackageLabels, "form", "")
 	}
-	if r.excludePackageLabels != nil {
-		t := *r.excludePackageLabels
-		if reflect.TypeOf(t).Kind() == reflect.Slice {
-			s := reflect.ValueOf(t)
-			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "excludePackageLabels", s.Index(i).Interface(), "form", "multi")
-			}
-		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "excludePackageLabels", t, "form", "multi")
-		}
+	if r.excludeFields != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeFields", r.excludeFields, "deepObject", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -720,6 +747,17 @@ func (a *RevisionsAPIService) GetRevisionAttributionJSONExecute(r ApiGetRevision
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -778,7 +816,7 @@ type ApiGetRevisionDependenciesRequest struct {
 	includeLocators *[]string
 }
 
-// Maximum number of dependencies to return (min 1, max 10000)
+// Maximum number of dependencies to return. The value is clamped server-side to the range 25–100: any value below 25 is treated as 25, and any value above 100 is treated as 100. 
 func (r ApiGetRevisionDependenciesRequest) Limit(limit int32) ApiGetRevisionDependenciesRequest {
 	r.limit = &limit
 	return r
@@ -909,7 +947,7 @@ func (a *RevisionsAPIService) GetRevisionDependenciesExecute(r ApiGetRevisionDep
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "text/plain"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -950,7 +988,7 @@ func (a *RevisionsAPIService) GetRevisionDependenciesExecute(r ApiGetRevisionDep
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetRevisionDependenciesPost404Response
+			var v string
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1062,7 +1100,7 @@ func (a *RevisionsAPIService) GetRevisionDependenciesPostExecute(r ApiGetRevisio
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "text/plain"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1105,7 +1143,184 @@ func (a *RevisionsAPIService) GetRevisionDependenciesPostExecute(r ApiGetRevisio
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetRevisionDependenciesPost404Response
+			var v string
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetRevisionScansRequest struct {
+	ctx context.Context
+	ApiService *RevisionsAPIService
+	locator string
+	page *int32
+	pageSize *int32
+}
+
+// The 1-indexed page of results to return
+func (r ApiGetRevisionScansRequest) Page(page int32) ApiGetRevisionScansRequest {
+	r.page = &page
+	return r
+}
+
+// The number of scans to return per page (maximum 50)
+func (r ApiGetRevisionScansRequest) PageSize(pageSize int32) ApiGetRevisionScansRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+func (r ApiGetRevisionScansRequest) Execute() (*GetRevisionScans200Response, *http.Response, error) {
+	return r.ApiService.GetRevisionScansExecute(r)
+}
+
+/*
+GetRevisionScans Method for GetRevisionScans
+
+Retrieve a paginated list of scans for a given revision, ordered by scan time descending, with ties broken by id DESC for deterministic pagination.
+Scans are filtered to the organization that owns the revision's project, so public and private projects behave consistently.
+Requires an authenticated user.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The URL-encoded locator of the revision
+ @return ApiGetRevisionScansRequest
+*/
+func (a *RevisionsAPIService) GetRevisionScans(ctx context.Context, locator string) ApiGetRevisionScansRequest {
+	return ApiGetRevisionScansRequest{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+	}
+}
+
+// Execute executes the request
+//  @return GetRevisionScans200Response
+func (a *RevisionsAPIService) GetRevisionScansExecute(r ApiGetRevisionScansRequest) (*GetRevisionScans200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetRevisionScans200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RevisionsAPIService.GetRevisionScans")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/revisions/{locator}/scans"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	} else {
+		var defaultValue int32 = 1
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
+		r.page = &defaultValue
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
+	} else {
+		var defaultValue int32 = 10
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", defaultValue, "form", "")
+		r.pageSize = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1350,6 +1565,17 @@ func (a *RevisionsAPIService) OriginalSbomExecute(r ApiOriginalSbomRequest) (*ht
 					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 403 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1431,6 +1657,9 @@ func (a *RevisionsAPIService) UpdateRevisionExecute(r ApiUpdateRevisionRequest) 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.updateRevisionRequest == nil {
+		return localVarReturnValue, nil, reportError("updateRevisionRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1472,6 +1701,17 @@ func (a *RevisionsAPIService) UpdateRevisionExecute(r ApiUpdateRevisionRequest) 
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
 			var v AddLicenseConclusion400Response
