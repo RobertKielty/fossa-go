@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.9
 Contact: support@fossa.com
 */
 
@@ -223,16 +223,56 @@ type ApiGetGlobalDependencyRequest struct {
 	ctx context.Context
 	ApiService *DependenciesAPIService
 	locator string
+	includeResolutionNotes *bool
+	includeLicenseText *bool
+	includeCopyright *bool
+	includeMatches *bool
+	includeDownloadUrl *bool
 }
 
-func (r ApiGetGlobalDependencyRequest) Execute() (*GetProjectDependency200Response, *http.Response, error) {
+// Include resolution notes in issue data
+func (r ApiGetGlobalDependencyRequest) IncludeResolutionNotes(includeResolutionNotes bool) ApiGetGlobalDependencyRequest {
+	r.includeResolutionNotes = &includeResolutionNotes
+	return r
+}
+
+// Include full license text in license data
+func (r ApiGetGlobalDependencyRequest) IncludeLicenseText(includeLicenseText bool) ApiGetGlobalDependencyRequest {
+	r.includeLicenseText = &includeLicenseText
+	return r
+}
+
+// Include copyright information in license data
+func (r ApiGetGlobalDependencyRequest) IncludeCopyright(includeCopyright bool) ApiGetGlobalDependencyRequest {
+	r.includeCopyright = &includeCopyright
+	return r
+}
+
+// Include license match details in license data
+func (r ApiGetGlobalDependencyRequest) IncludeMatches(includeMatches bool) ApiGetGlobalDependencyRequest {
+	r.includeMatches = &includeMatches
+	return r
+}
+
+// Include download URL in package data
+func (r ApiGetGlobalDependencyRequest) IncludeDownloadUrl(includeDownloadUrl bool) ApiGetGlobalDependencyRequest {
+	r.includeDownloadUrl = &includeDownloadUrl
+	return r
+}
+
+func (r ApiGetGlobalDependencyRequest) Execute() (*GetGlobalDependency200Response, *http.Response, error) {
 	return r.ApiService.GetGlobalDependencyExecute(r)
 }
 
 /*
 GetGlobalDependency Method for GetGlobalDependency
 
-Get a single dependency by locator in the global scope
+Get a single dependency by locator in the global scope.
+
+**Note:** Unlike the list endpoints, this single-dependency endpoint returns the full,
+unsanitized dependency object, including extra top-level fields and additional fields on
+the nested `rootProjects` and `issues` entries. See the response schema for the full contract.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param locator The locator of the dependency to retrieve
@@ -247,13 +287,13 @@ func (a *DependenciesAPIService) GetGlobalDependency(ctx context.Context, locato
 }
 
 // Execute executes the request
-//  @return GetProjectDependency200Response
-func (a *DependenciesAPIService) GetGlobalDependencyExecute(r ApiGetGlobalDependencyRequest) (*GetProjectDependency200Response, *http.Response, error) {
+//  @return GetGlobalDependency200Response
+func (a *DependenciesAPIService) GetGlobalDependencyExecute(r ApiGetGlobalDependencyRequest) (*GetGlobalDependency200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetProjectDependency200Response
+		localVarReturnValue  *GetGlobalDependency200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DependenciesAPIService.GetGlobalDependency")
@@ -268,6 +308,21 @@ func (a *DependenciesAPIService) GetGlobalDependencyExecute(r ApiGetGlobalDepend
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.includeResolutionNotes != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeResolutionNotes", r.includeResolutionNotes, "form", "")
+	}
+	if r.includeLicenseText != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseText", r.includeLicenseText, "form", "")
+	}
+	if r.includeCopyright != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyright", r.includeCopyright, "form", "")
+	}
+	if r.includeMatches != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeMatches", r.includeMatches, "form", "")
+	}
+	if r.includeDownloadUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDownloadUrl", r.includeDownloadUrl, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -358,6 +413,14 @@ type ApiGetProjectDependenciesRequest struct {
 	showIgnored *bool
 	confidence *[]string
 	sources *[]string
+	rootProjects *[]string
+	packageLabels *[]string
+	vendoredPath *string
+	includeResolutionNotes *bool
+	includeLicenseText *bool
+	includeCopyright *bool
+	includeMatches *bool
+	includeDownloadUrl *bool
 	page *int32
 	count *int32
 }
@@ -425,6 +488,54 @@ func (r ApiGetProjectDependenciesRequest) Confidence(confidence []string) ApiGet
 // Filter dependencies by source type (managed or vendored). Only supported on project scope.
 func (r ApiGetProjectDependenciesRequest) Sources(sources []string) ApiGetProjectDependenciesRequest {
 	r.sources = &sources
+	return r
+}
+
+// Filter release group dependencies by root projects
+func (r ApiGetProjectDependenciesRequest) RootProjects(rootProjects []string) ApiGetProjectDependenciesRequest {
+	r.rootProjects = &rootProjects
+	return r
+}
+
+// Filter dependencies by package label IDs
+func (r ApiGetProjectDependenciesRequest) PackageLabels(packageLabels []string) ApiGetProjectDependenciesRequest {
+	r.packageLabels = &packageLabels
+	return r
+}
+
+// Filter to vendored dependencies found under this path prefix. Only supported on project scope.
+func (r ApiGetProjectDependenciesRequest) VendoredPath(vendoredPath string) ApiGetProjectDependenciesRequest {
+	r.vendoredPath = &vendoredPath
+	return r
+}
+
+// Include resolution notes in issue data
+func (r ApiGetProjectDependenciesRequest) IncludeResolutionNotes(includeResolutionNotes bool) ApiGetProjectDependenciesRequest {
+	r.includeResolutionNotes = &includeResolutionNotes
+	return r
+}
+
+// Include full license text in license data
+func (r ApiGetProjectDependenciesRequest) IncludeLicenseText(includeLicenseText bool) ApiGetProjectDependenciesRequest {
+	r.includeLicenseText = &includeLicenseText
+	return r
+}
+
+// Include copyright information in license data
+func (r ApiGetProjectDependenciesRequest) IncludeCopyright(includeCopyright bool) ApiGetProjectDependenciesRequest {
+	r.includeCopyright = &includeCopyright
+	return r
+}
+
+// Include license match details in license data
+func (r ApiGetProjectDependenciesRequest) IncludeMatches(includeMatches bool) ApiGetProjectDependenciesRequest {
+	r.includeMatches = &includeMatches
+	return r
+}
+
+// Include download URL in package data
+func (r ApiGetProjectDependenciesRequest) IncludeDownloadUrl(includeDownloadUrl bool) ApiGetProjectDependenciesRequest {
+	r.includeDownloadUrl = &includeDownloadUrl
 	return r
 }
 
@@ -588,6 +699,46 @@ func (a *DependenciesAPIService) GetProjectDependenciesExecute(r ApiGetProjectDe
 			parameterAddToHeaderOrQuery(localVarQueryParams, "sources[]", t, "form", "multi")
 		}
 	}
+	if r.rootProjects != nil {
+		t := *r.rootProjects
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "rootProjects[]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "rootProjects[]", t, "form", "multi")
+		}
+	}
+	if r.packageLabels != nil {
+		t := *r.packageLabels
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels[]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels[]", t, "form", "multi")
+		}
+	}
+	if r.vendoredPath != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vendoredPath", r.vendoredPath, "form", "")
+	}
+	if r.includeResolutionNotes != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeResolutionNotes", r.includeResolutionNotes, "form", "")
+	}
+	if r.includeLicenseText != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseText", r.includeLicenseText, "form", "")
+	}
+	if r.includeCopyright != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyright", r.includeCopyright, "form", "")
+	}
+	if r.includeMatches != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeMatches", r.includeMatches, "form", "")
+	}
+	if r.includeDownloadUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDownloadUrl", r.includeDownloadUrl, "form", "")
+	}
 	if r.page != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
 	} else {
@@ -693,6 +844,41 @@ type ApiGetProjectDependencyRequest struct {
 	ApiService *DependenciesAPIService
 	locator string
 	dependencyRevisionLocator string
+	includeResolutionNotes *bool
+	includeLicenseText *bool
+	includeCopyright *bool
+	includeMatches *bool
+	includeDownloadUrl *bool
+}
+
+// Include resolution notes in issue data
+func (r ApiGetProjectDependencyRequest) IncludeResolutionNotes(includeResolutionNotes bool) ApiGetProjectDependencyRequest {
+	r.includeResolutionNotes = &includeResolutionNotes
+	return r
+}
+
+// Include full license text in license data
+func (r ApiGetProjectDependencyRequest) IncludeLicenseText(includeLicenseText bool) ApiGetProjectDependencyRequest {
+	r.includeLicenseText = &includeLicenseText
+	return r
+}
+
+// Include copyright information in license data
+func (r ApiGetProjectDependencyRequest) IncludeCopyright(includeCopyright bool) ApiGetProjectDependencyRequest {
+	r.includeCopyright = &includeCopyright
+	return r
+}
+
+// Include license match details in license data
+func (r ApiGetProjectDependencyRequest) IncludeMatches(includeMatches bool) ApiGetProjectDependencyRequest {
+	r.includeMatches = &includeMatches
+	return r
+}
+
+// Include download URL in package data
+func (r ApiGetProjectDependencyRequest) IncludeDownloadUrl(includeDownloadUrl bool) ApiGetProjectDependencyRequest {
+	r.includeDownloadUrl = &includeDownloadUrl
+	return r
 }
 
 func (r ApiGetProjectDependencyRequest) Execute() (*GetProjectDependency200Response, *http.Response, error) {
@@ -702,7 +888,16 @@ func (r ApiGetProjectDependencyRequest) Execute() (*GetProjectDependency200Respo
 /*
 GetProjectDependency Method for GetProjectDependency
 
-Get a single dependency by locator for a given project revision
+Get a single dependency by locator for a given project revision.
+
+**Note:** Unlike the list endpoint (`GET /v2/revisions/{locator}/dependencies`), this
+single-dependency endpoint returns the full, unsanitized dependency object. In addition to
+the fields documented in the response schema below, the payload includes these extra fields:
+
+- Top-level: `authors`, `description`, `url`, `individualLicenses`, `groupedLicenses`, `sourceType`, `lastPublishedDate`
+- Each entry in `rootProjects` additionally includes `type`, `teams`, `paths`, and `depth`
+- Each entry in `issues` additionally includes `notes`
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param locator The locator of the project revision
@@ -741,6 +936,21 @@ func (a *DependenciesAPIService) GetProjectDependencyExecute(r ApiGetProjectDepe
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.includeResolutionNotes != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeResolutionNotes", r.includeResolutionNotes, "form", "")
+	}
+	if r.includeLicenseText != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseText", r.includeLicenseText, "form", "")
+	}
+	if r.includeCopyright != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyright", r.includeCopyright, "form", "")
+	}
+	if r.includeMatches != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeMatches", r.includeMatches, "form", "")
+	}
+	if r.includeDownloadUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDownloadUrl", r.includeDownloadUrl, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -829,7 +1039,7 @@ func (r ApiGetProjectDependencyCountRequest) Sources(sources []string) ApiGetPro
 	return r
 }
 
-func (r ApiGetProjectDependencyCountRequest) Execute() (*GetProjectDependencyCount200Response, *http.Response, error) {
+func (r ApiGetProjectDependencyCountRequest) Execute() (*UpdateIssues200Response, *http.Response, error) {
 	return r.ApiService.GetProjectDependencyCountExecute(r)
 }
 
@@ -851,13 +1061,13 @@ func (a *DependenciesAPIService) GetProjectDependencyCount(ctx context.Context, 
 }
 
 // Execute executes the request
-//  @return GetProjectDependencyCount200Response
-func (a *DependenciesAPIService) GetProjectDependencyCountExecute(r ApiGetProjectDependencyCountRequest) (*GetProjectDependencyCount200Response, *http.Response, error) {
+//  @return UpdateIssues200Response
+func (a *DependenciesAPIService) GetProjectDependencyCountExecute(r ApiGetProjectDependencyCountRequest) (*UpdateIssues200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetProjectDependencyCount200Response
+		localVarReturnValue  *UpdateIssues200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DependenciesAPIService.GetProjectDependencyCount")
@@ -1121,6 +1331,13 @@ type ApiGetReleaseGroupDependenciesRequest struct {
 	confidence *[]string
 	sources *[]string
 	rootProjects *[]string
+	packageLabels *[]string
+	vendoredPath *string
+	includeResolutionNotes *bool
+	includeLicenseText *bool
+	includeCopyright *bool
+	includeMatches *bool
+	includeDownloadUrl *bool
 	page *int32
 	count *int32
 }
@@ -1194,6 +1411,48 @@ func (r ApiGetReleaseGroupDependenciesRequest) Sources(sources []string) ApiGetR
 // Filter release group dependencies by root projects
 func (r ApiGetReleaseGroupDependenciesRequest) RootProjects(rootProjects []string) ApiGetReleaseGroupDependenciesRequest {
 	r.rootProjects = &rootProjects
+	return r
+}
+
+// Filter dependencies by package label IDs
+func (r ApiGetReleaseGroupDependenciesRequest) PackageLabels(packageLabels []string) ApiGetReleaseGroupDependenciesRequest {
+	r.packageLabels = &packageLabels
+	return r
+}
+
+// Filter to vendored dependencies found under this path prefix. Only supported on project scope.
+func (r ApiGetReleaseGroupDependenciesRequest) VendoredPath(vendoredPath string) ApiGetReleaseGroupDependenciesRequest {
+	r.vendoredPath = &vendoredPath
+	return r
+}
+
+// Include resolution notes in issue data
+func (r ApiGetReleaseGroupDependenciesRequest) IncludeResolutionNotes(includeResolutionNotes bool) ApiGetReleaseGroupDependenciesRequest {
+	r.includeResolutionNotes = &includeResolutionNotes
+	return r
+}
+
+// Include full license text in license data
+func (r ApiGetReleaseGroupDependenciesRequest) IncludeLicenseText(includeLicenseText bool) ApiGetReleaseGroupDependenciesRequest {
+	r.includeLicenseText = &includeLicenseText
+	return r
+}
+
+// Include copyright information in license data
+func (r ApiGetReleaseGroupDependenciesRequest) IncludeCopyright(includeCopyright bool) ApiGetReleaseGroupDependenciesRequest {
+	r.includeCopyright = &includeCopyright
+	return r
+}
+
+// Include license match details in license data
+func (r ApiGetReleaseGroupDependenciesRequest) IncludeMatches(includeMatches bool) ApiGetReleaseGroupDependenciesRequest {
+	r.includeMatches = &includeMatches
+	return r
+}
+
+// Include download URL in package data
+func (r ApiGetReleaseGroupDependenciesRequest) IncludeDownloadUrl(includeDownloadUrl bool) ApiGetReleaseGroupDependenciesRequest {
+	r.includeDownloadUrl = &includeDownloadUrl
 	return r
 }
 
@@ -1371,6 +1630,35 @@ func (a *DependenciesAPIService) GetReleaseGroupDependenciesExecute(r ApiGetRele
 			parameterAddToHeaderOrQuery(localVarQueryParams, "rootProjects[]", t, "form", "multi")
 		}
 	}
+	if r.packageLabels != nil {
+		t := *r.packageLabels
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels[]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels[]", t, "form", "multi")
+		}
+	}
+	if r.vendoredPath != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "vendoredPath", r.vendoredPath, "form", "")
+	}
+	if r.includeResolutionNotes != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeResolutionNotes", r.includeResolutionNotes, "form", "")
+	}
+	if r.includeLicenseText != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseText", r.includeLicenseText, "form", "")
+	}
+	if r.includeCopyright != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyright", r.includeCopyright, "form", "")
+	}
+	if r.includeMatches != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeMatches", r.includeMatches, "form", "")
+	}
+	if r.includeDownloadUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDownloadUrl", r.includeDownloadUrl, "form", "")
+	}
 	if r.page != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
 	} else {
@@ -1477,6 +1765,41 @@ type ApiGetReleaseGroupDependencyRequest struct {
 	projectGroupId int32
 	projectGroupReleaseId int32
 	dependencyRevisionLocator string
+	includeResolutionNotes *bool
+	includeLicenseText *bool
+	includeCopyright *bool
+	includeMatches *bool
+	includeDownloadUrl *bool
+}
+
+// Include resolution notes in issue data
+func (r ApiGetReleaseGroupDependencyRequest) IncludeResolutionNotes(includeResolutionNotes bool) ApiGetReleaseGroupDependencyRequest {
+	r.includeResolutionNotes = &includeResolutionNotes
+	return r
+}
+
+// Include full license text in license data
+func (r ApiGetReleaseGroupDependencyRequest) IncludeLicenseText(includeLicenseText bool) ApiGetReleaseGroupDependencyRequest {
+	r.includeLicenseText = &includeLicenseText
+	return r
+}
+
+// Include copyright information in license data
+func (r ApiGetReleaseGroupDependencyRequest) IncludeCopyright(includeCopyright bool) ApiGetReleaseGroupDependencyRequest {
+	r.includeCopyright = &includeCopyright
+	return r
+}
+
+// Include license match details in license data
+func (r ApiGetReleaseGroupDependencyRequest) IncludeMatches(includeMatches bool) ApiGetReleaseGroupDependencyRequest {
+	r.includeMatches = &includeMatches
+	return r
+}
+
+// Include download URL in package data
+func (r ApiGetReleaseGroupDependencyRequest) IncludeDownloadUrl(includeDownloadUrl bool) ApiGetReleaseGroupDependencyRequest {
+	r.includeDownloadUrl = &includeDownloadUrl
+	return r
 }
 
 func (r ApiGetReleaseGroupDependencyRequest) Execute() (*GetProjectDependency200Response, *http.Response, error) {
@@ -1486,7 +1809,16 @@ func (r ApiGetReleaseGroupDependencyRequest) Execute() (*GetProjectDependency200
 /*
 GetReleaseGroupDependency Method for GetReleaseGroupDependency
 
-Get a single dependency by locator for a given release group
+Get a single dependency by locator for a given release group.
+
+**Note:** Unlike the list endpoint (`GET /v2/release-groups/{projectGroupId}/releases/{projectGroupReleaseId}/dependencies`),
+this single-dependency endpoint returns the full, unsanitized dependency object. In addition to
+the fields documented in the response schema below, the payload includes these extra fields:
+
+- Top-level: `authors`, `description`, `url`, `individualLicenses`, `groupedLicenses`, `sourceType`, `lastPublishedDate`
+- Each entry in `rootProjects` additionally includes `type`, `teams`, `paths`, and `depth`
+- Each entry in `issues` additionally includes `notes`
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param projectGroupId The ID of the release group
@@ -1528,6 +1860,21 @@ func (a *DependenciesAPIService) GetReleaseGroupDependencyExecute(r ApiGetReleas
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.includeResolutionNotes != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeResolutionNotes", r.includeResolutionNotes, "form", "")
+	}
+	if r.includeLicenseText != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseText", r.includeLicenseText, "form", "")
+	}
+	if r.includeCopyright != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyright", r.includeCopyright, "form", "")
+	}
+	if r.includeMatches != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeMatches", r.includeMatches, "form", "")
+	}
+	if r.includeDownloadUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDownloadUrl", r.includeDownloadUrl, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1617,7 +1964,7 @@ func (r ApiGetReleaseGroupDependencyCountRequest) Sources(sources []string) ApiG
 	return r
 }
 
-func (r ApiGetReleaseGroupDependencyCountRequest) Execute() (*GetReleaseGroupDependencyCount200Response, *http.Response, error) {
+func (r ApiGetReleaseGroupDependencyCountRequest) Execute() (*UpdateIssues200Response, *http.Response, error) {
 	return r.ApiService.GetReleaseGroupDependencyCountExecute(r)
 }
 
@@ -1641,13 +1988,13 @@ func (a *DependenciesAPIService) GetReleaseGroupDependencyCount(ctx context.Cont
 }
 
 // Execute executes the request
-//  @return GetReleaseGroupDependencyCount200Response
-func (a *DependenciesAPIService) GetReleaseGroupDependencyCountExecute(r ApiGetReleaseGroupDependencyCountRequest) (*GetReleaseGroupDependencyCount200Response, *http.Response, error) {
+//  @return UpdateIssues200Response
+func (a *DependenciesAPIService) GetReleaseGroupDependencyCountExecute(r ApiGetReleaseGroupDependencyCountRequest) (*UpdateIssues200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetReleaseGroupDependencyCount200Response
+		localVarReturnValue  *UpdateIssues200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DependenciesAPIService.GetReleaseGroupDependencyCount")
@@ -2050,7 +2397,7 @@ type ApiGetRevisionDependenciesRequest struct {
 	includeLocators *[]string
 }
 
-// Maximum number of dependencies to return (min 1, max 10000)
+// Maximum number of dependencies to return. The value is clamped server-side to the range 25–100: any value below 25 is treated as 25, and any value above 100 is treated as 100. 
 func (r ApiGetRevisionDependenciesRequest) Limit(limit int32) ApiGetRevisionDependenciesRequest {
 	r.limit = &limit
 	return r
@@ -2181,7 +2528,7 @@ func (a *DependenciesAPIService) GetRevisionDependenciesExecute(r ApiGetRevision
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "text/plain"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2222,7 +2569,7 @@ func (a *DependenciesAPIService) GetRevisionDependenciesExecute(r ApiGetRevision
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetRevisionDependenciesPost404Response
+			var v string
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2334,7 +2681,7 @@ func (a *DependenciesAPIService) GetRevisionDependenciesPostExecute(r ApiGetRevi
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "text/plain"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2377,7 +2724,7 @@ func (a *DependenciesAPIService) GetRevisionDependenciesPostExecute(r ApiGetRevi
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetRevisionDependenciesPost404Response
+			var v string
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
