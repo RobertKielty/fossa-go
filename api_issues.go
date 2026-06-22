@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.9
 Contact: support@fossa.com
 */
 
@@ -19,8 +19,8 @@ import (
 	"net/url"
 	"strings"
 	"os"
-	"reflect"
 	"time"
+	"reflect"
 )
 
 
@@ -46,7 +46,7 @@ func (r ApiCreateIssueDisputeRequest) Execute() (*CreateIssueDispute200Response,
 /*
 CreateIssueDispute Method for CreateIssueDispute
 
-Creates an issue dispute. For now it only supports licensing issues.
+Creates an issue dispute. Supports licensing and quality issue disputes. The dispute type is determined by the category of the specified issue.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param issueId ID of the issue that is being disputed.
@@ -536,6 +536,17 @@ func (a *IssuesAPIService) DeleteProjectGenerateAttributionSlugExecute(r ApiDele
 					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 404 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -694,11 +705,18 @@ type ApiGetGlobalIssuesCSVRequest struct {
 	ctx context.Context
 	ApiService *IssuesAPIService
 	email *bool
+	teamIds *GetIssuesByCategoryTeamIdParameter
 }
 
 // When provided, we will submit the report for background processing and deliver via email when ready. Otherwise the report will be streamed via API
 func (r ApiGetGlobalIssuesCSVRequest) Email(email bool) ApiGetGlobalIssuesCSVRequest {
 	r.email = &email
+	return r
+}
+
+// Scope the report to one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60;. Invalid (non-integer) team IDs are rejected with a &#x60;400&#x60;. Ignored for organizations on the free tier. 
+func (r ApiGetGlobalIssuesCSVRequest) TeamIds(teamIds GetIssuesByCategoryTeamIdParameter) ApiGetGlobalIssuesCSVRequest {
+	r.teamIds = &teamIds
 	return r
 }
 
@@ -709,7 +727,10 @@ func (r ApiGetGlobalIssuesCSVRequest) Execute() (*os.File, *http.Response, error
 /*
 GetGlobalIssuesCSV Method for GetGlobalIssuesCSV
 
-Download the global issues report (CSV) or submit for background processing
+Download the global issues report (CSV) or submit it for background processing.
+
+Requires the `Create` permission on either `OrganizationReport` or `TeamReport`; requests from users without one of these permissions are rejected with a `403`.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetGlobalIssuesCSVRequest
@@ -744,6 +765,9 @@ func (a *IssuesAPIService) GetGlobalIssuesCSVExecute(r ApiGetGlobalIssuesCSVRequ
 
 	if r.email != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "email", r.email, "form", "")
+	}
+	if r.teamIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "teamIds", r.teamIds, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -783,6 +807,28 @@ func (a *IssuesAPIService) GetGlobalIssuesCSVExecute(r ApiGetGlobalIssuesCSVRequ
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v AddLicenseConclusion400Response
@@ -1224,7 +1270,7 @@ type ApiGetIssueCWEsRequest struct {
 	scopeReleaseScanId *string
 	scopeCompareToRevision *string
 	scopeCompareToChangeStatus *string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *GetIssuesByCategoryTeamIdParameter
 }
 
 // Scope of issues to view / update
@@ -1281,8 +1327,8 @@ func (r ApiGetIssueCWEsRequest) ScopeCompareToChangeStatus(scopeCompareToChangeS
 	return r
 }
 
-// Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects.
-func (r ApiGetIssueCWEsRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiGetIssueCWEsRequest {
+// Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier. 
+func (r ApiGetIssueCWEsRequest) TeamId(teamId GetIssuesByCategoryTeamIdParameter) ApiGetIssueCWEsRequest {
 	r.teamId = &teamId
 	return r
 }
@@ -1356,15 +1402,7 @@ func (a *IssuesAPIService) GetIssueCWEsExecute(r ApiGetIssueCWEsRequest) (*GetIs
 		parameterAddToHeaderOrQuery(localVarQueryParams, "scope[compareTo][changeStatus]", r.scopeCompareToChangeStatus, "form", "")
 	}
 	if r.teamId != nil {
-		t := *r.teamId
-		if reflect.TypeOf(t).Kind() == reflect.Slice {
-			s := reflect.ValueOf(t)
-			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "teamId[]", s.Index(i).Interface(), "form", "multi")
-			}
-		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "teamId[]", t, "form", "multi")
-		}
+		parameterAddToHeaderOrQuery(localVarQueryParams, "teamId", r.teamId, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2371,6 +2409,7 @@ type ApiGetIssuePackageManagersRequest struct {
 	scopeRevisionScanId *int32
 	scopeRelease *string
 	scopeReleaseScanId *string
+	teamId *GetIssuesByCategoryTeamIdParameter
 }
 
 // Issue category
@@ -2418,6 +2457,12 @@ func (r ApiGetIssuePackageManagersRequest) ScopeRelease(scopeRelease string) Api
 // Release scan ID (when scope[type] is \&quot;releaseGroup\&quot;)
 func (r ApiGetIssuePackageManagersRequest) ScopeReleaseScanId(scopeReleaseScanId string) ApiGetIssuePackageManagersRequest {
 	r.scopeReleaseScanId = &scopeReleaseScanId
+	return r
+}
+
+// Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier. 
+func (r ApiGetIssuePackageManagersRequest) TeamId(teamId GetIssuesByCategoryTeamIdParameter) ApiGetIssuePackageManagersRequest {
+	r.teamId = &teamId
 	return r
 }
 
@@ -2486,6 +2531,9 @@ func (a *IssuesAPIService) GetIssuePackageManagersExecute(r ApiGetIssuePackageMa
 	}
 	if r.scopeReleaseScanId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "scope[releaseScanId]", r.scopeReleaseScanId, "form", "")
+	}
+	if r.teamId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "teamId", r.teamId, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2603,6 +2651,7 @@ type ApiGetIssueStatusesRequest struct {
 	filterIgnoreReason *[]string
 	filterLicenses *[]string
 	filterIssueSource *GetIssueStatusesFilterIssueSourceParameter
+	teamId *GetIssuesByCategoryTeamIdParameter
 }
 
 // Issue category
@@ -2764,6 +2813,12 @@ func (r ApiGetIssueStatusesRequest) FilterLicenses(filterLicenses []string) ApiG
 // Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored. 
 func (r ApiGetIssueStatusesRequest) FilterIssueSource(filterIssueSource GetIssueStatusesFilterIssueSourceParameter) ApiGetIssueStatusesRequest {
 	r.filterIssueSource = &filterIssueSource
+	return r
+}
+
+// Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier. 
+func (r ApiGetIssueStatusesRequest) TeamId(teamId GetIssuesByCategoryTeamIdParameter) ApiGetIssueStatusesRequest {
+	r.teamId = &teamId
 	return r
 }
 
@@ -3002,6 +3057,9 @@ func (a *IssuesAPIService) GetIssueStatusesExecute(r ApiGetIssueStatusesRequest)
 	if r.filterIssueSource != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[issueSource][]", r.filterIssueSource, "form", "")
 	}
+	if r.teamId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "teamId", r.teamId, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -3115,6 +3173,7 @@ type ApiGetIssuesRequest struct {
 	filterProjectLabels *[]string
 	filterIdentification *[]string
 	filterSeverity *[]string
+	filterSeveritySource *[]string
 	filterFoundBefore *time.Time
 	filterFoundAfter *time.Time
 	filterHasFix *[]string
@@ -3124,9 +3183,14 @@ type ApiGetIssuesRequest struct {
 	filterEpss *GetIssueDiffComparisonSummariesFilterEpssParameter
 	filterConfidence *[]string
 	filterIssueSource *GetIssueStatusesFilterIssueSourceParameter
+	filterCvssAttackVector *[]string
+	filterCvssAttackComplexity *[]string
+	filterCvssPrivilegesRequired *[]string
 	sort *string
 	page *int32
 	count *int32
+	teamId *GetIssuesByCategoryTeamIdParameter
+	email *bool
 }
 
 // Issue category
@@ -3273,6 +3337,12 @@ func (r ApiGetIssuesRequest) FilterSeverity(filterSeverity []string) ApiGetIssue
 	return r
 }
 
+// Filter by severity source (when category is \&quot;vulnerability\&quot;). Use &#39;standard&#39; to filter by CVSS score, &#39;custom&#39; to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to &#39;standard&#39; when not provided. Custom risk score filtering is not available for global scope. 
+func (r ApiGetIssuesRequest) FilterSeveritySource(filterSeveritySource []string) ApiGetIssuesRequest {
+	r.filterSeveritySource = &filterSeveritySource
+	return r
+}
+
 // Include only issues found on before a given ISO timestamp.  Only available to premium users
 func (r ApiGetIssuesRequest) FilterFoundBefore(filterFoundBefore time.Time) ApiGetIssuesRequest {
 	r.filterFoundBefore = &filterFoundBefore
@@ -3327,6 +3397,24 @@ func (r ApiGetIssuesRequest) FilterIssueSource(filterIssueSource GetIssueStatuse
 	return r
 }
 
+// Filter by CVSS attack vector (when category is \&quot;vulnerability\&quot;)
+func (r ApiGetIssuesRequest) FilterCvssAttackVector(filterCvssAttackVector []string) ApiGetIssuesRequest {
+	r.filterCvssAttackVector = &filterCvssAttackVector
+	return r
+}
+
+// Filter by CVSS attack complexity (when category is \&quot;vulnerability\&quot;). For CVSS v4, this includes the Attack Requirements (AT) metric.
+func (r ApiGetIssuesRequest) FilterCvssAttackComplexity(filterCvssAttackComplexity []string) ApiGetIssuesRequest {
+	r.filterCvssAttackComplexity = &filterCvssAttackComplexity
+	return r
+}
+
+// Filter by CVSS privileges required (when category is \&quot;vulnerability\&quot;)
+func (r ApiGetIssuesRequest) FilterCvssPrivilegesRequired(filterCvssPrivilegesRequired []string) ApiGetIssuesRequest {
+	r.filterCvssPrivilegesRequired = &filterCvssPrivilegesRequired
+	return r
+}
+
 // Sort by package name, when the issue was created, or severity (when category is \&quot;vulnerability\&quot;) 
 func (r ApiGetIssuesRequest) Sort(sort string) ApiGetIssuesRequest {
 	r.sort = &sort
@@ -3342,6 +3430,18 @@ func (r ApiGetIssuesRequest) Page(page int32) ApiGetIssuesRequest {
 // The number of items to return in each page of results
 func (r ApiGetIssuesRequest) Count(count int32) ApiGetIssuesRequest {
 	r.count = &count
+	return r
+}
+
+// Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier. 
+func (r ApiGetIssuesRequest) TeamId(teamId GetIssuesByCategoryTeamIdParameter) ApiGetIssuesRequest {
+	r.teamId = &teamId
+	return r
+}
+
+// Only applies when &#x60;csv&#x3D;true&#x60;. When provided, the CSV report is generated as a background task and emailed to the requesting user once ready; the response is then a &#x60;201&#x60; with the task metadata. When omitted, the CSV is streamed directly in the response. 
+func (r ApiGetIssuesRequest) Email(email bool) ApiGetIssuesRequest {
+	r.email = &email
 	return r
 }
 
@@ -3539,6 +3639,17 @@ func (a *IssuesAPIService) GetIssuesExecute(r ApiGetIssuesRequest) (*GetIssues20
 			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severity][]", t, "form", "multi")
 		}
 	}
+	if r.filterSeveritySource != nil {
+		t := *r.filterSeveritySource
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severitySource][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severitySource][]", t, "form", "multi")
+		}
+	}
 	if r.filterFoundBefore != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[foundBefore]", r.filterFoundBefore, "form", "")
 	}
@@ -3606,6 +3717,39 @@ func (a *IssuesAPIService) GetIssuesExecute(r ApiGetIssuesRequest) (*GetIssues20
 	if r.filterIssueSource != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[issueSource][]", r.filterIssueSource, "form", "")
 	}
+	if r.filterCvssAttackVector != nil {
+		t := *r.filterCvssAttackVector
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssAttackVector][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssAttackVector][]", t, "form", "multi")
+		}
+	}
+	if r.filterCvssAttackComplexity != nil {
+		t := *r.filterCvssAttackComplexity
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssAttackComplexity][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssAttackComplexity][]", t, "form", "multi")
+		}
+	}
+	if r.filterCvssPrivilegesRequired != nil {
+		t := *r.filterCvssPrivilegesRequired
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssPrivilegesRequired][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssPrivilegesRequired][]", t, "form", "multi")
+		}
+	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	}
@@ -3623,6 +3767,12 @@ func (a *IssuesAPIService) GetIssuesExecute(r ApiGetIssuesRequest) (*GetIssues20
 		parameterAddToHeaderOrQuery(localVarQueryParams, "count", defaultValue, "form", "")
 		r.count = &defaultValue
 	}
+	if r.teamId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "teamId", r.teamId, "form", "")
+	}
+	if r.email != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "email", r.email, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -3633,7 +3783,7 @@ func (a *IssuesAPIService) GetIssuesExecute(r ApiGetIssuesRequest) (*GetIssues20
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "text/csv"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -3729,6 +3879,7 @@ type ApiGetIssuesByCategoryRequest struct {
 	scopeRevisionScanId *int32
 	scopeRelease *string
 	scopeReleaseScanId *string
+	teamId *GetIssuesByCategoryTeamIdParameter
 }
 
 // Scope of issues to view / update
@@ -3764,6 +3915,12 @@ func (r ApiGetIssuesByCategoryRequest) ScopeRelease(scopeRelease string) ApiGetI
 // Release scan ID (when scope[type] is \&quot;releaseGroup\&quot;)
 func (r ApiGetIssuesByCategoryRequest) ScopeReleaseScanId(scopeReleaseScanId string) ApiGetIssuesByCategoryRequest {
 	r.scopeReleaseScanId = &scopeReleaseScanId
+	return r
+}
+
+// Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier. 
+func (r ApiGetIssuesByCategoryRequest) TeamId(teamId GetIssuesByCategoryTeamIdParameter) ApiGetIssuesByCategoryRequest {
+	r.teamId = &teamId
 	return r
 }
 
@@ -3825,6 +3982,9 @@ func (a *IssuesAPIService) GetIssuesByCategoryExecute(r ApiGetIssuesByCategoryRe
 	}
 	if r.scopeReleaseScanId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "scope[releaseScanId]", r.scopeReleaseScanId, "form", "")
+	}
+	if r.teamId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "teamId", r.teamId, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -3946,6 +4106,7 @@ type ApiGetIssuesByRevisionRequest struct {
 	sort *string
 	page *int32
 	count *int32
+	teamId *GetIssuesByCategoryTeamIdParameter
 }
 
 // Issue category
@@ -4131,6 +4292,12 @@ func (r ApiGetIssuesByRevisionRequest) Page(page int32) ApiGetIssuesByRevisionRe
 // The number of items to return in each page of results
 func (r ApiGetIssuesByRevisionRequest) Count(count int32) ApiGetIssuesByRevisionRequest {
 	r.count = &count
+	return r
+}
+
+// Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier. 
+func (r ApiGetIssuesByRevisionRequest) TeamId(teamId GetIssuesByCategoryTeamIdParameter) ApiGetIssuesByRevisionRequest {
+	r.teamId = &teamId
 	return r
 }
 
@@ -4389,6 +4556,9 @@ func (a *IssuesAPIService) GetIssuesByRevisionExecute(r ApiGetIssuesByRevisionRe
 		parameterAddToHeaderOrQuery(localVarQueryParams, "count", defaultValue, "form", "")
 		r.count = &defaultValue
 	}
+	if r.teamId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "teamId", r.teamId, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -4484,6 +4654,7 @@ type ApiGetIssuesByTypeRequest struct {
 	scopeRevisionScanId *int32
 	scopeRelease *string
 	scopeReleaseScanId *string
+	teamId *GetIssuesByCategoryTeamIdParameter
 }
 
 // Scope of issues to view / update
@@ -4519,6 +4690,12 @@ func (r ApiGetIssuesByTypeRequest) ScopeRelease(scopeRelease string) ApiGetIssue
 // Release scan ID (when scope[type] is \&quot;releaseGroup\&quot;)
 func (r ApiGetIssuesByTypeRequest) ScopeReleaseScanId(scopeReleaseScanId string) ApiGetIssuesByTypeRequest {
 	r.scopeReleaseScanId = &scopeReleaseScanId
+	return r
+}
+
+// Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier. 
+func (r ApiGetIssuesByTypeRequest) TeamId(teamId GetIssuesByCategoryTeamIdParameter) ApiGetIssuesByTypeRequest {
+	r.teamId = &teamId
 	return r
 }
 
@@ -4580,6 +4757,9 @@ func (a *IssuesAPIService) GetIssuesByTypeExecute(r ApiGetIssuesByTypeRequest) (
 	}
 	if r.scopeReleaseScanId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "scope[releaseScanId]", r.scopeReleaseScanId, "form", "")
+	}
+	if r.teamId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "teamId", r.teamId, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -4677,6 +4857,7 @@ type ApiGetLicenseListRequest struct {
 	scopeRevisionScanId *int32
 	scopeRelease *string
 	scopeReleaseScanId *string
+	teamId *GetIssuesByCategoryTeamIdParameter
 }
 
 // Issue category (must be licensing)
@@ -4718,6 +4899,12 @@ func (r ApiGetLicenseListRequest) ScopeRelease(scopeRelease string) ApiGetLicens
 // Release scan ID (when scope[type] is \&quot;releaseGroup\&quot;)
 func (r ApiGetLicenseListRequest) ScopeReleaseScanId(scopeReleaseScanId string) ApiGetLicenseListRequest {
 	r.scopeReleaseScanId = &scopeReleaseScanId
+	return r
+}
+
+// Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier. 
+func (r ApiGetLicenseListRequest) TeamId(teamId GetIssuesByCategoryTeamIdParameter) ApiGetLicenseListRequest {
+	r.teamId = &teamId
 	return r
 }
 
@@ -4783,6 +4970,9 @@ func (a *IssuesAPIService) GetLicenseListExecute(r ApiGetLicenseListRequest) (*G
 	}
 	if r.scopeReleaseScanId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "scope[releaseScanId]", r.scopeReleaseScanId, "form", "")
+	}
+	if r.teamId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "teamId", r.teamId, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -4904,7 +5094,7 @@ func (r ApiGetProjectCSVExportIssuesRequest) RefType(refType string) ApiGetProje
 	return r
 }
 
-func (r ApiGetProjectCSVExportIssuesRequest) Execute() (string, *http.Response, error) {
+func (r ApiGetProjectCSVExportIssuesRequest) Execute() (*os.File, *http.Response, error) {
 	return r.ApiService.GetProjectCSVExportIssuesExecute(r)
 }
 
@@ -4927,13 +5117,13 @@ func (a *IssuesAPIService) GetProjectCSVExportIssues(ctx context.Context, locato
 }
 
 // Execute executes the request
-//  @return string
-func (a *IssuesAPIService) GetProjectCSVExportIssuesExecute(r ApiGetProjectCSVExportIssuesRequest) (string, *http.Response, error) {
+//  @return *os.File
+func (a *IssuesAPIService) GetProjectCSVExportIssuesExecute(r ApiGetProjectCSVExportIssuesRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  string
+		localVarReturnValue  *os.File
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IssuesAPIService.GetProjectCSVExportIssues")
@@ -4970,7 +5160,7 @@ func (a *IssuesAPIService) GetProjectCSVExportIssuesExecute(r ApiGetProjectCSVEx
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"text/csv", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/octet-stream", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -5167,7 +5357,7 @@ func (a *IssuesAPIService) GetProjectExportIssuesExecute(r ApiGetProjectExportIs
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "text/csv"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/octet-stream"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -5465,6 +5655,7 @@ type ApiUpdateIssuesRequest struct {
 	filterProjectLabels *[]string
 	filterIdentification *[]string
 	filterSeverity *[]string
+	filterSeveritySource *[]string
 	filterFoundAfter *time.Time
 	filterHasFix *[]string
 	filterUpgradeDistance *[]string
@@ -5473,6 +5664,10 @@ type ApiUpdateIssuesRequest struct {
 	filterLicenses *[]string
 	filterConfidence *[]string
 	filterIssueSource *GetIssueStatusesFilterIssueSourceParameter
+	filterCvssAttackVector *[]string
+	filterCvssAttackComplexity *[]string
+	filterCvssPrivilegesRequired *[]string
+	teamId *GetIssuesByCategoryTeamIdParameter
 	updateIssuesRequest *UpdateIssuesRequest
 }
 
@@ -5602,6 +5797,12 @@ func (r ApiUpdateIssuesRequest) FilterSeverity(filterSeverity []string) ApiUpdat
 	return r
 }
 
+// Filter by severity source (when category is \&quot;vulnerability\&quot;). Use &#39;standard&#39; to filter by CVSS score, &#39;custom&#39; to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to &#39;standard&#39; when not provided. Custom risk score filtering is not available for global scope. 
+func (r ApiUpdateIssuesRequest) FilterSeveritySource(filterSeveritySource []string) ApiUpdateIssuesRequest {
+	r.filterSeveritySource = &filterSeveritySource
+	return r
+}
+
 // Include only issues found on after a given ISO timestamp.  Only available to premium users
 func (r ApiUpdateIssuesRequest) FilterFoundAfter(filterFoundAfter time.Time) ApiUpdateIssuesRequest {
 	r.filterFoundAfter = &filterFoundAfter
@@ -5647,6 +5848,30 @@ func (r ApiUpdateIssuesRequest) FilterConfidence(filterConfidence []string) ApiU
 // Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored. 
 func (r ApiUpdateIssuesRequest) FilterIssueSource(filterIssueSource GetIssueStatusesFilterIssueSourceParameter) ApiUpdateIssuesRequest {
 	r.filterIssueSource = &filterIssueSource
+	return r
+}
+
+// Filter by CVSS attack vector (when category is \&quot;vulnerability\&quot;)
+func (r ApiUpdateIssuesRequest) FilterCvssAttackVector(filterCvssAttackVector []string) ApiUpdateIssuesRequest {
+	r.filterCvssAttackVector = &filterCvssAttackVector
+	return r
+}
+
+// Filter by CVSS attack complexity (when category is \&quot;vulnerability\&quot;). For CVSS v4, this includes the Attack Requirements (AT) metric.
+func (r ApiUpdateIssuesRequest) FilterCvssAttackComplexity(filterCvssAttackComplexity []string) ApiUpdateIssuesRequest {
+	r.filterCvssAttackComplexity = &filterCvssAttackComplexity
+	return r
+}
+
+// Filter by CVSS privileges required (when category is \&quot;vulnerability\&quot;)
+func (r ApiUpdateIssuesRequest) FilterCvssPrivilegesRequired(filterCvssPrivilegesRequired []string) ApiUpdateIssuesRequest {
+	r.filterCvssPrivilegesRequired = &filterCvssPrivilegesRequired
+	return r
+}
+
+// Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier. 
+func (r ApiUpdateIssuesRequest) TeamId(teamId GetIssuesByCategoryTeamIdParameter) ApiUpdateIssuesRequest {
+	r.teamId = &teamId
 	return r
 }
 
@@ -5832,6 +6057,17 @@ func (a *IssuesAPIService) UpdateIssuesExecute(r ApiUpdateIssuesRequest) (*Updat
 			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severity][]", t, "form", "multi")
 		}
 	}
+	if r.filterSeveritySource != nil {
+		t := *r.filterSeveritySource
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severitySource][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[severitySource][]", t, "form", "multi")
+		}
+	}
 	if r.filterFoundAfter != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[foundAfter]", r.filterFoundAfter, "form", "")
 	}
@@ -5903,6 +6139,42 @@ func (a *IssuesAPIService) UpdateIssuesExecute(r ApiUpdateIssuesRequest) (*Updat
 	}
 	if r.filterIssueSource != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "filter[issueSource][]", r.filterIssueSource, "form", "")
+	}
+	if r.filterCvssAttackVector != nil {
+		t := *r.filterCvssAttackVector
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssAttackVector][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssAttackVector][]", t, "form", "multi")
+		}
+	}
+	if r.filterCvssAttackComplexity != nil {
+		t := *r.filterCvssAttackComplexity
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssAttackComplexity][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssAttackComplexity][]", t, "form", "multi")
+		}
+	}
+	if r.filterCvssPrivilegesRequired != nil {
+		t := *r.filterCvssPrivilegesRequired
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssPrivilegesRequired][]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "filter[cvssPrivilegesRequired][]", t, "form", "multi")
+		}
+	}
+	if r.teamId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "teamId", r.teamId, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
