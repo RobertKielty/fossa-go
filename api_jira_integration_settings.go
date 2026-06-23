@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.10
 Contact: support@fossa.com
 */
 
@@ -139,7 +139,7 @@ func (a *JiraIntegrationSettingsAPIService) CreateJiraConfigurationExecute(r Api
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GenerateProjectGenerateAttributionSlug401Response
+			var v UpdateReleaseGroupById403Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -150,7 +150,7 @@ func (a *JiraIntegrationSettingsAPIService) CreateJiraConfigurationExecute(r Api
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
-			var v GenerateProjectGenerateAttributionSlug401Response
+			var v UpdateReleaseGroupById403Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -285,7 +285,7 @@ func (a *JiraIntegrationSettingsAPIService) DeleteJiraConfigurationExecute(r Api
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GenerateProjectGenerateAttributionSlug401Response
+			var v UpdateReleaseGroupById403Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -405,7 +405,7 @@ func (a *JiraIntegrationSettingsAPIService) GetJiraConfigurationsExecute(r ApiGe
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GenerateProjectGenerateAttributionSlug401Response
+			var v UpdateReleaseGroupById403Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -546,7 +546,7 @@ func (a *JiraIntegrationSettingsAPIService) PatchJiraConfigurationExecute(r ApiP
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GenerateProjectGenerateAttributionSlug401Response
+			var v UpdateReleaseGroupById403Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
