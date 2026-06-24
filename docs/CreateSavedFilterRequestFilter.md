@@ -18,7 +18,6 @@ Name | Type | Description | Notes
 **UpgradeDistance** | Pointer to **string** |  | [optional] 
 **ExploitMaturity** | Pointer to **string** |  | [optional] 
 **IgnoreReason** | Pointer to **string** | Provided reason for ignoring or resolving a security issue. &#39;Fixed&#39; and &#39;Under_investigation&#39; map to VEX statuses with the same names. All other values map to the VEX status &#39;Not Affected&#39;. This value appears in the vulnerabilities.analysis.justification field of CycloneDX SBOM reports.  | [optional] 
-**Reachability** | Pointer to **string** |  | [optional] 
 **Cwes** | Pointer to **[]string** |  | [optional] 
 
 ## Methods
@@ -389,31 +388,6 @@ SetIgnoreReason sets IgnoreReason field to given value.
 `func (o *CreateSavedFilterRequestFilter) HasIgnoreReason() bool`
 
 HasIgnoreReason returns a boolean if a field has been set.
-
-### GetReachability
-
-`func (o *CreateSavedFilterRequestFilter) GetReachability() string`
-
-GetReachability returns the Reachability field if non-nil, zero value otherwise.
-
-### GetReachabilityOk
-
-`func (o *CreateSavedFilterRequestFilter) GetReachabilityOk() (*string, bool)`
-
-GetReachabilityOk returns a tuple with the Reachability field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetReachability
-
-`func (o *CreateSavedFilterRequestFilter) SetReachability(v string)`
-
-SetReachability sets Reachability field to given value.
-
-### HasReachability
-
-`func (o *CreateSavedFilterRequestFilter) HasReachability() bool`
-
-HasReachability returns a boolean if a field has been set.
 
 ### GetCwes
 

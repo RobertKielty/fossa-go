@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.11
 Contact: support@fossa.com
 */
 
@@ -160,15 +160,15 @@ type ApiCreateReleaseGroupReleasesRequest struct {
 	ctx context.Context
 	ApiService *ReleaseGroupsAPIService
 	groupId int32
-	createReleaseGroupReleasesRequest *CreateReleaseGroupReleasesRequest
+	createReleaseGroupRequestRelease *CreateReleaseGroupRequestRelease
 }
 
-func (r ApiCreateReleaseGroupReleasesRequest) CreateReleaseGroupReleasesRequest(createReleaseGroupReleasesRequest CreateReleaseGroupReleasesRequest) ApiCreateReleaseGroupReleasesRequest {
-	r.createReleaseGroupReleasesRequest = &createReleaseGroupReleasesRequest
+func (r ApiCreateReleaseGroupReleasesRequest) CreateReleaseGroupRequestRelease(createReleaseGroupRequestRelease CreateReleaseGroupRequestRelease) ApiCreateReleaseGroupReleasesRequest {
+	r.createReleaseGroupRequestRelease = &createReleaseGroupRequestRelease
 	return r
 }
 
-func (r ApiCreateReleaseGroupReleasesRequest) Execute() (*CreateReleaseGroup200Response, *http.Response, error) {
+func (r ApiCreateReleaseGroupReleasesRequest) Execute() (*CreateReleaseGroupReleases200Response, *http.Response, error) {
 	return r.ApiService.CreateReleaseGroupReleasesExecute(r)
 }
 
@@ -190,13 +190,13 @@ func (a *ReleaseGroupsAPIService) CreateReleaseGroupReleases(ctx context.Context
 }
 
 // Execute executes the request
-//  @return CreateReleaseGroup200Response
-func (a *ReleaseGroupsAPIService) CreateReleaseGroupReleasesExecute(r ApiCreateReleaseGroupReleasesRequest) (*CreateReleaseGroup200Response, *http.Response, error) {
+//  @return CreateReleaseGroupReleases200Response
+func (a *ReleaseGroupsAPIService) CreateReleaseGroupReleasesExecute(r ApiCreateReleaseGroupReleasesRequest) (*CreateReleaseGroupReleases200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *CreateReleaseGroup200Response
+		localVarReturnValue  *CreateReleaseGroupReleases200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReleaseGroupsAPIService.CreateReleaseGroupReleases")
@@ -210,8 +210,8 @@ func (a *ReleaseGroupsAPIService) CreateReleaseGroupReleasesExecute(r ApiCreateR
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.createReleaseGroupReleasesRequest == nil {
-		return localVarReturnValue, nil, reportError("createReleaseGroupReleasesRequest is required and must be specified")
+	if r.createReleaseGroupRequestRelease == nil {
+		return localVarReturnValue, nil, reportError("createReleaseGroupRequestRelease is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -232,7 +232,7 @@ func (a *ReleaseGroupsAPIService) CreateReleaseGroupReleasesExecute(r ApiCreateR
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.createReleaseGroupReleasesRequest
+	localVarPostBody = r.createReleaseGroupRequestRelease
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -267,7 +267,7 @@ func (a *ReleaseGroupsAPIService) CreateReleaseGroupReleasesExecute(r ApiCreateR
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GenerateProjectGenerateAttributionSlug401Response
+			var v UpdateReleaseGroupById403Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -389,7 +389,7 @@ func (a *ReleaseGroupsAPIService) DeleteReleaseGroupByIdExecute(r ApiDeleteRelea
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GenerateProjectGenerateAttributionSlug401Response
+			var v UpdateReleaseGroupById403Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1119,7 +1119,7 @@ type ApiGetReleaseGroupReleaseByIdRequest struct {
 	projectGroupReleaseId int32
 }
 
-func (r ApiGetReleaseGroupReleaseByIdRequest) Execute() ([]GetReleaseGroupReleaseById200ResponseInner, *http.Response, error) {
+func (r ApiGetReleaseGroupReleaseByIdRequest) Execute() (*GetReleaseGroupReleaseById200Response, *http.Response, error) {
 	return r.ApiService.GetReleaseGroupReleaseByIdExecute(r)
 }
 
@@ -1143,13 +1143,13 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseById(ctx context.Context
 }
 
 // Execute executes the request
-//  @return []GetReleaseGroupReleaseById200ResponseInner
-func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseByIdExecute(r ApiGetReleaseGroupReleaseByIdRequest) ([]GetReleaseGroupReleaseById200ResponseInner, *http.Response, error) {
+//  @return GetReleaseGroupReleaseById200Response
+func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseByIdExecute(r ApiGetReleaseGroupReleaseByIdRequest) (*GetReleaseGroupReleaseById200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  []GetReleaseGroupReleaseById200ResponseInner
+		localVarReturnValue  *GetReleaseGroupReleaseById200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReleaseGroupsAPIService.GetReleaseGroupReleaseById")
@@ -1609,7 +1609,7 @@ type ApiGetReleaseGroupReleaseScansRequest struct {
 	projectGroupReleaseId int32
 }
 
-func (r ApiGetReleaseGroupReleaseScansRequest) Execute() (*GetReleaseGroupReleaseScans200Response, *http.Response, error) {
+func (r ApiGetReleaseGroupReleaseScansRequest) Execute() ([]GetReleaseGroupReleaseScans200ResponseInner, *http.Response, error) {
 	return r.ApiService.GetReleaseGroupReleaseScansExecute(r)
 }
 
@@ -1633,13 +1633,13 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseScans(ctx context.Contex
 }
 
 // Execute executes the request
-//  @return GetReleaseGroupReleaseScans200Response
-func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseScansExecute(r ApiGetReleaseGroupReleaseScansRequest) (*GetReleaseGroupReleaseScans200Response, *http.Response, error) {
+//  @return []GetReleaseGroupReleaseScans200ResponseInner
+func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseScansExecute(r ApiGetReleaseGroupReleaseScansRequest) ([]GetReleaseGroupReleaseScans200ResponseInner, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetReleaseGroupReleaseScans200Response
+		localVarReturnValue  []GetReleaseGroupReleaseScans200ResponseInner
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReleaseGroupsAPIService.GetReleaseGroupReleaseScans")
@@ -2377,7 +2377,7 @@ func (a *ReleaseGroupsAPIService) UpdateReleaseGroupByIdExecute(r ApiUpdateRelea
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GenerateProjectGenerateAttributionSlug401Response
+			var v UpdateReleaseGroupById403Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2425,7 +2425,7 @@ func (r ApiUpdateReleaseGroupReleaseByIdRequest) UpdateReleaseGroupReleaseByIdRe
 	return r
 }
 
-func (r ApiUpdateReleaseGroupReleaseByIdRequest) Execute() (*CreateReleaseGroup200Response, *http.Response, error) {
+func (r ApiUpdateReleaseGroupReleaseByIdRequest) Execute() (*CreateReleaseGroupReleases200Response, *http.Response, error) {
 	return r.ApiService.UpdateReleaseGroupReleaseByIdExecute(r)
 }
 
@@ -2449,13 +2449,13 @@ func (a *ReleaseGroupsAPIService) UpdateReleaseGroupReleaseById(ctx context.Cont
 }
 
 // Execute executes the request
-//  @return CreateReleaseGroup200Response
-func (a *ReleaseGroupsAPIService) UpdateReleaseGroupReleaseByIdExecute(r ApiUpdateReleaseGroupReleaseByIdRequest) (*CreateReleaseGroup200Response, *http.Response, error) {
+//  @return CreateReleaseGroupReleases200Response
+func (a *ReleaseGroupsAPIService) UpdateReleaseGroupReleaseByIdExecute(r ApiUpdateReleaseGroupReleaseByIdRequest) (*CreateReleaseGroupReleases200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *CreateReleaseGroup200Response
+		localVarReturnValue  *CreateReleaseGroupReleases200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReleaseGroupsAPIService.UpdateReleaseGroupReleaseById")
