@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.11
 Contact: support@fossa.com
 */
 
@@ -24,7 +24,7 @@ var _ MappedNullable = &CreateReportOptionRequest{}
 type CreateReportOptionRequest struct {
 	// Name of the report option (1-80 characters). Must be unique within the organization.
 	Name string `json:"name"`
-	Options GetAllReportOptions200ResponseResultsInnerOptions `json:"options"`
+	Options CreateReportOptionRequestOptions `json:"options"`
 }
 
 type _CreateReportOptionRequest CreateReportOptionRequest
@@ -33,7 +33,7 @@ type _CreateReportOptionRequest CreateReportOptionRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateReportOptionRequest(name string, options GetAllReportOptions200ResponseResultsInnerOptions) *CreateReportOptionRequest {
+func NewCreateReportOptionRequest(name string, options CreateReportOptionRequestOptions) *CreateReportOptionRequest {
 	this := CreateReportOptionRequest{}
 	this.Name = name
 	this.Options = options
@@ -73,9 +73,9 @@ func (o *CreateReportOptionRequest) SetName(v string) {
 }
 
 // GetOptions returns the Options field value
-func (o *CreateReportOptionRequest) GetOptions() GetAllReportOptions200ResponseResultsInnerOptions {
+func (o *CreateReportOptionRequest) GetOptions() CreateReportOptionRequestOptions {
 	if o == nil {
-		var ret GetAllReportOptions200ResponseResultsInnerOptions
+		var ret CreateReportOptionRequestOptions
 		return ret
 	}
 
@@ -84,7 +84,7 @@ func (o *CreateReportOptionRequest) GetOptions() GetAllReportOptions200ResponseR
 
 // GetOptionsOk returns a tuple with the Options field value
 // and a boolean to check if the value has been set.
-func (o *CreateReportOptionRequest) GetOptionsOk() (*GetAllReportOptions200ResponseResultsInnerOptions, bool) {
+func (o *CreateReportOptionRequest) GetOptionsOk() (*CreateReportOptionRequestOptions, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -92,7 +92,7 @@ func (o *CreateReportOptionRequest) GetOptionsOk() (*GetAllReportOptions200Respo
 }
 
 // SetOptions sets field value
-func (o *CreateReportOptionRequest) SetOptions(v GetAllReportOptions200ResponseResultsInnerOptions) {
+func (o *CreateReportOptionRequest) SetOptions(v CreateReportOptionRequestOptions) {
 	o.Options = v
 }
 

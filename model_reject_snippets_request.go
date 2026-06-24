@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.11
 Contact: support@fossa.com
 */
 
@@ -34,6 +34,8 @@ type RejectSnippetsRequest struct {
 	RejectionStatus []string `json:"rejectionStatus,omitempty"`
 	// Filter by package labels
 	PackageLabels []string `json:"packageLabels,omitempty"`
+	// Filter by vendored/converted match status
+	VendoredMatch []string `json:"vendoredMatch,omitempty"`
 }
 
 type _RejectSnippetsRequest RejectSnippetsRequest
@@ -240,6 +242,38 @@ func (o *RejectSnippetsRequest) SetPackageLabels(v []string) {
 	o.PackageLabels = v
 }
 
+// GetVendoredMatch returns the VendoredMatch field value if set, zero value otherwise.
+func (o *RejectSnippetsRequest) GetVendoredMatch() []string {
+	if o == nil || IsNil(o.VendoredMatch) {
+		var ret []string
+		return ret
+	}
+	return o.VendoredMatch
+}
+
+// GetVendoredMatchOk returns a tuple with the VendoredMatch field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RejectSnippetsRequest) GetVendoredMatchOk() ([]string, bool) {
+	if o == nil || IsNil(o.VendoredMatch) {
+		return nil, false
+	}
+	return o.VendoredMatch, true
+}
+
+// HasVendoredMatch returns a boolean if a field has been set.
+func (o *RejectSnippetsRequest) HasVendoredMatch() bool {
+	if o != nil && !IsNil(o.VendoredMatch) {
+		return true
+	}
+
+	return false
+}
+
+// SetVendoredMatch gets a reference to the given []string and assigns it to the VendoredMatch field.
+func (o *RejectSnippetsRequest) SetVendoredMatch(v []string) {
+	o.VendoredMatch = v
+}
+
 func (o RejectSnippetsRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -265,6 +299,9 @@ func (o RejectSnippetsRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PackageLabels) {
 		toSerialize["packageLabels"] = o.PackageLabels
+	}
+	if !IsNil(o.VendoredMatch) {
+		toSerialize["vendoredMatch"] = o.VendoredMatch
 	}
 	return toSerialize, nil
 }

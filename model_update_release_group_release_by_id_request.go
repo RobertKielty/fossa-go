@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.11
 Contact: support@fossa.com
 */
 
@@ -23,7 +23,7 @@ var _ MappedNullable = &UpdateReleaseGroupReleaseByIdRequest{}
 // UpdateReleaseGroupReleaseByIdRequest struct for UpdateReleaseGroupReleaseByIdRequest
 type UpdateReleaseGroupReleaseByIdRequest struct {
 	Title string `json:"title"`
-	Projects []UpdateReleaseGroupReleaseByIdRequestProjectsInner `json:"projects,omitempty"`
+	Projects []CreateReleaseGroupRequestReleaseProjectsInner `json:"projects,omitempty"`
 	ProjectsToDelete []string `json:"projectsToDelete,omitempty"`
 }
 
@@ -72,9 +72,9 @@ func (o *UpdateReleaseGroupReleaseByIdRequest) SetTitle(v string) {
 }
 
 // GetProjects returns the Projects field value if set, zero value otherwise.
-func (o *UpdateReleaseGroupReleaseByIdRequest) GetProjects() []UpdateReleaseGroupReleaseByIdRequestProjectsInner {
+func (o *UpdateReleaseGroupReleaseByIdRequest) GetProjects() []CreateReleaseGroupRequestReleaseProjectsInner {
 	if o == nil || IsNil(o.Projects) {
-		var ret []UpdateReleaseGroupReleaseByIdRequestProjectsInner
+		var ret []CreateReleaseGroupRequestReleaseProjectsInner
 		return ret
 	}
 	return o.Projects
@@ -82,7 +82,7 @@ func (o *UpdateReleaseGroupReleaseByIdRequest) GetProjects() []UpdateReleaseGrou
 
 // GetProjectsOk returns a tuple with the Projects field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateReleaseGroupReleaseByIdRequest) GetProjectsOk() ([]UpdateReleaseGroupReleaseByIdRequestProjectsInner, bool) {
+func (o *UpdateReleaseGroupReleaseByIdRequest) GetProjectsOk() ([]CreateReleaseGroupRequestReleaseProjectsInner, bool) {
 	if o == nil || IsNil(o.Projects) {
 		return nil, false
 	}
@@ -98,8 +98,8 @@ func (o *UpdateReleaseGroupReleaseByIdRequest) HasProjects() bool {
 	return false
 }
 
-// SetProjects gets a reference to the given []UpdateReleaseGroupReleaseByIdRequestProjectsInner and assigns it to the Projects field.
-func (o *UpdateReleaseGroupReleaseByIdRequest) SetProjects(v []UpdateReleaseGroupReleaseByIdRequestProjectsInner) {
+// SetProjects gets a reference to the given []CreateReleaseGroupRequestReleaseProjectsInner and assigns it to the Projects field.
+func (o *UpdateReleaseGroupReleaseByIdRequest) SetProjects(v []CreateReleaseGroupRequestReleaseProjectsInner) {
 	o.Projects = v
 }
 
