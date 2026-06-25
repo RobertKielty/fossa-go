@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.12
 Contact: support@fossa.com
 */
 
@@ -27,7 +27,6 @@ type CreateSavedFilterRequestFilterOneOf1 struct {
 	ExploitMaturity *string `json:"exploitMaturity,omitempty"`
 	// Provided reason for ignoring or resolving a security issue. 'Fixed' and 'Under_investigation' map to VEX statuses with the same names. All other values map to the VEX status 'Not Affected'. This value appears in the vulnerabilities.analysis.justification field of CycloneDX SBOM reports. 
 	IgnoreReason *string `json:"ignoreReason,omitempty"`
-	Reachability *string `json:"reachability,omitempty"`
 	Cwes []string `json:"cwes,omitempty"`
 	PackageManagers []string `json:"packageManagers,omitempty"`
 	ProjectLabels []string `json:"projectLabels,omitempty"`
@@ -213,38 +212,6 @@ func (o *CreateSavedFilterRequestFilterOneOf1) HasIgnoreReason() bool {
 // SetIgnoreReason gets a reference to the given string and assigns it to the IgnoreReason field.
 func (o *CreateSavedFilterRequestFilterOneOf1) SetIgnoreReason(v string) {
 	o.IgnoreReason = &v
-}
-
-// GetReachability returns the Reachability field value if set, zero value otherwise.
-func (o *CreateSavedFilterRequestFilterOneOf1) GetReachability() string {
-	if o == nil || IsNil(o.Reachability) {
-		var ret string
-		return ret
-	}
-	return *o.Reachability
-}
-
-// GetReachabilityOk returns a tuple with the Reachability field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateSavedFilterRequestFilterOneOf1) GetReachabilityOk() (*string, bool) {
-	if o == nil || IsNil(o.Reachability) {
-		return nil, false
-	}
-	return o.Reachability, true
-}
-
-// HasReachability returns a boolean if a field has been set.
-func (o *CreateSavedFilterRequestFilterOneOf1) HasReachability() bool {
-	if o != nil && !IsNil(o.Reachability) {
-		return true
-	}
-
-	return false
-}
-
-// SetReachability gets a reference to the given string and assigns it to the Reachability field.
-func (o *CreateSavedFilterRequestFilterOneOf1) SetReachability(v string) {
-	o.Reachability = &v
 }
 
 // GetCwes returns the Cwes field value if set, zero value otherwise.
@@ -527,9 +494,6 @@ func (o CreateSavedFilterRequestFilterOneOf1) ToMap() (map[string]interface{}, e
 	}
 	if !IsNil(o.IgnoreReason) {
 		toSerialize["ignoreReason"] = o.IgnoreReason
-	}
-	if !IsNil(o.Reachability) {
-		toSerialize["reachability"] = o.Reachability
 	}
 	if !IsNil(o.Cwes) {
 		toSerialize["cwes"] = o.Cwes
