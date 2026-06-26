@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.14
 Contact: support@fossa.com
 */
 
@@ -13,6 +13,8 @@ package fossa
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the GetOrganizationNotificationSettings200Response type satisfies the MappedNullable interface at compile time
@@ -21,20 +23,29 @@ var _ MappedNullable = &GetOrganizationNotificationSettings200Response{}
 // GetOrganizationNotificationSettings200Response struct for GetOrganizationNotificationSettings200Response
 type GetOrganizationNotificationSettings200Response struct {
 	// the on/off status of project notifications
-	NotificationDefaultEnabled *bool `json:"notificationDefaultEnabled,omitempty"`
+	NotificationDefaultEnabled bool `json:"notificationDefaultEnabled"`
 	// the on/off status of slack notifications for scans
-	NotificationDefaultSlackScan *bool `json:"notificationDefaultSlackScan,omitempty"`
-	NotificationDefaultEmailScanUsers []float32 `json:"notificationDefaultEmailScanUsers,omitempty"`
+	NotificationDefaultSlackScan bool `json:"notificationDefaultSlackScan"`
+	// the on/off status of API webhook notifications for scans
+	NotificationDefaultApiWebhookScan bool `json:"notificationDefaultApiWebhookScan"`
+	NotificationDefaultEmailScanUsers []float32 `json:"notificationDefaultEmailScanUsers"`
 	// The type of users to email for scan notifications. Each option represents a different set of users: - current: Only the current user will receive scan notifications. - all: All users will receive scan notifications. - custom: Custom set of users will receive scan notifications. 
-	NotificationDefaultEmailScanUserType *string `json:"notificationDefaultEmailScanUserType,omitempty"`
+	NotificationDefaultEmailScanUserType string `json:"notificationDefaultEmailScanUserType"`
 }
+
+type _GetOrganizationNotificationSettings200Response GetOrganizationNotificationSettings200Response
 
 // NewGetOrganizationNotificationSettings200Response instantiates a new GetOrganizationNotificationSettings200Response object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetOrganizationNotificationSettings200Response() *GetOrganizationNotificationSettings200Response {
+func NewGetOrganizationNotificationSettings200Response(notificationDefaultEnabled bool, notificationDefaultSlackScan bool, notificationDefaultApiWebhookScan bool, notificationDefaultEmailScanUsers []float32, notificationDefaultEmailScanUserType string) *GetOrganizationNotificationSettings200Response {
 	this := GetOrganizationNotificationSettings200Response{}
+	this.NotificationDefaultEnabled = notificationDefaultEnabled
+	this.NotificationDefaultSlackScan = notificationDefaultSlackScan
+	this.NotificationDefaultApiWebhookScan = notificationDefaultApiWebhookScan
+	this.NotificationDefaultEmailScanUsers = notificationDefaultEmailScanUsers
+	this.NotificationDefaultEmailScanUserType = notificationDefaultEmailScanUserType
 	return &this
 }
 
@@ -46,132 +57,124 @@ func NewGetOrganizationNotificationSettings200ResponseWithDefaults() *GetOrganiz
 	return &this
 }
 
-// GetNotificationDefaultEnabled returns the NotificationDefaultEnabled field value if set, zero value otherwise.
+// GetNotificationDefaultEnabled returns the NotificationDefaultEnabled field value
 func (o *GetOrganizationNotificationSettings200Response) GetNotificationDefaultEnabled() bool {
-	if o == nil || IsNil(o.NotificationDefaultEnabled) {
+	if o == nil {
 		var ret bool
 		return ret
 	}
-	return *o.NotificationDefaultEnabled
+
+	return o.NotificationDefaultEnabled
 }
 
-// GetNotificationDefaultEnabledOk returns a tuple with the NotificationDefaultEnabled field value if set, nil otherwise
+// GetNotificationDefaultEnabledOk returns a tuple with the NotificationDefaultEnabled field value
 // and a boolean to check if the value has been set.
 func (o *GetOrganizationNotificationSettings200Response) GetNotificationDefaultEnabledOk() (*bool, bool) {
-	if o == nil || IsNil(o.NotificationDefaultEnabled) {
+	if o == nil {
 		return nil, false
 	}
-	return o.NotificationDefaultEnabled, true
+	return &o.NotificationDefaultEnabled, true
 }
 
-// HasNotificationDefaultEnabled returns a boolean if a field has been set.
-func (o *GetOrganizationNotificationSettings200Response) HasNotificationDefaultEnabled() bool {
-	if o != nil && !IsNil(o.NotificationDefaultEnabled) {
-		return true
-	}
-
-	return false
-}
-
-// SetNotificationDefaultEnabled gets a reference to the given bool and assigns it to the NotificationDefaultEnabled field.
+// SetNotificationDefaultEnabled sets field value
 func (o *GetOrganizationNotificationSettings200Response) SetNotificationDefaultEnabled(v bool) {
-	o.NotificationDefaultEnabled = &v
+	o.NotificationDefaultEnabled = v
 }
 
-// GetNotificationDefaultSlackScan returns the NotificationDefaultSlackScan field value if set, zero value otherwise.
+// GetNotificationDefaultSlackScan returns the NotificationDefaultSlackScan field value
 func (o *GetOrganizationNotificationSettings200Response) GetNotificationDefaultSlackScan() bool {
-	if o == nil || IsNil(o.NotificationDefaultSlackScan) {
+	if o == nil {
 		var ret bool
 		return ret
 	}
-	return *o.NotificationDefaultSlackScan
+
+	return o.NotificationDefaultSlackScan
 }
 
-// GetNotificationDefaultSlackScanOk returns a tuple with the NotificationDefaultSlackScan field value if set, nil otherwise
+// GetNotificationDefaultSlackScanOk returns a tuple with the NotificationDefaultSlackScan field value
 // and a boolean to check if the value has been set.
 func (o *GetOrganizationNotificationSettings200Response) GetNotificationDefaultSlackScanOk() (*bool, bool) {
-	if o == nil || IsNil(o.NotificationDefaultSlackScan) {
+	if o == nil {
 		return nil, false
 	}
-	return o.NotificationDefaultSlackScan, true
+	return &o.NotificationDefaultSlackScan, true
 }
 
-// HasNotificationDefaultSlackScan returns a boolean if a field has been set.
-func (o *GetOrganizationNotificationSettings200Response) HasNotificationDefaultSlackScan() bool {
-	if o != nil && !IsNil(o.NotificationDefaultSlackScan) {
-		return true
+// SetNotificationDefaultSlackScan sets field value
+func (o *GetOrganizationNotificationSettings200Response) SetNotificationDefaultSlackScan(v bool) {
+	o.NotificationDefaultSlackScan = v
+}
+
+// GetNotificationDefaultApiWebhookScan returns the NotificationDefaultApiWebhookScan field value
+func (o *GetOrganizationNotificationSettings200Response) GetNotificationDefaultApiWebhookScan() bool {
+	if o == nil {
+		var ret bool
+		return ret
 	}
 
-	return false
+	return o.NotificationDefaultApiWebhookScan
 }
 
-// SetNotificationDefaultSlackScan gets a reference to the given bool and assigns it to the NotificationDefaultSlackScan field.
-func (o *GetOrganizationNotificationSettings200Response) SetNotificationDefaultSlackScan(v bool) {
-	o.NotificationDefaultSlackScan = &v
+// GetNotificationDefaultApiWebhookScanOk returns a tuple with the NotificationDefaultApiWebhookScan field value
+// and a boolean to check if the value has been set.
+func (o *GetOrganizationNotificationSettings200Response) GetNotificationDefaultApiWebhookScanOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.NotificationDefaultApiWebhookScan, true
 }
 
-// GetNotificationDefaultEmailScanUsers returns the NotificationDefaultEmailScanUsers field value if set, zero value otherwise.
+// SetNotificationDefaultApiWebhookScan sets field value
+func (o *GetOrganizationNotificationSettings200Response) SetNotificationDefaultApiWebhookScan(v bool) {
+	o.NotificationDefaultApiWebhookScan = v
+}
+
+// GetNotificationDefaultEmailScanUsers returns the NotificationDefaultEmailScanUsers field value
 func (o *GetOrganizationNotificationSettings200Response) GetNotificationDefaultEmailScanUsers() []float32 {
-	if o == nil || IsNil(o.NotificationDefaultEmailScanUsers) {
+	if o == nil {
 		var ret []float32
 		return ret
 	}
+
 	return o.NotificationDefaultEmailScanUsers
 }
 
-// GetNotificationDefaultEmailScanUsersOk returns a tuple with the NotificationDefaultEmailScanUsers field value if set, nil otherwise
+// GetNotificationDefaultEmailScanUsersOk returns a tuple with the NotificationDefaultEmailScanUsers field value
 // and a boolean to check if the value has been set.
 func (o *GetOrganizationNotificationSettings200Response) GetNotificationDefaultEmailScanUsersOk() ([]float32, bool) {
-	if o == nil || IsNil(o.NotificationDefaultEmailScanUsers) {
+	if o == nil {
 		return nil, false
 	}
 	return o.NotificationDefaultEmailScanUsers, true
 }
 
-// HasNotificationDefaultEmailScanUsers returns a boolean if a field has been set.
-func (o *GetOrganizationNotificationSettings200Response) HasNotificationDefaultEmailScanUsers() bool {
-	if o != nil && !IsNil(o.NotificationDefaultEmailScanUsers) {
-		return true
-	}
-
-	return false
-}
-
-// SetNotificationDefaultEmailScanUsers gets a reference to the given []float32 and assigns it to the NotificationDefaultEmailScanUsers field.
+// SetNotificationDefaultEmailScanUsers sets field value
 func (o *GetOrganizationNotificationSettings200Response) SetNotificationDefaultEmailScanUsers(v []float32) {
 	o.NotificationDefaultEmailScanUsers = v
 }
 
-// GetNotificationDefaultEmailScanUserType returns the NotificationDefaultEmailScanUserType field value if set, zero value otherwise.
+// GetNotificationDefaultEmailScanUserType returns the NotificationDefaultEmailScanUserType field value
 func (o *GetOrganizationNotificationSettings200Response) GetNotificationDefaultEmailScanUserType() string {
-	if o == nil || IsNil(o.NotificationDefaultEmailScanUserType) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.NotificationDefaultEmailScanUserType
+
+	return o.NotificationDefaultEmailScanUserType
 }
 
-// GetNotificationDefaultEmailScanUserTypeOk returns a tuple with the NotificationDefaultEmailScanUserType field value if set, nil otherwise
+// GetNotificationDefaultEmailScanUserTypeOk returns a tuple with the NotificationDefaultEmailScanUserType field value
 // and a boolean to check if the value has been set.
 func (o *GetOrganizationNotificationSettings200Response) GetNotificationDefaultEmailScanUserTypeOk() (*string, bool) {
-	if o == nil || IsNil(o.NotificationDefaultEmailScanUserType) {
+	if o == nil {
 		return nil, false
 	}
-	return o.NotificationDefaultEmailScanUserType, true
+	return &o.NotificationDefaultEmailScanUserType, true
 }
 
-// HasNotificationDefaultEmailScanUserType returns a boolean if a field has been set.
-func (o *GetOrganizationNotificationSettings200Response) HasNotificationDefaultEmailScanUserType() bool {
-	if o != nil && !IsNil(o.NotificationDefaultEmailScanUserType) {
-		return true
-	}
-
-	return false
-}
-
-// SetNotificationDefaultEmailScanUserType gets a reference to the given string and assigns it to the NotificationDefaultEmailScanUserType field.
+// SetNotificationDefaultEmailScanUserType sets field value
 func (o *GetOrganizationNotificationSettings200Response) SetNotificationDefaultEmailScanUserType(v string) {
-	o.NotificationDefaultEmailScanUserType = &v
+	o.NotificationDefaultEmailScanUserType = v
 }
 
 func (o GetOrganizationNotificationSettings200Response) MarshalJSON() ([]byte, error) {
@@ -184,19 +187,53 @@ func (o GetOrganizationNotificationSettings200Response) MarshalJSON() ([]byte, e
 
 func (o GetOrganizationNotificationSettings200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.NotificationDefaultEnabled) {
-		toSerialize["notificationDefaultEnabled"] = o.NotificationDefaultEnabled
-	}
-	if !IsNil(o.NotificationDefaultSlackScan) {
-		toSerialize["notificationDefaultSlackScan"] = o.NotificationDefaultSlackScan
-	}
-	if !IsNil(o.NotificationDefaultEmailScanUsers) {
-		toSerialize["notificationDefaultEmailScanUsers"] = o.NotificationDefaultEmailScanUsers
-	}
-	if !IsNil(o.NotificationDefaultEmailScanUserType) {
-		toSerialize["notificationDefaultEmailScanUserType"] = o.NotificationDefaultEmailScanUserType
-	}
+	toSerialize["notificationDefaultEnabled"] = o.NotificationDefaultEnabled
+	toSerialize["notificationDefaultSlackScan"] = o.NotificationDefaultSlackScan
+	toSerialize["notificationDefaultApiWebhookScan"] = o.NotificationDefaultApiWebhookScan
+	toSerialize["notificationDefaultEmailScanUsers"] = o.NotificationDefaultEmailScanUsers
+	toSerialize["notificationDefaultEmailScanUserType"] = o.NotificationDefaultEmailScanUserType
 	return toSerialize, nil
+}
+
+func (o *GetOrganizationNotificationSettings200Response) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"notificationDefaultEnabled",
+		"notificationDefaultSlackScan",
+		"notificationDefaultApiWebhookScan",
+		"notificationDefaultEmailScanUsers",
+		"notificationDefaultEmailScanUserType",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varGetOrganizationNotificationSettings200Response := _GetOrganizationNotificationSettings200Response{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varGetOrganizationNotificationSettings200Response)
+
+	if err != nil {
+		return err
+	}
+
+	*o = GetOrganizationNotificationSettings200Response(varGetOrganizationNotificationSettings200Response)
+
+	return err
 }
 
 type NullableGetOrganizationNotificationSettings200Response struct {
