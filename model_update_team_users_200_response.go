@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.14
 Contact: support@fossa.com
 */
 
@@ -23,7 +23,7 @@ type UpdateTeamUsers200Response struct {
 	// Team ID
 	Id *int32 `json:"id,omitempty"`
 	// Updated list of team users
-	Users []UpdateTeamUsers200ResponseUsersInner `json:"users,omitempty"`
+	Users []GetAllTeams200ResponseInnerTeamUsersInner `json:"users,omitempty"`
 }
 
 // NewUpdateTeamUsers200Response instantiates a new UpdateTeamUsers200Response object
@@ -76,9 +76,9 @@ func (o *UpdateTeamUsers200Response) SetId(v int32) {
 }
 
 // GetUsers returns the Users field value if set, zero value otherwise.
-func (o *UpdateTeamUsers200Response) GetUsers() []UpdateTeamUsers200ResponseUsersInner {
+func (o *UpdateTeamUsers200Response) GetUsers() []GetAllTeams200ResponseInnerTeamUsersInner {
 	if o == nil || IsNil(o.Users) {
-		var ret []UpdateTeamUsers200ResponseUsersInner
+		var ret []GetAllTeams200ResponseInnerTeamUsersInner
 		return ret
 	}
 	return o.Users
@@ -86,7 +86,7 @@ func (o *UpdateTeamUsers200Response) GetUsers() []UpdateTeamUsers200ResponseUser
 
 // GetUsersOk returns a tuple with the Users field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateTeamUsers200Response) GetUsersOk() ([]UpdateTeamUsers200ResponseUsersInner, bool) {
+func (o *UpdateTeamUsers200Response) GetUsersOk() ([]GetAllTeams200ResponseInnerTeamUsersInner, bool) {
 	if o == nil || IsNil(o.Users) {
 		return nil, false
 	}
@@ -102,8 +102,8 @@ func (o *UpdateTeamUsers200Response) HasUsers() bool {
 	return false
 }
 
-// SetUsers gets a reference to the given []UpdateTeamUsers200ResponseUsersInner and assigns it to the Users field.
-func (o *UpdateTeamUsers200Response) SetUsers(v []UpdateTeamUsers200ResponseUsersInner) {
+// SetUsers gets a reference to the given []GetAllTeams200ResponseInnerTeamUsersInner and assigns it to the Users field.
+func (o *UpdateTeamUsers200Response) SetUsers(v []GetAllTeams200ResponseInnerTeamUsersInner) {
 	o.Users = v
 }
 

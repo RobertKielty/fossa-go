@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.14
 Contact: support@fossa.com
 */
 
@@ -19,11 +19,149 @@ import (
 	"net/url"
 	"strings"
 	"reflect"
+	"os"
 )
 
 
 // ProjectsAPIService ProjectsAPI service
 type ProjectsAPIService service
+
+type ApiDeleteProjectRequest struct {
+	ctx context.Context
+	ApiService *ProjectsAPIService
+	locator string
+}
+
+func (r ApiDeleteProjectRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteProjectExecute(r)
+}
+
+/*
+DeleteProject Delete a project.
+
+Permanently delete a project and its associated data. The caller must have Delete permission on the project,
+and the project must belong to the caller's organization.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The URL-encoded locator of the project (e.g., \"git+github.com/owner/repo\")
+ @return ApiDeleteProjectRequest
+*/
+func (a *ProjectsAPIService) DeleteProject(ctx context.Context, locator string) ApiDeleteProjectRequest {
+	return ApiDeleteProjectRequest{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+	}
+}
+
+// Execute executes the request
+func (a *ProjectsAPIService) DeleteProjectExecute(r ApiDeleteProjectRequest) (*http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProjectsAPIService.DeleteProject")
+	if err != nil {
+		return nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/projects/{locator}"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
 
 type ApiDeleteProjectGenerateAttributionSlugRequest struct {
 	ctx context.Context
@@ -133,6 +271,17 @@ func (a *ProjectsAPIService) DeleteProjectGenerateAttributionSlugExecute(r ApiDe
 					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 404 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -153,13 +302,16 @@ type ApiDeleteProjectsRequest struct {
 	ctx context.Context
 	ApiService *ProjectsAPIService
 	title *string
-	type_ *string
+	type_ *[]string
 	isPublic *bool
 	labels *[]string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *[]GetIssueCountsTeamIdParameterInner
 	latestScan *int32
 	lastRevisionWithin *int32
 	locators *DeleteProjectsLocatorsParameter
+	url *string
+	includeSharedProjects *bool
+	onlyIncludeSharedProjects *bool
 }
 
 // Filter by project name.
@@ -169,7 +321,7 @@ func (r ApiDeleteProjectsRequest) Title(title string) ApiDeleteProjectsRequest {
 }
 
 // Filter by project type.
-func (r ApiDeleteProjectsRequest) Type_(type_ string) ApiDeleteProjectsRequest {
+func (r ApiDeleteProjectsRequest) Type_(type_ []string) ApiDeleteProjectsRequest {
 	r.type_ = &type_
 	return r
 }
@@ -187,7 +339,7 @@ func (r ApiDeleteProjectsRequest) Labels(labels []string) ApiDeleteProjectsReque
 }
 
 // Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects.
-func (r ApiDeleteProjectsRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiDeleteProjectsRequest {
+func (r ApiDeleteProjectsRequest) TeamId(teamId []GetIssueCountsTeamIdParameterInner) ApiDeleteProjectsRequest {
 	r.teamId = &teamId
 	return r
 }
@@ -207,6 +359,24 @@ func (r ApiDeleteProjectsRequest) LastRevisionWithin(lastRevisionWithin int32) A
 // The list of locators for the projects to delete. If \&quot;all\&quot; is provided, then all projects that meet the provided filters will be deleted. 
 func (r ApiDeleteProjectsRequest) Locators(locators DeleteProjectsLocatorsParameter) ApiDeleteProjectsRequest {
 	r.locators = &locators
+	return r
+}
+
+// Filter by a project&#39;s URL.
+func (r ApiDeleteProjectsRequest) Url(url string) ApiDeleteProjectsRequest {
+	r.url = &url
+	return r
+}
+
+// Include shared projects.
+func (r ApiDeleteProjectsRequest) IncludeSharedProjects(includeSharedProjects bool) ApiDeleteProjectsRequest {
+	r.includeSharedProjects = &includeSharedProjects
+	return r
+}
+
+// Only show projects that have been shared with other organizations.
+func (r ApiDeleteProjectsRequest) OnlyIncludeSharedProjects(onlyIncludeSharedProjects bool) ApiDeleteProjectsRequest {
+	r.onlyIncludeSharedProjects = &onlyIncludeSharedProjects
 	return r
 }
 
@@ -252,7 +422,15 @@ func (a *ProjectsAPIService) DeleteProjectsExecute(r ApiDeleteProjectsRequest) (
 		parameterAddToHeaderOrQuery(localVarQueryParams, "title", r.title, "form", "")
 	}
 	if r.type_ != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "type", r.type_, "form", "")
+		t := *r.type_
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "type[]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "type[]", t, "form", "multi")
+		}
 	}
 	if r.isPublic != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "isPublic", r.isPublic, "form", "")
@@ -287,6 +465,15 @@ func (a *ProjectsAPIService) DeleteProjectsExecute(r ApiDeleteProjectsRequest) (
 	}
 	if r.locators != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "locators", r.locators, "form", "")
+	}
+	if r.url != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "url", r.url, "form", "")
+	}
+	if r.includeSharedProjects != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeSharedProjects", r.includeSharedProjects, "form", "")
+	}
+	if r.onlyIncludeSharedProjects != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "onlyIncludeSharedProjects", r.onlyIncludeSharedProjects, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -347,7 +534,7 @@ type ApiDeleteReleaseGroupsRequest struct {
 	ctx context.Context
 	ApiService *ProjectsAPIService
 	title *string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *[]GetIssueCountsTeamIdParameterInner
 	latestScan *int32
 	ids *DeleteReleaseGroupsIdsParameter
 }
@@ -359,7 +546,7 @@ func (r ApiDeleteReleaseGroupsRequest) Title(title string) ApiDeleteReleaseGroup
 }
 
 // Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups.
-func (r ApiDeleteReleaseGroupsRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiDeleteReleaseGroupsRequest {
+func (r ApiDeleteReleaseGroupsRequest) TeamId(teamId []GetIssueCountsTeamIdParameterInner) ApiDeleteReleaseGroupsRequest {
 	r.teamId = &teamId
 	return r
 }
@@ -502,7 +689,10 @@ func (r ApiGenerateProjectGenerateAttributionSlugRequest) Execute() (string, *ht
 /*
 GenerateProjectGenerateAttributionSlug Method for GenerateProjectGenerateAttributionSlug
 
-Generate (or regenerate) a slug used in the URL for the live attribution report for this project
+Generate (or regenerate) a slug used in the URL for the live attribution report for this project.
+
+**Requires a Premium subscription.** Organizations below the Premium access level receive a `403` response.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param locator
@@ -589,7 +779,18 @@ func (a *ProjectsAPIService) GenerateProjectGenerateAttributionSlugExecute(r Api
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
-			var v GenerateProjectGenerateAttributionSlug401Response
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -600,6 +801,177 @@ func (a *ProjectsAPIService) GenerateProjectGenerateAttributionSlugExecute(r Api
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetProjectRequest struct {
+	ctx context.Context
+	ApiService *ProjectsAPIService
+	locator string
+	ref *string
+	refType *string
+}
+
+// The branch or tag to use when computing the head/latest/last-analyzed revision metadata. Defaults to the project&#39;s default branch.
+func (r ApiGetProjectRequest) Ref(ref string) ApiGetProjectRequest {
+	r.ref = &ref
+	return r
+}
+
+// Whether &#x60;ref&#x60; refers to a branch or a tag. Defaults to &#x60;branch&#x60;.
+func (r ApiGetProjectRequest) RefType(refType string) ApiGetProjectRequest {
+	r.refType = &refType
+	return r
+}
+
+func (r ApiGetProjectRequest) Execute() (map[string]interface{}, *http.Response, error) {
+	return r.ApiService.GetProjectExecute(r)
+}
+
+/*
+GetProject Get a single project.
+
+Retrieve a single project by its locator, including its policy, update hook, labels, and saved issue filters,
+plus computed metadata: the head/latest/last-analyzed revisions, notifications, references, and contributor count.
+
+This endpoint implements its own access control via the project scope: a caller may read a project only if it is
+public or belongs to the caller's organization.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The URL-encoded locator of the project (e.g., \"git+github.com/owner/repo\")
+ @return ApiGetProjectRequest
+*/
+func (a *ProjectsAPIService) GetProject(ctx context.Context, locator string) ApiGetProjectRequest {
+	return ApiGetProjectRequest{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+	}
+}
+
+// Execute executes the request
+//  @return map[string]interface{}
+func (a *ProjectsAPIService) GetProjectExecute(r ApiGetProjectRequest) (map[string]interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  map[string]interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProjectsAPIService.GetProject")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/projects/{locator}"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.ref != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ref", r.ref, "form", "")
+	}
+	if r.refType != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ref_type", r.refType, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -658,7 +1030,7 @@ func (r ApiGetProjectCSVExportIssuesRequest) RefType(refType string) ApiGetProje
 	return r
 }
 
-func (r ApiGetProjectCSVExportIssuesRequest) Execute() (string, *http.Response, error) {
+func (r ApiGetProjectCSVExportIssuesRequest) Execute() (*os.File, *http.Response, error) {
 	return r.ApiService.GetProjectCSVExportIssuesExecute(r)
 }
 
@@ -681,13 +1053,13 @@ func (a *ProjectsAPIService) GetProjectCSVExportIssues(ctx context.Context, loca
 }
 
 // Execute executes the request
-//  @return string
-func (a *ProjectsAPIService) GetProjectCSVExportIssuesExecute(r ApiGetProjectCSVExportIssuesRequest) (string, *http.Response, error) {
+//  @return *os.File
+func (a *ProjectsAPIService) GetProjectCSVExportIssuesExecute(r ApiGetProjectCSVExportIssuesRequest) (*os.File, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  string
+		localVarReturnValue  *os.File
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProjectsAPIService.GetProjectCSVExportIssues")
@@ -724,7 +1096,7 @@ func (a *ProjectsAPIService) GetProjectCSVExportIssuesExecute(r ApiGetProjectCSV
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"text/csv", "application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/octet-stream", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -921,7 +1293,7 @@ func (a *ProjectsAPIService) GetProjectExportIssuesExecute(r ApiGetProjectExport
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "text/csv"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/octet-stream"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1329,15 +1701,17 @@ type ApiGetProjectRevisionsRequest struct {
 	refs *[]string
 	refsType *string
 	source *string
+	isMinimal *bool
+	locator2 *string
 }
 
-// the number of revisions to skip for pagination (used with \&quot;count\&quot; query parameter)
+// the number of revisions to skip per ref (branch or tag) for pagination.
 func (r ApiGetProjectRevisionsRequest) Offset(offset float32) ApiGetProjectRevisionsRequest {
 	r.offset = &offset
 	return r
 }
 
-// the number of revisions to return (maximum of 1000)
+// the number of revisions to return per ref (branch or tag), max 1000.
 func (r ApiGetProjectRevisionsRequest) Count(count float32) ApiGetProjectRevisionsRequest {
 	r.count = &count
 	return r
@@ -1364,6 +1738,18 @@ func (r ApiGetProjectRevisionsRequest) RefsType(refsType string) ApiGetProjectRe
 // Filter the revisions by source
 func (r ApiGetProjectRevisionsRequest) Source(source string) ApiGetProjectRevisionsRequest {
 	r.source = &source
+	return r
+}
+
+// If &#x60;true&#x60;, each Revision in the response is reduced to only its &#x60;locator&#x60; and &#x60;message&#x60; fields. Useful for limiting response size. 
+func (r ApiGetProjectRevisionsRequest) IsMinimal(isMinimal bool) ApiGetProjectRevisionsRequest {
+	r.isMinimal = &isMinimal
+	return r
+}
+
+// Filter the revisions to those whose locator contains this value (case-insensitive substring match).
+func (r ApiGetProjectRevisionsRequest) Locator2(locator2 string) ApiGetProjectRevisionsRequest {
+	r.locator2 = &locator2
 	return r
 }
 
@@ -1435,6 +1821,12 @@ func (a *ProjectsAPIService) GetProjectRevisionsExecute(r ApiGetProjectRevisions
 	}
 	if r.source != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "source", r.source, "form", "")
+	}
+	if r.isMinimal != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "isMinimal", r.isMinimal, "form", "")
+	}
+	if r.locator2 != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "locator", r.locator2, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1540,10 +1932,10 @@ type ApiGetProjectsRequest struct {
 	page *int32
 	count *int32
 	title *string
-	type_ *string
+	type_ *[]string
 	isPublic *bool
 	labels *[]string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *[]GetIssueCountsTeamIdParameterInner
 	latestScan *int32
 	lastRevisionWithin *int32
 	locators *[]string
@@ -1577,7 +1969,7 @@ func (r ApiGetProjectsRequest) Title(title string) ApiGetProjectsRequest {
 }
 
 // Filter by project type.
-func (r ApiGetProjectsRequest) Type_(type_ string) ApiGetProjectsRequest {
+func (r ApiGetProjectsRequest) Type_(type_ []string) ApiGetProjectsRequest {
 	r.type_ = &type_
 	return r
 }
@@ -1595,7 +1987,7 @@ func (r ApiGetProjectsRequest) Labels(labels []string) ApiGetProjectsRequest {
 }
 
 // Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects.
-func (r ApiGetProjectsRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiGetProjectsRequest {
+func (r ApiGetProjectsRequest) TeamId(teamId []GetIssueCountsTeamIdParameterInner) ApiGetProjectsRequest {
 	r.teamId = &teamId
 	return r
 }
@@ -1697,7 +2089,15 @@ func (a *ProjectsAPIService) GetProjectsExecute(r ApiGetProjectsRequest) (*GetPr
 		parameterAddToHeaderOrQuery(localVarQueryParams, "title", r.title, "form", "")
 	}
 	if r.type_ != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "type", r.type_, "form", "")
+		t := *r.type_
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "type[]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "type[]", t, "form", "multi")
+		}
 	}
 	if r.isPublic != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "isPublic", r.isPublic, "form", "")
@@ -1767,6 +2167,124 @@ func (a *ProjectsAPIService) GetProjectsExecute(r ApiGetProjectsRequest) (*GetPr
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetProjectsByPostRequest struct {
+	ctx context.Context
+	ApiService *ProjectsAPIService
+	getProjectsByPostRequest *GetProjectsByPostRequest
+}
+
+func (r ApiGetProjectsByPostRequest) GetProjectsByPostRequest(getProjectsByPostRequest GetProjectsByPostRequest) ApiGetProjectsByPostRequest {
+	r.getProjectsByPostRequest = &getProjectsByPostRequest
+	return r
+}
+
+func (r ApiGetProjectsByPostRequest) Execute() (*GetProjects200Response, *http.Response, error) {
+	return r.ApiService.GetProjectsByPostExecute(r)
+}
+
+/*
+GetProjectsByPost Method for GetProjectsByPost
+
+Fetch the list of projects based on provided filters. This endpoint is functionally identical to `GET /api/v2/projects`, but it reads the filter, sort, and pagination options from the request body instead of the query string. Use it when filtering by a large number of `locators` that would exceed query-string length limits.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetProjectsByPostRequest
+*/
+func (a *ProjectsAPIService) GetProjectsByPost(ctx context.Context) ApiGetProjectsByPostRequest {
+	return ApiGetProjectsByPostRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return GetProjects200Response
+func (a *ProjectsAPIService) GetProjectsByPostExecute(r ApiGetProjectsByPostRequest) (*GetProjects200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetProjects200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProjectsAPIService.GetProjectsByPost")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/projects"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.getProjectsByPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1930,9 +2448,8 @@ type ApiGetReleaseGroupsRequest struct {
 	page *int32
 	count *int32
 	title *string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *[]GetIssueCountsTeamIdParameterInner
 	latestScan *int32
-	lastRevisionWithin *int32
 	isPublic *bool
 }
 
@@ -1961,7 +2478,7 @@ func (r ApiGetReleaseGroupsRequest) Title(title string) ApiGetReleaseGroupsReque
 }
 
 // Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups.
-func (r ApiGetReleaseGroupsRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiGetReleaseGroupsRequest {
+func (r ApiGetReleaseGroupsRequest) TeamId(teamId []GetIssueCountsTeamIdParameterInner) ApiGetReleaseGroupsRequest {
 	r.teamId = &teamId
 	return r
 }
@@ -1969,12 +2486,6 @@ func (r ApiGetReleaseGroupsRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterI
 // Filter by last policy scan within N days.
 func (r ApiGetReleaseGroupsRequest) LatestScan(latestScan int32) ApiGetReleaseGroupsRequest {
 	r.latestScan = &latestScan
-	return r
-}
-
-// Filter by last revision analyzed within N days.
-func (r ApiGetReleaseGroupsRequest) LastRevisionWithin(lastRevisionWithin int32) ApiGetReleaseGroupsRequest {
-	r.lastRevisionWithin = &lastRevisionWithin
 	return r
 }
 
@@ -2058,9 +2569,6 @@ func (a *ProjectsAPIService) GetReleaseGroupsExecute(r ApiGetReleaseGroupsReques
 	if r.latestScan != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "latestScan", r.latestScan, "form", "")
 	}
-	if r.lastRevisionWithin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "lastRevisionWithin", r.lastRevisionWithin, "form", "")
-	}
 	if r.isPublic != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "isPublic", r.isPublic, "form", "")
 	}
@@ -2134,7 +2642,7 @@ type ApiListReleaseGroupsForProjectRequest struct {
 	locator string
 }
 
-func (r ApiListReleaseGroupsForProjectRequest) Execute() ([]ListReleaseGroupsForProject200ResponseInner, *http.Response, error) {
+func (r ApiListReleaseGroupsForProjectRequest) Execute() (*ListReleaseGroupsForProject200Response, *http.Response, error) {
 	return r.ApiService.ListReleaseGroupsForProjectExecute(r)
 }
 
@@ -2156,13 +2664,13 @@ func (a *ProjectsAPIService) ListReleaseGroupsForProject(ctx context.Context, lo
 }
 
 // Execute executes the request
-//  @return []ListReleaseGroupsForProject200ResponseInner
-func (a *ProjectsAPIService) ListReleaseGroupsForProjectExecute(r ApiListReleaseGroupsForProjectRequest) ([]ListReleaseGroupsForProject200ResponseInner, *http.Response, error) {
+//  @return ListReleaseGroupsForProject200Response
+func (a *ProjectsAPIService) ListReleaseGroupsForProjectExecute(r ApiListReleaseGroupsForProjectRequest) (*ListReleaseGroupsForProject200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  []ListReleaseGroupsForProject200ResponseInner
+		localVarReturnValue  *ListReleaseGroupsForProject200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProjectsAPIService.ListReleaseGroupsForProject")
@@ -2281,6 +2789,8 @@ Most fields require Edit permission on the project. The following fields require
 
 ### Feature Flags
 - `securityIssueScanningEnabled` and `qualityIssueScanningEnabled` can only be modified if the organization has the respective features enabled.
+- `quickImportVendoredDetectionEnabled` can only be modified if the organization has both quick import vendored detection and vendored dependency detection features enabled.
+- `quickImportSnippetDetectionEnabled` can only be modified if the organization has both quick import snippet detection and snippet detection features enabled.
 
 ### Issue Tracker Fields
 - When updating `issueTrackerCustomFields`, boolean values in the `isRequired` field may be stringified and will be automatically converted.
@@ -2441,12 +2951,15 @@ type ApiUpdateProjectsLabelsRequest struct {
 	labelId *float32
 	locators *DeleteProjectsLocatorsParameter
 	title *string
-	type_ *string
+	type_ *[]string
 	isPublic *bool
 	labels *[]string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *[]GetIssueCountsTeamIdParameterInner
 	latestScan *int32
 	lastRevisionWithin *int32
+	url *string
+	includeSharedProjects *bool
+	onlyIncludeSharedProjects *bool
 }
 
 // The ID of the label you want to apply to projects.
@@ -2468,7 +2981,7 @@ func (r ApiUpdateProjectsLabelsRequest) Title(title string) ApiUpdateProjectsLab
 }
 
 // Filter by project type.
-func (r ApiUpdateProjectsLabelsRequest) Type_(type_ string) ApiUpdateProjectsLabelsRequest {
+func (r ApiUpdateProjectsLabelsRequest) Type_(type_ []string) ApiUpdateProjectsLabelsRequest {
 	r.type_ = &type_
 	return r
 }
@@ -2486,7 +2999,7 @@ func (r ApiUpdateProjectsLabelsRequest) Labels(labels []string) ApiUpdateProject
 }
 
 // Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects.
-func (r ApiUpdateProjectsLabelsRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiUpdateProjectsLabelsRequest {
+func (r ApiUpdateProjectsLabelsRequest) TeamId(teamId []GetIssueCountsTeamIdParameterInner) ApiUpdateProjectsLabelsRequest {
 	r.teamId = &teamId
 	return r
 }
@@ -2500,6 +3013,24 @@ func (r ApiUpdateProjectsLabelsRequest) LatestScan(latestScan int32) ApiUpdatePr
 // Filter by last revision analyzed within N days.
 func (r ApiUpdateProjectsLabelsRequest) LastRevisionWithin(lastRevisionWithin int32) ApiUpdateProjectsLabelsRequest {
 	r.lastRevisionWithin = &lastRevisionWithin
+	return r
+}
+
+// Filter by a project&#39;s URL.
+func (r ApiUpdateProjectsLabelsRequest) Url(url string) ApiUpdateProjectsLabelsRequest {
+	r.url = &url
+	return r
+}
+
+// Include shared projects.
+func (r ApiUpdateProjectsLabelsRequest) IncludeSharedProjects(includeSharedProjects bool) ApiUpdateProjectsLabelsRequest {
+	r.includeSharedProjects = &includeSharedProjects
+	return r
+}
+
+// Only show projects that have been shared with other organizations.
+func (r ApiUpdateProjectsLabelsRequest) OnlyIncludeSharedProjects(onlyIncludeSharedProjects bool) ApiUpdateProjectsLabelsRequest {
+	r.onlyIncludeSharedProjects = &onlyIncludeSharedProjects
 	return r
 }
 
@@ -2555,7 +3086,15 @@ func (a *ProjectsAPIService) UpdateProjectsLabelsExecute(r ApiUpdateProjectsLabe
 		parameterAddToHeaderOrQuery(localVarQueryParams, "title", r.title, "form", "")
 	}
 	if r.type_ != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "type", r.type_, "form", "")
+		t := *r.type_
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "type[]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "type[]", t, "form", "multi")
+		}
 	}
 	if r.isPublic != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "isPublic", r.isPublic, "form", "")
@@ -2587,6 +3126,15 @@ func (a *ProjectsAPIService) UpdateProjectsLabelsExecute(r ApiUpdateProjectsLabe
 	}
 	if r.lastRevisionWithin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "lastRevisionWithin", r.lastRevisionWithin, "form", "")
+	}
+	if r.url != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "url", r.url, "form", "")
+	}
+	if r.includeSharedProjects != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeSharedProjects", r.includeSharedProjects, "form", "")
+	}
+	if r.onlyIncludeSharedProjects != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "onlyIncludeSharedProjects", r.onlyIncludeSharedProjects, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2658,12 +3206,15 @@ type ApiUpdateProjectsPoliciesRequest struct {
 	policyId *float32
 	locators *DeleteProjectsLocatorsParameter
 	title *string
-	type_ *string
+	type_ *[]string
 	isPublic *bool
 	labels *[]string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *[]GetIssueCountsTeamIdParameterInner
 	latestScan *int32
 	lastRevisionWithin *int32
+	url *string
+	includeSharedProjects *bool
+	onlyIncludeSharedProjects *bool
 }
 
 // The ID of the policy you want to apply to projects.
@@ -2685,7 +3236,7 @@ func (r ApiUpdateProjectsPoliciesRequest) Title(title string) ApiUpdateProjectsP
 }
 
 // Filter by project type.
-func (r ApiUpdateProjectsPoliciesRequest) Type_(type_ string) ApiUpdateProjectsPoliciesRequest {
+func (r ApiUpdateProjectsPoliciesRequest) Type_(type_ []string) ApiUpdateProjectsPoliciesRequest {
 	r.type_ = &type_
 	return r
 }
@@ -2703,7 +3254,7 @@ func (r ApiUpdateProjectsPoliciesRequest) Labels(labels []string) ApiUpdateProje
 }
 
 // Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects.
-func (r ApiUpdateProjectsPoliciesRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiUpdateProjectsPoliciesRequest {
+func (r ApiUpdateProjectsPoliciesRequest) TeamId(teamId []GetIssueCountsTeamIdParameterInner) ApiUpdateProjectsPoliciesRequest {
 	r.teamId = &teamId
 	return r
 }
@@ -2717,6 +3268,24 @@ func (r ApiUpdateProjectsPoliciesRequest) LatestScan(latestScan int32) ApiUpdate
 // Filter by last revision analyzed within N days.
 func (r ApiUpdateProjectsPoliciesRequest) LastRevisionWithin(lastRevisionWithin int32) ApiUpdateProjectsPoliciesRequest {
 	r.lastRevisionWithin = &lastRevisionWithin
+	return r
+}
+
+// Filter by a project&#39;s URL.
+func (r ApiUpdateProjectsPoliciesRequest) Url(url string) ApiUpdateProjectsPoliciesRequest {
+	r.url = &url
+	return r
+}
+
+// Include shared projects.
+func (r ApiUpdateProjectsPoliciesRequest) IncludeSharedProjects(includeSharedProjects bool) ApiUpdateProjectsPoliciesRequest {
+	r.includeSharedProjects = &includeSharedProjects
+	return r
+}
+
+// Only show projects that have been shared with other organizations.
+func (r ApiUpdateProjectsPoliciesRequest) OnlyIncludeSharedProjects(onlyIncludeSharedProjects bool) ApiUpdateProjectsPoliciesRequest {
+	r.onlyIncludeSharedProjects = &onlyIncludeSharedProjects
 	return r
 }
 
@@ -2772,7 +3341,15 @@ func (a *ProjectsAPIService) UpdateProjectsPoliciesExecute(r ApiUpdateProjectsPo
 		parameterAddToHeaderOrQuery(localVarQueryParams, "title", r.title, "form", "")
 	}
 	if r.type_ != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "type", r.type_, "form", "")
+		t := *r.type_
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "type[]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "type[]", t, "form", "multi")
+		}
 	}
 	if r.isPublic != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "isPublic", r.isPublic, "form", "")
@@ -2804,6 +3381,15 @@ func (a *ProjectsAPIService) UpdateProjectsPoliciesExecute(r ApiUpdateProjectsPo
 	}
 	if r.lastRevisionWithin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "lastRevisionWithin", r.lastRevisionWithin, "form", "")
+	}
+	if r.url != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "url", r.url, "form", "")
+	}
+	if r.includeSharedProjects != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeSharedProjects", r.includeSharedProjects, "form", "")
+	}
+	if r.onlyIncludeSharedProjects != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "onlyIncludeSharedProjects", r.onlyIncludeSharedProjects, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2875,7 +3461,7 @@ type ApiUpdateReleaseGroupsPoliciesRequest struct {
 	policyId *float32
 	ids *UpdateReleaseGroupsPoliciesIdsParameter
 	title *string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *[]GetIssueCountsTeamIdParameterInner
 	latestScan *int32
 }
 
@@ -2885,7 +3471,7 @@ func (r ApiUpdateReleaseGroupsPoliciesRequest) PolicyId(policyId float32) ApiUpd
 	return r
 }
 
-// The list of IDs for the release groups to update. If \&quot;all\&quot; is provided, then all release groups that meet the provided filters will have the label applied. 
+// The list of IDs for the release groups to update. If \&quot;all\&quot; is provided, then all release groups that meet the provided filters will have the policy applied. If omitted, the release groups are selected by the supplied filter params (&#x60;title&#x60;, &#x60;latestScan&#x60;, &#x60;teamId&#x60;); at least one filter must then be provided. 
 func (r ApiUpdateReleaseGroupsPoliciesRequest) Ids(ids UpdateReleaseGroupsPoliciesIdsParameter) ApiUpdateReleaseGroupsPoliciesRequest {
 	r.ids = &ids
 	return r
@@ -2898,7 +3484,7 @@ func (r ApiUpdateReleaseGroupsPoliciesRequest) Title(title string) ApiUpdateRele
 }
 
 // Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups.
-func (r ApiUpdateReleaseGroupsPoliciesRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiUpdateReleaseGroupsPoliciesRequest {
+func (r ApiUpdateReleaseGroupsPoliciesRequest) TeamId(teamId []GetIssueCountsTeamIdParameterInner) ApiUpdateReleaseGroupsPoliciesRequest {
 	r.teamId = &teamId
 	return r
 }
@@ -2949,12 +3535,11 @@ func (a *ProjectsAPIService) UpdateReleaseGroupsPoliciesExecute(r ApiUpdateRelea
 	if r.policyId == nil {
 		return nil, reportError("policyId is required and must be specified")
 	}
-	if r.ids == nil {
-		return nil, reportError("ids is required and must be specified")
-	}
 
 	parameterAddToHeaderOrQuery(localVarQueryParams, "policyId", r.policyId, "form", "")
-	parameterAddToHeaderOrQuery(localVarQueryParams, "ids", r.ids, "form", "")
+	if r.ids != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ids", r.ids, "form", "")
+	}
 	if r.title != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "title", r.title, "form", "")
 	}
