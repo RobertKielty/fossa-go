@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.16
 Contact: support@fossa.com
 */
 
@@ -23,7 +23,7 @@ type GetBuilds200ResponseInnerRevision struct {
 	// The revision locator for the build
 	Locator *string `json:"locator,omitempty"`
 	// The project locator of the project for the build
-	ProjectId *int32 `json:"projectId,omitempty"`
+	ProjectId *string `json:"projectId,omitempty"`
 	// The message for the revision
 	Message *string `json:"message,omitempty"`
 }
@@ -78,9 +78,9 @@ func (o *GetBuilds200ResponseInnerRevision) SetLocator(v string) {
 }
 
 // GetProjectId returns the ProjectId field value if set, zero value otherwise.
-func (o *GetBuilds200ResponseInnerRevision) GetProjectId() int32 {
+func (o *GetBuilds200ResponseInnerRevision) GetProjectId() string {
 	if o == nil || IsNil(o.ProjectId) {
-		var ret int32
+		var ret string
 		return ret
 	}
 	return *o.ProjectId
@@ -88,7 +88,7 @@ func (o *GetBuilds200ResponseInnerRevision) GetProjectId() int32 {
 
 // GetProjectIdOk returns a tuple with the ProjectId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetBuilds200ResponseInnerRevision) GetProjectIdOk() (*int32, bool) {
+func (o *GetBuilds200ResponseInnerRevision) GetProjectIdOk() (*string, bool) {
 	if o == nil || IsNil(o.ProjectId) {
 		return nil, false
 	}
@@ -104,8 +104,8 @@ func (o *GetBuilds200ResponseInnerRevision) HasProjectId() bool {
 	return false
 }
 
-// SetProjectId gets a reference to the given int32 and assigns it to the ProjectId field.
-func (o *GetBuilds200ResponseInnerRevision) SetProjectId(v int32) {
+// SetProjectId gets a reference to the given string and assigns it to the ProjectId field.
+func (o *GetBuilds200ResponseInnerRevision) SetProjectId(v string) {
 	o.ProjectId = &v
 }
 
