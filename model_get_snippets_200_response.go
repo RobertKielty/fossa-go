@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.16
 Contact: support@fossa.com
 */
 
@@ -28,8 +28,8 @@ type GetSnippets200Response struct {
 	TotalCount int32 `json:"totalCount"`
 	// Current page number
 	Page int32 `json:"page"`
-	// Number of items per page
-	Count int32 `json:"count"`
+	// Number of items requested per page
+	PageSize int32 `json:"pageSize"`
 }
 
 type _GetSnippets200Response GetSnippets200Response
@@ -38,12 +38,12 @@ type _GetSnippets200Response GetSnippets200Response
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetSnippets200Response(results []GetSnippets200ResponseResultsInner, totalCount int32, page int32, count int32) *GetSnippets200Response {
+func NewGetSnippets200Response(results []GetSnippets200ResponseResultsInner, totalCount int32, page int32, pageSize int32) *GetSnippets200Response {
 	this := GetSnippets200Response{}
 	this.Results = results
 	this.TotalCount = totalCount
 	this.Page = page
-	this.Count = count
+	this.PageSize = pageSize
 	return &this
 }
 
@@ -127,28 +127,28 @@ func (o *GetSnippets200Response) SetPage(v int32) {
 	o.Page = v
 }
 
-// GetCount returns the Count field value
-func (o *GetSnippets200Response) GetCount() int32 {
+// GetPageSize returns the PageSize field value
+func (o *GetSnippets200Response) GetPageSize() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.Count
+	return o.PageSize
 }
 
-// GetCountOk returns a tuple with the Count field value
+// GetPageSizeOk returns a tuple with the PageSize field value
 // and a boolean to check if the value has been set.
-func (o *GetSnippets200Response) GetCountOk() (*int32, bool) {
+func (o *GetSnippets200Response) GetPageSizeOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Count, true
+	return &o.PageSize, true
 }
 
-// SetCount sets field value
-func (o *GetSnippets200Response) SetCount(v int32) {
-	o.Count = v
+// SetPageSize sets field value
+func (o *GetSnippets200Response) SetPageSize(v int32) {
+	o.PageSize = v
 }
 
 func (o GetSnippets200Response) MarshalJSON() ([]byte, error) {
@@ -164,7 +164,7 @@ func (o GetSnippets200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize["results"] = o.Results
 	toSerialize["totalCount"] = o.TotalCount
 	toSerialize["page"] = o.Page
-	toSerialize["count"] = o.Count
+	toSerialize["pageSize"] = o.PageSize
 	return toSerialize, nil
 }
 
@@ -176,7 +176,7 @@ func (o *GetSnippets200Response) UnmarshalJSON(data []byte) (err error) {
 		"results",
 		"totalCount",
 		"page",
-		"count",
+		"pageSize",
 	}
 
 	allProperties := make(map[string]interface{})

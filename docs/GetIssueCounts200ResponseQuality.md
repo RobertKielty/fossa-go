@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | Pointer to [**GetIssueCounts200ResponseQualityType**](GetIssueCounts200ResponseQualityType.md) |  | [optional] 
-**Status** | Pointer to [**GetIssueCounts200ResponseQualityStatus**](GetIssueCounts200ResponseQualityStatus.md) |  | [optional] 
+**Status** | Pointer to [**GetIssueCounts200ResponseLicensingStatus**](GetIssueCounts200ResponseLicensingStatus.md) |  | [optional] 
 
 ## Methods
 
@@ -53,20 +53,20 @@ HasType returns a boolean if a field has been set.
 
 ### GetStatus
 
-`func (o *GetIssueCounts200ResponseQuality) GetStatus() GetIssueCounts200ResponseQualityStatus`
+`func (o *GetIssueCounts200ResponseQuality) GetStatus() GetIssueCounts200ResponseLicensingStatus`
 
 GetStatus returns the Status field if non-nil, zero value otherwise.
 
 ### GetStatusOk
 
-`func (o *GetIssueCounts200ResponseQuality) GetStatusOk() (*GetIssueCounts200ResponseQualityStatus, bool)`
+`func (o *GetIssueCounts200ResponseQuality) GetStatusOk() (*GetIssueCounts200ResponseLicensingStatus, bool)`
 
 GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStatus
 
-`func (o *GetIssueCounts200ResponseQuality) SetStatus(v GetIssueCounts200ResponseQualityStatus)`
+`func (o *GetIssueCounts200ResponseQuality) SetStatus(v GetIssueCounts200ResponseLicensingStatus)`
 
 SetStatus sets Status field to given value.
 
