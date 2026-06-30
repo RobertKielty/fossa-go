@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.19
 Contact: support@fossa.com
 */
 
@@ -46,6 +46,20 @@ type GetOrganizationCLI200Response struct {
 	DefaultToFirstPartyScans *bool `json:"defaultToFirstPartyScans,omitempty"`
 	// Configuration for custom license scans
 	CustomLicenseScanConfigs []GetOrganizationCLI200ResponseCustomLicenseScanConfigsInner `json:"customLicenseScanConfigs,omitempty"`
+	// True if the organization requires a policy to be assigned when uploading, otherwise False.
+	RequirePolicyOnUpload *bool `json:"requirePolicyOnUpload,omitempty"`
+	// True if the organization is permissioned for CLI license scanning and archive uploads, otherwise False.
+	ArchiveUploadAndCLILicenseScanEnabled *bool `json:"archiveUploadAndCLILicenseScanEnabled,omitempty"`
+	// True if the organization supports CLI preflight checks, otherwise False.
+	SupportsPreflightChecks *bool `json:"supportsPreflightChecks,omitempty"`
+	// True if Core understands git-backed cargo locators in the format `cargo+<repoUrl>#<crateName>$<version>`. When False, the CLI should fall back to plain crate names for git-sourced cargo dependencies.
+	SupportsGitBackedCargoLocators *bool `json:"supportsGitBackedCargoLocators,omitempty"`
+	// The organization subscription access level.
+	Subscription *string `json:"subscription,omitempty"`
+	// The package label scopes supported by the organization.
+	PackageLabelScopes []string `json:"packageLabelScopes,omitempty"`
+	// Number of days source code from snippet scans is retained for the organization.
+	SnippetScanSourceCodeRetentionDays *int32 `json:"snippetScanSourceCodeRetentionDays,omitempty"`
 }
 
 // NewGetOrganizationCLI200Response instantiates a new GetOrganizationCLI200Response object
@@ -481,6 +495,230 @@ func (o *GetOrganizationCLI200Response) SetCustomLicenseScanConfigs(v []GetOrgan
 	o.CustomLicenseScanConfigs = v
 }
 
+// GetRequirePolicyOnUpload returns the RequirePolicyOnUpload field value if set, zero value otherwise.
+func (o *GetOrganizationCLI200Response) GetRequirePolicyOnUpload() bool {
+	if o == nil || IsNil(o.RequirePolicyOnUpload) {
+		var ret bool
+		return ret
+	}
+	return *o.RequirePolicyOnUpload
+}
+
+// GetRequirePolicyOnUploadOk returns a tuple with the RequirePolicyOnUpload field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetOrganizationCLI200Response) GetRequirePolicyOnUploadOk() (*bool, bool) {
+	if o == nil || IsNil(o.RequirePolicyOnUpload) {
+		return nil, false
+	}
+	return o.RequirePolicyOnUpload, true
+}
+
+// HasRequirePolicyOnUpload returns a boolean if a field has been set.
+func (o *GetOrganizationCLI200Response) HasRequirePolicyOnUpload() bool {
+	if o != nil && !IsNil(o.RequirePolicyOnUpload) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequirePolicyOnUpload gets a reference to the given bool and assigns it to the RequirePolicyOnUpload field.
+func (o *GetOrganizationCLI200Response) SetRequirePolicyOnUpload(v bool) {
+	o.RequirePolicyOnUpload = &v
+}
+
+// GetArchiveUploadAndCLILicenseScanEnabled returns the ArchiveUploadAndCLILicenseScanEnabled field value if set, zero value otherwise.
+func (o *GetOrganizationCLI200Response) GetArchiveUploadAndCLILicenseScanEnabled() bool {
+	if o == nil || IsNil(o.ArchiveUploadAndCLILicenseScanEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.ArchiveUploadAndCLILicenseScanEnabled
+}
+
+// GetArchiveUploadAndCLILicenseScanEnabledOk returns a tuple with the ArchiveUploadAndCLILicenseScanEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetOrganizationCLI200Response) GetArchiveUploadAndCLILicenseScanEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.ArchiveUploadAndCLILicenseScanEnabled) {
+		return nil, false
+	}
+	return o.ArchiveUploadAndCLILicenseScanEnabled, true
+}
+
+// HasArchiveUploadAndCLILicenseScanEnabled returns a boolean if a field has been set.
+func (o *GetOrganizationCLI200Response) HasArchiveUploadAndCLILicenseScanEnabled() bool {
+	if o != nil && !IsNil(o.ArchiveUploadAndCLILicenseScanEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetArchiveUploadAndCLILicenseScanEnabled gets a reference to the given bool and assigns it to the ArchiveUploadAndCLILicenseScanEnabled field.
+func (o *GetOrganizationCLI200Response) SetArchiveUploadAndCLILicenseScanEnabled(v bool) {
+	o.ArchiveUploadAndCLILicenseScanEnabled = &v
+}
+
+// GetSupportsPreflightChecks returns the SupportsPreflightChecks field value if set, zero value otherwise.
+func (o *GetOrganizationCLI200Response) GetSupportsPreflightChecks() bool {
+	if o == nil || IsNil(o.SupportsPreflightChecks) {
+		var ret bool
+		return ret
+	}
+	return *o.SupportsPreflightChecks
+}
+
+// GetSupportsPreflightChecksOk returns a tuple with the SupportsPreflightChecks field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetOrganizationCLI200Response) GetSupportsPreflightChecksOk() (*bool, bool) {
+	if o == nil || IsNil(o.SupportsPreflightChecks) {
+		return nil, false
+	}
+	return o.SupportsPreflightChecks, true
+}
+
+// HasSupportsPreflightChecks returns a boolean if a field has been set.
+func (o *GetOrganizationCLI200Response) HasSupportsPreflightChecks() bool {
+	if o != nil && !IsNil(o.SupportsPreflightChecks) {
+		return true
+	}
+
+	return false
+}
+
+// SetSupportsPreflightChecks gets a reference to the given bool and assigns it to the SupportsPreflightChecks field.
+func (o *GetOrganizationCLI200Response) SetSupportsPreflightChecks(v bool) {
+	o.SupportsPreflightChecks = &v
+}
+
+// GetSupportsGitBackedCargoLocators returns the SupportsGitBackedCargoLocators field value if set, zero value otherwise.
+func (o *GetOrganizationCLI200Response) GetSupportsGitBackedCargoLocators() bool {
+	if o == nil || IsNil(o.SupportsGitBackedCargoLocators) {
+		var ret bool
+		return ret
+	}
+	return *o.SupportsGitBackedCargoLocators
+}
+
+// GetSupportsGitBackedCargoLocatorsOk returns a tuple with the SupportsGitBackedCargoLocators field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetOrganizationCLI200Response) GetSupportsGitBackedCargoLocatorsOk() (*bool, bool) {
+	if o == nil || IsNil(o.SupportsGitBackedCargoLocators) {
+		return nil, false
+	}
+	return o.SupportsGitBackedCargoLocators, true
+}
+
+// HasSupportsGitBackedCargoLocators returns a boolean if a field has been set.
+func (o *GetOrganizationCLI200Response) HasSupportsGitBackedCargoLocators() bool {
+	if o != nil && !IsNil(o.SupportsGitBackedCargoLocators) {
+		return true
+	}
+
+	return false
+}
+
+// SetSupportsGitBackedCargoLocators gets a reference to the given bool and assigns it to the SupportsGitBackedCargoLocators field.
+func (o *GetOrganizationCLI200Response) SetSupportsGitBackedCargoLocators(v bool) {
+	o.SupportsGitBackedCargoLocators = &v
+}
+
+// GetSubscription returns the Subscription field value if set, zero value otherwise.
+func (o *GetOrganizationCLI200Response) GetSubscription() string {
+	if o == nil || IsNil(o.Subscription) {
+		var ret string
+		return ret
+	}
+	return *o.Subscription
+}
+
+// GetSubscriptionOk returns a tuple with the Subscription field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetOrganizationCLI200Response) GetSubscriptionOk() (*string, bool) {
+	if o == nil || IsNil(o.Subscription) {
+		return nil, false
+	}
+	return o.Subscription, true
+}
+
+// HasSubscription returns a boolean if a field has been set.
+func (o *GetOrganizationCLI200Response) HasSubscription() bool {
+	if o != nil && !IsNil(o.Subscription) {
+		return true
+	}
+
+	return false
+}
+
+// SetSubscription gets a reference to the given string and assigns it to the Subscription field.
+func (o *GetOrganizationCLI200Response) SetSubscription(v string) {
+	o.Subscription = &v
+}
+
+// GetPackageLabelScopes returns the PackageLabelScopes field value if set, zero value otherwise.
+func (o *GetOrganizationCLI200Response) GetPackageLabelScopes() []string {
+	if o == nil || IsNil(o.PackageLabelScopes) {
+		var ret []string
+		return ret
+	}
+	return o.PackageLabelScopes
+}
+
+// GetPackageLabelScopesOk returns a tuple with the PackageLabelScopes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetOrganizationCLI200Response) GetPackageLabelScopesOk() ([]string, bool) {
+	if o == nil || IsNil(o.PackageLabelScopes) {
+		return nil, false
+	}
+	return o.PackageLabelScopes, true
+}
+
+// HasPackageLabelScopes returns a boolean if a field has been set.
+func (o *GetOrganizationCLI200Response) HasPackageLabelScopes() bool {
+	if o != nil && !IsNil(o.PackageLabelScopes) {
+		return true
+	}
+
+	return false
+}
+
+// SetPackageLabelScopes gets a reference to the given []string and assigns it to the PackageLabelScopes field.
+func (o *GetOrganizationCLI200Response) SetPackageLabelScopes(v []string) {
+	o.PackageLabelScopes = v
+}
+
+// GetSnippetScanSourceCodeRetentionDays returns the SnippetScanSourceCodeRetentionDays field value if set, zero value otherwise.
+func (o *GetOrganizationCLI200Response) GetSnippetScanSourceCodeRetentionDays() int32 {
+	if o == nil || IsNil(o.SnippetScanSourceCodeRetentionDays) {
+		var ret int32
+		return ret
+	}
+	return *o.SnippetScanSourceCodeRetentionDays
+}
+
+// GetSnippetScanSourceCodeRetentionDaysOk returns a tuple with the SnippetScanSourceCodeRetentionDays field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetOrganizationCLI200Response) GetSnippetScanSourceCodeRetentionDaysOk() (*int32, bool) {
+	if o == nil || IsNil(o.SnippetScanSourceCodeRetentionDays) {
+		return nil, false
+	}
+	return o.SnippetScanSourceCodeRetentionDays, true
+}
+
+// HasSnippetScanSourceCodeRetentionDays returns a boolean if a field has been set.
+func (o *GetOrganizationCLI200Response) HasSnippetScanSourceCodeRetentionDays() bool {
+	if o != nil && !IsNil(o.SnippetScanSourceCodeRetentionDays) {
+		return true
+	}
+
+	return false
+}
+
+// SetSnippetScanSourceCodeRetentionDays gets a reference to the given int32 and assigns it to the SnippetScanSourceCodeRetentionDays field.
+func (o *GetOrganizationCLI200Response) SetSnippetScanSourceCodeRetentionDays(v int32) {
+	o.SnippetScanSourceCodeRetentionDays = &v
+}
+
 func (o GetOrganizationCLI200Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -529,6 +767,27 @@ func (o GetOrganizationCLI200Response) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CustomLicenseScanConfigs) {
 		toSerialize["customLicenseScanConfigs"] = o.CustomLicenseScanConfigs
+	}
+	if !IsNil(o.RequirePolicyOnUpload) {
+		toSerialize["requirePolicyOnUpload"] = o.RequirePolicyOnUpload
+	}
+	if !IsNil(o.ArchiveUploadAndCLILicenseScanEnabled) {
+		toSerialize["archiveUploadAndCLILicenseScanEnabled"] = o.ArchiveUploadAndCLILicenseScanEnabled
+	}
+	if !IsNil(o.SupportsPreflightChecks) {
+		toSerialize["supportsPreflightChecks"] = o.SupportsPreflightChecks
+	}
+	if !IsNil(o.SupportsGitBackedCargoLocators) {
+		toSerialize["supportsGitBackedCargoLocators"] = o.SupportsGitBackedCargoLocators
+	}
+	if !IsNil(o.Subscription) {
+		toSerialize["subscription"] = o.Subscription
+	}
+	if !IsNil(o.PackageLabelScopes) {
+		toSerialize["packageLabelScopes"] = o.PackageLabelScopes
+	}
+	if !IsNil(o.SnippetScanSourceCodeRetentionDays) {
+		toSerialize["snippetScanSourceCodeRetentionDays"] = o.SnippetScanSourceCodeRetentionDays
 	}
 	return toSerialize, nil
 }
