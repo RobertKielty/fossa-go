@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.19
 Contact: support@fossa.com
 */
 
@@ -21,7 +21,7 @@ var _ MappedNullable = &NugetConfig{}
 // NugetConfig struct for NugetConfig
 type NugetConfig struct {
 	// List of configured Nuget Feeds
-	Sources []GetOrganizationNugetSettings200ResponseSourcesInner `json:"sources,omitempty"`
+	Sources []GetOrganizationRubyGemsSettings200ResponseSourcesInner `json:"sources,omitempty"`
 }
 
 // NewNugetConfig instantiates a new NugetConfig object
@@ -42,9 +42,9 @@ func NewNugetConfigWithDefaults() *NugetConfig {
 }
 
 // GetSources returns the Sources field value if set, zero value otherwise.
-func (o *NugetConfig) GetSources() []GetOrganizationNugetSettings200ResponseSourcesInner {
+func (o *NugetConfig) GetSources() []GetOrganizationRubyGemsSettings200ResponseSourcesInner {
 	if o == nil || IsNil(o.Sources) {
-		var ret []GetOrganizationNugetSettings200ResponseSourcesInner
+		var ret []GetOrganizationRubyGemsSettings200ResponseSourcesInner
 		return ret
 	}
 	return o.Sources
@@ -52,7 +52,7 @@ func (o *NugetConfig) GetSources() []GetOrganizationNugetSettings200ResponseSour
 
 // GetSourcesOk returns a tuple with the Sources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *NugetConfig) GetSourcesOk() ([]GetOrganizationNugetSettings200ResponseSourcesInner, bool) {
+func (o *NugetConfig) GetSourcesOk() ([]GetOrganizationRubyGemsSettings200ResponseSourcesInner, bool) {
 	if o == nil || IsNil(o.Sources) {
 		return nil, false
 	}
@@ -68,8 +68,8 @@ func (o *NugetConfig) HasSources() bool {
 	return false
 }
 
-// SetSources gets a reference to the given []GetOrganizationNugetSettings200ResponseSourcesInner and assigns it to the Sources field.
-func (o *NugetConfig) SetSources(v []GetOrganizationNugetSettings200ResponseSourcesInner) {
+// SetSources gets a reference to the given []GetOrganizationRubyGemsSettings200ResponseSourcesInner and assigns it to the Sources field.
+func (o *NugetConfig) SetSources(v []GetOrganizationRubyGemsSettings200ResponseSourcesInner) {
 	o.Sources = v
 }
 

@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.19
 Contact: support@fossa.com
 */
 
@@ -29,7 +29,7 @@ type GetTeamGroups200ResponseInner struct {
 	// Teams within this team group
 	Teams []GetTeamGroups200ResponseInnerTeamsInner `json:"teams,omitempty"`
 	// Members of this team group
-	Members []GetTeamGroups200ResponseInnerMembersInner `json:"members,omitempty"`
+	Members []GetAllTeams200ResponseInnerTeamUsersInner `json:"members,omitempty"`
 }
 
 // NewGetTeamGroups200ResponseInner instantiates a new GetTeamGroups200ResponseInner object
@@ -178,9 +178,9 @@ func (o *GetTeamGroups200ResponseInner) SetTeams(v []GetTeamGroups200ResponseInn
 }
 
 // GetMembers returns the Members field value if set, zero value otherwise.
-func (o *GetTeamGroups200ResponseInner) GetMembers() []GetTeamGroups200ResponseInnerMembersInner {
+func (o *GetTeamGroups200ResponseInner) GetMembers() []GetAllTeams200ResponseInnerTeamUsersInner {
 	if o == nil || IsNil(o.Members) {
-		var ret []GetTeamGroups200ResponseInnerMembersInner
+		var ret []GetAllTeams200ResponseInnerTeamUsersInner
 		return ret
 	}
 	return o.Members
@@ -188,7 +188,7 @@ func (o *GetTeamGroups200ResponseInner) GetMembers() []GetTeamGroups200ResponseI
 
 // GetMembersOk returns a tuple with the Members field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetTeamGroups200ResponseInner) GetMembersOk() ([]GetTeamGroups200ResponseInnerMembersInner, bool) {
+func (o *GetTeamGroups200ResponseInner) GetMembersOk() ([]GetAllTeams200ResponseInnerTeamUsersInner, bool) {
 	if o == nil || IsNil(o.Members) {
 		return nil, false
 	}
@@ -204,8 +204,8 @@ func (o *GetTeamGroups200ResponseInner) HasMembers() bool {
 	return false
 }
 
-// SetMembers gets a reference to the given []GetTeamGroups200ResponseInnerMembersInner and assigns it to the Members field.
-func (o *GetTeamGroups200ResponseInner) SetMembers(v []GetTeamGroups200ResponseInnerMembersInner) {
+// SetMembers gets a reference to the given []GetAllTeams200ResponseInnerTeamUsersInner and assigns it to the Members field.
+func (o *GetTeamGroups200ResponseInner) SetMembers(v []GetAllTeams200ResponseInnerTeamUsersInner) {
 	o.Members = v
 }
 
