@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Name** | Pointer to **string** | Team group name | [optional] 
 **DefaultRoleId** | Pointer to **int32** | Default role ID for members | [optional] 
 **Teams** | Pointer to [**[]GetTeamGroups200ResponseInnerTeamsInner**](GetTeamGroups200ResponseInnerTeamsInner.md) | Teams within this team group | [optional] 
-**Members** | Pointer to [**[]GetTeamGroups200ResponseInnerMembersInner**](GetTeamGroups200ResponseInnerMembersInner.md) | Members of this team group | [optional] 
+**Members** | Pointer to [**[]GetAllTeams200ResponseInnerTeamUsersInner**](GetAllTeams200ResponseInnerTeamUsersInner.md) | Members of this team group | [optional] 
 
 ## Methods
 
@@ -131,20 +131,20 @@ HasTeams returns a boolean if a field has been set.
 
 ### GetMembers
 
-`func (o *GetTeamGroups200ResponseInner) GetMembers() []GetTeamGroups200ResponseInnerMembersInner`
+`func (o *GetTeamGroups200ResponseInner) GetMembers() []GetAllTeams200ResponseInnerTeamUsersInner`
 
 GetMembers returns the Members field if non-nil, zero value otherwise.
 
 ### GetMembersOk
 
-`func (o *GetTeamGroups200ResponseInner) GetMembersOk() (*[]GetTeamGroups200ResponseInnerMembersInner, bool)`
+`func (o *GetTeamGroups200ResponseInner) GetMembersOk() (*[]GetAllTeams200ResponseInnerTeamUsersInner, bool)`
 
 GetMembersOk returns a tuple with the Members field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMembers
 
-`func (o *GetTeamGroups200ResponseInner) SetMembers(v []GetTeamGroups200ResponseInnerMembersInner)`
+`func (o *GetTeamGroups200ResponseInner) SetMembers(v []GetAllTeams200ResponseInnerTeamUsersInner)`
 
 SetMembers sets Members field to given value.
 
