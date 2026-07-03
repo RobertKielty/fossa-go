@@ -94,7 +94,7 @@ Name | Type | Description  | Notes
 
 ## CreateReleaseGroupReleases
 
-> CreateReleaseGroup200Response CreateReleaseGroupReleases(ctx, groupId).CreateReleaseGroupReleasesRequest(createReleaseGroupReleasesRequest).Execute()
+> CreateReleaseGroupReleases200Response CreateReleaseGroupReleases(ctx, groupId).CreateReleaseGroupReleasesRequest(createReleaseGroupReleasesRequest).Execute()
 
 
 
@@ -123,7 +123,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReleaseGroupsAPI.CreateReleaseGroupReleases``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `CreateReleaseGroupReleases`: CreateReleaseGroup200Response
+	// response from `CreateReleaseGroupReleases`: CreateReleaseGroupReleases200Response
 	fmt.Fprintf(os.Stdout, "Response from `ReleaseGroupsAPI.CreateReleaseGroupReleases`: %v\n", resp)
 }
 ```
@@ -148,7 +148,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateReleaseGroup200Response**](CreateReleaseGroup200Response.md)
+[**CreateReleaseGroupReleases200Response**](CreateReleaseGroupReleases200Response.md)
 
 ### Authorization
 
@@ -655,7 +655,7 @@ Name | Type | Description  | Notes
 
 ## GetReleaseGroupReleaseById
 
-> []GetReleaseGroupReleaseById200ResponseInner GetReleaseGroupReleaseById(ctx, groupId, projectGroupReleaseId).Execute()
+> GetReleaseGroupReleaseById200Response GetReleaseGroupReleaseById(ctx, groupId, projectGroupReleaseId).Execute()
 
 
 
@@ -684,7 +684,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReleaseGroupsAPI.GetReleaseGroupReleaseById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetReleaseGroupReleaseById`: []GetReleaseGroupReleaseById200ResponseInner
+	// response from `GetReleaseGroupReleaseById`: GetReleaseGroupReleaseById200Response
 	fmt.Fprintf(os.Stdout, "Response from `ReleaseGroupsAPI.GetReleaseGroupReleaseById`: %v\n", resp)
 }
 ```
@@ -710,7 +710,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]GetReleaseGroupReleaseById200ResponseInner**](GetReleaseGroupReleaseById200ResponseInner.md)
+[**GetReleaseGroupReleaseById200Response**](GetReleaseGroupReleaseById200Response.md)
 
 ### Authorization
 
@@ -947,7 +947,7 @@ Name | Type | Description  | Notes
 
 ## GetReleaseGroupReleaseScans
 
-> GetReleaseGroupReleaseScans200Response GetReleaseGroupReleaseScans(ctx, groupId, projectGroupReleaseId).Execute()
+> []GetReleaseGroupReleaseScans200ResponseInner GetReleaseGroupReleaseScans(ctx, groupId, projectGroupReleaseId).Execute()
 
 
 
@@ -976,7 +976,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReleaseGroupsAPI.GetReleaseGroupReleaseScans``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetReleaseGroupReleaseScans`: GetReleaseGroupReleaseScans200Response
+	// response from `GetReleaseGroupReleaseScans`: []GetReleaseGroupReleaseScans200ResponseInner
 	fmt.Fprintf(os.Stdout, "Response from `ReleaseGroupsAPI.GetReleaseGroupReleaseScans`: %v\n", resp)
 }
 ```
@@ -1002,7 +1002,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetReleaseGroupReleaseScans200Response**](GetReleaseGroupReleaseScans200Response.md)
+[**[]GetReleaseGroupReleaseScans200ResponseInner**](GetReleaseGroupReleaseScans200ResponseInner.md)
 
 ### Authorization
 
@@ -1345,7 +1345,7 @@ Name | Type | Description  | Notes
 
 ## UpdateReleaseGroupReleaseById
 
-> CreateReleaseGroup200Response UpdateReleaseGroupReleaseById(ctx, groupId, projectGroupReleaseId).UpdateReleaseGroupReleaseByIdRequest(updateReleaseGroupReleaseByIdRequest).Execute()
+> CreateReleaseGroupReleases200Response UpdateReleaseGroupReleaseById(ctx, groupId, projectGroupReleaseId).UpdateReleaseGroupReleaseByIdRequest(updateReleaseGroupReleaseByIdRequest).Execute()
 
 
 
@@ -1375,7 +1375,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReleaseGroupsAPI.UpdateReleaseGroupReleaseById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `UpdateReleaseGroupReleaseById`: CreateReleaseGroup200Response
+	// response from `UpdateReleaseGroupReleaseById`: CreateReleaseGroupReleases200Response
 	fmt.Fprintf(os.Stdout, "Response from `ReleaseGroupsAPI.UpdateReleaseGroupReleaseById`: %v\n", resp)
 }
 ```
@@ -1402,7 +1402,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateReleaseGroup200Response**](CreateReleaseGroup200Response.md)
+[**CreateReleaseGroupReleases200Response**](CreateReleaseGroupReleases200Response.md)
 
 ### Authorization
 
