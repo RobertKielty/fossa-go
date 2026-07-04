@@ -4,16 +4,19 @@ All URIs are relative to *https://app.fossa.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**DeleteProject**](ProjectsAPI.md#DeleteProject) | **Delete** /projects/{locator} | Delete a project.
 [**DeleteProjectGenerateAttributionSlug**](ProjectsAPI.md#DeleteProjectGenerateAttributionSlug) | **Delete** /projects/{locator}/generate_attribution_slug | 
 [**DeleteProjects**](ProjectsAPI.md#DeleteProjects) | **Delete** /v2/projects | 
 [**DeleteReleaseGroups**](ProjectsAPI.md#DeleteReleaseGroups) | **Delete** /v2/release-groups | 
 [**GenerateProjectGenerateAttributionSlug**](ProjectsAPI.md#GenerateProjectGenerateAttributionSlug) | **Put** /projects/{locator}/generate_attribution_slug | 
+[**GetProject**](ProjectsAPI.md#GetProject) | **Get** /projects/{locator} | Get a single project.
 [**GetProjectCSVExportIssues**](ProjectsAPI.md#GetProjectCSVExportIssues) | **Get** /projects/{locator}/export-issues/csv | 
 [**GetProjectExportIssues**](ProjectsAPI.md#GetProjectExportIssues) | **Get** /projects/{locator}/export-issues | 
 [**GetProjectJSONExportIssues**](ProjectsAPI.md#GetProjectJSONExportIssues) | **Get** /projects/{locator}/export-issues/json | 
 [**GetProjectLastPublished**](ProjectsAPI.md#GetProjectLastPublished) | **Get** /projects/{locator}/last-published | 
 [**GetProjectRevisions**](ProjectsAPI.md#GetProjectRevisions) | **Get** /projects/{locator}/revisions | 
 [**GetProjects**](ProjectsAPI.md#GetProjects) | **Get** /v2/projects | 
+[**GetProjectsByPost**](ProjectsAPI.md#GetProjectsByPost) | **Post** /v2/projects | 
 [**GetProjectsSummary**](ProjectsAPI.md#GetProjectsSummary) | **Get** /v2/projects/summary | 
 [**GetReleaseGroups**](ProjectsAPI.md#GetReleaseGroups) | **Get** /v2/release-groups | 
 [**ListReleaseGroupsForProject**](ProjectsAPI.md#ListReleaseGroupsForProject) | **Get** /v2/projects/{locator}/release-groups | 
@@ -22,6 +25,74 @@ Method | HTTP request | Description
 [**UpdateProjectsPolicies**](ProjectsAPI.md#UpdateProjectsPolicies) | **Put** /v2/projects/policy | 
 [**UpdateReleaseGroupsPolicies**](ProjectsAPI.md#UpdateReleaseGroupsPolicies) | **Put** /v2/release-groups/policy | 
 
+
+
+## DeleteProject
+
+> DeleteProject(ctx, locator).Execute()
+
+Delete a project.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	locator := "git%2Bgithub.com%2Ffossas%2Ffossa-cli" // string | The URL-encoded locator of the project (e.g., \"git+github.com/owner/repo\")
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.ProjectsAPI.DeleteProject(context.Background(), locator).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.DeleteProject``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**locator** | **string** | The URL-encoded locator of the project (e.g., \&quot;git+github.com/owner/repo\&quot;) | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteProjectRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## DeleteProjectGenerateAttributionSlug
@@ -94,7 +165,7 @@ Name | Type | Description  | Notes
 
 ## DeleteProjects
 
-> DeleteProjects(ctx).Title(title).Type_(type_).IsPublic(isPublic).Labels(labels).TeamId(teamId).LatestScan(latestScan).LastRevisionWithin(lastRevisionWithin).Locators(locators).Execute()
+> DeleteProjects(ctx).Title(title).Type_(type_).IsPublic(isPublic).Labels(labels).TeamId(teamId).LatestScan(latestScan).LastRevisionWithin(lastRevisionWithin).Locators(locators).Url(url).IncludeSharedProjects(includeSharedProjects).OnlyIncludeSharedProjects(onlyIncludeSharedProjects).Execute()
 
 
 
@@ -114,17 +185,20 @@ import (
 
 func main() {
 	title := "title_example" // string | Filter by project name. (optional)
-	type_ := "type__example" // string | Filter by project type. (optional)
+	type_ := []string{"Type_example"} // []string | Filter by project type. (optional)
 	isPublic := true // bool | Filter by project being public or private. (optional)
 	labels := []string{"Inner_example"} // []string | Filter by project labels. (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
+	teamId := []openapiclient.GetIssueCountsTeamIdParameterInner{openapiclient.getIssueCounts_teamId_parameter_inner{Float32: new(float32)}} // []GetIssueCountsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
 	latestScan := int32(56) // int32 | Filter by last policy scan within N days. (optional)
 	lastRevisionWithin := int32(56) // int32 | Filter by last revision analyzed within N days. (optional)
 	locators := openapiclient.deleteProjects_locators_parameter{ArrayOfString: new([]string)} // DeleteProjectsLocatorsParameter | The list of locators for the projects to delete. If \"all\" is provided, then all projects that meet the provided filters will be deleted.  (optional)
+	url := "url_example" // string | Filter by a project's URL. (optional)
+	includeSharedProjects := true // bool | Include shared projects. (optional)
+	onlyIncludeSharedProjects := true // bool | Only show projects that have been shared with other organizations. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.ProjectsAPI.DeleteProjects(context.Background()).Title(title).Type_(type_).IsPublic(isPublic).Labels(labels).TeamId(teamId).LatestScan(latestScan).LastRevisionWithin(lastRevisionWithin).Locators(locators).Execute()
+	r, err := apiClient.ProjectsAPI.DeleteProjects(context.Background()).Title(title).Type_(type_).IsPublic(isPublic).Labels(labels).TeamId(teamId).LatestScan(latestScan).LastRevisionWithin(lastRevisionWithin).Locators(locators).Url(url).IncludeSharedProjects(includeSharedProjects).OnlyIncludeSharedProjects(onlyIncludeSharedProjects).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.DeleteProjects``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -144,13 +218,16 @@ Other parameters are passed through a pointer to a apiDeleteProjectsRequest stru
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **title** | **string** | Filter by project name. | 
- **type_** | **string** | Filter by project type. | 
+ **type_** | **[]string** | Filter by project type. | 
  **isPublic** | **bool** | Filter by project being public or private. | 
  **labels** | **[]string** | Filter by project labels. | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
+ **teamId** | [**[]GetIssueCountsTeamIdParameterInner**](GetIssueCountsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
  **latestScan** | **int32** | Filter by last policy scan within N days. | 
  **lastRevisionWithin** | **int32** | Filter by last revision analyzed within N days. | 
  **locators** | [**DeleteProjectsLocatorsParameter**](DeleteProjectsLocatorsParameter.md) | The list of locators for the projects to delete. If \&quot;all\&quot; is provided, then all projects that meet the provided filters will be deleted.  | 
+ **url** | **string** | Filter by a project&#39;s URL. | 
+ **includeSharedProjects** | **bool** | Include shared projects. | 
+ **onlyIncludeSharedProjects** | **bool** | Only show projects that have been shared with other organizations. | 
 
 ### Return type
 
@@ -192,7 +269,7 @@ import (
 
 func main() {
 	title := "title_example" // string | Filter by release group name. (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned release groups. (optional)
+	teamId := []openapiclient.GetIssueCountsTeamIdParameterInner{openapiclient.getIssueCounts_teamId_parameter_inner{Float32: new(float32)}} // []GetIssueCountsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned release groups. (optional)
 	latestScan := int32(56) // int32 | Filter by last policy scan within N days. (optional)
 	ids := openapiclient.deleteReleaseGroups_ids_parameter{ArrayOfInt32: new([]int32)} // DeleteReleaseGroupsIdsParameter | The list of ids for the release groups to delete. If \"all\" is provided, then all release groups that meet the provided filters will be deleted.  (optional)
 
@@ -218,7 +295,7 @@ Other parameters are passed through a pointer to a apiDeleteReleaseGroupsRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **title** | **string** | Filter by release group name. | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups. | 
+ **teamId** | [**[]GetIssueCountsTeamIdParameterInner**](GetIssueCountsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups. | 
  **latestScan** | **int32** | Filter by last policy scan within N days. | 
  **ids** | [**DeleteReleaseGroupsIdsParameter**](DeleteReleaseGroupsIdsParameter.md) | The list of ids for the release groups to delete. If \&quot;all\&quot; is provided, then all release groups that meet the provided filters will be deleted.  | 
 
@@ -310,9 +387,83 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetProject
+
+> map[string]interface{} GetProject(ctx, locator).Ref(ref).RefType(refType).Execute()
+
+Get a single project.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	locator := "git%2Bgithub.com%2Ffossas%2Ffossa-cli" // string | The URL-encoded locator of the project (e.g., \"git+github.com/owner/repo\")
+	ref := "ref_example" // string | The branch or tag to use when computing the head/latest/last-analyzed revision metadata. Defaults to the project's default branch. (optional)
+	refType := "refType_example" // string | Whether `ref` refers to a branch or a tag. Defaults to `branch`. (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ProjectsAPI.GetProject(context.Background(), locator).Ref(ref).RefType(refType).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.GetProject``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetProject`: map[string]interface{}
+	fmt.Fprintf(os.Stdout, "Response from `ProjectsAPI.GetProject`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**locator** | **string** | The URL-encoded locator of the project (e.g., \&quot;git+github.com/owner/repo\&quot;) | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetProjectRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **ref** | **string** | The branch or tag to use when computing the head/latest/last-analyzed revision metadata. Defaults to the project&#39;s default branch. | 
+ **refType** | **string** | Whether &#x60;ref&#x60; refers to a branch or a tag. Defaults to &#x60;branch&#x60;. | 
+
+### Return type
+
+**map[string]interface{}**
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetProjectCSVExportIssues
 
-> string GetProjectCSVExportIssues(ctx, locator).RevisionId(revisionId).Status(status).Ref(ref).RefType(refType).Execute()
+> *os.File GetProjectCSVExportIssues(ctx, locator).RevisionId(revisionId).Status(status).Ref(ref).RefType(refType).Execute()
 
 
 
@@ -344,7 +495,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.GetProjectCSVExportIssues``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetProjectCSVExportIssues`: string
+	// response from `GetProjectCSVExportIssues`: *os.File
 	fmt.Fprintf(os.Stdout, "Response from `ProjectsAPI.GetProjectCSVExportIssues`: %v\n", resp)
 }
 ```
@@ -372,7 +523,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**string**
+[***os.File**](*os.File.md)
 
 ### Authorization
 
@@ -381,7 +532,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: text/csv, application/json
+- **Accept**: application/octet-stream, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -461,7 +612,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json, text/csv
+- **Accept**: application/json, application/octet-stream
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -618,7 +769,7 @@ Name | Type | Description  | Notes
 
 ## GetProjectRevisions
 
-> GetProjectRevisions200Response GetProjectRevisions(ctx, locator).Offset(offset).Count(count).Resolved(resolved).Refs(refs).RefsType(refsType).Source(source).Execute()
+> GetProjectRevisions200Response GetProjectRevisions(ctx, locator).Offset(offset).Count(count).Resolved(resolved).Refs(refs).RefsType(refsType).Source(source).IsMinimal(isMinimal).Locator2(locator2).Execute()
 
 
 
@@ -638,16 +789,18 @@ import (
 
 func main() {
 	locator := "locator_example" // string | the url-encoded locator of the project - matched by substring
-	offset := float32(8.14) // float32 | the number of revisions to skip for pagination (used with \"count\" query parameter) (optional)
-	count := float32(8.14) // float32 | the number of revisions to return (maximum of 1000) (optional)
+	offset := float32(8.14) // float32 | the number of revisions to skip per ref (branch or tag) for pagination. (optional)
+	count := float32(8.14) // float32 | the number of revisions to return per ref (branch or tag), max 1000. (optional)
 	resolved := true // bool | If true, we will only return Revisions that have been successfully analyzed by FOSSA (resolved) (optional)
 	refs := []string{"Inner_example"} // []string | the list of branches or tags being requested (optional)
 	refsType := "refsType_example" // string | Specify whether the list should be tags OR branches (optional)
 	source := "source_example" // string | Filter the revisions by source (optional)
+	isMinimal := true // bool | If `true`, each Revision in the response is reduced to only its `locator` and `message` fields. Useful for limiting response size.  (optional)
+	locator2 := "locator_example" // string | Filter the revisions to those whose locator contains this value (case-insensitive substring match). (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ProjectsAPI.GetProjectRevisions(context.Background(), locator).Offset(offset).Count(count).Resolved(resolved).Refs(refs).RefsType(refsType).Source(source).Execute()
+	resp, r, err := apiClient.ProjectsAPI.GetProjectRevisions(context.Background(), locator).Offset(offset).Count(count).Resolved(resolved).Refs(refs).RefsType(refsType).Source(source).IsMinimal(isMinimal).Locator2(locator2).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.GetProjectRevisions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -673,12 +826,14 @@ Other parameters are passed through a pointer to a apiGetProjectRevisionsRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **offset** | **float32** | the number of revisions to skip for pagination (used with \&quot;count\&quot; query parameter) | 
- **count** | **float32** | the number of revisions to return (maximum of 1000) | 
+ **offset** | **float32** | the number of revisions to skip per ref (branch or tag) for pagination. | 
+ **count** | **float32** | the number of revisions to return per ref (branch or tag), max 1000. | 
  **resolved** | **bool** | If true, we will only return Revisions that have been successfully analyzed by FOSSA (resolved) | 
  **refs** | **[]string** | the list of branches or tags being requested | 
  **refsType** | **string** | Specify whether the list should be tags OR branches | 
  **source** | **string** | Filter the revisions by source | 
+ **isMinimal** | **bool** | If &#x60;true&#x60;, each Revision in the response is reduced to only its &#x60;locator&#x60; and &#x60;message&#x60; fields. Useful for limiting response size.  | 
+ **locator2** | **string** | Filter the revisions to those whose locator contains this value (case-insensitive substring match). | 
 
 ### Return type
 
@@ -723,10 +878,10 @@ func main() {
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
 	count := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 20)
 	title := "title_example" // string | Filter by project name. (optional)
-	type_ := "type__example" // string | Filter by project type. (optional)
+	type_ := []string{"Type_example"} // []string | Filter by project type. (optional)
 	isPublic := true // bool | Filter by project being public or private. (optional)
 	labels := []string{"Inner_example"} // []string | Filter by project labels. (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
+	teamId := []openapiclient.GetIssueCountsTeamIdParameterInner{openapiclient.getIssueCounts_teamId_parameter_inner{Float32: new(float32)}} // []GetIssueCountsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
 	latestScan := int32(56) // int32 | Filter by last policy scan within N days. (optional)
 	lastRevisionWithin := int32(56) // int32 | Filter by last revision analyzed within N days. (optional)
 	locators := []string{"Inner_example"} // []string | Filter by project locators (exact match). (optional)
@@ -761,10 +916,10 @@ Name | Type | Description  | Notes
  **page** | **int32** | The specific page of data to return | [default to 1]
  **count** | **int32** | The number of items to return in each page of results | [default to 20]
  **title** | **string** | Filter by project name. | 
- **type_** | **string** | Filter by project type. | 
+ **type_** | **[]string** | Filter by project type. | 
  **isPublic** | **bool** | Filter by project being public or private. | 
  **labels** | **[]string** | Filter by project labels. | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
+ **teamId** | [**[]GetIssueCountsTeamIdParameterInner**](GetIssueCountsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
  **latestScan** | **int32** | Filter by last policy scan within N days. | 
  **lastRevisionWithin** | **int32** | Filter by last revision analyzed within N days. | 
  **locators** | **[]string** | Filter by project locators (exact match). | 
@@ -783,6 +938,72 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetProjectsByPost
+
+> GetProjects200Response GetProjectsByPost(ctx).GetProjectsByPostRequest(getProjectsByPostRequest).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	getProjectsByPostRequest := *openapiclient.NewGetProjectsByPostRequest() // GetProjectsByPostRequest |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ProjectsAPI.GetProjectsByPost(context.Background()).GetProjectsByPostRequest(getProjectsByPostRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.GetProjectsByPost``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetProjectsByPost`: GetProjects200Response
+	fmt.Fprintf(os.Stdout, "Response from `ProjectsAPI.GetProjectsByPost`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetProjectsByPostRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **getProjectsByPostRequest** | [**GetProjectsByPostRequest**](GetProjectsByPostRequest.md) |  | 
+
+### Return type
+
+[**GetProjects200Response**](GetProjects200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -853,7 +1074,7 @@ Other parameters are passed through a pointer to a apiGetProjectsSummaryRequest 
 
 ## GetReleaseGroups
 
-> GetReleaseGroups200Response GetReleaseGroups(ctx).Sort(sort).Page(page).Count(count).Title(title).TeamId(teamId).LatestScan(latestScan).LastRevisionWithin(lastRevisionWithin).IsPublic(isPublic).Execute()
+> GetReleaseGroups200Response GetReleaseGroups(ctx).Sort(sort).Page(page).Count(count).Title(title).TeamId(teamId).LatestScan(latestScan).IsPublic(isPublic).Execute()
 
 
 
@@ -876,14 +1097,13 @@ func main() {
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
 	count := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 10)
 	title := "title_example" // string | Filter by release group name. (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned release groups. (optional)
+	teamId := []openapiclient.GetIssueCountsTeamIdParameterInner{openapiclient.getIssueCounts_teamId_parameter_inner{Float32: new(float32)}} // []GetIssueCountsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned release groups. (optional)
 	latestScan := int32(56) // int32 | Filter by last policy scan within N days. (optional)
-	lastRevisionWithin := int32(56) // int32 | Filter by last revision analyzed within N days. (optional)
 	isPublic := true // bool | Filter by whether the release group is public on the portal. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ProjectsAPI.GetReleaseGroups(context.Background()).Sort(sort).Page(page).Count(count).Title(title).TeamId(teamId).LatestScan(latestScan).LastRevisionWithin(lastRevisionWithin).IsPublic(isPublic).Execute()
+	resp, r, err := apiClient.ProjectsAPI.GetReleaseGroups(context.Background()).Sort(sort).Page(page).Count(count).Title(title).TeamId(teamId).LatestScan(latestScan).IsPublic(isPublic).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.GetReleaseGroups``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -908,9 +1128,8 @@ Name | Type | Description  | Notes
  **page** | **int32** | The specific page of data to return | [default to 1]
  **count** | **int32** | The number of items to return in each page of results | [default to 10]
  **title** | **string** | Filter by release group name. | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups. | 
+ **teamId** | [**[]GetIssueCountsTeamIdParameterInner**](GetIssueCountsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups. | 
  **latestScan** | **int32** | Filter by last policy scan within N days. | 
- **lastRevisionWithin** | **int32** | Filter by last revision analyzed within N days. | 
  **isPublic** | **bool** | Filter by whether the release group is public on the portal. | 
 
 ### Return type
@@ -933,7 +1152,7 @@ Name | Type | Description  | Notes
 
 ## ListReleaseGroupsForProject
 
-> []ListReleaseGroupsForProject200ResponseInner ListReleaseGroupsForProject(ctx, locator).Execute()
+> ListReleaseGroupsForProject200Response ListReleaseGroupsForProject(ctx, locator).Execute()
 
 
 
@@ -961,7 +1180,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.ListReleaseGroupsForProject``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `ListReleaseGroupsForProject`: []ListReleaseGroupsForProject200ResponseInner
+	// response from `ListReleaseGroupsForProject`: ListReleaseGroupsForProject200Response
 	fmt.Fprintf(os.Stdout, "Response from `ProjectsAPI.ListReleaseGroupsForProject`: %v\n", resp)
 }
 ```
@@ -985,7 +1204,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]ListReleaseGroupsForProject200ResponseInner**](ListReleaseGroupsForProject200ResponseInner.md)
+[**ListReleaseGroupsForProject200Response**](ListReleaseGroupsForProject200Response.md)
 
 ### Authorization
 
@@ -1075,7 +1294,7 @@ Name | Type | Description  | Notes
 
 ## UpdateProjectsLabels
 
-> map[string]interface{} UpdateProjectsLabels(ctx).LabelId(labelId).Locators(locators).Title(title).Type_(type_).IsPublic(isPublic).Labels(labels).TeamId(teamId).LatestScan(latestScan).LastRevisionWithin(lastRevisionWithin).Execute()
+> map[string]interface{} UpdateProjectsLabels(ctx).LabelId(labelId).Locators(locators).Title(title).Type_(type_).IsPublic(isPublic).Labels(labels).TeamId(teamId).LatestScan(latestScan).LastRevisionWithin(lastRevisionWithin).Url(url).IncludeSharedProjects(includeSharedProjects).OnlyIncludeSharedProjects(onlyIncludeSharedProjects).Execute()
 
 
 
@@ -1097,16 +1316,19 @@ func main() {
 	labelId := float32(8.14) // float32 | The ID of the label you want to apply to projects.
 	locators := openapiclient.deleteProjects_locators_parameter{ArrayOfString: new([]string)} // DeleteProjectsLocatorsParameter | The list of locators for the projects to update. If \"all\" is provided, then all projects that meet the provided filters will have the label applied. 
 	title := "title_example" // string | Filter by project name. (optional)
-	type_ := "type__example" // string | Filter by project type. (optional)
+	type_ := []string{"Type_example"} // []string | Filter by project type. (optional)
 	isPublic := true // bool | Filter by project being public or private. (optional)
 	labels := []string{"Inner_example"} // []string | Filter by project labels. (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
+	teamId := []openapiclient.GetIssueCountsTeamIdParameterInner{openapiclient.getIssueCounts_teamId_parameter_inner{Float32: new(float32)}} // []GetIssueCountsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
 	latestScan := int32(56) // int32 | Filter by last policy scan within N days. (optional)
 	lastRevisionWithin := int32(56) // int32 | Filter by last revision analyzed within N days. (optional)
+	url := "url_example" // string | Filter by a project's URL. (optional)
+	includeSharedProjects := true // bool | Include shared projects. (optional)
+	onlyIncludeSharedProjects := true // bool | Only show projects that have been shared with other organizations. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ProjectsAPI.UpdateProjectsLabels(context.Background()).LabelId(labelId).Locators(locators).Title(title).Type_(type_).IsPublic(isPublic).Labels(labels).TeamId(teamId).LatestScan(latestScan).LastRevisionWithin(lastRevisionWithin).Execute()
+	resp, r, err := apiClient.ProjectsAPI.UpdateProjectsLabels(context.Background()).LabelId(labelId).Locators(locators).Title(title).Type_(type_).IsPublic(isPublic).Labels(labels).TeamId(teamId).LatestScan(latestScan).LastRevisionWithin(lastRevisionWithin).Url(url).IncludeSharedProjects(includeSharedProjects).OnlyIncludeSharedProjects(onlyIncludeSharedProjects).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.UpdateProjectsLabels``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1130,12 +1352,15 @@ Name | Type | Description  | Notes
  **labelId** | **float32** | The ID of the label you want to apply to projects. | 
  **locators** | [**DeleteProjectsLocatorsParameter**](DeleteProjectsLocatorsParameter.md) | The list of locators for the projects to update. If \&quot;all\&quot; is provided, then all projects that meet the provided filters will have the label applied.  | 
  **title** | **string** | Filter by project name. | 
- **type_** | **string** | Filter by project type. | 
+ **type_** | **[]string** | Filter by project type. | 
  **isPublic** | **bool** | Filter by project being public or private. | 
  **labels** | **[]string** | Filter by project labels. | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
+ **teamId** | [**[]GetIssueCountsTeamIdParameterInner**](GetIssueCountsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
  **latestScan** | **int32** | Filter by last policy scan within N days. | 
  **lastRevisionWithin** | **int32** | Filter by last revision analyzed within N days. | 
+ **url** | **string** | Filter by a project&#39;s URL. | 
+ **includeSharedProjects** | **bool** | Include shared projects. | 
+ **onlyIncludeSharedProjects** | **bool** | Only show projects that have been shared with other organizations. | 
 
 ### Return type
 
@@ -1157,7 +1382,7 @@ Name | Type | Description  | Notes
 
 ## UpdateProjectsPolicies
 
-> map[string]interface{} UpdateProjectsPolicies(ctx).PolicyId(policyId).Locators(locators).Title(title).Type_(type_).IsPublic(isPublic).Labels(labels).TeamId(teamId).LatestScan(latestScan).LastRevisionWithin(lastRevisionWithin).Execute()
+> map[string]interface{} UpdateProjectsPolicies(ctx).PolicyId(policyId).Locators(locators).Title(title).Type_(type_).IsPublic(isPublic).Labels(labels).TeamId(teamId).LatestScan(latestScan).LastRevisionWithin(lastRevisionWithin).Url(url).IncludeSharedProjects(includeSharedProjects).OnlyIncludeSharedProjects(onlyIncludeSharedProjects).Execute()
 
 
 
@@ -1179,16 +1404,19 @@ func main() {
 	policyId := float32(8.14) // float32 | The ID of the policy you want to apply to projects.
 	locators := openapiclient.deleteProjects_locators_parameter{ArrayOfString: new([]string)} // DeleteProjectsLocatorsParameter | The list of locators for the projects to update. If \"all\" is provided, then all projects that meet the provided filters will have the policy applied. 
 	title := "title_example" // string | Filter by project name. (optional)
-	type_ := "type__example" // string | Filter by project type. (optional)
+	type_ := []string{"Type_example"} // []string | Filter by project type. (optional)
 	isPublic := true // bool | Filter by project being public or private. (optional)
 	labels := []string{"Inner_example"} // []string | Filter by project labels. (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
+	teamId := []openapiclient.GetIssueCountsTeamIdParameterInner{openapiclient.getIssueCounts_teamId_parameter_inner{Float32: new(float32)}} // []GetIssueCountsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
 	latestScan := int32(56) // int32 | Filter by last policy scan within N days. (optional)
 	lastRevisionWithin := int32(56) // int32 | Filter by last revision analyzed within N days. (optional)
+	url := "url_example" // string | Filter by a project's URL. (optional)
+	includeSharedProjects := true // bool | Include shared projects. (optional)
+	onlyIncludeSharedProjects := true // bool | Only show projects that have been shared with other organizations. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ProjectsAPI.UpdateProjectsPolicies(context.Background()).PolicyId(policyId).Locators(locators).Title(title).Type_(type_).IsPublic(isPublic).Labels(labels).TeamId(teamId).LatestScan(latestScan).LastRevisionWithin(lastRevisionWithin).Execute()
+	resp, r, err := apiClient.ProjectsAPI.UpdateProjectsPolicies(context.Background()).PolicyId(policyId).Locators(locators).Title(title).Type_(type_).IsPublic(isPublic).Labels(labels).TeamId(teamId).LatestScan(latestScan).LastRevisionWithin(lastRevisionWithin).Url(url).IncludeSharedProjects(includeSharedProjects).OnlyIncludeSharedProjects(onlyIncludeSharedProjects).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ProjectsAPI.UpdateProjectsPolicies``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1212,12 +1440,15 @@ Name | Type | Description  | Notes
  **policyId** | **float32** | The ID of the policy you want to apply to projects. | 
  **locators** | [**DeleteProjectsLocatorsParameter**](DeleteProjectsLocatorsParameter.md) | The list of locators for the projects to update. If \&quot;all\&quot; is provided, then all projects that meet the provided filters will have the policy applied.  | 
  **title** | **string** | Filter by project name. | 
- **type_** | **string** | Filter by project type. | 
+ **type_** | **[]string** | Filter by project type. | 
  **isPublic** | **bool** | Filter by project being public or private. | 
  **labels** | **[]string** | Filter by project labels. | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
+ **teamId** | [**[]GetIssueCountsTeamIdParameterInner**](GetIssueCountsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
  **latestScan** | **int32** | Filter by last policy scan within N days. | 
  **lastRevisionWithin** | **int32** | Filter by last revision analyzed within N days. | 
+ **url** | **string** | Filter by a project&#39;s URL. | 
+ **includeSharedProjects** | **bool** | Include shared projects. | 
+ **onlyIncludeSharedProjects** | **bool** | Only show projects that have been shared with other organizations. | 
 
 ### Return type
 
@@ -1259,9 +1490,9 @@ import (
 
 func main() {
 	policyId := float32(8.14) // float32 | The ID of the policy you want to apply to projects.
-	ids := openapiclient.updateReleaseGroupsPolicies_ids_parameter{ArrayOfFloat32: new([]float32)} // UpdateReleaseGroupsPoliciesIdsParameter | The list of IDs for the release groups to update. If \"all\" is provided, then all release groups that meet the provided filters will have the label applied. 
+	ids := openapiclient.updateReleaseGroupsPolicies_ids_parameter{ArrayOfFloat32: new([]float32)} // UpdateReleaseGroupsPoliciesIdsParameter | The list of IDs for the release groups to update. If \"all\" is provided, then all release groups that meet the provided filters will have the policy applied. If omitted, the release groups are selected by the supplied filter params (`title`, `latestScan`, `teamId`); at least one filter must then be provided.  (optional)
 	title := "title_example" // string | Filter by release group name. (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned release groups. (optional)
+	teamId := []openapiclient.GetIssueCountsTeamIdParameterInner{openapiclient.getIssueCounts_teamId_parameter_inner{Float32: new(float32)}} // []GetIssueCountsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned release groups. (optional)
 	latestScan := int32(56) // int32 | Filter by last policy scan within N days. (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -1286,9 +1517,9 @@ Other parameters are passed through a pointer to a apiUpdateReleaseGroupsPolicie
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **policyId** | **float32** | The ID of the policy you want to apply to projects. | 
- **ids** | [**UpdateReleaseGroupsPoliciesIdsParameter**](UpdateReleaseGroupsPoliciesIdsParameter.md) | The list of IDs for the release groups to update. If \&quot;all\&quot; is provided, then all release groups that meet the provided filters will have the label applied.  | 
+ **ids** | [**UpdateReleaseGroupsPoliciesIdsParameter**](UpdateReleaseGroupsPoliciesIdsParameter.md) | The list of IDs for the release groups to update. If \&quot;all\&quot; is provided, then all release groups that meet the provided filters will have the policy applied. If omitted, the release groups are selected by the supplied filter params (&#x60;title&#x60;, &#x60;latestScan&#x60;, &#x60;teamId&#x60;); at least one filter must then be provided.  | 
  **title** | **string** | Filter by release group name. | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups. | 
+ **teamId** | [**[]GetIssueCountsTeamIdParameterInner**](GetIssueCountsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned release groups. | 
  **latestScan** | **int32** | Filter by last policy scan within N days. | 
 
 ### Return type

@@ -128,7 +128,7 @@ import (
 func main() {
 	packageSpec := "packageSpec_example" // string | the package spec
 	revision := "revision_example" // string | The branch or revision of the component project being built.
-	fileType := "fileType_example" // string | The kind of file to be uploaded to the signed URL. If 'archive', the signed URL is for uplaoding a directory of source code. If 'sbom', the signed URL is for uploading an SBOM file (CycloneDX or SPDX).  (optional)
+	fileType := "fileType_example" // string | The kind of file to be uploaded to the signed URL. If 'archive', the signed URL is for uplaoding a directory of source code. If 'sbom', the signed URL is for uploading an SBOM file (CycloneDX or SPDX). If 'binary', the signed URL is for uploading a binary for binary decomposition; this is billing-gated and may return a 403 if the organization is outside its binary decomposition billing term or has exhausted its allowance.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -155,7 +155,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **packageSpec** | **string** | the package spec | 
  **revision** | **string** | The branch or revision of the component project being built. | 
- **fileType** | **string** | The kind of file to be uploaded to the signed URL. If &#39;archive&#39;, the signed URL is for uplaoding a directory of source code. If &#39;sbom&#39;, the signed URL is for uploading an SBOM file (CycloneDX or SPDX).  | 
+ **fileType** | **string** | The kind of file to be uploaded to the signed URL. If &#39;archive&#39;, the signed URL is for uplaoding a directory of source code. If &#39;sbom&#39;, the signed URL is for uploading an SBOM file (CycloneDX or SPDX). If &#39;binary&#39;, the signed URL is for uploading a binary for binary decomposition; this is billing-gated and may return a 403 if the organization is outside its binary decomposition billing term or has exhausted its allowance.  | 
 
 ### Return type
 
