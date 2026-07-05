@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Title** | Pointer to **string** |  | [optional] 
 **Revision** | Pointer to **string** |  | [optional] 
 **Branch** | Pointer to **string** |  | [optional] 
-**Conclusions** | Pointer to [**GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses**](GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses.md) |  | [optional] 
+**Conclusions** | Pointer to [**GetProjectDependencies200ResponseDependenciesInnerConclusions**](GetProjectDependencies200ResponseDependenciesInnerConclusions.md) |  | [optional] 
 
 ## Methods
 
@@ -105,20 +105,20 @@ HasBranch returns a boolean if a field has been set.
 
 ### GetConclusions
 
-`func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) GetConclusions() GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses`
+`func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) GetConclusions() GetProjectDependencies200ResponseDependenciesInnerConclusions`
 
 GetConclusions returns the Conclusions field if non-nil, zero value otherwise.
 
 ### GetConclusionsOk
 
-`func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) GetConclusionsOk() (*GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses, bool)`
+`func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) GetConclusionsOk() (*GetProjectDependencies200ResponseDependenciesInnerConclusions, bool)`
 
 GetConclusionsOk returns a tuple with the Conclusions field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetConclusions
 
-`func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) SetConclusions(v GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses)`
+`func (o *GetProjectDependencies200ResponseDependenciesInnerRootProjectsInner) SetConclusions(v GetProjectDependencies200ResponseDependenciesInnerConclusions)`
 
 SetConclusions sets Conclusions field to given value.
 
