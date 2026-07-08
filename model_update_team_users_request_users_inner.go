@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.29
 Contact: support@fossa.com
 */
 
@@ -23,8 +23,8 @@ var _ MappedNullable = &UpdateTeamUsersRequestUsersInner{}
 // UpdateTeamUsersRequestUsersInner struct for UpdateTeamUsersRequestUsersInner
 type UpdateTeamUsersRequestUsersInner struct {
 	// ID of the user
-	UserId int32 `json:"userId"`
-	// Role ID for the user (required for add and update actions)
+	Id int32 `json:"id"`
+	// Role ID for the user (required for add and replace actions)
 	RoleId *int32 `json:"roleId,omitempty"`
 }
 
@@ -34,9 +34,9 @@ type _UpdateTeamUsersRequestUsersInner UpdateTeamUsersRequestUsersInner
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUpdateTeamUsersRequestUsersInner(userId int32) *UpdateTeamUsersRequestUsersInner {
+func NewUpdateTeamUsersRequestUsersInner(id int32) *UpdateTeamUsersRequestUsersInner {
 	this := UpdateTeamUsersRequestUsersInner{}
-	this.UserId = userId
+	this.Id = id
 	return &this
 }
 
@@ -48,28 +48,28 @@ func NewUpdateTeamUsersRequestUsersInnerWithDefaults() *UpdateTeamUsersRequestUs
 	return &this
 }
 
-// GetUserId returns the UserId field value
-func (o *UpdateTeamUsersRequestUsersInner) GetUserId() int32 {
+// GetId returns the Id field value
+func (o *UpdateTeamUsersRequestUsersInner) GetId() int32 {
 	if o == nil {
 		var ret int32
 		return ret
 	}
 
-	return o.UserId
+	return o.Id
 }
 
-// GetUserIdOk returns a tuple with the UserId field value
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
-func (o *UpdateTeamUsersRequestUsersInner) GetUserIdOk() (*int32, bool) {
+func (o *UpdateTeamUsersRequestUsersInner) GetIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.UserId, true
+	return &o.Id, true
 }
 
-// SetUserId sets field value
-func (o *UpdateTeamUsersRequestUsersInner) SetUserId(v int32) {
-	o.UserId = v
+// SetId sets field value
+func (o *UpdateTeamUsersRequestUsersInner) SetId(v int32) {
+	o.Id = v
 }
 
 // GetRoleId returns the RoleId field value if set, zero value otherwise.
@@ -114,7 +114,7 @@ func (o UpdateTeamUsersRequestUsersInner) MarshalJSON() ([]byte, error) {
 
 func (o UpdateTeamUsersRequestUsersInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["userId"] = o.UserId
+	toSerialize["id"] = o.Id
 	if !IsNil(o.RoleId) {
 		toSerialize["roleId"] = o.RoleId
 	}
@@ -126,7 +126,7 @@ func (o *UpdateTeamUsersRequestUsersInner) UnmarshalJSON(data []byte) (err error
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"userId",
+		"id",
 	}
 
 	allProperties := make(map[string]interface{})

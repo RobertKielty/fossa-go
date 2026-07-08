@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Counts** | [**GetIssueCounts200ResponseCounts**](GetIssueCounts200ResponseCounts.md) |  | 
+**Counts** | [**[]GetIssueCounts200ResponseCountsInner**](GetIssueCounts200ResponseCountsInner.md) | An array of daily issue count summaries. | 
 **TotalProjects** | **int32** |  | 
 **Licensing** | Pointer to [**GetIssueCounts200ResponseLicensing**](GetIssueCounts200ResponseLicensing.md) |  | [optional] 
 **Vulnerability** | Pointer to [**GetIssueCounts200ResponseVulnerability**](GetIssueCounts200ResponseVulnerability.md) |  | [optional] 
@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewGetIssueCounts200Response
 
-`func NewGetIssueCounts200Response(counts GetIssueCounts200ResponseCounts, totalProjects int32, ) *GetIssueCounts200Response`
+`func NewGetIssueCounts200Response(counts []GetIssueCounts200ResponseCountsInner, totalProjects int32, ) *GetIssueCounts200Response`
 
 NewGetIssueCounts200Response instantiates a new GetIssueCounts200Response object
 This constructor will assign default values to properties that have it defined,
@@ -31,20 +31,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetCounts
 
-`func (o *GetIssueCounts200Response) GetCounts() GetIssueCounts200ResponseCounts`
+`func (o *GetIssueCounts200Response) GetCounts() []GetIssueCounts200ResponseCountsInner`
 
 GetCounts returns the Counts field if non-nil, zero value otherwise.
 
 ### GetCountsOk
 
-`func (o *GetIssueCounts200Response) GetCountsOk() (*GetIssueCounts200ResponseCounts, bool)`
+`func (o *GetIssueCounts200Response) GetCountsOk() (*[]GetIssueCounts200ResponseCountsInner, bool)`
 
 GetCountsOk returns a tuple with the Counts field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCounts
 
-`func (o *GetIssueCounts200Response) SetCounts(v GetIssueCounts200ResponseCounts)`
+`func (o *GetIssueCounts200Response) SetCounts(v []GetIssueCounts200ResponseCountsInner)`
 
 SetCounts sets Counts field to given value.
 
