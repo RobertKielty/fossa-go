@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.30
 Contact: support@fossa.com
 */
 
@@ -25,6 +25,8 @@ type GetRevisionAttributionJSON200ResponseDirectDependenciesInnerNoticeFilesInne
 	Id *int32 `json:"id,omitempty"`
 	// The revision ID of the notice match
 	RevisionId *string `json:"revisionId,omitempty"`
+	// The file path of the notice match
+	Path *string `json:"path,omitempty"`
 	// The contents of the notice match
 	Contents *string `json:"contents,omitempty"`
 	// The copyrights of the notice match
@@ -118,6 +120,38 @@ func (o *GetRevisionAttributionJSON200ResponseDirectDependenciesInnerNoticeFiles
 // SetRevisionId gets a reference to the given string and assigns it to the RevisionId field.
 func (o *GetRevisionAttributionJSON200ResponseDirectDependenciesInnerNoticeFilesInner) SetRevisionId(v string) {
 	o.RevisionId = &v
+}
+
+// GetPath returns the Path field value if set, zero value otherwise.
+func (o *GetRevisionAttributionJSON200ResponseDirectDependenciesInnerNoticeFilesInner) GetPath() string {
+	if o == nil || IsNil(o.Path) {
+		var ret string
+		return ret
+	}
+	return *o.Path
+}
+
+// GetPathOk returns a tuple with the Path field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetRevisionAttributionJSON200ResponseDirectDependenciesInnerNoticeFilesInner) GetPathOk() (*string, bool) {
+	if o == nil || IsNil(o.Path) {
+		return nil, false
+	}
+	return o.Path, true
+}
+
+// HasPath returns a boolean if a field has been set.
+func (o *GetRevisionAttributionJSON200ResponseDirectDependenciesInnerNoticeFilesInner) HasPath() bool {
+	if o != nil && !IsNil(o.Path) {
+		return true
+	}
+
+	return false
+}
+
+// SetPath gets a reference to the given string and assigns it to the Path field.
+func (o *GetRevisionAttributionJSON200ResponseDirectDependenciesInnerNoticeFilesInner) SetPath(v string) {
+	o.Path = &v
 }
 
 // GetContents returns the Contents field value if set, zero value otherwise.
@@ -327,6 +361,9 @@ func (o GetRevisionAttributionJSON200ResponseDirectDependenciesInnerNoticeFilesI
 	}
 	if !IsNil(o.RevisionId) {
 		toSerialize["revisionId"] = o.RevisionId
+	}
+	if !IsNil(o.Path) {
+		toSerialize["path"] = o.Path
 	}
 	if !IsNil(o.Contents) {
 		toSerialize["contents"] = o.Contents
