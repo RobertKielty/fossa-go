@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.32
 Contact: support@fossa.com
 */
 
@@ -24,6 +24,8 @@ type QualityIssueSettings struct {
 	ProjectDefaultQualityIssueScanningEnabled *bool `json:"projectDefaultQualityIssueScanningEnabled,omitempty"`
 	ProjectDefaultQualityStatusCheckEnabled *bool `json:"projectDefaultQualityStatusCheckEnabled,omitempty"`
 	ProjectDefaultStatusCheckFilterQuality *int32 `json:"projectDefaultStatusCheckFilterQuality,omitempty"`
+	// Enable or disable quality issue scanning for vendored dependencies by default for projects in the organization
+	ProjectDefaultVendoredQualityIssueScanningEnabled *bool `json:"projectDefaultVendoredQualityIssueScanningEnabled,omitempty"`
 }
 
 // NewQualityIssueSettings instantiates a new QualityIssueSettings object
@@ -171,6 +173,38 @@ func (o *QualityIssueSettings) SetProjectDefaultStatusCheckFilterQuality(v int32
 	o.ProjectDefaultStatusCheckFilterQuality = &v
 }
 
+// GetProjectDefaultVendoredQualityIssueScanningEnabled returns the ProjectDefaultVendoredQualityIssueScanningEnabled field value if set, zero value otherwise.
+func (o *QualityIssueSettings) GetProjectDefaultVendoredQualityIssueScanningEnabled() bool {
+	if o == nil || IsNil(o.ProjectDefaultVendoredQualityIssueScanningEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.ProjectDefaultVendoredQualityIssueScanningEnabled
+}
+
+// GetProjectDefaultVendoredQualityIssueScanningEnabledOk returns a tuple with the ProjectDefaultVendoredQualityIssueScanningEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QualityIssueSettings) GetProjectDefaultVendoredQualityIssueScanningEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.ProjectDefaultVendoredQualityIssueScanningEnabled) {
+		return nil, false
+	}
+	return o.ProjectDefaultVendoredQualityIssueScanningEnabled, true
+}
+
+// HasProjectDefaultVendoredQualityIssueScanningEnabled returns a boolean if a field has been set.
+func (o *QualityIssueSettings) HasProjectDefaultVendoredQualityIssueScanningEnabled() bool {
+	if o != nil && !IsNil(o.ProjectDefaultVendoredQualityIssueScanningEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetProjectDefaultVendoredQualityIssueScanningEnabled gets a reference to the given bool and assigns it to the ProjectDefaultVendoredQualityIssueScanningEnabled field.
+func (o *QualityIssueSettings) SetProjectDefaultVendoredQualityIssueScanningEnabled(v bool) {
+	o.ProjectDefaultVendoredQualityIssueScanningEnabled = &v
+}
+
 func (o QualityIssueSettings) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -192,6 +226,9 @@ func (o QualityIssueSettings) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ProjectDefaultStatusCheckFilterQuality) {
 		toSerialize["projectDefaultStatusCheckFilterQuality"] = o.ProjectDefaultStatusCheckFilterQuality
+	}
+	if !IsNil(o.ProjectDefaultVendoredQualityIssueScanningEnabled) {
+		toSerialize["projectDefaultVendoredQualityIssueScanningEnabled"] = o.ProjectDefaultVendoredQualityIssueScanningEnabled
 	}
 	return toSerialize, nil
 }
