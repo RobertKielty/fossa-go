@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.32
 Contact: support@fossa.com
 */
 
@@ -32,7 +32,7 @@ type GetSnippetPackages200ResponseResultsInner struct {
 	MatchCount int32 `json:"matchCount"`
 	IssueCounts GetSnippetPackages200ResponseResultsInnerIssueCounts `json:"issueCounts"`
 	// Package labels assigned to this snippet package
-	Labels []GetSnippets200ResponseResultsInnerLabelsInner `json:"labels"`
+	Labels []GetProjectDependencies200ResponseDependenciesInnerLabelsInner `json:"labels"`
 	// Whether all snippets in this package have been rejected
 	IsFullyRejected bool `json:"isFullyRejected"`
 }
@@ -43,7 +43,7 @@ type _GetSnippetPackages200ResponseResultsInner GetSnippetPackages200ResponseRes
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetSnippetPackages200ResponseResultsInner(id string, name string, versionCount int32, matchCount int32, issueCounts GetSnippetPackages200ResponseResultsInnerIssueCounts, labels []GetSnippets200ResponseResultsInnerLabelsInner, isFullyRejected bool) *GetSnippetPackages200ResponseResultsInner {
+func NewGetSnippetPackages200ResponseResultsInner(id string, name string, versionCount int32, matchCount int32, issueCounts GetSnippetPackages200ResponseResultsInnerIssueCounts, labels []GetProjectDependencies200ResponseDependenciesInnerLabelsInner, isFullyRejected bool) *GetSnippetPackages200ResponseResultsInner {
 	this := GetSnippetPackages200ResponseResultsInner{}
 	this.Id = id
 	this.Name = name
@@ -184,9 +184,9 @@ func (o *GetSnippetPackages200ResponseResultsInner) SetIssueCounts(v GetSnippetP
 }
 
 // GetLabels returns the Labels field value
-func (o *GetSnippetPackages200ResponseResultsInner) GetLabels() []GetSnippets200ResponseResultsInnerLabelsInner {
+func (o *GetSnippetPackages200ResponseResultsInner) GetLabels() []GetProjectDependencies200ResponseDependenciesInnerLabelsInner {
 	if o == nil {
-		var ret []GetSnippets200ResponseResultsInnerLabelsInner
+		var ret []GetProjectDependencies200ResponseDependenciesInnerLabelsInner
 		return ret
 	}
 
@@ -195,7 +195,7 @@ func (o *GetSnippetPackages200ResponseResultsInner) GetLabels() []GetSnippets200
 
 // GetLabelsOk returns a tuple with the Labels field value
 // and a boolean to check if the value has been set.
-func (o *GetSnippetPackages200ResponseResultsInner) GetLabelsOk() ([]GetSnippets200ResponseResultsInnerLabelsInner, bool) {
+func (o *GetSnippetPackages200ResponseResultsInner) GetLabelsOk() ([]GetProjectDependencies200ResponseDependenciesInnerLabelsInner, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -203,7 +203,7 @@ func (o *GetSnippetPackages200ResponseResultsInner) GetLabelsOk() ([]GetSnippets
 }
 
 // SetLabels sets field value
-func (o *GetSnippetPackages200ResponseResultsInner) SetLabels(v []GetSnippets200ResponseResultsInnerLabelsInner) {
+func (o *GetSnippetPackages200ResponseResultsInner) SetLabels(v []GetProjectDependencies200ResponseDependenciesInnerLabelsInner) {
 	o.Labels = v
 }
 

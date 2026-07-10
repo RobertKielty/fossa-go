@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.32
 Contact: support@fossa.com
 */
 
@@ -45,10 +45,10 @@ type ListOIDCTrustRelationships200ResponseAllOfResultsInner struct {
 	UpdatedAt time.Time `json:"updatedAt"`
 	// The username of the service account associated with this trust relationship
 	Username string `json:"username"`
-	// The email of the service account associated with this trust relationship (if available)
-	Email *string `json:"email,omitempty"`
-	// The name of the team (if scope is team)
-	TeamName string `json:"teamName"`
+	// The email of the service account associated with this trust relationship (`null` if the account has no email)
+	Email NullableString `json:"email,omitempty"`
+	// The name of the team. `null` for organization-scoped trust relationships (only team-scoped relationships have a team name).
+	TeamName NullableString `json:"teamName,omitempty"`
 	// The issuer URL of the OIDC Provider
 	Issuer string `json:"issuer"`
 }
@@ -59,7 +59,7 @@ type _ListOIDCTrustRelationships200ResponseAllOfResultsInner ListOIDCTrustRelati
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewListOIDCTrustRelationships200ResponseAllOfResultsInner(id int32, organizationId int32, userId int32, providerId int32, audiences []string, requiredClaims []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner, createdAt time.Time, updatedAt time.Time, username string, teamName string, issuer string) *ListOIDCTrustRelationships200ResponseAllOfResultsInner {
+func NewListOIDCTrustRelationships200ResponseAllOfResultsInner(id int32, organizationId int32, userId int32, providerId int32, audiences []string, requiredClaims []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner, createdAt time.Time, updatedAt time.Time, username string, issuer string) *ListOIDCTrustRelationships200ResponseAllOfResultsInner {
 	this := ListOIDCTrustRelationships200ResponseAllOfResultsInner{}
 	this.Id = id
 	this.OrganizationId = organizationId
@@ -70,7 +70,6 @@ func NewListOIDCTrustRelationships200ResponseAllOfResultsInner(id int32, organiz
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	this.Username = username
-	this.TeamName = teamName
 	this.Issuer = issuer
 	return &this
 }
@@ -363,60 +362,88 @@ func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetUsername(v s
 	o.Username = v
 }
 
-// GetEmail returns the Email field value if set, zero value otherwise.
+// GetEmail returns the Email field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetEmail() string {
-	if o == nil || IsNil(o.Email) {
+	if o == nil || IsNil(o.Email.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.Email
+	return *o.Email.Get()
 }
 
 // GetEmailOk returns a tuple with the Email field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetEmailOk() (*string, bool) {
-	if o == nil || IsNil(o.Email) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Email, true
+	return o.Email.Get(), o.Email.IsSet()
 }
 
 // HasEmail returns a boolean if a field has been set.
 func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) HasEmail() bool {
-	if o != nil && !IsNil(o.Email) {
+	if o != nil && o.Email.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetEmail gets a reference to the given string and assigns it to the Email field.
+// SetEmail gets a reference to the given NullableString and assigns it to the Email field.
 func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetEmail(v string) {
-	o.Email = &v
+	o.Email.Set(&v)
+}
+// SetEmailNil sets the value for Email to be an explicit nil
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetEmailNil() {
+	o.Email.Set(nil)
 }
 
-// GetTeamName returns the TeamName field value
+// UnsetEmail ensures that no value is present for Email, not even an explicit nil
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) UnsetEmail() {
+	o.Email.Unset()
+}
+
+// GetTeamName returns the TeamName field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetTeamName() string {
-	if o == nil {
+	if o == nil || IsNil(o.TeamName.Get()) {
 		var ret string
 		return ret
 	}
-
-	return o.TeamName
+	return *o.TeamName.Get()
 }
 
-// GetTeamNameOk returns a tuple with the TeamName field value
+// GetTeamNameOk returns a tuple with the TeamName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetTeamNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.TeamName, true
+	return o.TeamName.Get(), o.TeamName.IsSet()
 }
 
-// SetTeamName sets field value
+// HasTeamName returns a boolean if a field has been set.
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) HasTeamName() bool {
+	if o != nil && o.TeamName.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetTeamName gets a reference to the given NullableString and assigns it to the TeamName field.
 func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetTeamName(v string) {
-	o.TeamName = v
+	o.TeamName.Set(&v)
+}
+// SetTeamNameNil sets the value for TeamName to be an explicit nil
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetTeamNameNil() {
+	o.TeamName.Set(nil)
+}
+
+// UnsetTeamName ensures that no value is present for TeamName, not even an explicit nil
+func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) UnsetTeamName() {
+	o.TeamName.Unset()
 }
 
 // GetIssuer returns the Issuer field value
@@ -468,10 +495,12 @@ func (o ListOIDCTrustRelationships200ResponseAllOfResultsInner) ToMap() (map[str
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
 	toSerialize["username"] = o.Username
-	if !IsNil(o.Email) {
-		toSerialize["email"] = o.Email
+	if o.Email.IsSet() {
+		toSerialize["email"] = o.Email.Get()
 	}
-	toSerialize["teamName"] = o.TeamName
+	if o.TeamName.IsSet() {
+		toSerialize["teamName"] = o.TeamName.Get()
+	}
 	toSerialize["issuer"] = o.Issuer
 	return toSerialize, nil
 }
@@ -490,7 +519,6 @@ func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) UnmarshalJSON(d
 		"createdAt",
 		"updatedAt",
 		"username",
-		"teamName",
 		"issuer",
 	}
 
