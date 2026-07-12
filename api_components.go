@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.34
 Contact: support@fossa.com
 */
 
@@ -153,7 +153,7 @@ func (r ApiBuildRequest) Execute() (*http.Response, error) {
 /*
 Build Method for Build
 
-Upload a component and start asynchronously building it.  Only SBOM imports are supported for non-premium accounts.
+Upload a component and start asynchronously building it.  Only SBOM imports are supported for non-premium accounts.  This endpoint accepts push-only tokens in addition to full API tokens.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiBuildRequest
@@ -330,7 +330,7 @@ func (r ApiGetSignedUrlRequest) Revision(revision string) ApiGetSignedUrlRequest
 	return r
 }
 
-// The kind of file to be uploaded to the signed URL. If &#39;archive&#39;, the signed URL is for uplaoding a directory of source code. If &#39;sbom&#39;, the signed URL is for uploading an SBOM file (CycloneDX or SPDX). 
+// The kind of file to be uploaded to the signed URL. If &#39;archive&#39;, the signed URL is for uplaoding a directory of source code. If &#39;sbom&#39;, the signed URL is for uploading an SBOM file (CycloneDX or SPDX). If &#39;binary&#39;, the signed URL is for uploading a binary for binary decomposition; this is billing-gated and may return a 403 if the organization is outside its binary decomposition billing term or has exhausted its allowance. 
 func (r ApiGetSignedUrlRequest) FileType(fileType string) ApiGetSignedUrlRequest {
 	r.fileType = &fileType
 	return r
@@ -343,7 +343,7 @@ func (r ApiGetSignedUrlRequest) Execute() (*GetSignedUrl200Response, *http.Respo
 /*
 GetSignedUrl Method for GetSignedUrl
 
-Get a signed URL for uploading component files to FOSSA, to expire in 5 minutes' time.  Only SBOM imports are supported for non-premium accounts.
+Get a signed URL for uploading component files to FOSSA, to expire in 5 minutes' time.  Only SBOM imports are supported for non-premium accounts.  This endpoint accepts push-only tokens in addition to full API tokens.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetSignedUrlRequest

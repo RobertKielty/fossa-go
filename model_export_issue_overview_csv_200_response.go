@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.34
 Contact: support@fossa.com
 */
 
@@ -13,6 +13,8 @@ package fossa
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ExportIssueOverviewCsv200Response type satisfies the MappedNullable interface at compile time
@@ -21,17 +23,21 @@ var _ MappedNullable = &ExportIssueOverviewCsv200Response{}
 // ExportIssueOverviewCsv200Response struct for ExportIssueOverviewCsv200Response
 type ExportIssueOverviewCsv200Response struct {
 	// The job token used by the frontend when polling for updates.
-	JobToken *string `json:"jobToken,omitempty"`
+	JobToken string `json:"jobToken"`
 	// The name of the background task.
-	Task *string `json:"task,omitempty"`
+	Task string `json:"task"`
 }
+
+type _ExportIssueOverviewCsv200Response ExportIssueOverviewCsv200Response
 
 // NewExportIssueOverviewCsv200Response instantiates a new ExportIssueOverviewCsv200Response object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewExportIssueOverviewCsv200Response() *ExportIssueOverviewCsv200Response {
+func NewExportIssueOverviewCsv200Response(jobToken string, task string) *ExportIssueOverviewCsv200Response {
 	this := ExportIssueOverviewCsv200Response{}
+	this.JobToken = jobToken
+	this.Task = task
 	return &this
 }
 
@@ -43,68 +49,52 @@ func NewExportIssueOverviewCsv200ResponseWithDefaults() *ExportIssueOverviewCsv2
 	return &this
 }
 
-// GetJobToken returns the JobToken field value if set, zero value otherwise.
+// GetJobToken returns the JobToken field value
 func (o *ExportIssueOverviewCsv200Response) GetJobToken() string {
-	if o == nil || IsNil(o.JobToken) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.JobToken
+
+	return o.JobToken
 }
 
-// GetJobTokenOk returns a tuple with the JobToken field value if set, nil otherwise
+// GetJobTokenOk returns a tuple with the JobToken field value
 // and a boolean to check if the value has been set.
 func (o *ExportIssueOverviewCsv200Response) GetJobTokenOk() (*string, bool) {
-	if o == nil || IsNil(o.JobToken) {
+	if o == nil {
 		return nil, false
 	}
-	return o.JobToken, true
+	return &o.JobToken, true
 }
 
-// HasJobToken returns a boolean if a field has been set.
-func (o *ExportIssueOverviewCsv200Response) HasJobToken() bool {
-	if o != nil && !IsNil(o.JobToken) {
-		return true
-	}
-
-	return false
-}
-
-// SetJobToken gets a reference to the given string and assigns it to the JobToken field.
+// SetJobToken sets field value
 func (o *ExportIssueOverviewCsv200Response) SetJobToken(v string) {
-	o.JobToken = &v
+	o.JobToken = v
 }
 
-// GetTask returns the Task field value if set, zero value otherwise.
+// GetTask returns the Task field value
 func (o *ExportIssueOverviewCsv200Response) GetTask() string {
-	if o == nil || IsNil(o.Task) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Task
+
+	return o.Task
 }
 
-// GetTaskOk returns a tuple with the Task field value if set, nil otherwise
+// GetTaskOk returns a tuple with the Task field value
 // and a boolean to check if the value has been set.
 func (o *ExportIssueOverviewCsv200Response) GetTaskOk() (*string, bool) {
-	if o == nil || IsNil(o.Task) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Task, true
+	return &o.Task, true
 }
 
-// HasTask returns a boolean if a field has been set.
-func (o *ExportIssueOverviewCsv200Response) HasTask() bool {
-	if o != nil && !IsNil(o.Task) {
-		return true
-	}
-
-	return false
-}
-
-// SetTask gets a reference to the given string and assigns it to the Task field.
+// SetTask sets field value
 func (o *ExportIssueOverviewCsv200Response) SetTask(v string) {
-	o.Task = &v
+	o.Task = v
 }
 
 func (o ExportIssueOverviewCsv200Response) MarshalJSON() ([]byte, error) {
@@ -117,13 +107,47 @@ func (o ExportIssueOverviewCsv200Response) MarshalJSON() ([]byte, error) {
 
 func (o ExportIssueOverviewCsv200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.JobToken) {
-		toSerialize["jobToken"] = o.JobToken
-	}
-	if !IsNil(o.Task) {
-		toSerialize["task"] = o.Task
-	}
+	toSerialize["jobToken"] = o.JobToken
+	toSerialize["task"] = o.Task
 	return toSerialize, nil
+}
+
+func (o *ExportIssueOverviewCsv200Response) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"jobToken",
+		"task",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varExportIssueOverviewCsv200Response := _ExportIssueOverviewCsv200Response{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varExportIssueOverviewCsv200Response)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ExportIssueOverviewCsv200Response(varExportIssueOverviewCsv200Response)
+
+	return err
 }
 
 type NullableExportIssueOverviewCsv200Response struct {
