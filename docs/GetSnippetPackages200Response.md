@@ -7,13 +7,13 @@ Name | Type | Description | Notes
 **Results** | [**[]GetSnippetPackages200ResponseResultsInner**](GetSnippetPackages200ResponseResultsInner.md) | Array of snippet packages | 
 **TotalCount** | **int32** | Total number of snippet packages matching the filter criteria | 
 **Page** | **int32** | Current page number | 
-**Count** | **int32** | Number of items per page | 
+**PageSize** | **int32** | Number of items requested per page | 
 
 ## Methods
 
 ### NewGetSnippetPackages200Response
 
-`func NewGetSnippetPackages200Response(results []GetSnippetPackages200ResponseResultsInner, totalCount int32, page int32, count int32, ) *GetSnippetPackages200Response`
+`func NewGetSnippetPackages200Response(results []GetSnippetPackages200ResponseResultsInner, totalCount int32, page int32, pageSize int32, ) *GetSnippetPackages200Response`
 
 NewGetSnippetPackages200Response instantiates a new GetSnippetPackages200Response object
 This constructor will assign default values to properties that have it defined,
@@ -88,24 +88,24 @@ and a boolean to check if the value has been set.
 SetPage sets Page field to given value.
 
 
-### GetCount
+### GetPageSize
 
-`func (o *GetSnippetPackages200Response) GetCount() int32`
+`func (o *GetSnippetPackages200Response) GetPageSize() int32`
 
-GetCount returns the Count field if non-nil, zero value otherwise.
+GetPageSize returns the PageSize field if non-nil, zero value otherwise.
 
-### GetCountOk
+### GetPageSizeOk
 
-`func (o *GetSnippetPackages200Response) GetCountOk() (*int32, bool)`
+`func (o *GetSnippetPackages200Response) GetPageSizeOk() (*int32, bool)`
 
-GetCountOk returns a tuple with the Count field if it's non-nil, zero value otherwise
+GetPageSizeOk returns a tuple with the PageSize field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCount
+### SetPageSize
 
-`func (o *GetSnippetPackages200Response) SetCount(v int32)`
+`func (o *GetSnippetPackages200Response) SetPageSize(v int32)`
 
-SetCount sets Count field to given value.
+SetPageSize sets PageSize field to given value.
 
 
 

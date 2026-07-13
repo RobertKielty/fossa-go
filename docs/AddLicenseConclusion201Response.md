@@ -5,8 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DependencyRevisionLocator** | **string** | The locator of the dependency revision | 
-**Scope** | **string** | The scope of the license conclusion | 
-**ScopeId** | **string** | The ID of the scope (project locator, revision locator, release group ID, etc.) | 
+**Scope** | **string** | The scope of the license conclusion. May be &#x60;null&#x60; for auto-generated conclusions. | 
+**ScopeId** | **string** | The ID of the scope (project locator, revision locator, release group ID, etc.). &#x60;null&#x60; for global conclusions. | 
 **ConcludedLicenses** | **[]string** | The list of concluded licenses for this dependency | 
 **CreatedAt** | **time.Time** | The date and time the conclusion was created | 
 **UpdatedAt** | **time.Time** | The date and time the conclusion was last updated | 
