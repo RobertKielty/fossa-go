@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.35
 Contact: support@fossa.com
 */
 
@@ -20,7 +20,7 @@ var _ MappedNullable = &GetRevisionDependenciesPostRequest{}
 
 // GetRevisionDependenciesPostRequest struct for GetRevisionDependenciesPostRequest
 type GetRevisionDependenciesPostRequest struct {
-	// Maximum number of dependencies to return (min 1, max 10000)
+	// Maximum number of dependencies to return. The value is clamped server-side to the range 25–100: any value below 25 is treated as 25, and any value above 100 is treated as 100. 
 	Limit *int32 `json:"limit,omitempty"`
 	// Number of dependencies to skip for pagination
 	Offset *int32 `json:"offset,omitempty"`
