@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.38
 Contact: support@fossa.com
 */
 
@@ -64,6 +64,24 @@ type UpdateProjectRequest struct {
 	SnippetLicensingIssueScanningEnabled *bool `json:"snippetLicensingIssueScanningEnabled,omitempty"`
 	// Enable or disable snippet security issue scanning for this project
 	SnippetSecurityIssueScanningEnabled *bool `json:"snippetSecurityIssueScanningEnabled,omitempty"`
+	// Match percentage at (or above) which snippet matches are automatically rejected. Must be an integer between 1 and 100, or `null` to disable auto-rejection. 
+	SnippetAutoRejectMatchPercentageThreshold *int32 `json:"snippetAutoRejectMatchPercentageThreshold,omitempty"`
+	// Enable or disable licensing issue scanning for vendored dependencies in this project
+	VendoredLicensingIssueScanningEnabled *bool `json:"vendoredLicensingIssueScanningEnabled,omitempty"`
+	// Enable or disable security issue scanning for vendored dependencies in this project
+	VendoredSecurityIssueScanningEnabled *bool `json:"vendoredSecurityIssueScanningEnabled,omitempty"`
+	// Enable or disable quality issue scanning for vendored dependencies in this project
+	VendoredQualityIssueScanningEnabled *bool `json:"vendoredQualityIssueScanningEnabled,omitempty"`
+	// Enable or disable vendored dependency detection during quick imports for this project. Can only be modified if the organization has quick import vendored detection and vendored dependency detection features enabled. 
+	QuickImportVendoredDetectionEnabled *bool `json:"quickImportVendoredDetectionEnabled,omitempty"`
+	// Enable or disable snippet detection during quick imports for this project. Can only be modified if the organization has quick import snippet detection and snippet detection features enabled. 
+	QuickImportSnippetDetectionEnabled *bool `json:"quickImportSnippetDetectionEnabled,omitempty"`
+	// ID of the saved report option to use as the default for licensing reports. Must reference a report option belonging to your organization, or `null` to clear it. 
+	DefaultSavedOptionLicensingReport *int32 `json:"defaultSavedOptionLicensingReport,omitempty"`
+	// ID of the saved report option to use as the default for SBOM reports. Must reference a report option belonging to your organization, or `null` to clear it. 
+	DefaultSavedOptionSbom *int32 `json:"defaultSavedOptionSbom,omitempty"`
+	// Whether the credential associated with this project is currently invalid.
+	InvalidCredential *bool `json:"invalidCredential,omitempty"`
 	// Enable or disable licensing issue CI/CD status checks
 	LicensingStatusCheckEnabled *bool `json:"licensingStatusCheckEnabled,omitempty"`
 	// Enable or disable security issue CI/CD status checks
@@ -98,7 +116,7 @@ type UpdateProjectRequest struct {
 	TransitiveExcludes []string `json:"transitive_excludes,omitempty"`
 	// Custom text to include in attribution reports for this project
 	ReportCustomText *string `json:"reportCustomText,omitempty"`
-	// Columns to display in the Bill of Materials (BOM) report. Available options: All, Name, Version, Type, License, DirectLicense, DirectLicenseOrigin, DeepLicense, DeepLicenseOrigin, Description, Homepage, PrimaryLanguage, SourceLocation, ReleasePublishDate, OriginId, Tags, ComponentComment, Reachability 
+	// Columns to display in the Bill of Materials (BOM) report. Available options: All, Name, Version, Type, License, DirectLicense, DirectLicenseOrigin, DeepLicense, DeepLicenseOrigin, Description, Homepage, PrimaryLanguage, SourceLocation, ReleasePublishDate, OriginId, Tags, ComponentComment 
 	BomColumnSettings []string `json:"bom_column_settings,omitempty"`
 	// Public identifier for accessing the project's attribution report
 	BomPublicId *string `json:"bom_public_id,omitempty"`
@@ -828,6 +846,294 @@ func (o *UpdateProjectRequest) HasSnippetSecurityIssueScanningEnabled() bool {
 // SetSnippetSecurityIssueScanningEnabled gets a reference to the given bool and assigns it to the SnippetSecurityIssueScanningEnabled field.
 func (o *UpdateProjectRequest) SetSnippetSecurityIssueScanningEnabled(v bool) {
 	o.SnippetSecurityIssueScanningEnabled = &v
+}
+
+// GetSnippetAutoRejectMatchPercentageThreshold returns the SnippetAutoRejectMatchPercentageThreshold field value if set, zero value otherwise.
+func (o *UpdateProjectRequest) GetSnippetAutoRejectMatchPercentageThreshold() int32 {
+	if o == nil || IsNil(o.SnippetAutoRejectMatchPercentageThreshold) {
+		var ret int32
+		return ret
+	}
+	return *o.SnippetAutoRejectMatchPercentageThreshold
+}
+
+// GetSnippetAutoRejectMatchPercentageThresholdOk returns a tuple with the SnippetAutoRejectMatchPercentageThreshold field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateProjectRequest) GetSnippetAutoRejectMatchPercentageThresholdOk() (*int32, bool) {
+	if o == nil || IsNil(o.SnippetAutoRejectMatchPercentageThreshold) {
+		return nil, false
+	}
+	return o.SnippetAutoRejectMatchPercentageThreshold, true
+}
+
+// HasSnippetAutoRejectMatchPercentageThreshold returns a boolean if a field has been set.
+func (o *UpdateProjectRequest) HasSnippetAutoRejectMatchPercentageThreshold() bool {
+	if o != nil && !IsNil(o.SnippetAutoRejectMatchPercentageThreshold) {
+		return true
+	}
+
+	return false
+}
+
+// SetSnippetAutoRejectMatchPercentageThreshold gets a reference to the given int32 and assigns it to the SnippetAutoRejectMatchPercentageThreshold field.
+func (o *UpdateProjectRequest) SetSnippetAutoRejectMatchPercentageThreshold(v int32) {
+	o.SnippetAutoRejectMatchPercentageThreshold = &v
+}
+
+// GetVendoredLicensingIssueScanningEnabled returns the VendoredLicensingIssueScanningEnabled field value if set, zero value otherwise.
+func (o *UpdateProjectRequest) GetVendoredLicensingIssueScanningEnabled() bool {
+	if o == nil || IsNil(o.VendoredLicensingIssueScanningEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.VendoredLicensingIssueScanningEnabled
+}
+
+// GetVendoredLicensingIssueScanningEnabledOk returns a tuple with the VendoredLicensingIssueScanningEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateProjectRequest) GetVendoredLicensingIssueScanningEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.VendoredLicensingIssueScanningEnabled) {
+		return nil, false
+	}
+	return o.VendoredLicensingIssueScanningEnabled, true
+}
+
+// HasVendoredLicensingIssueScanningEnabled returns a boolean if a field has been set.
+func (o *UpdateProjectRequest) HasVendoredLicensingIssueScanningEnabled() bool {
+	if o != nil && !IsNil(o.VendoredLicensingIssueScanningEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetVendoredLicensingIssueScanningEnabled gets a reference to the given bool and assigns it to the VendoredLicensingIssueScanningEnabled field.
+func (o *UpdateProjectRequest) SetVendoredLicensingIssueScanningEnabled(v bool) {
+	o.VendoredLicensingIssueScanningEnabled = &v
+}
+
+// GetVendoredSecurityIssueScanningEnabled returns the VendoredSecurityIssueScanningEnabled field value if set, zero value otherwise.
+func (o *UpdateProjectRequest) GetVendoredSecurityIssueScanningEnabled() bool {
+	if o == nil || IsNil(o.VendoredSecurityIssueScanningEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.VendoredSecurityIssueScanningEnabled
+}
+
+// GetVendoredSecurityIssueScanningEnabledOk returns a tuple with the VendoredSecurityIssueScanningEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateProjectRequest) GetVendoredSecurityIssueScanningEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.VendoredSecurityIssueScanningEnabled) {
+		return nil, false
+	}
+	return o.VendoredSecurityIssueScanningEnabled, true
+}
+
+// HasVendoredSecurityIssueScanningEnabled returns a boolean if a field has been set.
+func (o *UpdateProjectRequest) HasVendoredSecurityIssueScanningEnabled() bool {
+	if o != nil && !IsNil(o.VendoredSecurityIssueScanningEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetVendoredSecurityIssueScanningEnabled gets a reference to the given bool and assigns it to the VendoredSecurityIssueScanningEnabled field.
+func (o *UpdateProjectRequest) SetVendoredSecurityIssueScanningEnabled(v bool) {
+	o.VendoredSecurityIssueScanningEnabled = &v
+}
+
+// GetVendoredQualityIssueScanningEnabled returns the VendoredQualityIssueScanningEnabled field value if set, zero value otherwise.
+func (o *UpdateProjectRequest) GetVendoredQualityIssueScanningEnabled() bool {
+	if o == nil || IsNil(o.VendoredQualityIssueScanningEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.VendoredQualityIssueScanningEnabled
+}
+
+// GetVendoredQualityIssueScanningEnabledOk returns a tuple with the VendoredQualityIssueScanningEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateProjectRequest) GetVendoredQualityIssueScanningEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.VendoredQualityIssueScanningEnabled) {
+		return nil, false
+	}
+	return o.VendoredQualityIssueScanningEnabled, true
+}
+
+// HasVendoredQualityIssueScanningEnabled returns a boolean if a field has been set.
+func (o *UpdateProjectRequest) HasVendoredQualityIssueScanningEnabled() bool {
+	if o != nil && !IsNil(o.VendoredQualityIssueScanningEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetVendoredQualityIssueScanningEnabled gets a reference to the given bool and assigns it to the VendoredQualityIssueScanningEnabled field.
+func (o *UpdateProjectRequest) SetVendoredQualityIssueScanningEnabled(v bool) {
+	o.VendoredQualityIssueScanningEnabled = &v
+}
+
+// GetQuickImportVendoredDetectionEnabled returns the QuickImportVendoredDetectionEnabled field value if set, zero value otherwise.
+func (o *UpdateProjectRequest) GetQuickImportVendoredDetectionEnabled() bool {
+	if o == nil || IsNil(o.QuickImportVendoredDetectionEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.QuickImportVendoredDetectionEnabled
+}
+
+// GetQuickImportVendoredDetectionEnabledOk returns a tuple with the QuickImportVendoredDetectionEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateProjectRequest) GetQuickImportVendoredDetectionEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.QuickImportVendoredDetectionEnabled) {
+		return nil, false
+	}
+	return o.QuickImportVendoredDetectionEnabled, true
+}
+
+// HasQuickImportVendoredDetectionEnabled returns a boolean if a field has been set.
+func (o *UpdateProjectRequest) HasQuickImportVendoredDetectionEnabled() bool {
+	if o != nil && !IsNil(o.QuickImportVendoredDetectionEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetQuickImportVendoredDetectionEnabled gets a reference to the given bool and assigns it to the QuickImportVendoredDetectionEnabled field.
+func (o *UpdateProjectRequest) SetQuickImportVendoredDetectionEnabled(v bool) {
+	o.QuickImportVendoredDetectionEnabled = &v
+}
+
+// GetQuickImportSnippetDetectionEnabled returns the QuickImportSnippetDetectionEnabled field value if set, zero value otherwise.
+func (o *UpdateProjectRequest) GetQuickImportSnippetDetectionEnabled() bool {
+	if o == nil || IsNil(o.QuickImportSnippetDetectionEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.QuickImportSnippetDetectionEnabled
+}
+
+// GetQuickImportSnippetDetectionEnabledOk returns a tuple with the QuickImportSnippetDetectionEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateProjectRequest) GetQuickImportSnippetDetectionEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.QuickImportSnippetDetectionEnabled) {
+		return nil, false
+	}
+	return o.QuickImportSnippetDetectionEnabled, true
+}
+
+// HasQuickImportSnippetDetectionEnabled returns a boolean if a field has been set.
+func (o *UpdateProjectRequest) HasQuickImportSnippetDetectionEnabled() bool {
+	if o != nil && !IsNil(o.QuickImportSnippetDetectionEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetQuickImportSnippetDetectionEnabled gets a reference to the given bool and assigns it to the QuickImportSnippetDetectionEnabled field.
+func (o *UpdateProjectRequest) SetQuickImportSnippetDetectionEnabled(v bool) {
+	o.QuickImportSnippetDetectionEnabled = &v
+}
+
+// GetDefaultSavedOptionLicensingReport returns the DefaultSavedOptionLicensingReport field value if set, zero value otherwise.
+func (o *UpdateProjectRequest) GetDefaultSavedOptionLicensingReport() int32 {
+	if o == nil || IsNil(o.DefaultSavedOptionLicensingReport) {
+		var ret int32
+		return ret
+	}
+	return *o.DefaultSavedOptionLicensingReport
+}
+
+// GetDefaultSavedOptionLicensingReportOk returns a tuple with the DefaultSavedOptionLicensingReport field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateProjectRequest) GetDefaultSavedOptionLicensingReportOk() (*int32, bool) {
+	if o == nil || IsNil(o.DefaultSavedOptionLicensingReport) {
+		return nil, false
+	}
+	return o.DefaultSavedOptionLicensingReport, true
+}
+
+// HasDefaultSavedOptionLicensingReport returns a boolean if a field has been set.
+func (o *UpdateProjectRequest) HasDefaultSavedOptionLicensingReport() bool {
+	if o != nil && !IsNil(o.DefaultSavedOptionLicensingReport) {
+		return true
+	}
+
+	return false
+}
+
+// SetDefaultSavedOptionLicensingReport gets a reference to the given int32 and assigns it to the DefaultSavedOptionLicensingReport field.
+func (o *UpdateProjectRequest) SetDefaultSavedOptionLicensingReport(v int32) {
+	o.DefaultSavedOptionLicensingReport = &v
+}
+
+// GetDefaultSavedOptionSbom returns the DefaultSavedOptionSbom field value if set, zero value otherwise.
+func (o *UpdateProjectRequest) GetDefaultSavedOptionSbom() int32 {
+	if o == nil || IsNil(o.DefaultSavedOptionSbom) {
+		var ret int32
+		return ret
+	}
+	return *o.DefaultSavedOptionSbom
+}
+
+// GetDefaultSavedOptionSbomOk returns a tuple with the DefaultSavedOptionSbom field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateProjectRequest) GetDefaultSavedOptionSbomOk() (*int32, bool) {
+	if o == nil || IsNil(o.DefaultSavedOptionSbom) {
+		return nil, false
+	}
+	return o.DefaultSavedOptionSbom, true
+}
+
+// HasDefaultSavedOptionSbom returns a boolean if a field has been set.
+func (o *UpdateProjectRequest) HasDefaultSavedOptionSbom() bool {
+	if o != nil && !IsNil(o.DefaultSavedOptionSbom) {
+		return true
+	}
+
+	return false
+}
+
+// SetDefaultSavedOptionSbom gets a reference to the given int32 and assigns it to the DefaultSavedOptionSbom field.
+func (o *UpdateProjectRequest) SetDefaultSavedOptionSbom(v int32) {
+	o.DefaultSavedOptionSbom = &v
+}
+
+// GetInvalidCredential returns the InvalidCredential field value if set, zero value otherwise.
+func (o *UpdateProjectRequest) GetInvalidCredential() bool {
+	if o == nil || IsNil(o.InvalidCredential) {
+		var ret bool
+		return ret
+	}
+	return *o.InvalidCredential
+}
+
+// GetInvalidCredentialOk returns a tuple with the InvalidCredential field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateProjectRequest) GetInvalidCredentialOk() (*bool, bool) {
+	if o == nil || IsNil(o.InvalidCredential) {
+		return nil, false
+	}
+	return o.InvalidCredential, true
+}
+
+// HasInvalidCredential returns a boolean if a field has been set.
+func (o *UpdateProjectRequest) HasInvalidCredential() bool {
+	if o != nil && !IsNil(o.InvalidCredential) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvalidCredential gets a reference to the given bool and assigns it to the InvalidCredential field.
+func (o *UpdateProjectRequest) SetInvalidCredential(v bool) {
+	o.InvalidCredential = &v
 }
 
 // GetLicensingStatusCheckEnabled returns the LicensingStatusCheckEnabled field value if set, zero value otherwise.
@@ -1609,6 +1915,33 @@ func (o UpdateProjectRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SnippetSecurityIssueScanningEnabled) {
 		toSerialize["snippetSecurityIssueScanningEnabled"] = o.SnippetSecurityIssueScanningEnabled
+	}
+	if !IsNil(o.SnippetAutoRejectMatchPercentageThreshold) {
+		toSerialize["snippetAutoRejectMatchPercentageThreshold"] = o.SnippetAutoRejectMatchPercentageThreshold
+	}
+	if !IsNil(o.VendoredLicensingIssueScanningEnabled) {
+		toSerialize["vendoredLicensingIssueScanningEnabled"] = o.VendoredLicensingIssueScanningEnabled
+	}
+	if !IsNil(o.VendoredSecurityIssueScanningEnabled) {
+		toSerialize["vendoredSecurityIssueScanningEnabled"] = o.VendoredSecurityIssueScanningEnabled
+	}
+	if !IsNil(o.VendoredQualityIssueScanningEnabled) {
+		toSerialize["vendoredQualityIssueScanningEnabled"] = o.VendoredQualityIssueScanningEnabled
+	}
+	if !IsNil(o.QuickImportVendoredDetectionEnabled) {
+		toSerialize["quickImportVendoredDetectionEnabled"] = o.QuickImportVendoredDetectionEnabled
+	}
+	if !IsNil(o.QuickImportSnippetDetectionEnabled) {
+		toSerialize["quickImportSnippetDetectionEnabled"] = o.QuickImportSnippetDetectionEnabled
+	}
+	if !IsNil(o.DefaultSavedOptionLicensingReport) {
+		toSerialize["defaultSavedOptionLicensingReport"] = o.DefaultSavedOptionLicensingReport
+	}
+	if !IsNil(o.DefaultSavedOptionSbom) {
+		toSerialize["defaultSavedOptionSbom"] = o.DefaultSavedOptionSbom
+	}
+	if !IsNil(o.InvalidCredential) {
+		toSerialize["invalidCredential"] = o.InvalidCredential
 	}
 	if !IsNil(o.LicensingStatusCheckEnabled) {
 		toSerialize["licensingStatusCheckEnabled"] = o.LicensingStatusCheckEnabled
