@@ -36,7 +36,7 @@ func main() {
 	labels := []int32{int32(123)} // []int32 | The project labels to filter Issue Overview data to. (optional)
 	category := "category_example" // string | The issue category to filter Issue Overview data to. If no category is chosen, it will fetch data for all issue categories. (optional)
 	projectId := "projectId_example" // string | The specific project ID to filter Issue Overview data to. (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
+	teamId := []openapiclient.GetIssueCountsTeamIdParameterInner{openapiclient.getIssueCounts_teamId_parameter_inner{Float32: new(float32)}} // []GetIssueCountsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -66,7 +66,7 @@ Name | Type | Description  | Notes
  **labels** | **[]int32** | The project labels to filter Issue Overview data to. | 
  **category** | **string** | The issue category to filter Issue Overview data to. If no category is chosen, it will fetch data for all issue categories. | 
  **projectId** | **string** | The specific project ID to filter Issue Overview data to. | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
+ **teamId** | [**[]GetIssueCountsTeamIdParameterInner**](GetIssueCountsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
 
 ### Return type
 
@@ -113,7 +113,7 @@ func main() {
 	labels := []int32{int32(123)} // []int32 | The project labels to filter Issue Overview data to. (optional)
 	category := "category_example" // string | The issue category to filter Issue Overview data to. If no category is chosen, it will fetch data for all issue categories. (optional)
 	projectId := "projectId_example" // string | The specific project ID to filter Issue Overview data to. (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
+	teamId := []openapiclient.GetIssueCountsTeamIdParameterInner{openapiclient.getIssueCounts_teamId_parameter_inner{Float32: new(float32)}} // []GetIssueCountsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -143,7 +143,7 @@ Name | Type | Description  | Notes
  **labels** | **[]int32** | The project labels to filter Issue Overview data to. | 
  **category** | **string** | The issue category to filter Issue Overview data to. If no category is chosen, it will fetch data for all issue categories. | 
  **projectId** | **string** | The specific project ID to filter Issue Overview data to. | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
+ **teamId** | [**[]GetIssueCountsTeamIdParameterInner**](GetIssueCountsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
 
 ### Return type
 
