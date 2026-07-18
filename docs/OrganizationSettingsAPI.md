@@ -4,6 +4,7 @@ All URIs are relative to *https://app.fossa.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**DeleteOrganizationLogo**](OrganizationSettingsAPI.md#DeleteOrganizationLogo) | **Delete** /organizations/{id}/logo | Delete organization logo
 [**DeleteOrganizationSamlSettings**](OrganizationSettingsAPI.md#DeleteOrganizationSamlSettings) | **Delete** /organizations/{id}/saml | 
 [**GetOrganizationAuthenticationSettings**](OrganizationSettingsAPI.md#GetOrganizationAuthenticationSettings) | **Get** /organizations/{id}/settings/authentication | 
 [**GetOrganizationBowerSettings**](OrganizationSettingsAPI.md#GetOrganizationBowerSettings) | **Get** /organizations/{id}/settings/languages/bower | 
@@ -19,7 +20,9 @@ Method | HTTP request | Description
 [**GetOrganizationNotificationSettings**](OrganizationSettingsAPI.md#GetOrganizationNotificationSettings) | **Get** /organizations/{id}/settings/projects/notifications | 
 [**GetOrganizationNugetSettings**](OrganizationSettingsAPI.md#GetOrganizationNugetSettings) | **Get** /organizations/{id}/settings/languages/nuget | 
 [**GetOrganizationPipSettings**](OrganizationSettingsAPI.md#GetOrganizationPipSettings) | **Get** /organizations/{id}/settings/languages/pip | 
+[**GetOrganizationProjectHiddenSnippetUrlsSettings**](OrganizationSettingsAPI.md#GetOrganizationProjectHiddenSnippetUrlsSettings) | **Get** /organizations/{id}/settings/projects/hidden-snippet-urls | 
 [**GetOrganizationProjectPrivacySettings**](OrganizationSettingsAPI.md#GetOrganizationProjectPrivacySettings) | **Get** /organizations/{id}/settings/projects/privacy | 
+[**GetOrganizationProjectScanMethodsSettings**](OrganizationSettingsAPI.md#GetOrganizationProjectScanMethodsSettings) | **Get** /organizations/{id}/settings/projects/quick-import-scan-methods | 
 [**GetOrganizationQualityIssueSettings**](OrganizationSettingsAPI.md#GetOrganizationQualityIssueSettings) | **Get** /organizations/{id}/settings/projects/issues/quality | 
 [**GetOrganizationRubyGemsSettings**](OrganizationSettingsAPI.md#GetOrganizationRubyGemsSettings) | **Get** /organizations/{id}/settings/languages/gem | 
 [**GetOrganizationSecurityIssueSettings**](OrganizationSettingsAPI.md#GetOrganizationSecurityIssueSettings) | **Get** /organizations/{id}/settings/projects/issues/security | 
@@ -29,7 +32,9 @@ Method | HTTP request | Description
 [**PropagateOrganizationGithubStatusCheckSettings**](OrganizationSettingsAPI.md#PropagateOrganizationGithubStatusCheckSettings) | **Patch** /organizations/{id}/settings/projects/github-status-checks | 
 [**PropagateOrganizationLicensingIssueSettings**](OrganizationSettingsAPI.md#PropagateOrganizationLicensingIssueSettings) | **Patch** /organizations/{id}/settings/projects/issues/licensing | 
 [**PropagateOrganizationNotificationSettings**](OrganizationSettingsAPI.md#PropagateOrganizationNotificationSettings) | **Patch** /organizations/{id}/settings/projects/notifications | 
+[**PropagateOrganizationProjectHiddenSnippetUrlsSettings**](OrganizationSettingsAPI.md#PropagateOrganizationProjectHiddenSnippetUrlsSettings) | **Patch** /organizations/{id}/settings/projects/hidden-snippet-urls | 
 [**PropagateOrganizationProjectPrivacySettings**](OrganizationSettingsAPI.md#PropagateOrganizationProjectPrivacySettings) | **Patch** /organizations/{id}/settings/projects/privacy | 
+[**PropagateOrganizationProjectScanMethodsSettings**](OrganizationSettingsAPI.md#PropagateOrganizationProjectScanMethodsSettings) | **Patch** /organizations/{id}/settings/projects/quick-import-scan-methods | 
 [**PropagateOrganizationQualityIssueSettings**](OrganizationSettingsAPI.md#PropagateOrganizationQualityIssueSettings) | **Patch** /organizations/{id}/settings/projects/issues/quality | 
 [**PropagateOrganizationSecurityIssueSettings**](OrganizationSettingsAPI.md#PropagateOrganizationSecurityIssueSettings) | **Patch** /organizations/{id}/settings/projects/issues/security | 
 [**PropagateOrganizationUpdateHookSettings**](OrganizationSettingsAPI.md#PropagateOrganizationUpdateHookSettings) | **Patch** /organizations/{id}/settings/projects/update-hooks | 
@@ -48,12 +53,85 @@ Method | HTTP request | Description
 [**UpdateOrganizationGithubStatusCheckSettings**](OrganizationSettingsAPI.md#UpdateOrganizationGithubStatusCheckSettings) | **Put** /organizations/{id}/settings/projects/github-status-checks | 
 [**UpdateOrganizationLicensingIssueSettings**](OrganizationSettingsAPI.md#UpdateOrganizationLicensingIssueSettings) | **Put** /organizations/{id}/settings/projects/issues/licensing | 
 [**UpdateOrganizationNotificationSettings**](OrganizationSettingsAPI.md#UpdateOrganizationNotificationSettings) | **Put** /organizations/{id}/settings/projects/notifications | 
+[**UpdateOrganizationProjectHiddenSnippetUrlsSettings**](OrganizationSettingsAPI.md#UpdateOrganizationProjectHiddenSnippetUrlsSettings) | **Put** /organizations/{id}/settings/projects/hidden-snippet-urls | 
 [**UpdateOrganizationProjectPrivacySettings**](OrganizationSettingsAPI.md#UpdateOrganizationProjectPrivacySettings) | **Put** /organizations/{id}/settings/projects/privacy | 
+[**UpdateOrganizationProjectScanMethodsSettings**](OrganizationSettingsAPI.md#UpdateOrganizationProjectScanMethodsSettings) | **Put** /organizations/{id}/settings/projects/quick-import-scan-methods | 
 [**UpdateOrganizationQualityIssueSettings**](OrganizationSettingsAPI.md#UpdateOrganizationQualityIssueSettings) | **Put** /organizations/{id}/settings/projects/issues/quality | 
+[**UpdateOrganizationSBOMReportDefaults**](OrganizationSettingsAPI.md#UpdateOrganizationSBOMReportDefaults) | **Put** /organizations/{id}/sbomReportDefaults | Update organization SBOM report defaults
 [**UpdateOrganizationSamlSettings**](OrganizationSettingsAPI.md#UpdateOrganizationSamlSettings) | **Put** /organizations/{id}/saml | 
 [**UpdateOrganizationSecurityIssueSettings**](OrganizationSettingsAPI.md#UpdateOrganizationSecurityIssueSettings) | **Put** /organizations/{id}/settings/projects/issues/security | 
 [**UpdateOrganizationUpdateHookSettings**](OrganizationSettingsAPI.md#UpdateOrganizationUpdateHookSettings) | **Put** /organizations/{id}/settings/projects/update-hooks | 
 
+
+
+## DeleteOrganizationLogo
+
+> DeleteOrganizationLogo200Response DeleteOrganizationLogo(ctx, id).Execute()
+
+Delete organization logo
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(1234) // int32 | The organization ID.
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OrganizationSettingsAPI.DeleteOrganizationLogo(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OrganizationSettingsAPI.DeleteOrganizationLogo``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteOrganizationLogo`: DeleteOrganizationLogo200Response
+	fmt.Fprintf(os.Stdout, "Response from `OrganizationSettingsAPI.DeleteOrganizationLogo`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** | The organization ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteOrganizationLogoRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**DeleteOrganizationLogo200Response**](DeleteOrganizationLogo200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## DeleteOrganizationSamlSettings
@@ -1104,6 +1182,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## GetOrganizationProjectHiddenSnippetUrlsSettings
+
+> GetOrganizationProjectHiddenSnippetUrlsSettings200Response GetOrganizationProjectHiddenSnippetUrlsSettings(ctx, id).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OrganizationSettingsAPI.GetOrganizationProjectHiddenSnippetUrlsSettings(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OrganizationSettingsAPI.GetOrganizationProjectHiddenSnippetUrlsSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetOrganizationProjectHiddenSnippetUrlsSettings`: GetOrganizationProjectHiddenSnippetUrlsSettings200Response
+	fmt.Fprintf(os.Stdout, "Response from `OrganizationSettingsAPI.GetOrganizationProjectHiddenSnippetUrlsSettings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetOrganizationProjectHiddenSnippetUrlsSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**GetOrganizationProjectHiddenSnippetUrlsSettings200Response**](GetOrganizationProjectHiddenSnippetUrlsSettings200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetOrganizationProjectPrivacySettings
 
 > GetOrganizationProjectPrivacySettings200Response GetOrganizationProjectPrivacySettings(ctx, id).Execute()
@@ -1159,6 +1307,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetOrganizationProjectPrivacySettings200Response**](GetOrganizationProjectPrivacySettings200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetOrganizationProjectScanMethodsSettings
+
+> GetOrganizationProjectScanMethodsSettings200Response GetOrganizationProjectScanMethodsSettings(ctx, id).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OrganizationSettingsAPI.GetOrganizationProjectScanMethodsSettings(context.Background(), id).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OrganizationSettingsAPI.GetOrganizationProjectScanMethodsSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetOrganizationProjectScanMethodsSettings`: GetOrganizationProjectScanMethodsSettings200Response
+	fmt.Fprintf(os.Stdout, "Response from `OrganizationSettingsAPI.GetOrganizationProjectScanMethodsSettings`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetOrganizationProjectScanMethodsSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**GetOrganizationProjectScanMethodsSettings200Response**](GetOrganizationProjectScanMethodsSettings200Response.md)
 
 ### Authorization
 
@@ -1804,6 +2022,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## PropagateOrganizationProjectHiddenSnippetUrlsSettings
+
+> PropagateOrganizationProjectHiddenSnippetUrlsSettings(ctx, id).RequestBody(requestBody).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	requestBody := []string{"Property_example"} // []string |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.OrganizationSettingsAPI.PropagateOrganizationProjectHiddenSnippetUrlsSettings(context.Background(), id).RequestBody(requestBody).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OrganizationSettingsAPI.PropagateOrganizationProjectHiddenSnippetUrlsSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPropagateOrganizationProjectHiddenSnippetUrlsSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **requestBody** | **[]string** |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## PropagateOrganizationProjectPrivacySettings
 
 > PropagateOrganizationProjectPrivacySettings(ctx, id).RequestBody(requestBody).Execute()
@@ -1849,6 +2137,76 @@ Name | Type | Description  | Notes
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiPropagateOrganizationProjectPrivacySettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **requestBody** | **[]string** |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## PropagateOrganizationProjectScanMethodsSettings
+
+> PropagateOrganizationProjectScanMethodsSettings(ctx, id).RequestBody(requestBody).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	requestBody := []string{"Property_example"} // []string |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.OrganizationSettingsAPI.PropagateOrganizationProjectScanMethodsSettings(context.Background(), id).RequestBody(requestBody).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OrganizationSettingsAPI.PropagateOrganizationProjectScanMethodsSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPropagateOrganizationProjectScanMethodsSettingsRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -3086,7 +3444,7 @@ import (
 
 func main() {
 	id := int32(56) // int32 | 
-	getOrganizationNotificationSettings200Response := *openapiclient.NewGetOrganizationNotificationSettings200Response() // GetOrganizationNotificationSettings200Response |  (optional)
+	getOrganizationNotificationSettings200Response := *openapiclient.NewGetOrganizationNotificationSettings200Response(false, false, false, []float32{float32(123)}, "NotificationDefaultEmailScanUserType_example") // GetOrganizationNotificationSettings200Response |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -3115,6 +3473,76 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **getOrganizationNotificationSettings200Response** | [**GetOrganizationNotificationSettings200Response**](GetOrganizationNotificationSettings200Response.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateOrganizationProjectHiddenSnippetUrlsSettings
+
+> UpdateOrganizationProjectHiddenSnippetUrlsSettings(ctx, id).UpdateOrganizationProjectHiddenSnippetUrlsSettingsRequest(updateOrganizationProjectHiddenSnippetUrlsSettingsRequest).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	updateOrganizationProjectHiddenSnippetUrlsSettingsRequest := *openapiclient.NewUpdateOrganizationProjectHiddenSnippetUrlsSettingsRequest([]string{"ProjectDefaultHiddenSnippetUrls_example"}) // UpdateOrganizationProjectHiddenSnippetUrlsSettingsRequest |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.OrganizationSettingsAPI.UpdateOrganizationProjectHiddenSnippetUrlsSettings(context.Background(), id).UpdateOrganizationProjectHiddenSnippetUrlsSettingsRequest(updateOrganizationProjectHiddenSnippetUrlsSettingsRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OrganizationSettingsAPI.UpdateOrganizationProjectHiddenSnippetUrlsSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateOrganizationProjectHiddenSnippetUrlsSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateOrganizationProjectHiddenSnippetUrlsSettingsRequest** | [**UpdateOrganizationProjectHiddenSnippetUrlsSettingsRequest**](UpdateOrganizationProjectHiddenSnippetUrlsSettingsRequest.md) |  | 
 
 ### Return type
 
@@ -3204,6 +3632,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## UpdateOrganizationProjectScanMethodsSettings
+
+> UpdateOrganizationProjectScanMethodsSettings(ctx, id).UpdateOrganizationProjectScanMethodsSettingsRequest(updateOrganizationProjectScanMethodsSettingsRequest).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(56) // int32 | 
+	updateOrganizationProjectScanMethodsSettingsRequest := *openapiclient.NewUpdateOrganizationProjectScanMethodsSettingsRequest(false, false) // UpdateOrganizationProjectScanMethodsSettingsRequest |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	r, err := apiClient.OrganizationSettingsAPI.UpdateOrganizationProjectScanMethodsSettings(context.Background(), id).UpdateOrganizationProjectScanMethodsSettingsRequest(updateOrganizationProjectScanMethodsSettingsRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OrganizationSettingsAPI.UpdateOrganizationProjectScanMethodsSettings``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateOrganizationProjectScanMethodsSettingsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateOrganizationProjectScanMethodsSettingsRequest** | [**UpdateOrganizationProjectScanMethodsSettingsRequest**](UpdateOrganizationProjectScanMethodsSettingsRequest.md) |  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## UpdateOrganizationQualityIssueSettings
 
 > UpdateOrganizationQualityIssueSettings(ctx, id).GetOrganizationQualityIssueSettings200Response(getOrganizationQualityIssueSettings200Response).Execute()
@@ -3259,6 +3757,78 @@ Name | Type | Description  | Notes
 ### Return type
 
  (empty response body)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdateOrganizationSBOMReportDefaults
+
+> UpdateOrganizationSBOMReportDefaults200Response UpdateOrganizationSBOMReportDefaults(ctx, id).UpdateOrganizationSBOMReportDefaultsRequest(updateOrganizationSBOMReportDefaultsRequest).Execute()
+
+Update organization SBOM report defaults
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := int32(1234) // int32 | The organization ID.
+	updateOrganizationSBOMReportDefaultsRequest := *openapiclient.NewUpdateOrganizationSBOMReportDefaultsRequest() // UpdateOrganizationSBOMReportDefaultsRequest |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OrganizationSettingsAPI.UpdateOrganizationSBOMReportDefaults(context.Background(), id).UpdateOrganizationSBOMReportDefaultsRequest(updateOrganizationSBOMReportDefaultsRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OrganizationSettingsAPI.UpdateOrganizationSBOMReportDefaults``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdateOrganizationSBOMReportDefaults`: UpdateOrganizationSBOMReportDefaults200Response
+	fmt.Fprintf(os.Stdout, "Response from `OrganizationSettingsAPI.UpdateOrganizationSBOMReportDefaults`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **int32** | The organization ID. | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdateOrganizationSBOMReportDefaultsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **updateOrganizationSBOMReportDefaultsRequest** | [**UpdateOrganizationSBOMReportDefaultsRequest**](UpdateOrganizationSBOMReportDefaultsRequest.md) |  | 
+
+### Return type
+
+[**UpdateOrganizationSBOMReportDefaults200Response**](UpdateOrganizationSBOMReportDefaults200Response.md)
 
 ### Authorization
 
