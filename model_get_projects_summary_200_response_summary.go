@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.42
 Contact: support@fossa.com
 */
 
@@ -22,6 +22,7 @@ var _ MappedNullable = &GetProjectsSummary200ResponseSummary{}
 type GetProjectsSummary200ResponseSummary struct {
 	Projects *int32 `json:"projects,omitempty"`
 	ReleaseGroups *int32 `json:"releaseGroups,omitempty"`
+	SharedProjects *int32 `json:"sharedProjects,omitempty"`
 }
 
 // NewGetProjectsSummary200ResponseSummary instantiates a new GetProjectsSummary200ResponseSummary object
@@ -105,6 +106,38 @@ func (o *GetProjectsSummary200ResponseSummary) SetReleaseGroups(v int32) {
 	o.ReleaseGroups = &v
 }
 
+// GetSharedProjects returns the SharedProjects field value if set, zero value otherwise.
+func (o *GetProjectsSummary200ResponseSummary) GetSharedProjects() int32 {
+	if o == nil || IsNil(o.SharedProjects) {
+		var ret int32
+		return ret
+	}
+	return *o.SharedProjects
+}
+
+// GetSharedProjectsOk returns a tuple with the SharedProjects field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetProjectsSummary200ResponseSummary) GetSharedProjectsOk() (*int32, bool) {
+	if o == nil || IsNil(o.SharedProjects) {
+		return nil, false
+	}
+	return o.SharedProjects, true
+}
+
+// HasSharedProjects returns a boolean if a field has been set.
+func (o *GetProjectsSummary200ResponseSummary) HasSharedProjects() bool {
+	if o != nil && !IsNil(o.SharedProjects) {
+		return true
+	}
+
+	return false
+}
+
+// SetSharedProjects gets a reference to the given int32 and assigns it to the SharedProjects field.
+func (o *GetProjectsSummary200ResponseSummary) SetSharedProjects(v int32) {
+	o.SharedProjects = &v
+}
+
 func (o GetProjectsSummary200ResponseSummary) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -120,6 +153,9 @@ func (o GetProjectsSummary200ResponseSummary) ToMap() (map[string]interface{}, e
 	}
 	if !IsNil(o.ReleaseGroups) {
 		toSerialize["releaseGroups"] = o.ReleaseGroups
+	}
+	if !IsNil(o.SharedProjects) {
+		toSerialize["sharedProjects"] = o.SharedProjects
 	}
 	return toSerialize, nil
 }
