@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.44
 Contact: support@fossa.com
 */
 
@@ -21,7 +21,6 @@ var _ MappedNullable = &UpdateReportOptionByIdRequestOptionsDependencyData{}
 // UpdateReportOptionByIdRequestOptionsDependencyData Controls which dependency data fields are included
 type UpdateReportOptionByIdRequestOptionsDependencyData struct {
 	Projects *bool `json:"projects,omitempty"`
-	Name *bool `json:"name,omitempty"`
 	Authors *bool `json:"authors,omitempty"`
 	Description *bool `json:"description,omitempty"`
 	Homepage *bool `json:"homepage,omitempty"`
@@ -88,38 +87,6 @@ func (o *UpdateReportOptionByIdRequestOptionsDependencyData) HasProjects() bool 
 // SetProjects gets a reference to the given bool and assigns it to the Projects field.
 func (o *UpdateReportOptionByIdRequestOptionsDependencyData) SetProjects(v bool) {
 	o.Projects = &v
-}
-
-// GetName returns the Name field value if set, zero value otherwise.
-func (o *UpdateReportOptionByIdRequestOptionsDependencyData) GetName() bool {
-	if o == nil || IsNil(o.Name) {
-		var ret bool
-		return ret
-	}
-	return *o.Name
-}
-
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *UpdateReportOptionByIdRequestOptionsDependencyData) GetNameOk() (*bool, bool) {
-	if o == nil || IsNil(o.Name) {
-		return nil, false
-	}
-	return o.Name, true
-}
-
-// HasName returns a boolean if a field has been set.
-func (o *UpdateReportOptionByIdRequestOptionsDependencyData) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given bool and assigns it to the Name field.
-func (o *UpdateReportOptionByIdRequestOptionsDependencyData) SetName(v bool) {
-	o.Name = &v
 }
 
 // GetAuthors returns the Authors field value if set, zero value otherwise.
@@ -678,9 +645,6 @@ func (o UpdateReportOptionByIdRequestOptionsDependencyData) ToMap() (map[string]
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Projects) {
 		toSerialize["projects"] = o.Projects
-	}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
 	}
 	if !IsNil(o.Authors) {
 		toSerialize["authors"] = o.Authors
