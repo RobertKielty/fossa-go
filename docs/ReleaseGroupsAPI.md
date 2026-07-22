@@ -21,6 +21,7 @@ Method | HTTP request | Description
 [**GetReleaseGroupReleaseSummary**](ReleaseGroupsAPI.md#GetReleaseGroupReleaseSummary) | **Get** /project_group/{groupId}/release/{projectGroupReleaseId}/summary | 
 [**GetReleaseGroupReleases**](ReleaseGroupsAPI.md#GetReleaseGroupReleases) | **Get** /project_group/{groupId}/releases | 
 [**QueueReleaseGroupAttributionReport**](ReleaseGroupsAPI.md#QueueReleaseGroupAttributionReport) | **Post** /project_group/{groupId}/release/{releaseId}/attribution/{format} | 
+[**QueueReleaseGroupAttributionReportV2**](ReleaseGroupsAPI.md#QueueReleaseGroupAttributionReportV2) | **Get** /v2/project_group/{groupId}/release/{releaseId}/attribution/{format} | 
 [**UpdateReleaseGroupById**](ReleaseGroupsAPI.md#UpdateReleaseGroupById) | **Put** /project_group/{groupId} | 
 [**UpdateReleaseGroupReleaseById**](ReleaseGroupsAPI.md#UpdateReleaseGroupReleaseById) | **Put** /project_group/{groupId}/release/{projectGroupReleaseId} | 
 
@@ -94,7 +95,7 @@ Name | Type | Description  | Notes
 
 ## CreateReleaseGroupReleases
 
-> CreateReleaseGroup200Response CreateReleaseGroupReleases(ctx, groupId).CreateReleaseGroupReleasesRequest(createReleaseGroupReleasesRequest).Execute()
+> CreateReleaseGroupReleases200Response CreateReleaseGroupReleases(ctx, groupId).CreateReleaseGroupReleasesRequest(createReleaseGroupReleasesRequest).Execute()
 
 
 
@@ -123,7 +124,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReleaseGroupsAPI.CreateReleaseGroupReleases``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `CreateReleaseGroupReleases`: CreateReleaseGroup200Response
+	// response from `CreateReleaseGroupReleases`: CreateReleaseGroupReleases200Response
 	fmt.Fprintf(os.Stdout, "Response from `ReleaseGroupsAPI.CreateReleaseGroupReleases`: %v\n", resp)
 }
 ```
@@ -148,7 +149,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateReleaseGroup200Response**](CreateReleaseGroup200Response.md)
+[**CreateReleaseGroupReleases200Response**](CreateReleaseGroupReleases200Response.md)
 
 ### Authorization
 
@@ -655,7 +656,7 @@ Name | Type | Description  | Notes
 
 ## GetReleaseGroupReleaseById
 
-> []GetReleaseGroupReleaseById200ResponseInner GetReleaseGroupReleaseById(ctx, groupId, projectGroupReleaseId).Execute()
+> GetReleaseGroupReleaseById200Response GetReleaseGroupReleaseById(ctx, groupId, projectGroupReleaseId).Execute()
 
 
 
@@ -684,7 +685,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReleaseGroupsAPI.GetReleaseGroupReleaseById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetReleaseGroupReleaseById`: []GetReleaseGroupReleaseById200ResponseInner
+	// response from `GetReleaseGroupReleaseById`: GetReleaseGroupReleaseById200Response
 	fmt.Fprintf(os.Stdout, "Response from `ReleaseGroupsAPI.GetReleaseGroupReleaseById`: %v\n", resp)
 }
 ```
@@ -710,7 +711,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]GetReleaseGroupReleaseById200ResponseInner**](GetReleaseGroupReleaseById200ResponseInner.md)
+[**GetReleaseGroupReleaseById200Response**](GetReleaseGroupReleaseById200Response.md)
 
 ### Authorization
 
@@ -947,7 +948,7 @@ Name | Type | Description  | Notes
 
 ## GetReleaseGroupReleaseScans
 
-> GetReleaseGroupReleaseScans200Response GetReleaseGroupReleaseScans(ctx, groupId, projectGroupReleaseId).Execute()
+> []GetReleaseGroupReleaseScans200ResponseInner GetReleaseGroupReleaseScans(ctx, groupId, projectGroupReleaseId).Execute()
 
 
 
@@ -976,7 +977,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReleaseGroupsAPI.GetReleaseGroupReleaseScans``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetReleaseGroupReleaseScans`: GetReleaseGroupReleaseScans200Response
+	// response from `GetReleaseGroupReleaseScans`: []GetReleaseGroupReleaseScans200ResponseInner
 	fmt.Fprintf(os.Stdout, "Response from `ReleaseGroupsAPI.GetReleaseGroupReleaseScans`: %v\n", resp)
 }
 ```
@@ -1002,7 +1003,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetReleaseGroupReleaseScans200Response**](GetReleaseGroupReleaseScans200Response.md)
+[**[]GetReleaseGroupReleaseScans200ResponseInner**](GetReleaseGroupReleaseScans200ResponseInner.md)
 
 ### Authorization
 
@@ -1271,6 +1272,124 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## QueueReleaseGroupAttributionReportV2
+
+> QueueReleaseGroupAttributionReportV2200Response QueueReleaseGroupAttributionReportV2(ctx, groupId, releaseId, format).Preview(preview).Download(download).IsPublishing(isPublishing).ProjectGroupTitle(projectGroupTitle).ProjectGroupReleaseTitle(projectGroupReleaseTitle).ProjectGroupUrl(projectGroupUrl).DependencyInfoOptions(dependencyInfoOptions).IncludeDeepDependencies(includeDeepDependencies).IncludeDirectDependencies(includeDirectDependencies).IncludeFOSSADependencies(includeFOSSADependencies).IncludeLicenseList(includeLicenseList).IncludeLicenseScan(includeLicenseScan).IncludeProjectLicense(includeProjectLicense).IncludeCopyrightList(includeCopyrightList).IncludeFileMatches(includeFileMatches).IncludeOpenVulnerabilities(includeOpenVulnerabilities).IncludeClosedVulnerabilities(includeClosedVulnerabilities).IncludeDependencySummary(includeDependencySummary).IncludeLicenseHeaders(includeLicenseHeaders).IncludePackageLabels(includePackageLabels).ExcludeFields(excludeFields).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	groupId := int32(56) // int32 | The ID of the release group
+	releaseId := int32(56) // int32 | The ID of the release within the release group
+	format := "format_example" // string | The format of the report
+	preview := true // bool | Whether to preview the report inline rather than generate a downloadable file (default is false) (optional) (default to false)
+	download := true // bool | Whether to stream the report back directly for download (default is false) (optional) (default to false)
+	isPublishing := true // bool | Whether to publish the report to the SBOM portal. Requires portal-manage permission and an enabled SBOM portal. (optional) (default to false)
+	projectGroupTitle := "projectGroupTitle_example" // string | Override for the release group title shown in the report. (optional)
+	projectGroupReleaseTitle := "projectGroupReleaseTitle_example" // string | Override for the release title shown in the report. (optional)
+	projectGroupUrl := "projectGroupUrl_example" // string | URL to embed in the release group report metadata. (optional)
+	dependencyInfoOptions := []string{"DependencyInfoOptions_example"} // []string | Per-dependency columns/fields to include in the report. (optional)
+	includeDeepDependencies := true // bool | Whether to include deep dependencies (default is false) (optional) (default to false)
+	includeDirectDependencies := true // bool | Whether to include direct dependencies (default is false) (optional) (default to false)
+	includeFOSSADependencies := true // bool | Whether to include FOSSA-managed dependencies (default is false) (optional) (default to false)
+	includeLicenseList := true // bool | Whether to include the license list (default is false) (optional) (default to false)
+	includeLicenseScan := true // bool | Whether to include the first-party license scan (default is false) (optional) (default to false)
+	includeProjectLicense := true // bool | Whether to include the project's declared license (default is false) (optional) (default to false)
+	includeCopyrightList := true // bool | Whether to include the copyright list (default is false) (optional) (default to false)
+	includeFileMatches := true // bool | Whether to include license file matches (default is false) (optional) (default to false)
+	includeOpenVulnerabilities := true // bool | Whether to include open vulnerabilities (default is false) (optional) (default to false)
+	includeClosedVulnerabilities := true // bool | Whether to include closed vulnerabilities (default is false) (optional) (default to false)
+	includeDependencySummary := true // bool | Whether to include the dependency summary (default is false) (optional) (default to false)
+	includeLicenseHeaders := true // bool | Whether to include license headers (default is false) (optional) (default to false)
+	includePackageLabels := true // bool | Whether to include the package labels assigned to each dependency (default is false) (optional) (default to false)
+	excludeFields := *openapiclient.NewQueueReleaseGroupAttributionReportV2ExcludeFieldsParameter() // QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter | Object controlling which dependencies are excluded from the report. The only supported nested field is `packageLabels`: a non-empty array of package-label values; dependencies carrying any of these labels are excluded from the report.  The server parses the query string with the `qs` library, so the array is sent using bracket-and-index notation rather than standard OpenAPI `deepObject` serialization. For example, to exclude two labels send (before URL-encoding): `excludeFields[packageLabels][0]=internal&excludeFields[packageLabels][1]=vendored`.  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ReleaseGroupsAPI.QueueReleaseGroupAttributionReportV2(context.Background(), groupId, releaseId, format).Preview(preview).Download(download).IsPublishing(isPublishing).ProjectGroupTitle(projectGroupTitle).ProjectGroupReleaseTitle(projectGroupReleaseTitle).ProjectGroupUrl(projectGroupUrl).DependencyInfoOptions(dependencyInfoOptions).IncludeDeepDependencies(includeDeepDependencies).IncludeDirectDependencies(includeDirectDependencies).IncludeFOSSADependencies(includeFOSSADependencies).IncludeLicenseList(includeLicenseList).IncludeLicenseScan(includeLicenseScan).IncludeProjectLicense(includeProjectLicense).IncludeCopyrightList(includeCopyrightList).IncludeFileMatches(includeFileMatches).IncludeOpenVulnerabilities(includeOpenVulnerabilities).IncludeClosedVulnerabilities(includeClosedVulnerabilities).IncludeDependencySummary(includeDependencySummary).IncludeLicenseHeaders(includeLicenseHeaders).IncludePackageLabels(includePackageLabels).ExcludeFields(excludeFields).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ReleaseGroupsAPI.QueueReleaseGroupAttributionReportV2``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `QueueReleaseGroupAttributionReportV2`: QueueReleaseGroupAttributionReportV2200Response
+	fmt.Fprintf(os.Stdout, "Response from `ReleaseGroupsAPI.QueueReleaseGroupAttributionReportV2`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**groupId** | **int32** | The ID of the release group | 
+**releaseId** | **int32** | The ID of the release within the release group | 
+**format** | **string** | The format of the report | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiQueueReleaseGroupAttributionReportV2Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+ **preview** | **bool** | Whether to preview the report inline rather than generate a downloadable file (default is false) | [default to false]
+ **download** | **bool** | Whether to stream the report back directly for download (default is false) | [default to false]
+ **isPublishing** | **bool** | Whether to publish the report to the SBOM portal. Requires portal-manage permission and an enabled SBOM portal. | [default to false]
+ **projectGroupTitle** | **string** | Override for the release group title shown in the report. | 
+ **projectGroupReleaseTitle** | **string** | Override for the release title shown in the report. | 
+ **projectGroupUrl** | **string** | URL to embed in the release group report metadata. | 
+ **dependencyInfoOptions** | **[]string** | Per-dependency columns/fields to include in the report. | 
+ **includeDeepDependencies** | **bool** | Whether to include deep dependencies (default is false) | [default to false]
+ **includeDirectDependencies** | **bool** | Whether to include direct dependencies (default is false) | [default to false]
+ **includeFOSSADependencies** | **bool** | Whether to include FOSSA-managed dependencies (default is false) | [default to false]
+ **includeLicenseList** | **bool** | Whether to include the license list (default is false) | [default to false]
+ **includeLicenseScan** | **bool** | Whether to include the first-party license scan (default is false) | [default to false]
+ **includeProjectLicense** | **bool** | Whether to include the project&#39;s declared license (default is false) | [default to false]
+ **includeCopyrightList** | **bool** | Whether to include the copyright list (default is false) | [default to false]
+ **includeFileMatches** | **bool** | Whether to include license file matches (default is false) | [default to false]
+ **includeOpenVulnerabilities** | **bool** | Whether to include open vulnerabilities (default is false) | [default to false]
+ **includeClosedVulnerabilities** | **bool** | Whether to include closed vulnerabilities (default is false) | [default to false]
+ **includeDependencySummary** | **bool** | Whether to include the dependency summary (default is false) | [default to false]
+ **includeLicenseHeaders** | **bool** | Whether to include license headers (default is false) | [default to false]
+ **includePackageLabels** | **bool** | Whether to include the package labels assigned to each dependency (default is false) | [default to false]
+ **excludeFields** | [**QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter**](QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter.md) | Object controlling which dependencies are excluded from the report. The only supported nested field is &#x60;packageLabels&#x60;: a non-empty array of package-label values; dependencies carrying any of these labels are excluded from the report.  The server parses the query string with the &#x60;qs&#x60; library, so the array is sent using bracket-and-index notation rather than standard OpenAPI &#x60;deepObject&#x60; serialization. For example, to exclude two labels send (before URL-encoding): &#x60;excludeFields[packageLabels][0]&#x3D;internal&amp;excludeFields[packageLabels][1]&#x3D;vendored&#x60;.  | 
+
+### Return type
+
+[**QueueReleaseGroupAttributionReportV2200Response**](QueueReleaseGroupAttributionReportV2200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/octet-stream
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## UpdateReleaseGroupById
 
 > CreateReleaseGroup200Response UpdateReleaseGroupById(ctx, groupId).UpdateReleaseGroupByIdRequest(updateReleaseGroupByIdRequest).Execute()
@@ -1345,7 +1464,7 @@ Name | Type | Description  | Notes
 
 ## UpdateReleaseGroupReleaseById
 
-> CreateReleaseGroup200Response UpdateReleaseGroupReleaseById(ctx, groupId, projectGroupReleaseId).UpdateReleaseGroupReleaseByIdRequest(updateReleaseGroupReleaseByIdRequest).Execute()
+> CreateReleaseGroupReleases200Response UpdateReleaseGroupReleaseById(ctx, groupId, projectGroupReleaseId).UpdateReleaseGroupReleaseByIdRequest(updateReleaseGroupReleaseByIdRequest).Execute()
 
 
 
@@ -1375,7 +1494,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `ReleaseGroupsAPI.UpdateReleaseGroupReleaseById``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `UpdateReleaseGroupReleaseById`: CreateReleaseGroup200Response
+	// response from `UpdateReleaseGroupReleaseById`: CreateReleaseGroupReleases200Response
 	fmt.Fprintf(os.Stdout, "Response from `ReleaseGroupsAPI.UpdateReleaseGroupReleaseById`: %v\n", resp)
 }
 ```
@@ -1402,7 +1521,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**CreateReleaseGroup200Response**](CreateReleaseGroup200Response.md)
+[**CreateReleaseGroupReleases200Response**](CreateReleaseGroupReleases200Response.md)
 
 ### Authorization
 

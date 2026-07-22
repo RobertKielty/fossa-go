@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.30.21
+API version: 4.34.46
 Contact: support@fossa.com
 */
 
@@ -20,7 +20,7 @@ var _ MappedNullable = &GetGlobalDependency200Response{}
 
 // GetGlobalDependency200Response struct for GetGlobalDependency200Response
 type GetGlobalDependency200Response struct {
-	Dependency *GetProjectDependencies200ResponseDependenciesInner `json:"dependency,omitempty"`
+	Dependency *GetGlobalDependency200ResponseDependency `json:"dependency,omitempty"`
 }
 
 // NewGetGlobalDependency200Response instantiates a new GetGlobalDependency200Response object
@@ -41,9 +41,9 @@ func NewGetGlobalDependency200ResponseWithDefaults() *GetGlobalDependency200Resp
 }
 
 // GetDependency returns the Dependency field value if set, zero value otherwise.
-func (o *GetGlobalDependency200Response) GetDependency() GetProjectDependencies200ResponseDependenciesInner {
+func (o *GetGlobalDependency200Response) GetDependency() GetGlobalDependency200ResponseDependency {
 	if o == nil || IsNil(o.Dependency) {
-		var ret GetProjectDependencies200ResponseDependenciesInner
+		var ret GetGlobalDependency200ResponseDependency
 		return ret
 	}
 	return *o.Dependency
@@ -51,7 +51,7 @@ func (o *GetGlobalDependency200Response) GetDependency() GetProjectDependencies2
 
 // GetDependencyOk returns a tuple with the Dependency field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetGlobalDependency200Response) GetDependencyOk() (*GetProjectDependencies200ResponseDependenciesInner, bool) {
+func (o *GetGlobalDependency200Response) GetDependencyOk() (*GetGlobalDependency200ResponseDependency, bool) {
 	if o == nil || IsNil(o.Dependency) {
 		return nil, false
 	}
@@ -67,8 +67,8 @@ func (o *GetGlobalDependency200Response) HasDependency() bool {
 	return false
 }
 
-// SetDependency gets a reference to the given GetProjectDependencies200ResponseDependenciesInner and assigns it to the Dependency field.
-func (o *GetGlobalDependency200Response) SetDependency(v GetProjectDependencies200ResponseDependenciesInner) {
+// SetDependency gets a reference to the given GetGlobalDependency200ResponseDependency and assigns it to the Dependency field.
+func (o *GetGlobalDependency200Response) SetDependency(v GetGlobalDependency200ResponseDependency) {
 	o.Dependency = &v
 }
 
