@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.47
 Contact: support@fossa.com
 */
 
@@ -48,6 +48,7 @@ type GetIssue200ResponseOneOf struct {
 	References []string `json:"references,omitempty"`
 	Exploitability *string `json:"exploitability,omitempty"`
 	Epss *GetIssue200ResponseOneOfAllOfEpss `json:"epss,omitempty"`
+	CustomRiskScore *GetIssue200ResponseOneOfAllOfCustomRiskScore `json:"customRiskScore,omitempty"`
 }
 
 // NewGetIssue200ResponseOneOf instantiates a new GetIssue200ResponseOneOf object
@@ -899,6 +900,38 @@ func (o *GetIssue200ResponseOneOf) SetEpss(v GetIssue200ResponseOneOfAllOfEpss) 
 	o.Epss = &v
 }
 
+// GetCustomRiskScore returns the CustomRiskScore field value if set, zero value otherwise.
+func (o *GetIssue200ResponseOneOf) GetCustomRiskScore() GetIssue200ResponseOneOfAllOfCustomRiskScore {
+	if o == nil || IsNil(o.CustomRiskScore) {
+		var ret GetIssue200ResponseOneOfAllOfCustomRiskScore
+		return ret
+	}
+	return *o.CustomRiskScore
+}
+
+// GetCustomRiskScoreOk returns a tuple with the CustomRiskScore field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetIssue200ResponseOneOf) GetCustomRiskScoreOk() (*GetIssue200ResponseOneOfAllOfCustomRiskScore, bool) {
+	if o == nil || IsNil(o.CustomRiskScore) {
+		return nil, false
+	}
+	return o.CustomRiskScore, true
+}
+
+// HasCustomRiskScore returns a boolean if a field has been set.
+func (o *GetIssue200ResponseOneOf) HasCustomRiskScore() bool {
+	if o != nil && !IsNil(o.CustomRiskScore) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomRiskScore gets a reference to the given GetIssue200ResponseOneOfAllOfCustomRiskScore and assigns it to the CustomRiskScore field.
+func (o *GetIssue200ResponseOneOf) SetCustomRiskScore(v GetIssue200ResponseOneOfAllOfCustomRiskScore) {
+	o.CustomRiskScore = &v
+}
+
 func (o GetIssue200ResponseOneOf) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -986,6 +1019,9 @@ func (o GetIssue200ResponseOneOf) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Epss) {
 		toSerialize["epss"] = o.Epss
+	}
+	if !IsNil(o.CustomRiskScore) {
+		toSerialize["customRiskScore"] = o.CustomRiskScore
 	}
 	return toSerialize, nil
 }
