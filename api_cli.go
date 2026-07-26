@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.47
 Contact: support@fossa.com
 */
 
@@ -37,6 +37,8 @@ GetOrganizationCLI Method for GetOrganizationCLI
 
 Retrieves organizations capability and preferences for CLI. This is used by CLI to infer default preference and capability of an organization.
 For example, 'supportsIssueDiffs' of True indicates to the CLI, that this organization, and this endpoint can support issue diffing.
+
+This endpoint accepts push-only tokens in addition to full API tokens.
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
