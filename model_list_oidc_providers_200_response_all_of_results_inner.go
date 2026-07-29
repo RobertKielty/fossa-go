@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.53
 Contact: support@fossa.com
 */
 
@@ -85,7 +85,16 @@ func (dst *ListOIDCProviders200ResponseAllOfResultsInner) UnmarshalJSON(data []b
 	} else if match == 1 {
 		return nil // exactly one match
 	} else { // no match
-		return fmt.Errorf("data failed to match schemas in oneOf(ListOIDCProviders200ResponseAllOfResultsInner)")
+        if err != nil {
+            return fmt.Errorf("data failed to match schemas in oneOf(ListOIDCProviders200ResponseAllOfResultsInner): %v", err)
+        } else {
+            return fmt.Errorf("data failed to match schemas in oneOf(ListOIDCProviders200ResponseAllOfResultsInner)")
+        }
+        if err != nil {
+            return fmt.Errorf("data failed to match schemas in oneOf(ListOIDCProviders200ResponseAllOfResultsInner): %v", err)
+        } else {
+            return fmt.Errorf("data failed to match schemas in oneOf(ListOIDCProviders200ResponseAllOfResultsInner)")
+        }
 	}
 }
 
