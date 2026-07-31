@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.54
 Contact: support@fossa.com
 */
 
@@ -25,7 +25,7 @@ type PatchJiraConfigurationRequestCustomFieldsValue struct {
 	// Display name to use in FOSSA
 	DisplayName *string `json:"displayName,omitempty"`
 	// On/off switch to tell FOSSA if the field is required when exporting tickets
-	IsRequired *string `json:"isRequired,omitempty"`
+	IsRequired *bool `json:"isRequired,omitempty"`
 	// When provided, is the default value used when exporting a ticket
 	DefaultValue *string `json:"defaultValue,omitempty"`
 }
@@ -112,9 +112,9 @@ func (o *PatchJiraConfigurationRequestCustomFieldsValue) SetDisplayName(v string
 }
 
 // GetIsRequired returns the IsRequired field value if set, zero value otherwise.
-func (o *PatchJiraConfigurationRequestCustomFieldsValue) GetIsRequired() string {
+func (o *PatchJiraConfigurationRequestCustomFieldsValue) GetIsRequired() bool {
 	if o == nil || IsNil(o.IsRequired) {
-		var ret string
+		var ret bool
 		return ret
 	}
 	return *o.IsRequired
@@ -122,7 +122,7 @@ func (o *PatchJiraConfigurationRequestCustomFieldsValue) GetIsRequired() string 
 
 // GetIsRequiredOk returns a tuple with the IsRequired field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PatchJiraConfigurationRequestCustomFieldsValue) GetIsRequiredOk() (*string, bool) {
+func (o *PatchJiraConfigurationRequestCustomFieldsValue) GetIsRequiredOk() (*bool, bool) {
 	if o == nil || IsNil(o.IsRequired) {
 		return nil, false
 	}
@@ -138,8 +138,8 @@ func (o *PatchJiraConfigurationRequestCustomFieldsValue) HasIsRequired() bool {
 	return false
 }
 
-// SetIsRequired gets a reference to the given string and assigns it to the IsRequired field.
-func (o *PatchJiraConfigurationRequestCustomFieldsValue) SetIsRequired(v string) {
+// SetIsRequired gets a reference to the given bool and assigns it to the IsRequired field.
+func (o *PatchJiraConfigurationRequestCustomFieldsValue) SetIsRequired(v bool) {
 	o.IsRequired = &v
 }
 

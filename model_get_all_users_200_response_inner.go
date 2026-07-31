@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.54
 Contact: support@fossa.com
 */
 
@@ -33,6 +33,8 @@ type GetAllUsers200ResponseInner struct {
 	Demo *bool `json:"demo,omitempty"`
 	// Whether the user is a super user
 	Super *bool `json:"super,omitempty"`
+	// Whether the user is a service account
+	IsServiceAccount *bool `json:"isServiceAccount,omitempty"`
 	// The date the user joined the organization
 	Joined NullableTime `json:"joined,omitempty"`
 	// The date the user last visited the organization
@@ -304,6 +306,38 @@ func (o *GetAllUsers200ResponseInner) HasSuper() bool {
 // SetSuper gets a reference to the given bool and assigns it to the Super field.
 func (o *GetAllUsers200ResponseInner) SetSuper(v bool) {
 	o.Super = &v
+}
+
+// GetIsServiceAccount returns the IsServiceAccount field value if set, zero value otherwise.
+func (o *GetAllUsers200ResponseInner) GetIsServiceAccount() bool {
+	if o == nil || IsNil(o.IsServiceAccount) {
+		var ret bool
+		return ret
+	}
+	return *o.IsServiceAccount
+}
+
+// GetIsServiceAccountOk returns a tuple with the IsServiceAccount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetAllUsers200ResponseInner) GetIsServiceAccountOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsServiceAccount) {
+		return nil, false
+	}
+	return o.IsServiceAccount, true
+}
+
+// HasIsServiceAccount returns a boolean if a field has been set.
+func (o *GetAllUsers200ResponseInner) HasIsServiceAccount() bool {
+	if o != nil && !IsNil(o.IsServiceAccount) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsServiceAccount gets a reference to the given bool and assigns it to the IsServiceAccount field.
+func (o *GetAllUsers200ResponseInner) SetIsServiceAccount(v bool) {
+	o.IsServiceAccount = &v
 }
 
 // GetJoined returns the Joined field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -1021,6 +1055,9 @@ func (o GetAllUsers200ResponseInner) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Super) {
 		toSerialize["super"] = o.Super
+	}
+	if !IsNil(o.IsServiceAccount) {
+		toSerialize["isServiceAccount"] = o.IsServiceAccount
 	}
 	if o.Joined.IsSet() {
 		toSerialize["joined"] = o.Joined.Get()
