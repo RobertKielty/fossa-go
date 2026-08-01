@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **Issuer** | **string** | The issuer URL of the OIDC Provider | 
 **Scope** | **string** | The scope level of the OIDC Provider | 
 **ScopeId** | **int32** | The organization ID | 
-**TeamName** | Pointer to [**nil**](nil.md) | Team name (null for org-scoped providers) | [optional] 
+**TeamName** | Pointer to [**NullableNil**](nil.md) | Team name (null for org-scoped providers) | [optional] 
 **CreatedAt** | **time.Time** | When the OIDC Provider was created | 
 **UpdatedAt** | **time.Time** | When the OIDC Provider was last updated | 
 
@@ -157,6 +157,16 @@ SetTeamName sets TeamName field to given value.
 
 HasTeamName returns a boolean if a field has been set.
 
+### SetTeamNameNil
+
+`func (o *ListOIDCProviders200ResponseAllOfResultsInnerOneOf) SetTeamNameNil(b bool)`
+
+ SetTeamNameNil sets the value for TeamName to be an explicit nil
+
+### UnsetTeamName
+`func (o *ListOIDCProviders200ResponseAllOfResultsInnerOneOf) UnsetTeamName()`
+
+UnsetTeamName ensures that no value is present for TeamName, not even an explicit nil
 ### GetCreatedAt
 
 `func (o *ListOIDCProviders200ResponseAllOfResultsInnerOneOf) GetCreatedAt() time.Time`

@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.55
 Contact: support@fossa.com
 */
 
@@ -27,7 +27,6 @@ type CreateReleaseGroupRequest struct {
 	SecurityPolicyId *int32 `json:"securityPolicyId,omitempty"`
 	QualityPolicyId *int32 `json:"qualityPolicyId,omitempty"`
 	PublicOnPortal *bool `json:"publicOnPortal,omitempty"`
-	IssueTrackerType *string `json:"issueTrackerType,omitempty"`
 	Teams []int32 `json:"teams,omitempty"`
 	Release CreateReleaseGroupRequestRelease `json:"release"`
 }
@@ -205,38 +204,6 @@ func (o *CreateReleaseGroupRequest) SetPublicOnPortal(v bool) {
 	o.PublicOnPortal = &v
 }
 
-// GetIssueTrackerType returns the IssueTrackerType field value if set, zero value otherwise.
-func (o *CreateReleaseGroupRequest) GetIssueTrackerType() string {
-	if o == nil || IsNil(o.IssueTrackerType) {
-		var ret string
-		return ret
-	}
-	return *o.IssueTrackerType
-}
-
-// GetIssueTrackerTypeOk returns a tuple with the IssueTrackerType field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateReleaseGroupRequest) GetIssueTrackerTypeOk() (*string, bool) {
-	if o == nil || IsNil(o.IssueTrackerType) {
-		return nil, false
-	}
-	return o.IssueTrackerType, true
-}
-
-// HasIssueTrackerType returns a boolean if a field has been set.
-func (o *CreateReleaseGroupRequest) HasIssueTrackerType() bool {
-	if o != nil && !IsNil(o.IssueTrackerType) {
-		return true
-	}
-
-	return false
-}
-
-// SetIssueTrackerType gets a reference to the given string and assigns it to the IssueTrackerType field.
-func (o *CreateReleaseGroupRequest) SetIssueTrackerType(v string) {
-	o.IssueTrackerType = &v
-}
-
 // GetTeams returns the Teams field value if set, zero value otherwise.
 func (o *CreateReleaseGroupRequest) GetTeams() []int32 {
 	if o == nil || IsNil(o.Teams) {
@@ -315,9 +282,6 @@ func (o CreateReleaseGroupRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PublicOnPortal) {
 		toSerialize["publicOnPortal"] = o.PublicOnPortal
-	}
-	if !IsNil(o.IssueTrackerType) {
-		toSerialize["issueTrackerType"] = o.IssueTrackerType
 	}
 	if !IsNil(o.Teams) {
 		toSerialize["teams"] = o.Teams

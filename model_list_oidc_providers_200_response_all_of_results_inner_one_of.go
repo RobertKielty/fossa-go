@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.55
 Contact: support@fossa.com
 */
 
@@ -34,7 +34,7 @@ type ListOIDCProviders200ResponseAllOfResultsInnerOneOf struct {
 	// The organization ID
 	ScopeId int32 `json:"scopeId"`
 	// Team name (null for org-scoped providers)
-	TeamName *nil `json:"teamName,omitempty"`
+	TeamName NullableNil `json:"teamName,omitempty"`
 	// When the OIDC Provider was created
 	CreatedAt time.Time `json:"createdAt"`
 	// When the OIDC Provider was last updated
@@ -187,36 +187,46 @@ func (o *ListOIDCProviders200ResponseAllOfResultsInnerOneOf) SetScopeId(v int32)
 	o.ScopeId = v
 }
 
-// GetTeamName returns the TeamName field value if set, zero value otherwise.
+// GetTeamName returns the TeamName field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *ListOIDCProviders200ResponseAllOfResultsInnerOneOf) GetTeamName() nil {
-	if o == nil || IsNil(o.TeamName) {
+	if o == nil || IsNil(o.TeamName.Get()) {
 		var ret nil
 		return ret
 	}
-	return *o.TeamName
+	return *o.TeamName.Get()
 }
 
 // GetTeamNameOk returns a tuple with the TeamName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ListOIDCProviders200ResponseAllOfResultsInnerOneOf) GetTeamNameOk() (*nil, bool) {
-	if o == nil || IsNil(o.TeamName) {
+	if o == nil {
 		return nil, false
 	}
-	return o.TeamName, true
+	return o.TeamName.Get(), o.TeamName.IsSet()
 }
 
 // HasTeamName returns a boolean if a field has been set.
 func (o *ListOIDCProviders200ResponseAllOfResultsInnerOneOf) HasTeamName() bool {
-	if o != nil && !IsNil(o.TeamName) {
+	if o != nil && o.TeamName.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetTeamName gets a reference to the given nil and assigns it to the TeamName field.
+// SetTeamName gets a reference to the given NullableNil and assigns it to the TeamName field.
 func (o *ListOIDCProviders200ResponseAllOfResultsInnerOneOf) SetTeamName(v nil) {
-	o.TeamName = &v
+	o.TeamName.Set(&v)
+}
+// SetTeamNameNil sets the value for TeamName to be an explicit nil
+func (o *ListOIDCProviders200ResponseAllOfResultsInnerOneOf) SetTeamNameNil() {
+	o.TeamName.Set(nil)
+}
+
+// UnsetTeamName ensures that no value is present for TeamName, not even an explicit nil
+func (o *ListOIDCProviders200ResponseAllOfResultsInnerOneOf) UnsetTeamName() {
+	o.TeamName.Unset()
 }
 
 // GetCreatedAt returns the CreatedAt field value
@@ -282,8 +292,8 @@ func (o ListOIDCProviders200ResponseAllOfResultsInnerOneOf) ToMap() (map[string]
 	toSerialize["issuer"] = o.Issuer
 	toSerialize["scope"] = o.Scope
 	toSerialize["scopeId"] = o.ScopeId
-	if !IsNil(o.TeamName) {
-		toSerialize["teamName"] = o.TeamName
+	if o.TeamName.IsSet() {
+		toSerialize["teamName"] = o.TeamName.Get()
 	}
 	toSerialize["createdAt"] = o.CreatedAt
 	toSerialize["updatedAt"] = o.UpdatedAt
