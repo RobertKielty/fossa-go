@@ -517,7 +517,7 @@ import (
 
 func main() {
 	id := int32(56) // int32 | ID of the team group
-	updateTeamGroupUsersRequest := *openapiclient.NewUpdateTeamGroupUsersRequest("add", []openapiclient.UpdateTeamGroupUsersRequestUsersInner{*openapiclient.NewUpdateTeamGroupUsersRequestUsersInner(int32(123))}) // UpdateTeamGroupUsersRequest | 
+	updateTeamGroupUsersRequest := *openapiclient.NewUpdateTeamGroupUsersRequest("add", []openapiclient.UpdateTeamUsersRequestUsersInner{*openapiclient.NewUpdateTeamUsersRequestUsersInner(int32(123))}) // UpdateTeamGroupUsersRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
