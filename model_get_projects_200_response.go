@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.58
 Contact: support@fossa.com
 */
 
@@ -21,7 +21,7 @@ var _ MappedNullable = &GetProjects200Response{}
 // GetProjects200Response struct for GetProjects200Response
 type GetProjects200Response struct {
 	Total *int32 `json:"total,omitempty"`
-	Projects []interface{} `json:"projects,omitempty"`
+	Projects []GetProjects200ResponseProjectsInner `json:"projects,omitempty"`
 }
 
 // NewGetProjects200Response instantiates a new GetProjects200Response object
@@ -74,9 +74,9 @@ func (o *GetProjects200Response) SetTotal(v int32) {
 }
 
 // GetProjects returns the Projects field value if set, zero value otherwise.
-func (o *GetProjects200Response) GetProjects() []interface{} {
+func (o *GetProjects200Response) GetProjects() []GetProjects200ResponseProjectsInner {
 	if o == nil || IsNil(o.Projects) {
-		var ret []interface{}
+		var ret []GetProjects200ResponseProjectsInner
 		return ret
 	}
 	return o.Projects
@@ -84,7 +84,7 @@ func (o *GetProjects200Response) GetProjects() []interface{} {
 
 // GetProjectsOk returns a tuple with the Projects field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetProjects200Response) GetProjectsOk() ([]interface{}, bool) {
+func (o *GetProjects200Response) GetProjectsOk() ([]GetProjects200ResponseProjectsInner, bool) {
 	if o == nil || IsNil(o.Projects) {
 		return nil, false
 	}
@@ -100,8 +100,8 @@ func (o *GetProjects200Response) HasProjects() bool {
 	return false
 }
 
-// SetProjects gets a reference to the given []interface{} and assigns it to the Projects field.
-func (o *GetProjects200Response) SetProjects(v []interface{}) {
+// SetProjects gets a reference to the given []GetProjects200ResponseProjectsInner and assigns it to the Projects field.
+func (o *GetProjects200Response) SetProjects(v []GetProjects200ResponseProjectsInner) {
 	o.Projects = v
 }
 
