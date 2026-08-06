@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.59
 Contact: support@fossa.com
 */
 
@@ -42,10 +42,12 @@ type Jira struct {
 	IssueTypes []string `json:"issueTypes,omitempty"`
 	// Available labels to include when exporting tickets. Corresponds to a label in Jira
 	Labels []string `json:"labels,omitempty"`
+	// Available Jira components to include when exporting tickets. Components can be made required in Jira and are passed by ID when creating issues.
+	Components []PatchJiraConfigurationRequestComponentsInner `json:"components,omitempty"`
 	// Available Jira Projects to export to from FOSSA
 	JiraProjectIds []string `json:"jiraProjectIds,omitempty"`
 	// a dictionary of custom fields
-	CustomFields *map[string]PatchJiraConfigurationRequestCustomFieldsValue `json:"customFields,omitempty"`
+	CustomFields map[string]PatchJiraConfigurationRequestCustomFieldsValue `json:"customFields,omitempty"`
 	// The Jira Project to default to when exporting licensing issues
 	DefaultLicensingProject NullableString `json:"defaultLicensingProject,omitempty"`
 	// The Jira Project to default to when exporting security issues
@@ -403,9 +405,9 @@ func (o *Jira) SetCredentials(v PatchJiraConfigurationRequestCredentials) {
 	o.Credentials = &v
 }
 
-// GetHeaders returns the Headers field value if set, zero value otherwise.
+// GetHeaders returns the Headers field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Jira) GetHeaders() map[string]string {
-	if o == nil || IsNil(o.Headers) {
+	if o == nil {
 		var ret map[string]string
 		return ret
 	}
@@ -414,6 +416,7 @@ func (o *Jira) GetHeaders() map[string]string {
 
 // GetHeadersOk returns a tuple with the Headers field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Jira) GetHeadersOk() (map[string]string, bool) {
 	if o == nil || IsNil(o.Headers) {
 		return map[string]string{}, false
@@ -501,6 +504,39 @@ func (o *Jira) SetLabels(v []string) {
 	o.Labels = v
 }
 
+// GetComponents returns the Components field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Jira) GetComponents() []PatchJiraConfigurationRequestComponentsInner {
+	if o == nil {
+		var ret []PatchJiraConfigurationRequestComponentsInner
+		return ret
+	}
+	return o.Components
+}
+
+// GetComponentsOk returns a tuple with the Components field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Jira) GetComponentsOk() ([]PatchJiraConfigurationRequestComponentsInner, bool) {
+	if o == nil || IsNil(o.Components) {
+		return nil, false
+	}
+	return o.Components, true
+}
+
+// HasComponents returns a boolean if a field has been set.
+func (o *Jira) HasComponents() bool {
+	if o != nil && !IsNil(o.Components) {
+		return true
+	}
+
+	return false
+}
+
+// SetComponents gets a reference to the given []PatchJiraConfigurationRequestComponentsInner and assigns it to the Components field.
+func (o *Jira) SetComponents(v []PatchJiraConfigurationRequestComponentsInner) {
+	o.Components = v
+}
+
 // GetJiraProjectIds returns the JiraProjectIds field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Jira) GetJiraProjectIds() []string {
 	if o == nil {
@@ -534,20 +570,21 @@ func (o *Jira) SetJiraProjectIds(v []string) {
 	o.JiraProjectIds = v
 }
 
-// GetCustomFields returns the CustomFields field value if set, zero value otherwise.
+// GetCustomFields returns the CustomFields field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *Jira) GetCustomFields() map[string]PatchJiraConfigurationRequestCustomFieldsValue {
-	if o == nil || IsNil(o.CustomFields) {
+	if o == nil {
 		var ret map[string]PatchJiraConfigurationRequestCustomFieldsValue
 		return ret
 	}
-	return *o.CustomFields
+	return o.CustomFields
 }
 
 // GetCustomFieldsOk returns a tuple with the CustomFields field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Jira) GetCustomFieldsOk() (*map[string]PatchJiraConfigurationRequestCustomFieldsValue, bool) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Jira) GetCustomFieldsOk() (map[string]PatchJiraConfigurationRequestCustomFieldsValue, bool) {
 	if o == nil || IsNil(o.CustomFields) {
-		return nil, false
+		return map[string]PatchJiraConfigurationRequestCustomFieldsValue{}, false
 	}
 	return o.CustomFields, true
 }
@@ -563,7 +600,7 @@ func (o *Jira) HasCustomFields() bool {
 
 // SetCustomFields gets a reference to the given map[string]PatchJiraConfigurationRequestCustomFieldsValue and assigns it to the CustomFields field.
 func (o *Jira) SetCustomFields(v map[string]PatchJiraConfigurationRequestCustomFieldsValue) {
-	o.CustomFields = &v
+	o.CustomFields = v
 }
 
 // GetDefaultLicensingProject returns the DefaultLicensingProject field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -764,7 +801,7 @@ func (o Jira) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Credentials) {
 		toSerialize["credentials"] = o.Credentials
 	}
-	if !IsNil(o.Headers) {
+	if o.Headers != nil {
 		toSerialize["headers"] = o.Headers
 	}
 	if o.IssueTypes != nil {
@@ -773,10 +810,13 @@ func (o Jira) ToMap() (map[string]interface{}, error) {
 	if o.Labels != nil {
 		toSerialize["labels"] = o.Labels
 	}
+	if o.Components != nil {
+		toSerialize["components"] = o.Components
+	}
 	if o.JiraProjectIds != nil {
 		toSerialize["jiraProjectIds"] = o.JiraProjectIds
 	}
-	if !IsNil(o.CustomFields) {
+	if o.CustomFields != nil {
 		toSerialize["customFields"] = o.CustomFields
 	}
 	if o.DefaultLicensingProject.IsSet() {

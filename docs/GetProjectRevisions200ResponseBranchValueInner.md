@@ -9,6 +9,8 @@ Name | Type | Description | Notes
 **Resolved** | Pointer to **bool** | Has the Revision been fully analyzed by FOSSA | [optional] 
 **ProjectId** | Pointer to **string** | The Project locator that the Revision belongs to | [optional] 
 **SourceType** | Pointer to **NullableString** | FOSSA internal representation of the source language for the given repository/project | [optional] 
+**Source** | Pointer to **NullableString** | The source the Revision originated from (for example &#x60;github&#x60;, &#x60;cli&#x60;, &#x60;archive&#x60;, &#x60;container&#x60;, &#x60;sbom&#x60;, or &#x60;binary&#x60;) | [optional] 
+**UnresolvedIssueCount** | Pointer to **NullableFloat32** | The number of unresolved issues found for this Revision | [optional] 
 **Error** | Pointer to **NullableString** | Error message during analysis (if any) | [optional] 
 **Message** | Pointer to **NullableString** | Message of the revision or commit | [optional] 
 **RevisionTimestamp** | Pointer to **NullableString** | timestamp of when the Revision was published | [optional] 
@@ -16,9 +18,6 @@ Name | Type | Description | Notes
 **LatestHubbleAnalysisId** | Pointer to **NullableFloat32** | The Hubble Analysis ID of the latest analysis | [optional] 
 **CreatedAt** | Pointer to **string** | when the Revision was added to the FOSSA Database | [optional] 
 **UpdatedAt** | Pointer to **string** | when the Revision was last updated in the FOSSA Database | [optional] 
-**Author** | Pointer to **NullableString** | The author of the Revision | [optional] 
-**Link** | Pointer to **NullableString** | The link associated with the Revision | [optional] 
-**Url** | Pointer to **NullableString** | The url associated with the Revision | [optional] 
 
 ## Methods
 
@@ -174,6 +173,76 @@ HasSourceType returns a boolean if a field has been set.
 `func (o *GetProjectRevisions200ResponseBranchValueInner) UnsetSourceType()`
 
 UnsetSourceType ensures that no value is present for SourceType, not even an explicit nil
+### GetSource
+
+`func (o *GetProjectRevisions200ResponseBranchValueInner) GetSource() string`
+
+GetSource returns the Source field if non-nil, zero value otherwise.
+
+### GetSourceOk
+
+`func (o *GetProjectRevisions200ResponseBranchValueInner) GetSourceOk() (*string, bool)`
+
+GetSourceOk returns a tuple with the Source field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSource
+
+`func (o *GetProjectRevisions200ResponseBranchValueInner) SetSource(v string)`
+
+SetSource sets Source field to given value.
+
+### HasSource
+
+`func (o *GetProjectRevisions200ResponseBranchValueInner) HasSource() bool`
+
+HasSource returns a boolean if a field has been set.
+
+### SetSourceNil
+
+`func (o *GetProjectRevisions200ResponseBranchValueInner) SetSourceNil(b bool)`
+
+ SetSourceNil sets the value for Source to be an explicit nil
+
+### UnsetSource
+`func (o *GetProjectRevisions200ResponseBranchValueInner) UnsetSource()`
+
+UnsetSource ensures that no value is present for Source, not even an explicit nil
+### GetUnresolvedIssueCount
+
+`func (o *GetProjectRevisions200ResponseBranchValueInner) GetUnresolvedIssueCount() float32`
+
+GetUnresolvedIssueCount returns the UnresolvedIssueCount field if non-nil, zero value otherwise.
+
+### GetUnresolvedIssueCountOk
+
+`func (o *GetProjectRevisions200ResponseBranchValueInner) GetUnresolvedIssueCountOk() (*float32, bool)`
+
+GetUnresolvedIssueCountOk returns a tuple with the UnresolvedIssueCount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetUnresolvedIssueCount
+
+`func (o *GetProjectRevisions200ResponseBranchValueInner) SetUnresolvedIssueCount(v float32)`
+
+SetUnresolvedIssueCount sets UnresolvedIssueCount field to given value.
+
+### HasUnresolvedIssueCount
+
+`func (o *GetProjectRevisions200ResponseBranchValueInner) HasUnresolvedIssueCount() bool`
+
+HasUnresolvedIssueCount returns a boolean if a field has been set.
+
+### SetUnresolvedIssueCountNil
+
+`func (o *GetProjectRevisions200ResponseBranchValueInner) SetUnresolvedIssueCountNil(b bool)`
+
+ SetUnresolvedIssueCountNil sets the value for UnresolvedIssueCount to be an explicit nil
+
+### UnsetUnresolvedIssueCount
+`func (o *GetProjectRevisions200ResponseBranchValueInner) UnsetUnresolvedIssueCount()`
+
+UnsetUnresolvedIssueCount ensures that no value is present for UnresolvedIssueCount, not even an explicit nil
 ### GetError
 
 `func (o *GetProjectRevisions200ResponseBranchValueInner) GetError() string`
@@ -399,111 +468,6 @@ SetUpdatedAt sets UpdatedAt field to given value.
 
 HasUpdatedAt returns a boolean if a field has been set.
 
-### GetAuthor
-
-`func (o *GetProjectRevisions200ResponseBranchValueInner) GetAuthor() string`
-
-GetAuthor returns the Author field if non-nil, zero value otherwise.
-
-### GetAuthorOk
-
-`func (o *GetProjectRevisions200ResponseBranchValueInner) GetAuthorOk() (*string, bool)`
-
-GetAuthorOk returns a tuple with the Author field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAuthor
-
-`func (o *GetProjectRevisions200ResponseBranchValueInner) SetAuthor(v string)`
-
-SetAuthor sets Author field to given value.
-
-### HasAuthor
-
-`func (o *GetProjectRevisions200ResponseBranchValueInner) HasAuthor() bool`
-
-HasAuthor returns a boolean if a field has been set.
-
-### SetAuthorNil
-
-`func (o *GetProjectRevisions200ResponseBranchValueInner) SetAuthorNil(b bool)`
-
- SetAuthorNil sets the value for Author to be an explicit nil
-
-### UnsetAuthor
-`func (o *GetProjectRevisions200ResponseBranchValueInner) UnsetAuthor()`
-
-UnsetAuthor ensures that no value is present for Author, not even an explicit nil
-### GetLink
-
-`func (o *GetProjectRevisions200ResponseBranchValueInner) GetLink() string`
-
-GetLink returns the Link field if non-nil, zero value otherwise.
-
-### GetLinkOk
-
-`func (o *GetProjectRevisions200ResponseBranchValueInner) GetLinkOk() (*string, bool)`
-
-GetLinkOk returns a tuple with the Link field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetLink
-
-`func (o *GetProjectRevisions200ResponseBranchValueInner) SetLink(v string)`
-
-SetLink sets Link field to given value.
-
-### HasLink
-
-`func (o *GetProjectRevisions200ResponseBranchValueInner) HasLink() bool`
-
-HasLink returns a boolean if a field has been set.
-
-### SetLinkNil
-
-`func (o *GetProjectRevisions200ResponseBranchValueInner) SetLinkNil(b bool)`
-
- SetLinkNil sets the value for Link to be an explicit nil
-
-### UnsetLink
-`func (o *GetProjectRevisions200ResponseBranchValueInner) UnsetLink()`
-
-UnsetLink ensures that no value is present for Link, not even an explicit nil
-### GetUrl
-
-`func (o *GetProjectRevisions200ResponseBranchValueInner) GetUrl() string`
-
-GetUrl returns the Url field if non-nil, zero value otherwise.
-
-### GetUrlOk
-
-`func (o *GetProjectRevisions200ResponseBranchValueInner) GetUrlOk() (*string, bool)`
-
-GetUrlOk returns a tuple with the Url field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetUrl
-
-`func (o *GetProjectRevisions200ResponseBranchValueInner) SetUrl(v string)`
-
-SetUrl sets Url field to given value.
-
-### HasUrl
-
-`func (o *GetProjectRevisions200ResponseBranchValueInner) HasUrl() bool`
-
-HasUrl returns a boolean if a field has been set.
-
-### SetUrlNil
-
-`func (o *GetProjectRevisions200ResponseBranchValueInner) SetUrlNil(b bool)`
-
- SetUrlNil sets the value for Url to be an explicit nil
-
-### UnsetUrl
-`func (o *GetProjectRevisions200ResponseBranchValueInner) UnsetUrl()`
-
-UnsetUrl ensures that no value is present for Url, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

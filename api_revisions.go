@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.59
 Contact: support@fossa.com
 */
 
@@ -26,6 +26,369 @@ import (
 // RevisionsAPIService RevisionsAPI service
 type RevisionsAPIService service
 
+type ApiCreateRevisionAttributionPublicReportV2Request struct {
+	ctx context.Context
+	ApiService *RevisionsAPIService
+	locator string
+	format *string
+	emails *string
+	includeDeepDependencies *bool
+	includeDirectDependencies *bool
+	includeLicenseList *bool
+	includeLicenseScan *bool
+	includeProjectLicense *bool
+	includeCopyrightList *bool
+	includeFileMatches *bool
+	includeOpenVulnerabilities *bool
+	includeClosedVulnerabilities *bool
+	includeDependencySummary *bool
+	includeLicenseHeaders *bool
+	includePackageLabels *bool
+	excludeFields *QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter
+}
+
+// The format of the report
+func (r ApiCreateRevisionAttributionPublicReportV2Request) Format(format string) ApiCreateRevisionAttributionPublicReportV2Request {
+	r.format = &format
+	return r
+}
+
+// A single email address used as the report recipient and, for SPDX-style reports, the author identifier. Despite the plural name, this accepts exactly one address — not a list. 
+func (r ApiCreateRevisionAttributionPublicReportV2Request) Emails(emails string) ApiCreateRevisionAttributionPublicReportV2Request {
+	r.emails = &emails
+	return r
+}
+
+// Whether to include deep dependencies (default is false)
+func (r ApiCreateRevisionAttributionPublicReportV2Request) IncludeDeepDependencies(includeDeepDependencies bool) ApiCreateRevisionAttributionPublicReportV2Request {
+	r.includeDeepDependencies = &includeDeepDependencies
+	return r
+}
+
+// Whether to include direct dependencies (default is false)
+func (r ApiCreateRevisionAttributionPublicReportV2Request) IncludeDirectDependencies(includeDirectDependencies bool) ApiCreateRevisionAttributionPublicReportV2Request {
+	r.includeDirectDependencies = &includeDirectDependencies
+	return r
+}
+
+// Whether to include the license list (default is false)
+func (r ApiCreateRevisionAttributionPublicReportV2Request) IncludeLicenseList(includeLicenseList bool) ApiCreateRevisionAttributionPublicReportV2Request {
+	r.includeLicenseList = &includeLicenseList
+	return r
+}
+
+// Whether to include the first-party license scan (default is false)
+func (r ApiCreateRevisionAttributionPublicReportV2Request) IncludeLicenseScan(includeLicenseScan bool) ApiCreateRevisionAttributionPublicReportV2Request {
+	r.includeLicenseScan = &includeLicenseScan
+	return r
+}
+
+// Whether to include the project&#39;s declared license (default is false)
+func (r ApiCreateRevisionAttributionPublicReportV2Request) IncludeProjectLicense(includeProjectLicense bool) ApiCreateRevisionAttributionPublicReportV2Request {
+	r.includeProjectLicense = &includeProjectLicense
+	return r
+}
+
+// Whether to include the copyright list (default is false)
+func (r ApiCreateRevisionAttributionPublicReportV2Request) IncludeCopyrightList(includeCopyrightList bool) ApiCreateRevisionAttributionPublicReportV2Request {
+	r.includeCopyrightList = &includeCopyrightList
+	return r
+}
+
+// Whether to include license file matches (default is false)
+func (r ApiCreateRevisionAttributionPublicReportV2Request) IncludeFileMatches(includeFileMatches bool) ApiCreateRevisionAttributionPublicReportV2Request {
+	r.includeFileMatches = &includeFileMatches
+	return r
+}
+
+// Whether to include open vulnerabilities (default is false)
+func (r ApiCreateRevisionAttributionPublicReportV2Request) IncludeOpenVulnerabilities(includeOpenVulnerabilities bool) ApiCreateRevisionAttributionPublicReportV2Request {
+	r.includeOpenVulnerabilities = &includeOpenVulnerabilities
+	return r
+}
+
+// Whether to include closed vulnerabilities (default is false)
+func (r ApiCreateRevisionAttributionPublicReportV2Request) IncludeClosedVulnerabilities(includeClosedVulnerabilities bool) ApiCreateRevisionAttributionPublicReportV2Request {
+	r.includeClosedVulnerabilities = &includeClosedVulnerabilities
+	return r
+}
+
+// Whether to include the dependency summary (default is false)
+func (r ApiCreateRevisionAttributionPublicReportV2Request) IncludeDependencySummary(includeDependencySummary bool) ApiCreateRevisionAttributionPublicReportV2Request {
+	r.includeDependencySummary = &includeDependencySummary
+	return r
+}
+
+// Whether to include license headers (default is false)
+func (r ApiCreateRevisionAttributionPublicReportV2Request) IncludeLicenseHeaders(includeLicenseHeaders bool) ApiCreateRevisionAttributionPublicReportV2Request {
+	r.includeLicenseHeaders = &includeLicenseHeaders
+	return r
+}
+
+// Whether to include the package labels assigned to each dependency (default is false)
+func (r ApiCreateRevisionAttributionPublicReportV2Request) IncludePackageLabels(includePackageLabels bool) ApiCreateRevisionAttributionPublicReportV2Request {
+	r.includePackageLabels = &includePackageLabels
+	return r
+}
+
+// Object controlling which dependencies are excluded from the report. The only supported nested field is &#x60;packageLabels&#x60;: a non-empty array of package-label values; dependencies carrying any of these labels are excluded from the report.  The server parses the query string with the &#x60;qs&#x60; library, so the array is sent using bracket-and-index notation rather than standard OpenAPI &#x60;deepObject&#x60; serialization. For example, to exclude two labels send (before URL-encoding): &#x60;excludeFields[packageLabels][0]&#x3D;internal&amp;excludeFields[packageLabels][1]&#x3D;vendored&#x60;. 
+func (r ApiCreateRevisionAttributionPublicReportV2Request) ExcludeFields(excludeFields QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter) ApiCreateRevisionAttributionPublicReportV2Request {
+	r.excludeFields = &excludeFields
+	return r
+}
+
+func (r ApiCreateRevisionAttributionPublicReportV2Request) Execute() (*CreateRevisionAttributionPublicReportV2202Response, *http.Response, error) {
+	return r.ApiService.CreateRevisionAttributionPublicReportV2Execute(r)
+}
+
+/*
+CreateRevisionAttributionPublicReportV2 Method for CreateRevisionAttributionPublicReportV2
+
+Create a public attribution report link for a revision (V2). Queues a background job to
+generate the report and upload it to S3, and returns the pending `Report` record together
+with the queued `task`.
+
+**Requires a Premium subscription** and project view + report-link permissions.
+
+**Note:** Not all report options are valid for every report format. Use your project's
+Reports UI to see which options apply to a given format.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The URL-encoded locator of the revision
+ @return ApiCreateRevisionAttributionPublicReportV2Request
+*/
+func (a *RevisionsAPIService) CreateRevisionAttributionPublicReportV2(ctx context.Context, locator string) ApiCreateRevisionAttributionPublicReportV2Request {
+	return ApiCreateRevisionAttributionPublicReportV2Request{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+	}
+}
+
+// Execute executes the request
+//  @return CreateRevisionAttributionPublicReportV2202Response
+func (a *RevisionsAPIService) CreateRevisionAttributionPublicReportV2Execute(r ApiCreateRevisionAttributionPublicReportV2Request) (*CreateRevisionAttributionPublicReportV2202Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CreateRevisionAttributionPublicReportV2202Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RevisionsAPIService.CreateRevisionAttributionPublicReportV2")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/revisions/{locator}/attribution/public"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.format != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "form", "")
+	}
+	if r.emails != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "emails", r.emails, "form", "")
+	}
+	if r.includeDeepDependencies != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDeepDependencies", r.includeDeepDependencies, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDeepDependencies", defaultValue, "form", "")
+		r.includeDeepDependencies = &defaultValue
+	}
+	if r.includeDirectDependencies != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDirectDependencies", r.includeDirectDependencies, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDirectDependencies", defaultValue, "form", "")
+		r.includeDirectDependencies = &defaultValue
+	}
+	if r.includeLicenseList != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseList", r.includeLicenseList, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseList", defaultValue, "form", "")
+		r.includeLicenseList = &defaultValue
+	}
+	if r.includeLicenseScan != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseScan", r.includeLicenseScan, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseScan", defaultValue, "form", "")
+		r.includeLicenseScan = &defaultValue
+	}
+	if r.includeProjectLicense != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeProjectLicense", r.includeProjectLicense, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeProjectLicense", defaultValue, "form", "")
+		r.includeProjectLicense = &defaultValue
+	}
+	if r.includeCopyrightList != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyrightList", r.includeCopyrightList, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyrightList", defaultValue, "form", "")
+		r.includeCopyrightList = &defaultValue
+	}
+	if r.includeFileMatches != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFileMatches", r.includeFileMatches, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFileMatches", defaultValue, "form", "")
+		r.includeFileMatches = &defaultValue
+	}
+	if r.includeOpenVulnerabilities != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeOpenVulnerabilities", r.includeOpenVulnerabilities, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeOpenVulnerabilities", defaultValue, "form", "")
+		r.includeOpenVulnerabilities = &defaultValue
+	}
+	if r.includeClosedVulnerabilities != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeClosedVulnerabilities", r.includeClosedVulnerabilities, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeClosedVulnerabilities", defaultValue, "form", "")
+		r.includeClosedVulnerabilities = &defaultValue
+	}
+	if r.includeDependencySummary != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDependencySummary", r.includeDependencySummary, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDependencySummary", defaultValue, "form", "")
+		r.includeDependencySummary = &defaultValue
+	}
+	if r.includeLicenseHeaders != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseHeaders", r.includeLicenseHeaders, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseHeaders", defaultValue, "form", "")
+		r.includeLicenseHeaders = &defaultValue
+	}
+	if r.includePackageLabels != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", r.includePackageLabels, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", defaultValue, "form", "")
+		r.includePackageLabels = &defaultValue
+	}
+	if r.excludeFields != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeFields", r.excludeFields, "deepObject", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiFixPlansRequest struct {
 	ctx context.Context
 	ApiService *RevisionsAPIService
@@ -35,8 +398,12 @@ type ApiFixPlansRequest struct {
 	bundle *bool
 	excludeQuickWins *bool
 	excludeHighPriority *bool
-	excludedLowPriority *bool
+	excludeLowPriority *bool
 	excludeOutdatedDependencies *bool
+	demo *bool
+	includeTransitiveVulns *bool
+	deduplicateOutdatedDeps *bool
+	includeMalware *bool
 }
 
 // Whether to preview the report (default is false)
@@ -70,14 +437,38 @@ func (r ApiFixPlansRequest) ExcludeHighPriority(excludeHighPriority bool) ApiFix
 }
 
 // Whether to exclude Low Priority section (default is false)
-func (r ApiFixPlansRequest) ExcludedLowPriority(excludedLowPriority bool) ApiFixPlansRequest {
-	r.excludedLowPriority = &excludedLowPriority
+func (r ApiFixPlansRequest) ExcludeLowPriority(excludeLowPriority bool) ApiFixPlansRequest {
+	r.excludeLowPriority = &excludeLowPriority
 	return r
 }
 
 // Whether to exclude Outdated Dependencies section (default is false)
 func (r ApiFixPlansRequest) ExcludeOutdatedDependencies(excludeOutdatedDependencies bool) ApiFixPlansRequest {
 	r.excludeOutdatedDependencies = &excludeOutdatedDependencies
+	return r
+}
+
+// Whether to generate the report in demo mode (default is false)
+func (r ApiFixPlansRequest) Demo(demo bool) ApiFixPlansRequest {
+	r.demo = &demo
+	return r
+}
+
+// Whether to include transitive vulnerabilities (default is false)
+func (r ApiFixPlansRequest) IncludeTransitiveVulns(includeTransitiveVulns bool) ApiFixPlansRequest {
+	r.includeTransitiveVulns = &includeTransitiveVulns
+	return r
+}
+
+// Whether to deduplicate outdated dependencies (default is false)
+func (r ApiFixPlansRequest) DeduplicateOutdatedDeps(deduplicateOutdatedDeps bool) ApiFixPlansRequest {
+	r.deduplicateOutdatedDeps = &deduplicateOutdatedDeps
+	return r
+}
+
+// Whether to include malware findings (default is false). Only takes effect when the organization has the malware-issues feature enabled. 
+func (r ApiFixPlansRequest) IncludeMalware(includeMalware bool) ApiFixPlansRequest {
+	r.includeMalware = &includeMalware
 	return r
 }
 
@@ -139,11 +530,23 @@ func (a *RevisionsAPIService) FixPlansExecute(r ApiFixPlansRequest) (*os.File, *
 	if r.excludeHighPriority != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeHighPriority", r.excludeHighPriority, "form", "")
 	}
-	if r.excludedLowPriority != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "excludedLowPriority", r.excludedLowPriority, "form", "")
+	if r.excludeLowPriority != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeLowPriority", r.excludeLowPriority, "form", "")
 	}
 	if r.excludeOutdatedDependencies != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeOutdatedDependencies", r.excludeOutdatedDependencies, "form", "")
+	}
+	if r.demo != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "demo", r.demo, "form", "")
+	}
+	if r.includeTransitiveVulns != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeTransitiveVulns", r.includeTransitiveVulns, "form", "")
+	}
+	if r.deduplicateOutdatedDeps != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deduplicateOutdatedDeps", r.deduplicateOutdatedDeps, "form", "")
+	}
+	if r.includeMalware != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeMalware", r.includeMalware, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -220,6 +623,368 @@ func (a *RevisionsAPIService) FixPlansExecute(r ApiFixPlansRequest) (*os.File, *
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetRevisionAttributionDownloadV2Request struct {
+	ctx context.Context
+	ApiService *RevisionsAPIService
+	locator string
+	format *string
+	access *string
+	includeDeepDependencies *bool
+	includeDirectDependencies *bool
+	includeLicenseList *bool
+	includeLicenseScan *bool
+	includeProjectLicense *bool
+	includeCopyrightList *bool
+	includeFileMatches *bool
+	includeOpenVulnerabilities *bool
+	includeClosedVulnerabilities *bool
+	includeDependencySummary *bool
+	includeLicenseHeaders *bool
+	includePackageLabels *bool
+	includeHashAndVersionData *bool
+	excludeFields *QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter
+}
+
+// The format of the report
+func (r ApiGetRevisionAttributionDownloadV2Request) Format(format string) ApiGetRevisionAttributionDownloadV2Request {
+	r.format = &format
+	return r
+}
+
+// The public BOM access ID. When provided, the report is generated for the public BOM associated with this ID.
+func (r ApiGetRevisionAttributionDownloadV2Request) Access(access string) ApiGetRevisionAttributionDownloadV2Request {
+	r.access = &access
+	return r
+}
+
+// Whether to include deep dependencies (default is false)
+func (r ApiGetRevisionAttributionDownloadV2Request) IncludeDeepDependencies(includeDeepDependencies bool) ApiGetRevisionAttributionDownloadV2Request {
+	r.includeDeepDependencies = &includeDeepDependencies
+	return r
+}
+
+// Whether to include direct dependencies (default is false)
+func (r ApiGetRevisionAttributionDownloadV2Request) IncludeDirectDependencies(includeDirectDependencies bool) ApiGetRevisionAttributionDownloadV2Request {
+	r.includeDirectDependencies = &includeDirectDependencies
+	return r
+}
+
+// Whether to include the license list (default is false)
+func (r ApiGetRevisionAttributionDownloadV2Request) IncludeLicenseList(includeLicenseList bool) ApiGetRevisionAttributionDownloadV2Request {
+	r.includeLicenseList = &includeLicenseList
+	return r
+}
+
+// Whether to include the first-party license scan (default is false)
+func (r ApiGetRevisionAttributionDownloadV2Request) IncludeLicenseScan(includeLicenseScan bool) ApiGetRevisionAttributionDownloadV2Request {
+	r.includeLicenseScan = &includeLicenseScan
+	return r
+}
+
+// Whether to include the project&#39;s declared license (default is false)
+func (r ApiGetRevisionAttributionDownloadV2Request) IncludeProjectLicense(includeProjectLicense bool) ApiGetRevisionAttributionDownloadV2Request {
+	r.includeProjectLicense = &includeProjectLicense
+	return r
+}
+
+// Whether to include the copyright list (default is false)
+func (r ApiGetRevisionAttributionDownloadV2Request) IncludeCopyrightList(includeCopyrightList bool) ApiGetRevisionAttributionDownloadV2Request {
+	r.includeCopyrightList = &includeCopyrightList
+	return r
+}
+
+// Whether to include license file matches (default is false)
+func (r ApiGetRevisionAttributionDownloadV2Request) IncludeFileMatches(includeFileMatches bool) ApiGetRevisionAttributionDownloadV2Request {
+	r.includeFileMatches = &includeFileMatches
+	return r
+}
+
+// Whether to include open vulnerabilities (default is false)
+func (r ApiGetRevisionAttributionDownloadV2Request) IncludeOpenVulnerabilities(includeOpenVulnerabilities bool) ApiGetRevisionAttributionDownloadV2Request {
+	r.includeOpenVulnerabilities = &includeOpenVulnerabilities
+	return r
+}
+
+// Whether to include closed vulnerabilities (default is false)
+func (r ApiGetRevisionAttributionDownloadV2Request) IncludeClosedVulnerabilities(includeClosedVulnerabilities bool) ApiGetRevisionAttributionDownloadV2Request {
+	r.includeClosedVulnerabilities = &includeClosedVulnerabilities
+	return r
+}
+
+// Whether to include the dependency summary (default is false)
+func (r ApiGetRevisionAttributionDownloadV2Request) IncludeDependencySummary(includeDependencySummary bool) ApiGetRevisionAttributionDownloadV2Request {
+	r.includeDependencySummary = &includeDependencySummary
+	return r
+}
+
+// Whether to include license headers (default is false)
+func (r ApiGetRevisionAttributionDownloadV2Request) IncludeLicenseHeaders(includeLicenseHeaders bool) ApiGetRevisionAttributionDownloadV2Request {
+	r.includeLicenseHeaders = &includeLicenseHeaders
+	return r
+}
+
+// Whether to include the package labels assigned to each dependency (default is false)
+func (r ApiGetRevisionAttributionDownloadV2Request) IncludePackageLabels(includePackageLabels bool) ApiGetRevisionAttributionDownloadV2Request {
+	r.includePackageLabels = &includePackageLabels
+	return r
+}
+
+// Whether to include hash and version data (default is false)
+func (r ApiGetRevisionAttributionDownloadV2Request) IncludeHashAndVersionData(includeHashAndVersionData bool) ApiGetRevisionAttributionDownloadV2Request {
+	r.includeHashAndVersionData = &includeHashAndVersionData
+	return r
+}
+
+// Object controlling which dependencies are excluded from the report. The only supported nested field is &#x60;packageLabels&#x60;: a non-empty array of package-label values; dependencies carrying any of these labels are excluded from the report.  The server parses the query string with the &#x60;qs&#x60; library, so the array is sent using bracket-and-index notation rather than standard OpenAPI &#x60;deepObject&#x60; serialization. For example, to exclude two labels send (before URL-encoding): &#x60;excludeFields[packageLabels][0]&#x3D;internal&amp;excludeFields[packageLabels][1]&#x3D;vendored&#x60;. 
+func (r ApiGetRevisionAttributionDownloadV2Request) ExcludeFields(excludeFields QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter) ApiGetRevisionAttributionDownloadV2Request {
+	r.excludeFields = &excludeFields
+	return r
+}
+
+func (r ApiGetRevisionAttributionDownloadV2Request) Execute() (*os.File, *http.Response, error) {
+	return r.ApiService.GetRevisionAttributionDownloadV2Execute(r)
+}
+
+/*
+GetRevisionAttributionDownloadV2 Method for GetRevisionAttributionDownloadV2
+
+Generate and stream a revision's attribution report as a downloadable file (V2).
+
+**Note:** Not all report options are valid for every report format. Use your project's
+Reports UI to see which options apply to a given format.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The URL-encoded locator of the revision
+ @return ApiGetRevisionAttributionDownloadV2Request
+*/
+func (a *RevisionsAPIService) GetRevisionAttributionDownloadV2(ctx context.Context, locator string) ApiGetRevisionAttributionDownloadV2Request {
+	return ApiGetRevisionAttributionDownloadV2Request{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+	}
+}
+
+// Execute executes the request
+//  @return *os.File
+func (a *RevisionsAPIService) GetRevisionAttributionDownloadV2Execute(r ApiGetRevisionAttributionDownloadV2Request) (*os.File, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *os.File
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RevisionsAPIService.GetRevisionAttributionDownloadV2")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/revisions/{locator}/attribution/download"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.format != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "form", "")
+	}
+	if r.access != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "access", r.access, "form", "")
+	}
+	if r.includeDeepDependencies != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDeepDependencies", r.includeDeepDependencies, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDeepDependencies", defaultValue, "form", "")
+		r.includeDeepDependencies = &defaultValue
+	}
+	if r.includeDirectDependencies != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDirectDependencies", r.includeDirectDependencies, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDirectDependencies", defaultValue, "form", "")
+		r.includeDirectDependencies = &defaultValue
+	}
+	if r.includeLicenseList != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseList", r.includeLicenseList, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseList", defaultValue, "form", "")
+		r.includeLicenseList = &defaultValue
+	}
+	if r.includeLicenseScan != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseScan", r.includeLicenseScan, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseScan", defaultValue, "form", "")
+		r.includeLicenseScan = &defaultValue
+	}
+	if r.includeProjectLicense != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeProjectLicense", r.includeProjectLicense, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeProjectLicense", defaultValue, "form", "")
+		r.includeProjectLicense = &defaultValue
+	}
+	if r.includeCopyrightList != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyrightList", r.includeCopyrightList, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyrightList", defaultValue, "form", "")
+		r.includeCopyrightList = &defaultValue
+	}
+	if r.includeFileMatches != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFileMatches", r.includeFileMatches, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFileMatches", defaultValue, "form", "")
+		r.includeFileMatches = &defaultValue
+	}
+	if r.includeOpenVulnerabilities != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeOpenVulnerabilities", r.includeOpenVulnerabilities, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeOpenVulnerabilities", defaultValue, "form", "")
+		r.includeOpenVulnerabilities = &defaultValue
+	}
+	if r.includeClosedVulnerabilities != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeClosedVulnerabilities", r.includeClosedVulnerabilities, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeClosedVulnerabilities", defaultValue, "form", "")
+		r.includeClosedVulnerabilities = &defaultValue
+	}
+	if r.includeDependencySummary != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDependencySummary", r.includeDependencySummary, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDependencySummary", defaultValue, "form", "")
+		r.includeDependencySummary = &defaultValue
+	}
+	if r.includeLicenseHeaders != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseHeaders", r.includeLicenseHeaders, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseHeaders", defaultValue, "form", "")
+		r.includeLicenseHeaders = &defaultValue
+	}
+	if r.includePackageLabels != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", r.includePackageLabels, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", defaultValue, "form", "")
+		r.includePackageLabels = &defaultValue
+	}
+	if r.includeHashAndVersionData != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeHashAndVersionData", r.includeHashAndVersionData, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeHashAndVersionData", defaultValue, "form", "")
+		r.includeHashAndVersionData = &defaultValue
+	}
+	if r.excludeFields != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeFields", r.excludeFields, "deepObject", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/octet-stream", "application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetRevisionAttributionEmailRequest struct {
 	ctx context.Context
 	ApiService *RevisionsAPIService
@@ -239,7 +1004,7 @@ type ApiGetRevisionAttributionEmailRequest struct {
 	includeDependencySummary *bool
 	includeLicenseHeaders *bool
 	includePackageLabels *bool
-	excludePackageLabels *[]string
+	excludeFields *QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter
 }
 
 // The public ID
@@ -332,9 +1097,9 @@ func (r ApiGetRevisionAttributionEmailRequest) IncludePackageLabels(includePacka
 	return r
 }
 
-// Exclude dependencies with particular package labels from the report
-func (r ApiGetRevisionAttributionEmailRequest) ExcludePackageLabels(excludePackageLabels []string) ApiGetRevisionAttributionEmailRequest {
-	r.excludePackageLabels = &excludePackageLabels
+// Object controlling which dependencies are excluded from the report. The only supported nested field is &#x60;packageLabels&#x60;: a non-empty array of package-label values; dependencies carrying any of these labels are excluded from the report. 
+func (r ApiGetRevisionAttributionEmailRequest) ExcludeFields(excludeFields QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter) ApiGetRevisionAttributionEmailRequest {
+	r.excludeFields = &excludeFields
 	return r
 }
 
@@ -426,16 +1191,8 @@ func (a *RevisionsAPIService) GetRevisionAttributionEmailExecute(r ApiGetRevisio
 	if r.includePackageLabels != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", r.includePackageLabels, "form", "")
 	}
-	if r.excludePackageLabels != nil {
-		t := *r.excludePackageLabels
-		if reflect.TypeOf(t).Kind() == reflect.Slice {
-			s := reflect.ValueOf(t)
-			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "excludePackageLabels", s.Index(i).Interface(), "form", "multi")
-			}
-		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "excludePackageLabels", t, "form", "multi")
-		}
+	if r.excludeFields != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeFields", r.excludeFields, "deepObject", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -523,6 +1280,509 @@ func (a *RevisionsAPIService) GetRevisionAttributionEmailExecute(r ApiGetRevisio
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetRevisionAttributionEmailV2Request struct {
+	ctx context.Context
+	ApiService *RevisionsAPIService
+	locator string
+	access *string
+	preview *bool
+	format *string
+	includeDeepDependencies *bool
+	includeDirectDependencies *bool
+	includeLicenseList *bool
+	includeLicenseScan *bool
+	includeProjectLicense *bool
+	includeCopyrightList *bool
+	includeFileMatches *bool
+	includeOpenVulnerabilities *bool
+	includeClosedVulnerabilities *bool
+	includeDependencySummary *bool
+	includeLicenseHeaders *bool
+	includePackageLabels *bool
+	excludeFields *QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter
+}
+
+// The public BOM access ID. When provided, the report is generated for the public BOM associated with this ID.
+func (r ApiGetRevisionAttributionEmailV2Request) Access(access string) ApiGetRevisionAttributionEmailV2Request {
+	r.access = &access
+	return r
+}
+
+// Whether to preview the report inline rather than generate a downloadable file (default is false)
+func (r ApiGetRevisionAttributionEmailV2Request) Preview(preview bool) ApiGetRevisionAttributionEmailV2Request {
+	r.preview = &preview
+	return r
+}
+
+// The format of the report
+func (r ApiGetRevisionAttributionEmailV2Request) Format(format string) ApiGetRevisionAttributionEmailV2Request {
+	r.format = &format
+	return r
+}
+
+// Whether to include deep dependencies (default is false)
+func (r ApiGetRevisionAttributionEmailV2Request) IncludeDeepDependencies(includeDeepDependencies bool) ApiGetRevisionAttributionEmailV2Request {
+	r.includeDeepDependencies = &includeDeepDependencies
+	return r
+}
+
+// Whether to include direct dependencies (default is false)
+func (r ApiGetRevisionAttributionEmailV2Request) IncludeDirectDependencies(includeDirectDependencies bool) ApiGetRevisionAttributionEmailV2Request {
+	r.includeDirectDependencies = &includeDirectDependencies
+	return r
+}
+
+// Whether to include the license list (default is false)
+func (r ApiGetRevisionAttributionEmailV2Request) IncludeLicenseList(includeLicenseList bool) ApiGetRevisionAttributionEmailV2Request {
+	r.includeLicenseList = &includeLicenseList
+	return r
+}
+
+// Whether to include the first-party license scan (default is false)
+func (r ApiGetRevisionAttributionEmailV2Request) IncludeLicenseScan(includeLicenseScan bool) ApiGetRevisionAttributionEmailV2Request {
+	r.includeLicenseScan = &includeLicenseScan
+	return r
+}
+
+// Whether to include the project&#39;s declared license (default is false)
+func (r ApiGetRevisionAttributionEmailV2Request) IncludeProjectLicense(includeProjectLicense bool) ApiGetRevisionAttributionEmailV2Request {
+	r.includeProjectLicense = &includeProjectLicense
+	return r
+}
+
+// Whether to include the copyright list (default is false)
+func (r ApiGetRevisionAttributionEmailV2Request) IncludeCopyrightList(includeCopyrightList bool) ApiGetRevisionAttributionEmailV2Request {
+	r.includeCopyrightList = &includeCopyrightList
+	return r
+}
+
+// Whether to include license file matches (default is false)
+func (r ApiGetRevisionAttributionEmailV2Request) IncludeFileMatches(includeFileMatches bool) ApiGetRevisionAttributionEmailV2Request {
+	r.includeFileMatches = &includeFileMatches
+	return r
+}
+
+// Whether to include open vulnerabilities (default is false)
+func (r ApiGetRevisionAttributionEmailV2Request) IncludeOpenVulnerabilities(includeOpenVulnerabilities bool) ApiGetRevisionAttributionEmailV2Request {
+	r.includeOpenVulnerabilities = &includeOpenVulnerabilities
+	return r
+}
+
+// Whether to include closed vulnerabilities (default is false)
+func (r ApiGetRevisionAttributionEmailV2Request) IncludeClosedVulnerabilities(includeClosedVulnerabilities bool) ApiGetRevisionAttributionEmailV2Request {
+	r.includeClosedVulnerabilities = &includeClosedVulnerabilities
+	return r
+}
+
+// Whether to include the dependency summary (default is false)
+func (r ApiGetRevisionAttributionEmailV2Request) IncludeDependencySummary(includeDependencySummary bool) ApiGetRevisionAttributionEmailV2Request {
+	r.includeDependencySummary = &includeDependencySummary
+	return r
+}
+
+// Whether to include license headers (default is false)
+func (r ApiGetRevisionAttributionEmailV2Request) IncludeLicenseHeaders(includeLicenseHeaders bool) ApiGetRevisionAttributionEmailV2Request {
+	r.includeLicenseHeaders = &includeLicenseHeaders
+	return r
+}
+
+// Whether to include the package labels assigned to each dependency (default is false)
+func (r ApiGetRevisionAttributionEmailV2Request) IncludePackageLabels(includePackageLabels bool) ApiGetRevisionAttributionEmailV2Request {
+	r.includePackageLabels = &includePackageLabels
+	return r
+}
+
+// Object controlling which dependencies are excluded from the report. The only supported nested field is &#x60;packageLabels&#x60;: a non-empty array of package-label values; dependencies carrying any of these labels are excluded from the report.  The server parses the query string with the &#x60;qs&#x60; library, so the array is sent using bracket-and-index notation rather than standard OpenAPI &#x60;deepObject&#x60; serialization. For example, to exclude two labels send (before URL-encoding): &#x60;excludeFields[packageLabels][0]&#x3D;internal&amp;excludeFields[packageLabels][1]&#x3D;vendored&#x60;. 
+func (r ApiGetRevisionAttributionEmailV2Request) ExcludeFields(excludeFields QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter) ApiGetRevisionAttributionEmailV2Request {
+	r.excludeFields = &excludeFields
+	return r
+}
+
+func (r ApiGetRevisionAttributionEmailV2Request) Execute() (*GetRevisionAttributionEmailV2200Response, *http.Response, error) {
+	return r.ApiService.GetRevisionAttributionEmailV2Execute(r)
+}
+
+/*
+GetRevisionAttributionEmailV2 Method for GetRevisionAttributionEmailV2
+
+Queue a job to generate and email a revision's attribution report (V2).
+
+**Note:** Not all report options are valid for every report format. Use your project's
+Reports UI to see which options apply to a given format.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The URL-encoded locator of the revision
+ @return ApiGetRevisionAttributionEmailV2Request
+*/
+func (a *RevisionsAPIService) GetRevisionAttributionEmailV2(ctx context.Context, locator string) ApiGetRevisionAttributionEmailV2Request {
+	return ApiGetRevisionAttributionEmailV2Request{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+	}
+}
+
+// Execute executes the request
+//  @return GetRevisionAttributionEmailV2200Response
+func (a *RevisionsAPIService) GetRevisionAttributionEmailV2Execute(r ApiGetRevisionAttributionEmailV2Request) (*GetRevisionAttributionEmailV2200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetRevisionAttributionEmailV2200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RevisionsAPIService.GetRevisionAttributionEmailV2")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/revisions/{locator}/attribution/email"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.access != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "access", r.access, "form", "")
+	}
+	if r.preview != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "preview", r.preview, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "preview", defaultValue, "form", "")
+		r.preview = &defaultValue
+	}
+	if r.format != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "form", "")
+	}
+	if r.includeDeepDependencies != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDeepDependencies", r.includeDeepDependencies, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDeepDependencies", defaultValue, "form", "")
+		r.includeDeepDependencies = &defaultValue
+	}
+	if r.includeDirectDependencies != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDirectDependencies", r.includeDirectDependencies, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDirectDependencies", defaultValue, "form", "")
+		r.includeDirectDependencies = &defaultValue
+	}
+	if r.includeLicenseList != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseList", r.includeLicenseList, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseList", defaultValue, "form", "")
+		r.includeLicenseList = &defaultValue
+	}
+	if r.includeLicenseScan != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseScan", r.includeLicenseScan, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseScan", defaultValue, "form", "")
+		r.includeLicenseScan = &defaultValue
+	}
+	if r.includeProjectLicense != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeProjectLicense", r.includeProjectLicense, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeProjectLicense", defaultValue, "form", "")
+		r.includeProjectLicense = &defaultValue
+	}
+	if r.includeCopyrightList != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyrightList", r.includeCopyrightList, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyrightList", defaultValue, "form", "")
+		r.includeCopyrightList = &defaultValue
+	}
+	if r.includeFileMatches != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFileMatches", r.includeFileMatches, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFileMatches", defaultValue, "form", "")
+		r.includeFileMatches = &defaultValue
+	}
+	if r.includeOpenVulnerabilities != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeOpenVulnerabilities", r.includeOpenVulnerabilities, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeOpenVulnerabilities", defaultValue, "form", "")
+		r.includeOpenVulnerabilities = &defaultValue
+	}
+	if r.includeClosedVulnerabilities != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeClosedVulnerabilities", r.includeClosedVulnerabilities, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeClosedVulnerabilities", defaultValue, "form", "")
+		r.includeClosedVulnerabilities = &defaultValue
+	}
+	if r.includeDependencySummary != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDependencySummary", r.includeDependencySummary, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDependencySummary", defaultValue, "form", "")
+		r.includeDependencySummary = &defaultValue
+	}
+	if r.includeLicenseHeaders != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseHeaders", r.includeLicenseHeaders, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseHeaders", defaultValue, "form", "")
+		r.includeLicenseHeaders = &defaultValue
+	}
+	if r.includePackageLabels != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", r.includePackageLabels, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", defaultValue, "form", "")
+		r.includePackageLabels = &defaultValue
+	}
+	if r.excludeFields != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeFields", r.excludeFields, "deepObject", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetRevisionAttributionFullV2Request struct {
+	ctx context.Context
+	ApiService *RevisionsAPIService
+	locator string
+	format string
+}
+
+func (r ApiGetRevisionAttributionFullV2Request) Execute() (*os.File, *http.Response, error) {
+	return r.ApiService.GetRevisionAttributionFullV2Execute(r)
+}
+
+/*
+GetRevisionAttributionFullV2 Method for GetRevisionAttributionFullV2
+
+Generate and stream a revision's attribution report in the given format with **all**
+report options enabled (V2). Intended for the `fossa report attribution` CLI flow.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The URL-encoded locator of the revision
+ @param format The format of the report
+ @return ApiGetRevisionAttributionFullV2Request
+*/
+func (a *RevisionsAPIService) GetRevisionAttributionFullV2(ctx context.Context, locator string, format string) ApiGetRevisionAttributionFullV2Request {
+	return ApiGetRevisionAttributionFullV2Request{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+		format: format,
+	}
+}
+
+// Execute executes the request
+//  @return *os.File
+func (a *RevisionsAPIService) GetRevisionAttributionFullV2Execute(r ApiGetRevisionAttributionFullV2Request) (*os.File, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *os.File
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RevisionsAPIService.GetRevisionAttributionFullV2")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/revisions/{locator}/attribution/full/{format}"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"format"+"}", url.PathEscape(parameterValueToString(r.format, "format")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/octet-stream", "application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetRevisionAttributionJSONRequest struct {
 	ctx context.Context
 	ApiService *RevisionsAPIService
@@ -536,7 +1796,7 @@ type ApiGetRevisionAttributionJSONRequest struct {
 	includeClosedVulnerabilities *bool
 	includeNoticeFiles *bool
 	includePackageLabels *bool
-	excludePackageLabels *[]string
+	excludeFields *QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter
 }
 
 // Whether to preview the report (default is false)
@@ -593,9 +1853,9 @@ func (r ApiGetRevisionAttributionJSONRequest) IncludePackageLabels(includePackag
 	return r
 }
 
-// Exclude dependencies with particular package labels from the report
-func (r ApiGetRevisionAttributionJSONRequest) ExcludePackageLabels(excludePackageLabels []string) ApiGetRevisionAttributionJSONRequest {
-	r.excludePackageLabels = &excludePackageLabels
+// Object controlling which dependencies are excluded from the report. The only supported nested field is &#x60;packageLabels&#x60;: a non-empty array of package-label values; dependencies carrying any of these labels are excluded from the report.  The server parses the query string with the &#x60;qs&#x60; library, so the array is sent using bracket-and-index notation rather than standard OpenAPI &#x60;deepObject&#x60; serialization. For example, to exclude two labels send (before URL-encoding): &#x60;excludeFields[packageLabels][0]&#x3D;internal&amp;excludeFields[packageLabels][1]&#x3D;vendored&#x60;. 
+func (r ApiGetRevisionAttributionJSONRequest) ExcludeFields(excludeFields QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter) ApiGetRevisionAttributionJSONRequest {
+	r.excludeFields = &excludeFields
 	return r
 }
 
@@ -606,7 +1866,10 @@ func (r ApiGetRevisionAttributionJSONRequest) Execute() (*GetRevisionAttribution
 /*
 GetRevisionAttributionJSON Method for GetRevisionAttributionJSON
 
-Return a JSON report of a revision's attribution
+Return a JSON report of a revision's attribution.
+
+**Requires a Premium subscription.** Organizations below the Premium access level receive a `403`.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param locator the url-encoded locator of the revision
@@ -669,16 +1932,8 @@ func (a *RevisionsAPIService) GetRevisionAttributionJSONExecute(r ApiGetRevision
 	if r.includePackageLabels != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", r.includePackageLabels, "form", "")
 	}
-	if r.excludePackageLabels != nil {
-		t := *r.excludePackageLabels
-		if reflect.TypeOf(t).Kind() == reflect.Slice {
-			s := reflect.ValueOf(t)
-			for i := 0; i < s.Len(); i++ {
-				parameterAddToHeaderOrQuery(localVarQueryParams, "excludePackageLabels", s.Index(i).Interface(), "form", "multi")
-			}
-		} else {
-			parameterAddToHeaderOrQuery(localVarQueryParams, "excludePackageLabels", t, "form", "multi")
-		}
+	if r.excludeFields != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeFields", r.excludeFields, "deepObject", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -691,6 +1946,1019 @@ func (a *RevisionsAPIService) GetRevisionAttributionJSONExecute(r ApiGetRevision
 
 	// to determine the Accept header
 	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetRevisionAttributionJSONV2Request struct {
+	ctx context.Context
+	ApiService *RevisionsAPIService
+	locator string
+	preview *bool
+	includeDeepDependencies *bool
+	includeHashAndVersionData *bool
+	includeCopyrightList *bool
+	includeFileMatches *bool
+	includeOpenVulnerabilities *bool
+	includeClosedVulnerabilities *bool
+	includeNoticeFiles *bool
+	includePackageLabels *bool
+	excludeFields *QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter
+}
+
+// Whether to preview the report inline rather than generate a downloadable file (default is false)
+func (r ApiGetRevisionAttributionJSONV2Request) Preview(preview bool) ApiGetRevisionAttributionJSONV2Request {
+	r.preview = &preview
+	return r
+}
+
+// Whether to include deep dependencies (default is false)
+func (r ApiGetRevisionAttributionJSONV2Request) IncludeDeepDependencies(includeDeepDependencies bool) ApiGetRevisionAttributionJSONV2Request {
+	r.includeDeepDependencies = &includeDeepDependencies
+	return r
+}
+
+// Whether to include hash and version data (default is false)
+func (r ApiGetRevisionAttributionJSONV2Request) IncludeHashAndVersionData(includeHashAndVersionData bool) ApiGetRevisionAttributionJSONV2Request {
+	r.includeHashAndVersionData = &includeHashAndVersionData
+	return r
+}
+
+// Whether to include the copyright list (default is false)
+func (r ApiGetRevisionAttributionJSONV2Request) IncludeCopyrightList(includeCopyrightList bool) ApiGetRevisionAttributionJSONV2Request {
+	r.includeCopyrightList = &includeCopyrightList
+	return r
+}
+
+// Whether to include license file matches (default is false)
+func (r ApiGetRevisionAttributionJSONV2Request) IncludeFileMatches(includeFileMatches bool) ApiGetRevisionAttributionJSONV2Request {
+	r.includeFileMatches = &includeFileMatches
+	return r
+}
+
+// Whether to include open vulnerabilities (default is false)
+func (r ApiGetRevisionAttributionJSONV2Request) IncludeOpenVulnerabilities(includeOpenVulnerabilities bool) ApiGetRevisionAttributionJSONV2Request {
+	r.includeOpenVulnerabilities = &includeOpenVulnerabilities
+	return r
+}
+
+// Whether to include closed vulnerabilities (default is false)
+func (r ApiGetRevisionAttributionJSONV2Request) IncludeClosedVulnerabilities(includeClosedVulnerabilities bool) ApiGetRevisionAttributionJSONV2Request {
+	r.includeClosedVulnerabilities = &includeClosedVulnerabilities
+	return r
+}
+
+// Whether to include the notice file match data (default is false)
+func (r ApiGetRevisionAttributionJSONV2Request) IncludeNoticeFiles(includeNoticeFiles bool) ApiGetRevisionAttributionJSONV2Request {
+	r.includeNoticeFiles = &includeNoticeFiles
+	return r
+}
+
+// Whether to include the package labels assigned to each dependency (default is false)
+func (r ApiGetRevisionAttributionJSONV2Request) IncludePackageLabels(includePackageLabels bool) ApiGetRevisionAttributionJSONV2Request {
+	r.includePackageLabels = &includePackageLabels
+	return r
+}
+
+// Object controlling which dependencies are excluded from the report. The only supported nested field is &#x60;packageLabels&#x60;: a non-empty array of package-label values; dependencies carrying any of these labels are excluded from the report.  The server parses the query string with the &#x60;qs&#x60; library, so the array is sent using bracket-and-index notation rather than standard OpenAPI &#x60;deepObject&#x60; serialization. For example, to exclude two labels send (before URL-encoding): &#x60;excludeFields[packageLabels][0]&#x3D;internal&amp;excludeFields[packageLabels][1]&#x3D;vendored&#x60;. 
+func (r ApiGetRevisionAttributionJSONV2Request) ExcludeFields(excludeFields QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter) ApiGetRevisionAttributionJSONV2Request {
+	r.excludeFields = &excludeFields
+	return r
+}
+
+func (r ApiGetRevisionAttributionJSONV2Request) Execute() (*GetRevisionAttributionJSON200Response, *http.Response, error) {
+	return r.ApiService.GetRevisionAttributionJSONV2Execute(r)
+}
+
+/*
+GetRevisionAttributionJSONV2 Method for GetRevisionAttributionJSONV2
+
+Return a JSON report of a revision's attribution (V2).
+
+**Requires a Premium subscription.** Organizations below the Premium access level receive a `403`.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The URL-encoded locator of the revision
+ @return ApiGetRevisionAttributionJSONV2Request
+*/
+func (a *RevisionsAPIService) GetRevisionAttributionJSONV2(ctx context.Context, locator string) ApiGetRevisionAttributionJSONV2Request {
+	return ApiGetRevisionAttributionJSONV2Request{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+	}
+}
+
+// Execute executes the request
+//  @return GetRevisionAttributionJSON200Response
+func (a *RevisionsAPIService) GetRevisionAttributionJSONV2Execute(r ApiGetRevisionAttributionJSONV2Request) (*GetRevisionAttributionJSON200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetRevisionAttributionJSON200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RevisionsAPIService.GetRevisionAttributionJSONV2")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/revisions/{locator}/attribution/json"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.preview != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "preview", r.preview, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "preview", defaultValue, "form", "")
+		r.preview = &defaultValue
+	}
+	if r.includeDeepDependencies != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDeepDependencies", r.includeDeepDependencies, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDeepDependencies", defaultValue, "form", "")
+		r.includeDeepDependencies = &defaultValue
+	}
+	if r.includeHashAndVersionData != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeHashAndVersionData", r.includeHashAndVersionData, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeHashAndVersionData", defaultValue, "form", "")
+		r.includeHashAndVersionData = &defaultValue
+	}
+	if r.includeCopyrightList != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyrightList", r.includeCopyrightList, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyrightList", defaultValue, "form", "")
+		r.includeCopyrightList = &defaultValue
+	}
+	if r.includeFileMatches != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFileMatches", r.includeFileMatches, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFileMatches", defaultValue, "form", "")
+		r.includeFileMatches = &defaultValue
+	}
+	if r.includeOpenVulnerabilities != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeOpenVulnerabilities", r.includeOpenVulnerabilities, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeOpenVulnerabilities", defaultValue, "form", "")
+		r.includeOpenVulnerabilities = &defaultValue
+	}
+	if r.includeClosedVulnerabilities != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeClosedVulnerabilities", r.includeClosedVulnerabilities, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeClosedVulnerabilities", defaultValue, "form", "")
+		r.includeClosedVulnerabilities = &defaultValue
+	}
+	if r.includeNoticeFiles != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeNoticeFiles", r.includeNoticeFiles, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeNoticeFiles", defaultValue, "form", "")
+		r.includeNoticeFiles = &defaultValue
+	}
+	if r.includePackageLabels != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", r.includePackageLabels, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", defaultValue, "form", "")
+		r.includePackageLabels = &defaultValue
+	}
+	if r.excludeFields != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeFields", r.excludeFields, "deepObject", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetRevisionAttributionPreviewV2Request struct {
+	ctx context.Context
+	ApiService *RevisionsAPIService
+	locator string
+	format *string
+	access *string
+	preview *bool
+	includeDeepDependencies *bool
+	includeDirectDependencies *bool
+	includeLicenseList *bool
+	includeLicenseScan *bool
+	includeProjectLicense *bool
+	includeCopyrightList *bool
+	includeFileMatches *bool
+	includeOpenVulnerabilities *bool
+	includeClosedVulnerabilities *bool
+	includeDependencySummary *bool
+	includeLicenseHeaders *bool
+	includePackageLabels *bool
+	includeHashAndVersionData *bool
+	excludeFields *QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter
+}
+
+// The format of the report
+func (r ApiGetRevisionAttributionPreviewV2Request) Format(format string) ApiGetRevisionAttributionPreviewV2Request {
+	r.format = &format
+	return r
+}
+
+// The public BOM access ID. When provided, the report is generated for the public BOM associated with this ID.
+func (r ApiGetRevisionAttributionPreviewV2Request) Access(access string) ApiGetRevisionAttributionPreviewV2Request {
+	r.access = &access
+	return r
+}
+
+// Whether to preview the report inline rather than generate a downloadable file (default is false)
+func (r ApiGetRevisionAttributionPreviewV2Request) Preview(preview bool) ApiGetRevisionAttributionPreviewV2Request {
+	r.preview = &preview
+	return r
+}
+
+// Whether to include deep dependencies (default is false)
+func (r ApiGetRevisionAttributionPreviewV2Request) IncludeDeepDependencies(includeDeepDependencies bool) ApiGetRevisionAttributionPreviewV2Request {
+	r.includeDeepDependencies = &includeDeepDependencies
+	return r
+}
+
+// Whether to include direct dependencies (default is false)
+func (r ApiGetRevisionAttributionPreviewV2Request) IncludeDirectDependencies(includeDirectDependencies bool) ApiGetRevisionAttributionPreviewV2Request {
+	r.includeDirectDependencies = &includeDirectDependencies
+	return r
+}
+
+// Whether to include the license list (default is false)
+func (r ApiGetRevisionAttributionPreviewV2Request) IncludeLicenseList(includeLicenseList bool) ApiGetRevisionAttributionPreviewV2Request {
+	r.includeLicenseList = &includeLicenseList
+	return r
+}
+
+// Whether to include the first-party license scan (default is false)
+func (r ApiGetRevisionAttributionPreviewV2Request) IncludeLicenseScan(includeLicenseScan bool) ApiGetRevisionAttributionPreviewV2Request {
+	r.includeLicenseScan = &includeLicenseScan
+	return r
+}
+
+// Whether to include the project&#39;s declared license (default is false)
+func (r ApiGetRevisionAttributionPreviewV2Request) IncludeProjectLicense(includeProjectLicense bool) ApiGetRevisionAttributionPreviewV2Request {
+	r.includeProjectLicense = &includeProjectLicense
+	return r
+}
+
+// Whether to include the copyright list (default is false)
+func (r ApiGetRevisionAttributionPreviewV2Request) IncludeCopyrightList(includeCopyrightList bool) ApiGetRevisionAttributionPreviewV2Request {
+	r.includeCopyrightList = &includeCopyrightList
+	return r
+}
+
+// Whether to include license file matches (default is false)
+func (r ApiGetRevisionAttributionPreviewV2Request) IncludeFileMatches(includeFileMatches bool) ApiGetRevisionAttributionPreviewV2Request {
+	r.includeFileMatches = &includeFileMatches
+	return r
+}
+
+// Whether to include open vulnerabilities (default is false)
+func (r ApiGetRevisionAttributionPreviewV2Request) IncludeOpenVulnerabilities(includeOpenVulnerabilities bool) ApiGetRevisionAttributionPreviewV2Request {
+	r.includeOpenVulnerabilities = &includeOpenVulnerabilities
+	return r
+}
+
+// Whether to include closed vulnerabilities (default is false)
+func (r ApiGetRevisionAttributionPreviewV2Request) IncludeClosedVulnerabilities(includeClosedVulnerabilities bool) ApiGetRevisionAttributionPreviewV2Request {
+	r.includeClosedVulnerabilities = &includeClosedVulnerabilities
+	return r
+}
+
+// Whether to include the dependency summary (default is false)
+func (r ApiGetRevisionAttributionPreviewV2Request) IncludeDependencySummary(includeDependencySummary bool) ApiGetRevisionAttributionPreviewV2Request {
+	r.includeDependencySummary = &includeDependencySummary
+	return r
+}
+
+// Whether to include license headers (default is false)
+func (r ApiGetRevisionAttributionPreviewV2Request) IncludeLicenseHeaders(includeLicenseHeaders bool) ApiGetRevisionAttributionPreviewV2Request {
+	r.includeLicenseHeaders = &includeLicenseHeaders
+	return r
+}
+
+// Whether to include the package labels assigned to each dependency (default is false)
+func (r ApiGetRevisionAttributionPreviewV2Request) IncludePackageLabels(includePackageLabels bool) ApiGetRevisionAttributionPreviewV2Request {
+	r.includePackageLabels = &includePackageLabels
+	return r
+}
+
+// Whether to include hash and version data (default is false)
+func (r ApiGetRevisionAttributionPreviewV2Request) IncludeHashAndVersionData(includeHashAndVersionData bool) ApiGetRevisionAttributionPreviewV2Request {
+	r.includeHashAndVersionData = &includeHashAndVersionData
+	return r
+}
+
+// Object controlling which dependencies are excluded from the report. The only supported nested field is &#x60;packageLabels&#x60;: a non-empty array of package-label values; dependencies carrying any of these labels are excluded from the report.  The server parses the query string with the &#x60;qs&#x60; library, so the array is sent using bracket-and-index notation rather than standard OpenAPI &#x60;deepObject&#x60; serialization. For example, to exclude two labels send (before URL-encoding): &#x60;excludeFields[packageLabels][0]&#x3D;internal&amp;excludeFields[packageLabels][1]&#x3D;vendored&#x60;. 
+func (r ApiGetRevisionAttributionPreviewV2Request) ExcludeFields(excludeFields QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter) ApiGetRevisionAttributionPreviewV2Request {
+	r.excludeFields = &excludeFields
+	return r
+}
+
+func (r ApiGetRevisionAttributionPreviewV2Request) Execute() (string, *http.Response, error) {
+	return r.ApiService.GetRevisionAttributionPreviewV2Execute(r)
+}
+
+/*
+GetRevisionAttributionPreviewV2 Method for GetRevisionAttributionPreviewV2
+
+Generate and return an inline preview of a revision's attribution report (V2).
+
+**Note:** Not all report options are valid for every report format. Use your project's
+Reports UI to see which options apply to a given format.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The URL-encoded locator of the revision
+ @return ApiGetRevisionAttributionPreviewV2Request
+*/
+func (a *RevisionsAPIService) GetRevisionAttributionPreviewV2(ctx context.Context, locator string) ApiGetRevisionAttributionPreviewV2Request {
+	return ApiGetRevisionAttributionPreviewV2Request{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+	}
+}
+
+// Execute executes the request
+//  @return string
+func (a *RevisionsAPIService) GetRevisionAttributionPreviewV2Execute(r ApiGetRevisionAttributionPreviewV2Request) (string, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  string
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RevisionsAPIService.GetRevisionAttributionPreviewV2")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/revisions/{locator}/attribution/preview"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.format != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "form", "")
+	}
+	if r.access != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "access", r.access, "form", "")
+	}
+	if r.preview != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "preview", r.preview, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "preview", defaultValue, "form", "")
+		r.preview = &defaultValue
+	}
+	if r.includeDeepDependencies != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDeepDependencies", r.includeDeepDependencies, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDeepDependencies", defaultValue, "form", "")
+		r.includeDeepDependencies = &defaultValue
+	}
+	if r.includeDirectDependencies != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDirectDependencies", r.includeDirectDependencies, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDirectDependencies", defaultValue, "form", "")
+		r.includeDirectDependencies = &defaultValue
+	}
+	if r.includeLicenseList != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseList", r.includeLicenseList, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseList", defaultValue, "form", "")
+		r.includeLicenseList = &defaultValue
+	}
+	if r.includeLicenseScan != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseScan", r.includeLicenseScan, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseScan", defaultValue, "form", "")
+		r.includeLicenseScan = &defaultValue
+	}
+	if r.includeProjectLicense != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeProjectLicense", r.includeProjectLicense, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeProjectLicense", defaultValue, "form", "")
+		r.includeProjectLicense = &defaultValue
+	}
+	if r.includeCopyrightList != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyrightList", r.includeCopyrightList, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyrightList", defaultValue, "form", "")
+		r.includeCopyrightList = &defaultValue
+	}
+	if r.includeFileMatches != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFileMatches", r.includeFileMatches, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFileMatches", defaultValue, "form", "")
+		r.includeFileMatches = &defaultValue
+	}
+	if r.includeOpenVulnerabilities != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeOpenVulnerabilities", r.includeOpenVulnerabilities, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeOpenVulnerabilities", defaultValue, "form", "")
+		r.includeOpenVulnerabilities = &defaultValue
+	}
+	if r.includeClosedVulnerabilities != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeClosedVulnerabilities", r.includeClosedVulnerabilities, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeClosedVulnerabilities", defaultValue, "form", "")
+		r.includeClosedVulnerabilities = &defaultValue
+	}
+	if r.includeDependencySummary != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDependencySummary", r.includeDependencySummary, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDependencySummary", defaultValue, "form", "")
+		r.includeDependencySummary = &defaultValue
+	}
+	if r.includeLicenseHeaders != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseHeaders", r.includeLicenseHeaders, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseHeaders", defaultValue, "form", "")
+		r.includeLicenseHeaders = &defaultValue
+	}
+	if r.includePackageLabels != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", r.includePackageLabels, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", defaultValue, "form", "")
+		r.includePackageLabels = &defaultValue
+	}
+	if r.includeHashAndVersionData != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeHashAndVersionData", r.includeHashAndVersionData, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeHashAndVersionData", defaultValue, "form", "")
+		r.includeHashAndVersionData = &defaultValue
+	}
+	if r.excludeFields != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeFields", r.excludeFields, "deepObject", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"*/*", "application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetRevisionAttributionV2Request struct {
+	ctx context.Context
+	ApiService *RevisionsAPIService
+	locator string
+	format *string
+	access *string
+	includeDeepDependencies *bool
+	includeDirectDependencies *bool
+	includeLicenseList *bool
+	includeLicenseScan *bool
+	includeProjectLicense *bool
+	includeCopyrightList *bool
+	includeFileMatches *bool
+	includeOpenVulnerabilities *bool
+	includeClosedVulnerabilities *bool
+	includeDependencySummary *bool
+	includeLicenseHeaders *bool
+	includePackageLabels *bool
+	includeHashAndVersionData *bool
+	excludeFields *QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter
+}
+
+// The format of the report
+func (r ApiGetRevisionAttributionV2Request) Format(format string) ApiGetRevisionAttributionV2Request {
+	r.format = &format
+	return r
+}
+
+// The public BOM access ID. When provided, the report is generated for the public BOM associated with this ID.
+func (r ApiGetRevisionAttributionV2Request) Access(access string) ApiGetRevisionAttributionV2Request {
+	r.access = &access
+	return r
+}
+
+// Whether to include deep dependencies (default is false)
+func (r ApiGetRevisionAttributionV2Request) IncludeDeepDependencies(includeDeepDependencies bool) ApiGetRevisionAttributionV2Request {
+	r.includeDeepDependencies = &includeDeepDependencies
+	return r
+}
+
+// Whether to include direct dependencies (default is false)
+func (r ApiGetRevisionAttributionV2Request) IncludeDirectDependencies(includeDirectDependencies bool) ApiGetRevisionAttributionV2Request {
+	r.includeDirectDependencies = &includeDirectDependencies
+	return r
+}
+
+// Whether to include the license list (default is false)
+func (r ApiGetRevisionAttributionV2Request) IncludeLicenseList(includeLicenseList bool) ApiGetRevisionAttributionV2Request {
+	r.includeLicenseList = &includeLicenseList
+	return r
+}
+
+// Whether to include the first-party license scan (default is false)
+func (r ApiGetRevisionAttributionV2Request) IncludeLicenseScan(includeLicenseScan bool) ApiGetRevisionAttributionV2Request {
+	r.includeLicenseScan = &includeLicenseScan
+	return r
+}
+
+// Whether to include the project&#39;s declared license (default is false)
+func (r ApiGetRevisionAttributionV2Request) IncludeProjectLicense(includeProjectLicense bool) ApiGetRevisionAttributionV2Request {
+	r.includeProjectLicense = &includeProjectLicense
+	return r
+}
+
+// Whether to include the copyright list (default is false)
+func (r ApiGetRevisionAttributionV2Request) IncludeCopyrightList(includeCopyrightList bool) ApiGetRevisionAttributionV2Request {
+	r.includeCopyrightList = &includeCopyrightList
+	return r
+}
+
+// Whether to include license file matches (default is false)
+func (r ApiGetRevisionAttributionV2Request) IncludeFileMatches(includeFileMatches bool) ApiGetRevisionAttributionV2Request {
+	r.includeFileMatches = &includeFileMatches
+	return r
+}
+
+// Whether to include open vulnerabilities (default is false)
+func (r ApiGetRevisionAttributionV2Request) IncludeOpenVulnerabilities(includeOpenVulnerabilities bool) ApiGetRevisionAttributionV2Request {
+	r.includeOpenVulnerabilities = &includeOpenVulnerabilities
+	return r
+}
+
+// Whether to include closed vulnerabilities (default is false)
+func (r ApiGetRevisionAttributionV2Request) IncludeClosedVulnerabilities(includeClosedVulnerabilities bool) ApiGetRevisionAttributionV2Request {
+	r.includeClosedVulnerabilities = &includeClosedVulnerabilities
+	return r
+}
+
+// Whether to include the dependency summary (default is false)
+func (r ApiGetRevisionAttributionV2Request) IncludeDependencySummary(includeDependencySummary bool) ApiGetRevisionAttributionV2Request {
+	r.includeDependencySummary = &includeDependencySummary
+	return r
+}
+
+// Whether to include license headers (default is false)
+func (r ApiGetRevisionAttributionV2Request) IncludeLicenseHeaders(includeLicenseHeaders bool) ApiGetRevisionAttributionV2Request {
+	r.includeLicenseHeaders = &includeLicenseHeaders
+	return r
+}
+
+// Whether to include the package labels assigned to each dependency (default is false)
+func (r ApiGetRevisionAttributionV2Request) IncludePackageLabels(includePackageLabels bool) ApiGetRevisionAttributionV2Request {
+	r.includePackageLabels = &includePackageLabels
+	return r
+}
+
+// Whether to include hash and version data (default is false)
+func (r ApiGetRevisionAttributionV2Request) IncludeHashAndVersionData(includeHashAndVersionData bool) ApiGetRevisionAttributionV2Request {
+	r.includeHashAndVersionData = &includeHashAndVersionData
+	return r
+}
+
+// Object controlling which dependencies are excluded from the report. The only supported nested field is &#x60;packageLabels&#x60;: a non-empty array of package-label values; dependencies carrying any of these labels are excluded from the report.  The server parses the query string with the &#x60;qs&#x60; library, so the array is sent using bracket-and-index notation rather than standard OpenAPI &#x60;deepObject&#x60; serialization. For example, to exclude two labels send (before URL-encoding): &#x60;excludeFields[packageLabels][0]&#x3D;internal&amp;excludeFields[packageLabels][1]&#x3D;vendored&#x60;. 
+func (r ApiGetRevisionAttributionV2Request) ExcludeFields(excludeFields QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter) ApiGetRevisionAttributionV2Request {
+	r.excludeFields = &excludeFields
+	return r
+}
+
+func (r ApiGetRevisionAttributionV2Request) Execute() (*os.File, *http.Response, error) {
+	return r.ApiService.GetRevisionAttributionV2Execute(r)
+}
+
+/*
+GetRevisionAttributionV2 Method for GetRevisionAttributionV2
+
+Generate and stream a revision's attribution report (V2). This is the catch-all report
+endpoint; the report `format` and contents are controlled via query parameters.
+
+**Note:** Not all report options are valid for every report format. Use your project's
+Reports UI to see which options apply to a given format.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The URL-encoded locator of the revision
+ @return ApiGetRevisionAttributionV2Request
+*/
+func (a *RevisionsAPIService) GetRevisionAttributionV2(ctx context.Context, locator string) ApiGetRevisionAttributionV2Request {
+	return ApiGetRevisionAttributionV2Request{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+	}
+}
+
+// Execute executes the request
+//  @return *os.File
+func (a *RevisionsAPIService) GetRevisionAttributionV2Execute(r ApiGetRevisionAttributionV2Request) (*os.File, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *os.File
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RevisionsAPIService.GetRevisionAttributionV2")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/revisions/{locator}/attribution"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.format != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "format", r.format, "form", "")
+	}
+	if r.access != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "access", r.access, "form", "")
+	}
+	if r.includeDeepDependencies != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDeepDependencies", r.includeDeepDependencies, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDeepDependencies", defaultValue, "form", "")
+		r.includeDeepDependencies = &defaultValue
+	}
+	if r.includeDirectDependencies != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDirectDependencies", r.includeDirectDependencies, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDirectDependencies", defaultValue, "form", "")
+		r.includeDirectDependencies = &defaultValue
+	}
+	if r.includeLicenseList != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseList", r.includeLicenseList, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseList", defaultValue, "form", "")
+		r.includeLicenseList = &defaultValue
+	}
+	if r.includeLicenseScan != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseScan", r.includeLicenseScan, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseScan", defaultValue, "form", "")
+		r.includeLicenseScan = &defaultValue
+	}
+	if r.includeProjectLicense != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeProjectLicense", r.includeProjectLicense, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeProjectLicense", defaultValue, "form", "")
+		r.includeProjectLicense = &defaultValue
+	}
+	if r.includeCopyrightList != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyrightList", r.includeCopyrightList, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyrightList", defaultValue, "form", "")
+		r.includeCopyrightList = &defaultValue
+	}
+	if r.includeFileMatches != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFileMatches", r.includeFileMatches, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFileMatches", defaultValue, "form", "")
+		r.includeFileMatches = &defaultValue
+	}
+	if r.includeOpenVulnerabilities != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeOpenVulnerabilities", r.includeOpenVulnerabilities, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeOpenVulnerabilities", defaultValue, "form", "")
+		r.includeOpenVulnerabilities = &defaultValue
+	}
+	if r.includeClosedVulnerabilities != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeClosedVulnerabilities", r.includeClosedVulnerabilities, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeClosedVulnerabilities", defaultValue, "form", "")
+		r.includeClosedVulnerabilities = &defaultValue
+	}
+	if r.includeDependencySummary != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDependencySummary", r.includeDependencySummary, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDependencySummary", defaultValue, "form", "")
+		r.includeDependencySummary = &defaultValue
+	}
+	if r.includeLicenseHeaders != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseHeaders", r.includeLicenseHeaders, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseHeaders", defaultValue, "form", "")
+		r.includeLicenseHeaders = &defaultValue
+	}
+	if r.includePackageLabels != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", r.includePackageLabels, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", defaultValue, "form", "")
+		r.includePackageLabels = &defaultValue
+	}
+	if r.includeHashAndVersionData != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeHashAndVersionData", r.includeHashAndVersionData, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeHashAndVersionData", defaultValue, "form", "")
+		r.includeHashAndVersionData = &defaultValue
+	}
+	if r.excludeFields != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeFields", r.excludeFields, "deepObject", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/octet-stream", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -778,7 +3046,7 @@ type ApiGetRevisionDependenciesRequest struct {
 	includeLocators *[]string
 }
 
-// Maximum number of dependencies to return (min 1, max 10000)
+// Maximum number of dependencies to return. The value is clamped server-side to the range 25–100: any value below 25 is treated as 25, and any value above 100 is treated as 100. 
 func (r ApiGetRevisionDependenciesRequest) Limit(limit int32) ApiGetRevisionDependenciesRequest {
 	r.limit = &limit
 	return r
@@ -909,7 +3177,7 @@ func (a *RevisionsAPIService) GetRevisionDependenciesExecute(r ApiGetRevisionDep
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "text/plain"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -950,7 +3218,7 @@ func (a *RevisionsAPIService) GetRevisionDependenciesExecute(r ApiGetRevisionDep
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetRevisionDependenciesPost404Response
+			var v string
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1062,7 +3330,7 @@ func (a *RevisionsAPIService) GetRevisionDependenciesPostExecute(r ApiGetRevisio
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "text/plain"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1105,7 +3373,184 @@ func (a *RevisionsAPIService) GetRevisionDependenciesPostExecute(r ApiGetRevisio
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v GetRevisionDependenciesPost404Response
+			var v string
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetRevisionScansRequest struct {
+	ctx context.Context
+	ApiService *RevisionsAPIService
+	locator string
+	page *int32
+	pageSize *int32
+}
+
+// The 1-indexed page of results to return
+func (r ApiGetRevisionScansRequest) Page(page int32) ApiGetRevisionScansRequest {
+	r.page = &page
+	return r
+}
+
+// The number of scans to return per page (maximum 50)
+func (r ApiGetRevisionScansRequest) PageSize(pageSize int32) ApiGetRevisionScansRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+func (r ApiGetRevisionScansRequest) Execute() (*GetRevisionScans200Response, *http.Response, error) {
+	return r.ApiService.GetRevisionScansExecute(r)
+}
+
+/*
+GetRevisionScans Method for GetRevisionScans
+
+Retrieve a paginated list of scans for a given revision, ordered by scan time descending, with ties broken by id DESC for deterministic pagination.
+Scans are filtered to the organization that owns the revision's project, so public and private projects behave consistently.
+Requires an authenticated user.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param locator The URL-encoded locator of the revision
+ @return ApiGetRevisionScansRequest
+*/
+func (a *RevisionsAPIService) GetRevisionScans(ctx context.Context, locator string) ApiGetRevisionScansRequest {
+	return ApiGetRevisionScansRequest{
+		ApiService: a,
+		ctx: ctx,
+		locator: locator,
+	}
+}
+
+// Execute executes the request
+//  @return GetRevisionScans200Response
+func (a *RevisionsAPIService) GetRevisionScansExecute(r ApiGetRevisionScansRequest) (*GetRevisionScans200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetRevisionScans200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "RevisionsAPIService.GetRevisionScans")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/revisions/{locator}/scans"
+	localVarPath = strings.Replace(localVarPath, "{"+"locator"+"}", url.PathEscape(parameterValueToString(r.locator, "locator")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	} else {
+		var defaultValue int32 = 1
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
+		r.page = &defaultValue
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
+	} else {
+		var defaultValue int32 = 10
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", defaultValue, "form", "")
+		r.pageSize = &defaultValue
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1350,6 +3795,17 @@ func (a *RevisionsAPIService) OriginalSbomExecute(r ApiOriginalSbomRequest) (*ht
 					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 403 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1431,6 +3887,9 @@ func (a *RevisionsAPIService) UpdateRevisionExecute(r ApiUpdateRevisionRequest) 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.updateRevisionRequest == nil {
+		return localVarReturnValue, nil, reportError("updateRevisionRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
@@ -1472,6 +3931,17 @@ func (a *RevisionsAPIService) UpdateRevisionExecute(r ApiUpdateRevisionRequest) 
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
 			var v AddLicenseConclusion400Response
