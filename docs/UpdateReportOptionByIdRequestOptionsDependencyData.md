@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Projects** | Pointer to **bool** |  | [optional] 
-**Name** | Pointer to **bool** |  | [optional] 
 **Authors** | Pointer to **bool** |  | [optional] 
 **Description** | Pointer to **bool** |  | [optional] 
 **Homepage** | Pointer to **bool** |  | [optional] 
@@ -67,31 +66,6 @@ SetProjects sets Projects field to given value.
 `func (o *UpdateReportOptionByIdRequestOptionsDependencyData) HasProjects() bool`
 
 HasProjects returns a boolean if a field has been set.
-
-### GetName
-
-`func (o *UpdateReportOptionByIdRequestOptionsDependencyData) GetName() bool`
-
-GetName returns the Name field if non-nil, zero value otherwise.
-
-### GetNameOk
-
-`func (o *UpdateReportOptionByIdRequestOptionsDependencyData) GetNameOk() (*bool, bool)`
-
-GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetName
-
-`func (o *UpdateReportOptionByIdRequestOptionsDependencyData) SetName(v bool)`
-
-SetName sets Name field to given value.
-
-### HasName
-
-`func (o *UpdateReportOptionByIdRequestOptionsDependencyData) HasName() bool`
-
-HasName returns a boolean if a field has been set.
 
 ### GetAuthors
 
