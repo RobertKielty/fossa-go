@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.62
 Contact: support@fossa.com
 */
 
@@ -26,8 +26,8 @@ type GetSnippets200ResponseResultsInnerLicensesInner struct {
 	Signature string `json:"signature"`
 	// How the license was identified
 	Type string `json:"type"`
-	// Approval status of the license
-	Status string `json:"status"`
+	// Approval status of the license (optional; absent for licenses with no issue)
+	Status *string `json:"status,omitempty"`
 	// ID of the related issue (optional)
 	IssueId *int32 `json:"issueId,omitempty"`
 }
@@ -38,11 +38,10 @@ type _GetSnippets200ResponseResultsInnerLicensesInner GetSnippets200ResponseResu
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetSnippets200ResponseResultsInnerLicensesInner(signature string, type_ string, status string) *GetSnippets200ResponseResultsInnerLicensesInner {
+func NewGetSnippets200ResponseResultsInnerLicensesInner(signature string, type_ string) *GetSnippets200ResponseResultsInnerLicensesInner {
 	this := GetSnippets200ResponseResultsInnerLicensesInner{}
 	this.Signature = signature
 	this.Type = type_
-	this.Status = status
 	return &this
 }
 
@@ -102,28 +101,36 @@ func (o *GetSnippets200ResponseResultsInnerLicensesInner) SetType(v string) {
 	o.Type = v
 }
 
-// GetStatus returns the Status field value
+// GetStatus returns the Status field value if set, zero value otherwise.
 func (o *GetSnippets200ResponseResultsInnerLicensesInner) GetStatus() string {
-	if o == nil {
+	if o == nil || IsNil(o.Status) {
 		var ret string
 		return ret
 	}
-
-	return o.Status
+	return *o.Status
 }
 
-// GetStatusOk returns a tuple with the Status field value
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetSnippets200ResponseResultsInnerLicensesInner) GetStatusOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
-	return &o.Status, true
+	return o.Status, true
 }
 
-// SetStatus sets field value
+// HasStatus returns a boolean if a field has been set.
+func (o *GetSnippets200ResponseResultsInnerLicensesInner) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given string and assigns it to the Status field.
 func (o *GetSnippets200ResponseResultsInnerLicensesInner) SetStatus(v string) {
-	o.Status = v
+	o.Status = &v
 }
 
 // GetIssueId returns the IssueId field value if set, zero value otherwise.
@@ -170,7 +177,9 @@ func (o GetSnippets200ResponseResultsInnerLicensesInner) ToMap() (map[string]int
 	toSerialize := map[string]interface{}{}
 	toSerialize["signature"] = o.Signature
 	toSerialize["type"] = o.Type
-	toSerialize["status"] = o.Status
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
 	if !IsNil(o.IssueId) {
 		toSerialize["issueId"] = o.IssueId
 	}
@@ -184,7 +193,6 @@ func (o *GetSnippets200ResponseResultsInnerLicensesInner) UnmarshalJSON(data []b
 	requiredProperties := []string{
 		"signature",
 		"type",
-		"status",
 	}
 
 	allProperties := make(map[string]interface{})
