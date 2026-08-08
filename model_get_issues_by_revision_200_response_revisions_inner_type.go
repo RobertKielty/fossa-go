@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.63
 Contact: support@fossa.com
 */
 
@@ -111,7 +111,21 @@ func (dst *GetIssuesByRevision200ResponseRevisionsInnerType) UnmarshalJSON(data 
 	} else if match == 1 {
 		return nil // exactly one match
 	} else { // no match
-		return fmt.Errorf("data failed to match schemas in oneOf(GetIssuesByRevision200ResponseRevisionsInnerType)")
+        if err != nil {
+            return fmt.Errorf("data failed to match schemas in oneOf(GetIssuesByRevision200ResponseRevisionsInnerType): %v", err)
+        } else {
+            return fmt.Errorf("data failed to match schemas in oneOf(GetIssuesByRevision200ResponseRevisionsInnerType)")
+        }
+        if err != nil {
+            return fmt.Errorf("data failed to match schemas in oneOf(GetIssuesByRevision200ResponseRevisionsInnerType): %v", err)
+        } else {
+            return fmt.Errorf("data failed to match schemas in oneOf(GetIssuesByRevision200ResponseRevisionsInnerType)")
+        }
+        if err != nil {
+            return fmt.Errorf("data failed to match schemas in oneOf(GetIssuesByRevision200ResponseRevisionsInnerType): %v", err)
+        } else {
+            return fmt.Errorf("data failed to match schemas in oneOf(GetIssuesByRevision200ResponseRevisionsInnerType)")
+        }
 	}
 }
 
