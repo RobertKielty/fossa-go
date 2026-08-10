@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.63
 Contact: support@fossa.com
 */
 
@@ -25,7 +25,7 @@ type UpdateTeamGroupUsersRequest struct {
 	// Action to perform on team group users
 	Action string `json:"action"`
 	// List of users to add, remove, or replace
-	Users []UpdateTeamGroupUsersRequestUsersInner `json:"users"`
+	Users []UpdateTeamUsersRequestUsersInner `json:"users"`
 }
 
 type _UpdateTeamGroupUsersRequest UpdateTeamGroupUsersRequest
@@ -34,7 +34,7 @@ type _UpdateTeamGroupUsersRequest UpdateTeamGroupUsersRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUpdateTeamGroupUsersRequest(action string, users []UpdateTeamGroupUsersRequestUsersInner) *UpdateTeamGroupUsersRequest {
+func NewUpdateTeamGroupUsersRequest(action string, users []UpdateTeamUsersRequestUsersInner) *UpdateTeamGroupUsersRequest {
 	this := UpdateTeamGroupUsersRequest{}
 	this.Action = action
 	this.Users = users
@@ -74,9 +74,9 @@ func (o *UpdateTeamGroupUsersRequest) SetAction(v string) {
 }
 
 // GetUsers returns the Users field value
-func (o *UpdateTeamGroupUsersRequest) GetUsers() []UpdateTeamGroupUsersRequestUsersInner {
+func (o *UpdateTeamGroupUsersRequest) GetUsers() []UpdateTeamUsersRequestUsersInner {
 	if o == nil {
-		var ret []UpdateTeamGroupUsersRequestUsersInner
+		var ret []UpdateTeamUsersRequestUsersInner
 		return ret
 	}
 
@@ -85,7 +85,7 @@ func (o *UpdateTeamGroupUsersRequest) GetUsers() []UpdateTeamGroupUsersRequestUs
 
 // GetUsersOk returns a tuple with the Users field value
 // and a boolean to check if the value has been set.
-func (o *UpdateTeamGroupUsersRequest) GetUsersOk() ([]UpdateTeamGroupUsersRequestUsersInner, bool) {
+func (o *UpdateTeamGroupUsersRequest) GetUsersOk() ([]UpdateTeamUsersRequestUsersInner, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -93,7 +93,7 @@ func (o *UpdateTeamGroupUsersRequest) GetUsersOk() ([]UpdateTeamGroupUsersReques
 }
 
 // SetUsers sets field value
-func (o *UpdateTeamGroupUsersRequest) SetUsers(v []UpdateTeamGroupUsersRequestUsersInner) {
+func (o *UpdateTeamGroupUsersRequest) SetUsers(v []UpdateTeamUsersRequestUsersInner) {
 	o.Users = v
 }
 
