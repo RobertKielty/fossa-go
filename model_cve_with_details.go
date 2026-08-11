@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.64
 Contact: support@fossa.com
 */
 
@@ -23,7 +23,7 @@ var _ MappedNullable = &CveWithDetails{}
 // CveWithDetails struct for CveWithDetails
 type CveWithDetails struct {
 	// CVE identifier (e.g., CVE-2021-44228)
-	Cve string `json:"cve" validate:"regexp=^CVE-\\\\d{4}-\\\\d{4,}$"`
+	Cve string `json:"cve" validate:"regexp=^CVE-\\d{4}-\\d{4\\,}$"`
 	// Detailed description of the vulnerability
 	Description *string `json:"description,omitempty"`
 }
