@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.66
 Contact: support@fossa.com
 */
 
@@ -52,7 +52,11 @@ type GetSnippets200ResponseResultsInner struct {
 	IssueCounts GetSnippets200ResponseResultsInnerIssueCounts `json:"issueCounts"`
 	RejectionDetails *GetSnippets200ResponseResultsInnerRejectionDetails `json:"rejectionDetails,omitempty"`
 	// Package labels assigned to this snippet
-	Labels []GetSnippets200ResponseResultsInnerLabelsInner `json:"labels"`
+	Labels []GetProjectDependencies200ResponseDependenciesInnerLabelsInner `json:"labels"`
+	// Whether the snippet exists as a vendored dependency
+	IsVendored bool `json:"isVendored"`
+	// Whether the snippet has been converted to a vendored dependency
+	IsConverted bool `json:"isConverted"`
 }
 
 type _GetSnippets200ResponseResultsInner GetSnippets200ResponseResultsInner
@@ -61,7 +65,7 @@ type _GetSnippets200ResponseResultsInner GetSnippets200ResponseResultsInner
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetSnippets200ResponseResultsInner(id string, packageId string, purl string, locator string, package_ string, version string, kind string, matchCount int32, highestMatchPercentage float32, licenses []GetSnippets200ResponseResultsInnerLicensesInner, issueCounts GetSnippets200ResponseResultsInnerIssueCounts, labels []GetSnippets200ResponseResultsInnerLabelsInner) *GetSnippets200ResponseResultsInner {
+func NewGetSnippets200ResponseResultsInner(id string, packageId string, purl string, locator string, package_ string, version string, kind string, matchCount int32, highestMatchPercentage float32, licenses []GetSnippets200ResponseResultsInnerLicensesInner, issueCounts GetSnippets200ResponseResultsInnerIssueCounts, labels []GetProjectDependencies200ResponseDependenciesInnerLabelsInner, isVendored bool, isConverted bool) *GetSnippets200ResponseResultsInner {
 	this := GetSnippets200ResponseResultsInner{}
 	this.Id = id
 	this.PackageId = packageId
@@ -75,6 +79,8 @@ func NewGetSnippets200ResponseResultsInner(id string, packageId string, purl str
 	this.Licenses = licenses
 	this.IssueCounts = issueCounts
 	this.Labels = labels
+	this.IsVendored = isVendored
+	this.IsConverted = isConverted
 	return &this
 }
 
@@ -479,9 +485,9 @@ func (o *GetSnippets200ResponseResultsInner) SetRejectionDetails(v GetSnippets20
 }
 
 // GetLabels returns the Labels field value
-func (o *GetSnippets200ResponseResultsInner) GetLabels() []GetSnippets200ResponseResultsInnerLabelsInner {
+func (o *GetSnippets200ResponseResultsInner) GetLabels() []GetProjectDependencies200ResponseDependenciesInnerLabelsInner {
 	if o == nil {
-		var ret []GetSnippets200ResponseResultsInnerLabelsInner
+		var ret []GetProjectDependencies200ResponseDependenciesInnerLabelsInner
 		return ret
 	}
 
@@ -490,7 +496,7 @@ func (o *GetSnippets200ResponseResultsInner) GetLabels() []GetSnippets200Respons
 
 // GetLabelsOk returns a tuple with the Labels field value
 // and a boolean to check if the value has been set.
-func (o *GetSnippets200ResponseResultsInner) GetLabelsOk() ([]GetSnippets200ResponseResultsInnerLabelsInner, bool) {
+func (o *GetSnippets200ResponseResultsInner) GetLabelsOk() ([]GetProjectDependencies200ResponseDependenciesInnerLabelsInner, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -498,8 +504,56 @@ func (o *GetSnippets200ResponseResultsInner) GetLabelsOk() ([]GetSnippets200Resp
 }
 
 // SetLabels sets field value
-func (o *GetSnippets200ResponseResultsInner) SetLabels(v []GetSnippets200ResponseResultsInnerLabelsInner) {
+func (o *GetSnippets200ResponseResultsInner) SetLabels(v []GetProjectDependencies200ResponseDependenciesInnerLabelsInner) {
 	o.Labels = v
+}
+
+// GetIsVendored returns the IsVendored field value
+func (o *GetSnippets200ResponseResultsInner) GetIsVendored() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.IsVendored
+}
+
+// GetIsVendoredOk returns a tuple with the IsVendored field value
+// and a boolean to check if the value has been set.
+func (o *GetSnippets200ResponseResultsInner) GetIsVendoredOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.IsVendored, true
+}
+
+// SetIsVendored sets field value
+func (o *GetSnippets200ResponseResultsInner) SetIsVendored(v bool) {
+	o.IsVendored = v
+}
+
+// GetIsConverted returns the IsConverted field value
+func (o *GetSnippets200ResponseResultsInner) GetIsConverted() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.IsConverted
+}
+
+// GetIsConvertedOk returns a tuple with the IsConverted field value
+// and a boolean to check if the value has been set.
+func (o *GetSnippets200ResponseResultsInner) GetIsConvertedOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.IsConverted, true
+}
+
+// SetIsConverted sets field value
+func (o *GetSnippets200ResponseResultsInner) SetIsConverted(v bool) {
+	o.IsConverted = v
 }
 
 func (o GetSnippets200ResponseResultsInner) MarshalJSON() ([]byte, error) {
@@ -536,6 +590,8 @@ func (o GetSnippets200ResponseResultsInner) ToMap() (map[string]interface{}, err
 		toSerialize["rejectionDetails"] = o.RejectionDetails
 	}
 	toSerialize["labels"] = o.Labels
+	toSerialize["isVendored"] = o.IsVendored
+	toSerialize["isConverted"] = o.IsConverted
 	return toSerialize, nil
 }
 
@@ -556,6 +612,8 @@ func (o *GetSnippets200ResponseResultsInner) UnmarshalJSON(data []byte) (err err
 		"licenses",
 		"issueCounts",
 		"labels",
+		"isVendored",
+		"isConverted",
 	}
 
 	allProperties := make(map[string]interface{})
