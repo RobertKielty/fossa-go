@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.66
 Contact: support@fossa.com
 */
 
@@ -34,7 +34,7 @@ func (r ApiBulkAssignPackageLabelsRequest) BulkAssignPackageLabelsRequest(bulkAs
 	return r
 }
 
-func (r ApiBulkAssignPackageLabelsRequest) Execute() (*GetPackageLabelAssignments200Response, *http.Response, error) {
+func (r ApiBulkAssignPackageLabelsRequest) Execute() (*UpdatePackageLabelAssignments200Response, *http.Response, error) {
 	return r.ApiService.BulkAssignPackageLabelsExecute(r)
 }
 
@@ -57,13 +57,13 @@ func (a *PackageLabelsAPIService) BulkAssignPackageLabels(ctx context.Context) A
 }
 
 // Execute executes the request
-//  @return GetPackageLabelAssignments200Response
-func (a *PackageLabelsAPIService) BulkAssignPackageLabelsExecute(r ApiBulkAssignPackageLabelsRequest) (*GetPackageLabelAssignments200Response, *http.Response, error) {
+//  @return UpdatePackageLabelAssignments200Response
+func (a *PackageLabelsAPIService) BulkAssignPackageLabelsExecute(r ApiBulkAssignPackageLabelsRequest) (*UpdatePackageLabelAssignments200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetPackageLabelAssignments200Response
+		localVarReturnValue  *UpdatePackageLabelAssignments200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PackageLabelsAPIService.BulkAssignPackageLabels")
@@ -321,7 +321,7 @@ func (r ApiCreatePackageLabelAssignmentsRequest) CreatePackageLabelAssignmentsRe
 	return r
 }
 
-func (r ApiCreatePackageLabelAssignmentsRequest) Execute() (*GetPackageLabelAssignments200Response, *http.Response, error) {
+func (r ApiCreatePackageLabelAssignmentsRequest) Execute() (*UpdatePackageLabelAssignments200Response, *http.Response, error) {
 	return r.ApiService.CreatePackageLabelAssignmentsExecute(r)
 }
 
@@ -341,13 +341,13 @@ func (a *PackageLabelsAPIService) CreatePackageLabelAssignments(ctx context.Cont
 }
 
 // Execute executes the request
-//  @return GetPackageLabelAssignments200Response
-func (a *PackageLabelsAPIService) CreatePackageLabelAssignmentsExecute(r ApiCreatePackageLabelAssignmentsRequest) (*GetPackageLabelAssignments200Response, *http.Response, error) {
+//  @return UpdatePackageLabelAssignments200Response
+func (a *PackageLabelsAPIService) CreatePackageLabelAssignmentsExecute(r ApiCreatePackageLabelAssignmentsRequest) (*UpdatePackageLabelAssignments200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetPackageLabelAssignments200Response
+		localVarReturnValue  *UpdatePackageLabelAssignments200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PackageLabelsAPIService.CreatePackageLabelAssignments")
@@ -710,6 +710,8 @@ type ApiGetPackageLabelAssignmentsRequest struct {
 	filtersPackageVersion *string
 	filtersScope *string
 	filtersScopeId *string
+	filtersShouldIncludePackageWideLabels *bool
+	filtersShouldIncludeRevisionScopedLabels *bool
 }
 
 func (r ApiGetPackageLabelAssignmentsRequest) FiltersPackageId(filtersPackageId string) ApiGetPackageLabelAssignmentsRequest {
@@ -732,6 +734,16 @@ func (r ApiGetPackageLabelAssignmentsRequest) FiltersScopeId(filtersScopeId stri
 	return r
 }
 
+func (r ApiGetPackageLabelAssignmentsRequest) FiltersShouldIncludePackageWideLabels(filtersShouldIncludePackageWideLabels bool) ApiGetPackageLabelAssignmentsRequest {
+	r.filtersShouldIncludePackageWideLabels = &filtersShouldIncludePackageWideLabels
+	return r
+}
+
+func (r ApiGetPackageLabelAssignmentsRequest) FiltersShouldIncludeRevisionScopedLabels(filtersShouldIncludeRevisionScopedLabels bool) ApiGetPackageLabelAssignmentsRequest {
+	r.filtersShouldIncludeRevisionScopedLabels = &filtersShouldIncludeRevisionScopedLabels
+	return r
+}
+
 func (r ApiGetPackageLabelAssignmentsRequest) Execute() (*GetPackageLabelAssignments200Response, *http.Response, error) {
 	return r.ApiService.GetPackageLabelAssignmentsExecute(r)
 }
@@ -739,7 +751,14 @@ func (r ApiGetPackageLabelAssignmentsRequest) Execute() (*GetPackageLabelAssignm
 /*
 GetPackageLabelAssignments Method for GetPackageLabelAssignments
 
-Get all Package Labels assigned to a single package.
+Get Package Label assignments for the organization, optionally filtered.
+
+All filters are optional. When no filters are supplied, every Package Label
+assignment in the organization is returned (subject to the caller's project
+view permissions).
+
+Note - This endpoint is not available for organizations on the Free plan.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetPackageLabelAssignmentsRequest
@@ -783,6 +802,12 @@ func (a *PackageLabelsAPIService) GetPackageLabelAssignmentsExecute(r ApiGetPack
 	}
 	if r.filtersScopeId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "filters[scopeId]", r.filtersScopeId, "form", "")
+	}
+	if r.filtersShouldIncludePackageWideLabels != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filters[shouldIncludePackageWideLabels]", r.filtersShouldIncludePackageWideLabels, "form", "")
+	}
+	if r.filtersShouldIncludeRevisionScopedLabels != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "filters[shouldIncludeRevisionScopedLabels]", r.filtersShouldIncludeRevisionScopedLabels, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -955,6 +980,157 @@ func (a *PackageLabelsAPIService) GetPackageLabelsExecute(r ApiGetPackageLabelsR
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiUpdatePackageLabelAssignmentsRequest struct {
+	ctx context.Context
+	ApiService *PackageLabelsAPIService
+	updatePackageLabelAssignmentsRequest *UpdatePackageLabelAssignmentsRequest
+}
+
+func (r ApiUpdatePackageLabelAssignmentsRequest) UpdatePackageLabelAssignmentsRequest(updatePackageLabelAssignmentsRequest UpdatePackageLabelAssignmentsRequest) ApiUpdatePackageLabelAssignmentsRequest {
+	r.updatePackageLabelAssignmentsRequest = &updatePackageLabelAssignmentsRequest
+	return r
+}
+
+func (r ApiUpdatePackageLabelAssignmentsRequest) Execute() (*UpdatePackageLabelAssignments200Response, *http.Response, error) {
+	return r.ApiService.UpdatePackageLabelAssignmentsExecute(r)
+}
+
+/*
+UpdatePackageLabelAssignments Method for UpdatePackageLabelAssignments
+
+Reconcile the Package Label assignments for a single package at a given scope.
+
+The desired end state is supplied as `newLabelIds`, a map keyed by package
+version (use the version string, or `all` for assignments that apply to every
+version) whose value is the list of label IDs that should be assigned for that
+version. Existing assignments not present in the map are removed and any new
+label IDs are added.
+
+Note - This endpoint is not available for organizations on the Free plan.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiUpdatePackageLabelAssignmentsRequest
+*/
+func (a *PackageLabelsAPIService) UpdatePackageLabelAssignments(ctx context.Context) ApiUpdatePackageLabelAssignmentsRequest {
+	return ApiUpdatePackageLabelAssignmentsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return UpdatePackageLabelAssignments200Response
+func (a *PackageLabelsAPIService) UpdatePackageLabelAssignmentsExecute(r ApiUpdatePackageLabelAssignmentsRequest) (*UpdatePackageLabelAssignments200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdatePackageLabelAssignments200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PackageLabelsAPIService.UpdatePackageLabelAssignments")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/package-label-assignments"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.updatePackageLabelAssignmentsRequest == nil {
+		return localVarReturnValue, nil, reportError("updatePackageLabelAssignmentsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.updatePackageLabelAssignmentsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {

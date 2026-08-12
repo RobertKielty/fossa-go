@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.66
 Contact: support@fossa.com
 */
 
@@ -23,7 +23,7 @@ var _ MappedNullable = &ExtendIssueExceptionRequest{}
 // ExtendIssueExceptionRequest struct for ExtendIssueExceptionRequest
 type ExtendIssueExceptionRequest struct {
 	// Expiration date in YYYY-MM-DD format, or null to never expire
-	ExpiresAfter string `json:"expiresAfter" validate:"regexp=^\\\\d{4}-\\\\d{2}-\\\\d{2}$"`
+	ExpiresAfter string `json:"expiresAfter" validate:"regexp=^\\d{4}-\\d{2}-\\d{2}$"`
 }
 
 type _ExtendIssueExceptionRequest ExtendIssueExceptionRequest
