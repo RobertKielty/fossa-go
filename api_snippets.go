@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.67
 Contact: support@fossa.com
 */
 
@@ -37,6 +37,7 @@ type ApiGetComparedSnippetPackagesRequest struct {
 	search *string
 	rejectionStatus *[]string
 	packageLabels *[]string
+	vendoredMatch *[]string
 	sort *string
 	page *int32
 	pageSize *int32
@@ -75,6 +76,12 @@ func (r ApiGetComparedSnippetPackagesRequest) RejectionStatus(rejectionStatus []
 // Filter by package labels
 func (r ApiGetComparedSnippetPackagesRequest) PackageLabels(packageLabels []string) ApiGetComparedSnippetPackagesRequest {
 	r.packageLabels = &packageLabels
+	return r
+}
+
+// Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | &#x60;vendored&#x60; | Include snippets that exist as a vendored dependency | | &#x60;exVendored&#x60; | Exclude snippets that exist as a vendored dependency | | &#x60;converted&#x60; | Include snippets that have been converted to vendored dependencies | | &#x60;exConverted&#x60; | Exclude snippets that have been converted to vendored dependencies | 
+func (r ApiGetComparedSnippetPackagesRequest) VendoredMatch(vendoredMatch []string) ApiGetComparedSnippetPackagesRequest {
+	r.vendoredMatch = &vendoredMatch
 	return r
 }
 
@@ -196,6 +203,17 @@ func (a *SnippetsAPIService) GetComparedSnippetPackagesExecute(r ApiGetComparedS
 			parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", t, "form", "multi")
 		}
 	}
+	if r.vendoredMatch != nil {
+		t := *r.vendoredMatch
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "vendoredMatch", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "vendoredMatch", t, "form", "multi")
+		}
+	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	} else {
@@ -287,6 +305,17 @@ func (a *SnippetsAPIService) GetComparedSnippetPackagesExecute(r ApiGetComparedS
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -315,9 +344,10 @@ type ApiGetComparedSnippetPathsRequest struct {
 	search *string
 	rejectionStatus *[]string
 	packageLabels *[]string
+	vendoredMatch *[]string
 }
 
-// The path to filter snippets by
+// The path to filter snippets by. When omitted, paths are aggregated from the root.
 func (r ApiGetComparedSnippetPathsRequest) Path(path string) ApiGetComparedSnippetPathsRequest {
 	r.path = &path
 	return r
@@ -350,6 +380,12 @@ func (r ApiGetComparedSnippetPathsRequest) RejectionStatus(rejectionStatus []str
 // Filter by package labels
 func (r ApiGetComparedSnippetPathsRequest) PackageLabels(packageLabels []string) ApiGetComparedSnippetPathsRequest {
 	r.packageLabels = &packageLabels
+	return r
+}
+
+// Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | &#x60;vendored&#x60; | Include snippets that exist as a vendored dependency | | &#x60;exVendored&#x60; | Exclude snippets that exist as a vendored dependency | | &#x60;converted&#x60; | Include snippets that have been converted to vendored dependencies | | &#x60;exConverted&#x60; | Exclude snippets that have been converted to vendored dependencies | 
+func (r ApiGetComparedSnippetPathsRequest) VendoredMatch(vendoredMatch []string) ApiGetComparedSnippetPathsRequest {
+	r.vendoredMatch = &vendoredMatch
 	return r
 }
 
@@ -401,11 +437,10 @@ func (a *SnippetsAPIService) GetComparedSnippetPathsExecute(r ApiGetComparedSnip
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.path == nil {
-		return localVarReturnValue, nil, reportError("path is required and must be specified")
-	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "path", r.path, "form", "")
+	if r.path != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "path", r.path, "form", "")
+	}
 	if r.ids != nil {
 		t := *r.ids
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
@@ -451,6 +486,17 @@ func (a *SnippetsAPIService) GetComparedSnippetPathsExecute(r ApiGetComparedSnip
 			}
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", t, "form", "multi")
+		}
+	}
+	if r.vendoredMatch != nil {
+		t := *r.vendoredMatch
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "vendoredMatch", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "vendoredMatch", t, "form", "multi")
 		}
 	}
 	// to determine the Content-Type header
@@ -523,6 +569,17 @@ func (a *SnippetsAPIService) GetComparedSnippetPathsExecute(r ApiGetComparedSnip
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -551,6 +608,7 @@ type ApiGetComparedSnippetsRequest struct {
 	search *string
 	rejectionStatus *[]string
 	packageLabels *[]string
+	vendoredMatch *[]string
 	sort *string
 	page *int32
 	pageSize *int32
@@ -589,6 +647,12 @@ func (r ApiGetComparedSnippetsRequest) RejectionStatus(rejectionStatus []string)
 // Filter by package labels
 func (r ApiGetComparedSnippetsRequest) PackageLabels(packageLabels []string) ApiGetComparedSnippetsRequest {
 	r.packageLabels = &packageLabels
+	return r
+}
+
+// Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | &#x60;vendored&#x60; | Include snippets that exist as a vendored dependency | | &#x60;exVendored&#x60; | Exclude snippets that exist as a vendored dependency | | &#x60;converted&#x60; | Include snippets that have been converted to vendored dependencies | | &#x60;exConverted&#x60; | Exclude snippets that have been converted to vendored dependencies | 
+func (r ApiGetComparedSnippetsRequest) VendoredMatch(vendoredMatch []string) ApiGetComparedSnippetsRequest {
+	r.vendoredMatch = &vendoredMatch
 	return r
 }
 
@@ -710,6 +774,17 @@ func (a *SnippetsAPIService) GetComparedSnippetsExecute(r ApiGetComparedSnippets
 			parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", t, "form", "multi")
 		}
 	}
+	if r.vendoredMatch != nil {
+		t := *r.vendoredMatch
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "vendoredMatch", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "vendoredMatch", t, "form", "multi")
+		}
+	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	} else {
@@ -801,6 +876,17 @@ func (a *SnippetsAPIService) GetComparedSnippetsExecute(r ApiGetComparedSnippets
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -827,6 +913,7 @@ type ApiGetSnippetCountRequest struct {
 	search *string
 	rejectionStatus *[]string
 	packageLabels *[]string
+	vendoredMatch *[]string
 }
 
 // The path to filter snippets by
@@ -862,6 +949,12 @@ func (r ApiGetSnippetCountRequest) RejectionStatus(rejectionStatus []string) Api
 // Filter by package labels
 func (r ApiGetSnippetCountRequest) PackageLabels(packageLabels []string) ApiGetSnippetCountRequest {
 	r.packageLabels = &packageLabels
+	return r
+}
+
+// Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | &#x60;vendored&#x60; | Include snippets that exist as a vendored dependency | | &#x60;exVendored&#x60; | Exclude snippets that exist as a vendored dependency | | &#x60;converted&#x60; | Include snippets that have been converted to vendored dependencies | | &#x60;exConverted&#x60; | Exclude snippets that have been converted to vendored dependencies | 
+func (r ApiGetSnippetCountRequest) VendoredMatch(vendoredMatch []string) ApiGetSnippetCountRequest {
+	r.vendoredMatch = &vendoredMatch
 	return r
 }
 
@@ -959,6 +1052,17 @@ func (a *SnippetsAPIService) GetSnippetCountExecute(r ApiGetSnippetCountRequest)
 			parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", t, "form", "multi")
 		}
 	}
+	if r.vendoredMatch != nil {
+		t := *r.vendoredMatch
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "vendoredMatch", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "vendoredMatch", t, "form", "multi")
+		}
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1029,6 +1133,17 @@ func (a *SnippetsAPIService) GetSnippetCountExecute(r ApiGetSnippetCountRequest)
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1050,6 +1165,13 @@ type ApiGetSnippetDetailsRequest struct {
 	ApiService *SnippetsAPIService
 	locator string
 	snippetId string
+	path *string
+}
+
+// An optional file path used to hydrate the snippet match details for that path.
+func (r ApiGetSnippetDetailsRequest) Path(path string) ApiGetSnippetDetailsRequest {
+	r.path = &path
+	return r
 }
 
 func (r ApiGetSnippetDetailsRequest) Execute() (*GetSnippetDetails200Response, *http.Response, error) {
@@ -1098,6 +1220,9 @@ func (a *SnippetsAPIService) GetSnippetDetailsExecute(r ApiGetSnippetDetailsRequ
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.path != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "path", r.path, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1136,6 +1261,17 @@ func (a *SnippetsAPIService) GetSnippetDetailsExecute(r ApiGetSnippetDetailsRequ
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
 			var v AddLicenseConclusion400Response
@@ -1280,6 +1416,17 @@ func (a *SnippetsAPIService) GetSnippetMatchDetailsExecute(r ApiGetSnippetMatchD
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 401 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1337,6 +1484,7 @@ type ApiGetSnippetPackagesRequest struct {
 	search *string
 	rejectionStatus *[]string
 	packageLabels *[]string
+	vendoredMatch *[]string
 	sort *string
 	page *int32
 	pageSize *int32
@@ -1375,6 +1523,12 @@ func (r ApiGetSnippetPackagesRequest) RejectionStatus(rejectionStatus []string) 
 // Filter by package labels
 func (r ApiGetSnippetPackagesRequest) PackageLabels(packageLabels []string) ApiGetSnippetPackagesRequest {
 	r.packageLabels = &packageLabels
+	return r
+}
+
+// Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | &#x60;vendored&#x60; | Include snippets that exist as a vendored dependency | | &#x60;exVendored&#x60; | Exclude snippets that exist as a vendored dependency | | &#x60;converted&#x60; | Include snippets that have been converted to vendored dependencies | | &#x60;exConverted&#x60; | Exclude snippets that have been converted to vendored dependencies | 
+func (r ApiGetSnippetPackagesRequest) VendoredMatch(vendoredMatch []string) ApiGetSnippetPackagesRequest {
+	r.vendoredMatch = &vendoredMatch
 	return r
 }
 
@@ -1490,6 +1644,17 @@ func (a *SnippetsAPIService) GetSnippetPackagesExecute(r ApiGetSnippetPackagesRe
 			parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", t, "form", "multi")
 		}
 	}
+	if r.vendoredMatch != nil {
+		t := *r.vendoredMatch
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "vendoredMatch", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "vendoredMatch", t, "form", "multi")
+		}
+	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	} else {
@@ -1581,6 +1746,17 @@ func (a *SnippetsAPIService) GetSnippetPackagesExecute(r ApiGetSnippetPackagesRe
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1607,9 +1783,10 @@ type ApiGetSnippetPathsRequest struct {
 	search *string
 	rejectionStatus *[]string
 	packageLabels *[]string
+	vendoredMatch *[]string
 }
 
-// The path to filter snippets by
+// The path to filter snippets by. When omitted, paths are aggregated from the root.
 func (r ApiGetSnippetPathsRequest) Path(path string) ApiGetSnippetPathsRequest {
 	r.path = &path
 	return r
@@ -1642,6 +1819,12 @@ func (r ApiGetSnippetPathsRequest) RejectionStatus(rejectionStatus []string) Api
 // Filter by package labels
 func (r ApiGetSnippetPathsRequest) PackageLabels(packageLabels []string) ApiGetSnippetPathsRequest {
 	r.packageLabels = &packageLabels
+	return r
+}
+
+// Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | &#x60;vendored&#x60; | Include snippets that exist as a vendored dependency | | &#x60;exVendored&#x60; | Exclude snippets that exist as a vendored dependency | | &#x60;converted&#x60; | Include snippets that have been converted to vendored dependencies | | &#x60;exConverted&#x60; | Exclude snippets that have been converted to vendored dependencies | 
+func (r ApiGetSnippetPathsRequest) VendoredMatch(vendoredMatch []string) ApiGetSnippetPathsRequest {
+	r.vendoredMatch = &vendoredMatch
 	return r
 }
 
@@ -1687,11 +1870,10 @@ func (a *SnippetsAPIService) GetSnippetPathsExecute(r ApiGetSnippetPathsRequest)
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.path == nil {
-		return localVarReturnValue, nil, reportError("path is required and must be specified")
-	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "path", r.path, "form", "")
+	if r.path != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "path", r.path, "form", "")
+	}
 	if r.ids != nil {
 		t := *r.ids
 		if reflect.TypeOf(t).Kind() == reflect.Slice {
@@ -1737,6 +1919,17 @@ func (a *SnippetsAPIService) GetSnippetPathsExecute(r ApiGetSnippetPathsRequest)
 			}
 		} else {
 			parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", t, "form", "multi")
+		}
+	}
+	if r.vendoredMatch != nil {
+		t := *r.vendoredMatch
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "vendoredMatch", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "vendoredMatch", t, "form", "multi")
 		}
 	}
 	// to determine the Content-Type header
@@ -1809,6 +2002,17 @@ func (a *SnippetsAPIService) GetSnippetPathsExecute(r ApiGetSnippetPathsRequest)
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1835,6 +2039,7 @@ type ApiGetSnippetsRequest struct {
 	search *string
 	rejectionStatus *[]string
 	packageLabels *[]string
+	vendoredMatch *[]string
 	sort *string
 	page *int32
 	pageSize *int32
@@ -1873,6 +2078,12 @@ func (r ApiGetSnippetsRequest) RejectionStatus(rejectionStatus []string) ApiGetS
 // Filter by package labels
 func (r ApiGetSnippetsRequest) PackageLabels(packageLabels []string) ApiGetSnippetsRequest {
 	r.packageLabels = &packageLabels
+	return r
+}
+
+// Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | &#x60;vendored&#x60; | Include snippets that exist as a vendored dependency | | &#x60;exVendored&#x60; | Exclude snippets that exist as a vendored dependency | | &#x60;converted&#x60; | Include snippets that have been converted to vendored dependencies | | &#x60;exConverted&#x60; | Exclude snippets that have been converted to vendored dependencies | 
+func (r ApiGetSnippetsRequest) VendoredMatch(vendoredMatch []string) ApiGetSnippetsRequest {
+	r.vendoredMatch = &vendoredMatch
 	return r
 }
 
@@ -1988,6 +2199,17 @@ func (a *SnippetsAPIService) GetSnippetsExecute(r ApiGetSnippetsRequest) (*GetSn
 			parameterAddToHeaderOrQuery(localVarQueryParams, "packageLabels", t, "form", "multi")
 		}
 	}
+	if r.vendoredMatch != nil {
+		t := *r.vendoredMatch
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "vendoredMatch", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "vendoredMatch", t, "form", "multi")
+		}
+	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
 	} else {
@@ -2071,6 +2293,17 @@ func (a *SnippetsAPIService) GetSnippetsExecute(r ApiGetSnippetsRequest) (*GetSn
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -2223,6 +2456,17 @@ func (a *SnippetsAPIService) RejectSnippetsExecute(r ApiRejectSnippetsRequest) (
 			}
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -2350,6 +2594,17 @@ func (a *SnippetsAPIService) UnrejectSnippetsExecute(r ApiUnrejectSnippetsReques
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
