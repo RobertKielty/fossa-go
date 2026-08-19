@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.73
 Contact: support@fossa.com
 */
 
@@ -33,7 +33,7 @@ type ApiExportIssueOverviewCsvRequest struct {
 	labels *[]int32
 	category *string
 	projectId *string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *[]GetIssueCountsTeamIdParameterInner
 }
 
 // The start date to pull Issue Overview data for. Defaults to 30 days before the end date.
@@ -67,7 +67,7 @@ func (r ApiExportIssueOverviewCsvRequest) ProjectId(projectId string) ApiExportI
 }
 
 // Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects.
-func (r ApiExportIssueOverviewCsvRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiExportIssueOverviewCsvRequest {
+func (r ApiExportIssueOverviewCsvRequest) TeamId(teamId []GetIssueCountsTeamIdParameterInner) ApiExportIssueOverviewCsvRequest {
 	r.teamId = &teamId
 	return r
 }
@@ -229,7 +229,7 @@ type ApiGetIssueCountsRequest struct {
 	labels *[]int32
 	category *string
 	projectId *string
-	teamId *[]GetIssueCWEsTeamIdParameterInner
+	teamId *[]GetIssueCountsTeamIdParameterInner
 }
 
 // The start date to pull Issue Overview data for. Defaults to 30 days before the end date.
@@ -263,7 +263,7 @@ func (r ApiGetIssueCountsRequest) ProjectId(projectId string) ApiGetIssueCountsR
 }
 
 // Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects.
-func (r ApiGetIssueCountsRequest) TeamId(teamId []GetIssueCWEsTeamIdParameterInner) ApiGetIssueCountsRequest {
+func (r ApiGetIssueCountsRequest) TeamId(teamId []GetIssueCountsTeamIdParameterInner) ApiGetIssueCountsRequest {
 	r.teamId = &teamId
 	return r
 }

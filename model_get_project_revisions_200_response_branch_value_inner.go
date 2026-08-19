@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.73
 Contact: support@fossa.com
 */
 
@@ -29,6 +29,10 @@ type GetProjectRevisions200ResponseBranchValueInner struct {
 	ProjectId *string `json:"projectId,omitempty"`
 	// FOSSA internal representation of the source language for the given repository/project
 	SourceType NullableString `json:"source_type,omitempty"`
+	// The source the Revision originated from (for example `github`, `cli`, `archive`, `container`, `sbom`, or `binary`)
+	Source NullableString `json:"source,omitempty"`
+	// The number of unresolved issues found for this Revision
+	UnresolvedIssueCount NullableFloat32 `json:"unresolved_issue_count,omitempty"`
 	// Error message during analysis (if any)
 	Error NullableString `json:"error,omitempty"`
 	// Message of the revision or commit
@@ -43,12 +47,6 @@ type GetProjectRevisions200ResponseBranchValueInner struct {
 	CreatedAt *string `json:"createdAt,omitempty"`
 	// when the Revision was last updated in the FOSSA Database
 	UpdatedAt *string `json:"updatedAt,omitempty"`
-	// The author of the Revision
-	Author NullableString `json:"author,omitempty"`
-	// The link associated with the Revision
-	Link NullableString `json:"link,omitempty"`
-	// The url associated with the Revision
-	Url NullableString `json:"url,omitempty"`
 }
 
 // NewGetProjectRevisions200ResponseBranchValueInner instantiates a new GetProjectRevisions200ResponseBranchValueInner object
@@ -236,6 +234,90 @@ func (o *GetProjectRevisions200ResponseBranchValueInner) SetSourceTypeNil() {
 // UnsetSourceType ensures that no value is present for SourceType, not even an explicit nil
 func (o *GetProjectRevisions200ResponseBranchValueInner) UnsetSourceType() {
 	o.SourceType.Unset()
+}
+
+// GetSource returns the Source field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetProjectRevisions200ResponseBranchValueInner) GetSource() string {
+	if o == nil || IsNil(o.Source.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Source.Get()
+}
+
+// GetSourceOk returns a tuple with the Source field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetProjectRevisions200ResponseBranchValueInner) GetSourceOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Source.Get(), o.Source.IsSet()
+}
+
+// HasSource returns a boolean if a field has been set.
+func (o *GetProjectRevisions200ResponseBranchValueInner) HasSource() bool {
+	if o != nil && o.Source.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSource gets a reference to the given NullableString and assigns it to the Source field.
+func (o *GetProjectRevisions200ResponseBranchValueInner) SetSource(v string) {
+	o.Source.Set(&v)
+}
+// SetSourceNil sets the value for Source to be an explicit nil
+func (o *GetProjectRevisions200ResponseBranchValueInner) SetSourceNil() {
+	o.Source.Set(nil)
+}
+
+// UnsetSource ensures that no value is present for Source, not even an explicit nil
+func (o *GetProjectRevisions200ResponseBranchValueInner) UnsetSource() {
+	o.Source.Unset()
+}
+
+// GetUnresolvedIssueCount returns the UnresolvedIssueCount field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetProjectRevisions200ResponseBranchValueInner) GetUnresolvedIssueCount() float32 {
+	if o == nil || IsNil(o.UnresolvedIssueCount.Get()) {
+		var ret float32
+		return ret
+	}
+	return *o.UnresolvedIssueCount.Get()
+}
+
+// GetUnresolvedIssueCountOk returns a tuple with the UnresolvedIssueCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetProjectRevisions200ResponseBranchValueInner) GetUnresolvedIssueCountOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.UnresolvedIssueCount.Get(), o.UnresolvedIssueCount.IsSet()
+}
+
+// HasUnresolvedIssueCount returns a boolean if a field has been set.
+func (o *GetProjectRevisions200ResponseBranchValueInner) HasUnresolvedIssueCount() bool {
+	if o != nil && o.UnresolvedIssueCount.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetUnresolvedIssueCount gets a reference to the given NullableFloat32 and assigns it to the UnresolvedIssueCount field.
+func (o *GetProjectRevisions200ResponseBranchValueInner) SetUnresolvedIssueCount(v float32) {
+	o.UnresolvedIssueCount.Set(&v)
+}
+// SetUnresolvedIssueCountNil sets the value for UnresolvedIssueCount to be an explicit nil
+func (o *GetProjectRevisions200ResponseBranchValueInner) SetUnresolvedIssueCountNil() {
+	o.UnresolvedIssueCount.Set(nil)
+}
+
+// UnsetUnresolvedIssueCount ensures that no value is present for UnresolvedIssueCount, not even an explicit nil
+func (o *GetProjectRevisions200ResponseBranchValueInner) UnsetUnresolvedIssueCount() {
+	o.UnresolvedIssueCount.Unset()
 }
 
 // GetError returns the Error field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -512,132 +594,6 @@ func (o *GetProjectRevisions200ResponseBranchValueInner) SetUpdatedAt(v string) 
 	o.UpdatedAt = &v
 }
 
-// GetAuthor returns the Author field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetProjectRevisions200ResponseBranchValueInner) GetAuthor() string {
-	if o == nil || IsNil(o.Author.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.Author.Get()
-}
-
-// GetAuthorOk returns a tuple with the Author field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetProjectRevisions200ResponseBranchValueInner) GetAuthorOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.Author.Get(), o.Author.IsSet()
-}
-
-// HasAuthor returns a boolean if a field has been set.
-func (o *GetProjectRevisions200ResponseBranchValueInner) HasAuthor() bool {
-	if o != nil && o.Author.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetAuthor gets a reference to the given NullableString and assigns it to the Author field.
-func (o *GetProjectRevisions200ResponseBranchValueInner) SetAuthor(v string) {
-	o.Author.Set(&v)
-}
-// SetAuthorNil sets the value for Author to be an explicit nil
-func (o *GetProjectRevisions200ResponseBranchValueInner) SetAuthorNil() {
-	o.Author.Set(nil)
-}
-
-// UnsetAuthor ensures that no value is present for Author, not even an explicit nil
-func (o *GetProjectRevisions200ResponseBranchValueInner) UnsetAuthor() {
-	o.Author.Unset()
-}
-
-// GetLink returns the Link field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetProjectRevisions200ResponseBranchValueInner) GetLink() string {
-	if o == nil || IsNil(o.Link.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.Link.Get()
-}
-
-// GetLinkOk returns a tuple with the Link field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetProjectRevisions200ResponseBranchValueInner) GetLinkOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.Link.Get(), o.Link.IsSet()
-}
-
-// HasLink returns a boolean if a field has been set.
-func (o *GetProjectRevisions200ResponseBranchValueInner) HasLink() bool {
-	if o != nil && o.Link.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetLink gets a reference to the given NullableString and assigns it to the Link field.
-func (o *GetProjectRevisions200ResponseBranchValueInner) SetLink(v string) {
-	o.Link.Set(&v)
-}
-// SetLinkNil sets the value for Link to be an explicit nil
-func (o *GetProjectRevisions200ResponseBranchValueInner) SetLinkNil() {
-	o.Link.Set(nil)
-}
-
-// UnsetLink ensures that no value is present for Link, not even an explicit nil
-func (o *GetProjectRevisions200ResponseBranchValueInner) UnsetLink() {
-	o.Link.Unset()
-}
-
-// GetUrl returns the Url field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetProjectRevisions200ResponseBranchValueInner) GetUrl() string {
-	if o == nil || IsNil(o.Url.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.Url.Get()
-}
-
-// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetProjectRevisions200ResponseBranchValueInner) GetUrlOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.Url.Get(), o.Url.IsSet()
-}
-
-// HasUrl returns a boolean if a field has been set.
-func (o *GetProjectRevisions200ResponseBranchValueInner) HasUrl() bool {
-	if o != nil && o.Url.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetUrl gets a reference to the given NullableString and assigns it to the Url field.
-func (o *GetProjectRevisions200ResponseBranchValueInner) SetUrl(v string) {
-	o.Url.Set(&v)
-}
-// SetUrlNil sets the value for Url to be an explicit nil
-func (o *GetProjectRevisions200ResponseBranchValueInner) SetUrlNil() {
-	o.Url.Set(nil)
-}
-
-// UnsetUrl ensures that no value is present for Url, not even an explicit nil
-func (o *GetProjectRevisions200ResponseBranchValueInner) UnsetUrl() {
-	o.Url.Unset()
-}
-
 func (o GetProjectRevisions200ResponseBranchValueInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -663,6 +619,12 @@ func (o GetProjectRevisions200ResponseBranchValueInner) ToMap() (map[string]inte
 	if o.SourceType.IsSet() {
 		toSerialize["source_type"] = o.SourceType.Get()
 	}
+	if o.Source.IsSet() {
+		toSerialize["source"] = o.Source.Get()
+	}
+	if o.UnresolvedIssueCount.IsSet() {
+		toSerialize["unresolved_issue_count"] = o.UnresolvedIssueCount.Get()
+	}
 	if o.Error.IsSet() {
 		toSerialize["error"] = o.Error.Get()
 	}
@@ -683,15 +645,6 @@ func (o GetProjectRevisions200ResponseBranchValueInner) ToMap() (map[string]inte
 	}
 	if !IsNil(o.UpdatedAt) {
 		toSerialize["updatedAt"] = o.UpdatedAt
-	}
-	if o.Author.IsSet() {
-		toSerialize["author"] = o.Author.Get()
-	}
-	if o.Link.IsSet() {
-		toSerialize["link"] = o.Link.Get()
-	}
-	if o.Url.IsSet() {
-		toSerialize["url"] = o.Url.Get()
 	}
 	return toSerialize, nil
 }
