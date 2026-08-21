@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.76
 Contact: support@fossa.com
 */
 
@@ -26,6 +26,8 @@ type GetOrganizationSecurityIssueSettings200Response struct {
 	ProjectDefaultStatusCheckFilterVulnerability *int32 `json:"projectDefaultStatusCheckFilterVulnerability,omitempty"`
 	// Enable or disable snippet security issue scanning by default for projects in the organization
 	ProjectDefaultSnippetSecurityIssueScanningEnabled *bool `json:"projectDefaultSnippetSecurityIssueScanningEnabled,omitempty"`
+	// Enable or disable security issue scanning for vendored dependencies by default for projects in the organization
+	ProjectDefaultVendoredSecurityIssueScanningEnabled *bool `json:"projectDefaultVendoredSecurityIssueScanningEnabled,omitempty"`
 }
 
 // NewGetOrganizationSecurityIssueSettings200Response instantiates a new GetOrganizationSecurityIssueSettings200Response object
@@ -205,6 +207,38 @@ func (o *GetOrganizationSecurityIssueSettings200Response) SetProjectDefaultSnipp
 	o.ProjectDefaultSnippetSecurityIssueScanningEnabled = &v
 }
 
+// GetProjectDefaultVendoredSecurityIssueScanningEnabled returns the ProjectDefaultVendoredSecurityIssueScanningEnabled field value if set, zero value otherwise.
+func (o *GetOrganizationSecurityIssueSettings200Response) GetProjectDefaultVendoredSecurityIssueScanningEnabled() bool {
+	if o == nil || IsNil(o.ProjectDefaultVendoredSecurityIssueScanningEnabled) {
+		var ret bool
+		return ret
+	}
+	return *o.ProjectDefaultVendoredSecurityIssueScanningEnabled
+}
+
+// GetProjectDefaultVendoredSecurityIssueScanningEnabledOk returns a tuple with the ProjectDefaultVendoredSecurityIssueScanningEnabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetOrganizationSecurityIssueSettings200Response) GetProjectDefaultVendoredSecurityIssueScanningEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.ProjectDefaultVendoredSecurityIssueScanningEnabled) {
+		return nil, false
+	}
+	return o.ProjectDefaultVendoredSecurityIssueScanningEnabled, true
+}
+
+// HasProjectDefaultVendoredSecurityIssueScanningEnabled returns a boolean if a field has been set.
+func (o *GetOrganizationSecurityIssueSettings200Response) HasProjectDefaultVendoredSecurityIssueScanningEnabled() bool {
+	if o != nil && !IsNil(o.ProjectDefaultVendoredSecurityIssueScanningEnabled) {
+		return true
+	}
+
+	return false
+}
+
+// SetProjectDefaultVendoredSecurityIssueScanningEnabled gets a reference to the given bool and assigns it to the ProjectDefaultVendoredSecurityIssueScanningEnabled field.
+func (o *GetOrganizationSecurityIssueSettings200Response) SetProjectDefaultVendoredSecurityIssueScanningEnabled(v bool) {
+	o.ProjectDefaultVendoredSecurityIssueScanningEnabled = &v
+}
+
 func (o GetOrganizationSecurityIssueSettings200Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -229,6 +263,9 @@ func (o GetOrganizationSecurityIssueSettings200Response) ToMap() (map[string]int
 	}
 	if !IsNil(o.ProjectDefaultSnippetSecurityIssueScanningEnabled) {
 		toSerialize["projectDefaultSnippetSecurityIssueScanningEnabled"] = o.ProjectDefaultSnippetSecurityIssueScanningEnabled
+	}
+	if !IsNil(o.ProjectDefaultVendoredSecurityIssueScanningEnabled) {
+		toSerialize["projectDefaultVendoredSecurityIssueScanningEnabled"] = o.ProjectDefaultVendoredSecurityIssueScanningEnabled
 	}
 	return toSerialize, nil
 }
