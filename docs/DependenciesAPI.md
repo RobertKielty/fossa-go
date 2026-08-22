@@ -92,7 +92,7 @@ Name | Type | Description  | Notes
 
 ## GetGlobalDependency
 
-> GetProjectDependency200Response GetGlobalDependency(ctx, locator).Execute()
+> GetGlobalDependency200Response GetGlobalDependency(ctx, locator).IncludeResolutionNotes(includeResolutionNotes).IncludeLicenseText(includeLicenseText).IncludeCopyright(includeCopyright).IncludeMatches(includeMatches).IncludeDownloadUrl(includeDownloadUrl).Execute()
 
 
 
@@ -112,15 +112,20 @@ import (
 
 func main() {
 	locator := "locator_example" // string | The locator of the dependency to retrieve
+	includeResolutionNotes := true // bool | Include resolution notes in issue data (optional)
+	includeLicenseText := true // bool | Include full license text in license data (optional)
+	includeCopyright := true // bool | Include copyright information in license data (optional)
+	includeMatches := true // bool | Include license match details in license data (optional)
+	includeDownloadUrl := true // bool | Include download URL in package data (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DependenciesAPI.GetGlobalDependency(context.Background(), locator).Execute()
+	resp, r, err := apiClient.DependenciesAPI.GetGlobalDependency(context.Background(), locator).IncludeResolutionNotes(includeResolutionNotes).IncludeLicenseText(includeLicenseText).IncludeCopyright(includeCopyright).IncludeMatches(includeMatches).IncludeDownloadUrl(includeDownloadUrl).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetGlobalDependency``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetGlobalDependency`: GetProjectDependency200Response
+	// response from `GetGlobalDependency`: GetGlobalDependency200Response
 	fmt.Fprintf(os.Stdout, "Response from `DependenciesAPI.GetGlobalDependency`: %v\n", resp)
 }
 ```
@@ -141,10 +146,15 @@ Other parameters are passed through a pointer to a apiGetGlobalDependencyRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **includeResolutionNotes** | **bool** | Include resolution notes in issue data | 
+ **includeLicenseText** | **bool** | Include full license text in license data | 
+ **includeCopyright** | **bool** | Include copyright information in license data | 
+ **includeMatches** | **bool** | Include license match details in license data | 
+ **includeDownloadUrl** | **bool** | Include download URL in package data | 
 
 ### Return type
 
-[**GetProjectDependency200Response**](GetProjectDependency200Response.md)
+[**GetGlobalDependency200Response**](GetGlobalDependency200Response.md)
 
 ### Authorization
 
@@ -162,7 +172,7 @@ Name | Type | Description  | Notes
 
 ## GetProjectDependencies
 
-> GetProjectDependencies200Response GetProjectDependencies(ctx, locator).Locators(locators).Title(title).Status(status).Depth(depth).LayerDepth(layerDepth).HasIssues(hasIssues).Licenses(licenses).Fetchers(fetchers).ShowIgnored(showIgnored).Confidence(confidence).Sources(sources).Page(page).Count(count).Execute()
+> GetProjectDependencies200Response GetProjectDependencies(ctx, locator).Locators(locators).Title(title).Status(status).Depth(depth).LayerDepth(layerDepth).HasIssues(hasIssues).Licenses(licenses).Fetchers(fetchers).ShowIgnored(showIgnored).Confidence(confidence).Sources(sources).RootProjects(rootProjects).PackageLabels(packageLabels).VendoredPath(vendoredPath).IncludeResolutionNotes(includeResolutionNotes).IncludeLicenseText(includeLicenseText).IncludeCopyright(includeCopyright).IncludeMatches(includeMatches).IncludeDownloadUrl(includeDownloadUrl).Page(page).Count(count).Execute()
 
 
 
@@ -193,12 +203,20 @@ func main() {
 	showIgnored := true // bool | Includes ignored dependencies (optional)
 	confidence := []string{"Confidence_example"} // []string | Filter dependencies by confidence (optional)
 	sources := []string{"Sources_example"} // []string | Filter dependencies by source type (managed or vendored). Only supported on project scope. (optional)
+	rootProjects := []string{"Inner_example"} // []string | Filter release group dependencies by root projects (optional)
+	packageLabels := []string{"Inner_example"} // []string | Filter dependencies by package label IDs (optional)
+	vendoredPath := "vendoredPath_example" // string | Filter to vendored dependencies found under this path prefix. Only supported on project scope. (optional)
+	includeResolutionNotes := true // bool | Include resolution notes in issue data (optional)
+	includeLicenseText := true // bool | Include full license text in license data (optional)
+	includeCopyright := true // bool | Include copyright information in license data (optional)
+	includeMatches := true // bool | Include license match details in license data (optional)
+	includeDownloadUrl := true // bool | Include download URL in package data (optional)
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
 	count := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 50)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DependenciesAPI.GetProjectDependencies(context.Background(), locator).Locators(locators).Title(title).Status(status).Depth(depth).LayerDepth(layerDepth).HasIssues(hasIssues).Licenses(licenses).Fetchers(fetchers).ShowIgnored(showIgnored).Confidence(confidence).Sources(sources).Page(page).Count(count).Execute()
+	resp, r, err := apiClient.DependenciesAPI.GetProjectDependencies(context.Background(), locator).Locators(locators).Title(title).Status(status).Depth(depth).LayerDepth(layerDepth).HasIssues(hasIssues).Licenses(licenses).Fetchers(fetchers).ShowIgnored(showIgnored).Confidence(confidence).Sources(sources).RootProjects(rootProjects).PackageLabels(packageLabels).VendoredPath(vendoredPath).IncludeResolutionNotes(includeResolutionNotes).IncludeLicenseText(includeLicenseText).IncludeCopyright(includeCopyright).IncludeMatches(includeMatches).IncludeDownloadUrl(includeDownloadUrl).Page(page).Count(count).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetProjectDependencies``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -235,6 +253,14 @@ Name | Type | Description  | Notes
  **showIgnored** | **bool** | Includes ignored dependencies | 
  **confidence** | **[]string** | Filter dependencies by confidence | 
  **sources** | **[]string** | Filter dependencies by source type (managed or vendored). Only supported on project scope. | 
+ **rootProjects** | **[]string** | Filter release group dependencies by root projects | 
+ **packageLabels** | **[]string** | Filter dependencies by package label IDs | 
+ **vendoredPath** | **string** | Filter to vendored dependencies found under this path prefix. Only supported on project scope. | 
+ **includeResolutionNotes** | **bool** | Include resolution notes in issue data | 
+ **includeLicenseText** | **bool** | Include full license text in license data | 
+ **includeCopyright** | **bool** | Include copyright information in license data | 
+ **includeMatches** | **bool** | Include license match details in license data | 
+ **includeDownloadUrl** | **bool** | Include download URL in package data | 
  **page** | **int32** | The specific page of data to return | [default to 1]
  **count** | **int32** | The number of items to return in each page of results | [default to 50]
 
@@ -258,7 +284,7 @@ Name | Type | Description  | Notes
 
 ## GetProjectDependency
 
-> GetProjectDependency200Response GetProjectDependency(ctx, locator, dependencyRevisionLocator).Execute()
+> GetProjectDependency200Response GetProjectDependency(ctx, locator, dependencyRevisionLocator).IncludeResolutionNotes(includeResolutionNotes).IncludeLicenseText(includeLicenseText).IncludeCopyright(includeCopyright).IncludeMatches(includeMatches).IncludeDownloadUrl(includeDownloadUrl).Execute()
 
 
 
@@ -279,10 +305,15 @@ import (
 func main() {
 	locator := "locator_example" // string | The locator of the project revision
 	dependencyRevisionLocator := "dependencyRevisionLocator_example" // string | The locator of the dependency to retrieve
+	includeResolutionNotes := true // bool | Include resolution notes in issue data (optional)
+	includeLicenseText := true // bool | Include full license text in license data (optional)
+	includeCopyright := true // bool | Include copyright information in license data (optional)
+	includeMatches := true // bool | Include license match details in license data (optional)
+	includeDownloadUrl := true // bool | Include download URL in package data (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DependenciesAPI.GetProjectDependency(context.Background(), locator, dependencyRevisionLocator).Execute()
+	resp, r, err := apiClient.DependenciesAPI.GetProjectDependency(context.Background(), locator, dependencyRevisionLocator).IncludeResolutionNotes(includeResolutionNotes).IncludeLicenseText(includeLicenseText).IncludeCopyright(includeCopyright).IncludeMatches(includeMatches).IncludeDownloadUrl(includeDownloadUrl).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetProjectDependency``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -310,6 +341,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **includeResolutionNotes** | **bool** | Include resolution notes in issue data | 
+ **includeLicenseText** | **bool** | Include full license text in license data | 
+ **includeCopyright** | **bool** | Include copyright information in license data | 
+ **includeMatches** | **bool** | Include license match details in license data | 
+ **includeDownloadUrl** | **bool** | Include download URL in package data | 
 
 ### Return type
 
@@ -331,7 +367,7 @@ Name | Type | Description  | Notes
 
 ## GetProjectDependencyCount
 
-> GetProjectDependencyCount200Response GetProjectDependencyCount(ctx, locator).Sources(sources).Execute()
+> GetProjectDependencyCount200Response GetProjectDependencyCount(ctx, locator).Sources(sources).Status(status).Execute()
 
 
 
@@ -352,10 +388,11 @@ import (
 func main() {
 	locator := "locator_example" // string | The locator of the project revision
 	sources := []string{"Sources_example"} // []string | Filter dependencies by source type (managed or vendored). Only supported on project scope. (optional)
+	status := []string{"Status_example"} // []string | Filter dependencies by status (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DependenciesAPI.GetProjectDependencyCount(context.Background(), locator).Sources(sources).Execute()
+	resp, r, err := apiClient.DependenciesAPI.GetProjectDependencyCount(context.Background(), locator).Sources(sources).Status(status).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetProjectDependencyCount``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -382,6 +419,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **sources** | **[]string** | Filter dependencies by source type (managed or vendored). Only supported on project scope. | 
+ **status** | **[]string** | Filter dependencies by status | 
 
 ### Return type
 
@@ -473,7 +511,7 @@ Name | Type | Description  | Notes
 
 ## GetReleaseGroupDependencies
 
-> GetProjectDependencies200Response GetReleaseGroupDependencies(ctx, projectGroupId, projectGroupReleaseId).Locators(locators).Title(title).Status(status).Depth(depth).LayerDepth(layerDepth).HasIssues(hasIssues).Licenses(licenses).Fetchers(fetchers).ShowIgnored(showIgnored).Confidence(confidence).Sources(sources).RootProjects(rootProjects).Page(page).Count(count).Execute()
+> GetProjectDependencies200Response GetReleaseGroupDependencies(ctx, projectGroupId, projectGroupReleaseId).Locators(locators).Title(title).Status(status).Depth(depth).LayerDepth(layerDepth).HasIssues(hasIssues).Licenses(licenses).Fetchers(fetchers).ShowIgnored(showIgnored).Confidence(confidence).Sources(sources).RootProjects(rootProjects).PackageLabels(packageLabels).VendoredPath(vendoredPath).IncludeResolutionNotes(includeResolutionNotes).IncludeLicenseText(includeLicenseText).IncludeCopyright(includeCopyright).IncludeMatches(includeMatches).IncludeDownloadUrl(includeDownloadUrl).Page(page).Count(count).Execute()
 
 
 
@@ -506,12 +544,19 @@ func main() {
 	confidence := []string{"Confidence_example"} // []string | Filter dependencies by confidence (optional)
 	sources := []string{"Sources_example"} // []string | Filter dependencies by source type (managed or vendored). Only supported on project scope. (optional)
 	rootProjects := []string{"Inner_example"} // []string | Filter release group dependencies by root projects (optional)
+	packageLabels := []string{"Inner_example"} // []string | Filter dependencies by package label IDs (optional)
+	vendoredPath := "vendoredPath_example" // string | Filter to vendored dependencies found under this path prefix. Only supported on project scope. (optional)
+	includeResolutionNotes := true // bool | Include resolution notes in issue data (optional)
+	includeLicenseText := true // bool | Include full license text in license data (optional)
+	includeCopyright := true // bool | Include copyright information in license data (optional)
+	includeMatches := true // bool | Include license match details in license data (optional)
+	includeDownloadUrl := true // bool | Include download URL in package data (optional)
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
 	count := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 50)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DependenciesAPI.GetReleaseGroupDependencies(context.Background(), projectGroupId, projectGroupReleaseId).Locators(locators).Title(title).Status(status).Depth(depth).LayerDepth(layerDepth).HasIssues(hasIssues).Licenses(licenses).Fetchers(fetchers).ShowIgnored(showIgnored).Confidence(confidence).Sources(sources).RootProjects(rootProjects).Page(page).Count(count).Execute()
+	resp, r, err := apiClient.DependenciesAPI.GetReleaseGroupDependencies(context.Background(), projectGroupId, projectGroupReleaseId).Locators(locators).Title(title).Status(status).Depth(depth).LayerDepth(layerDepth).HasIssues(hasIssues).Licenses(licenses).Fetchers(fetchers).ShowIgnored(showIgnored).Confidence(confidence).Sources(sources).RootProjects(rootProjects).PackageLabels(packageLabels).VendoredPath(vendoredPath).IncludeResolutionNotes(includeResolutionNotes).IncludeLicenseText(includeLicenseText).IncludeCopyright(includeCopyright).IncludeMatches(includeMatches).IncludeDownloadUrl(includeDownloadUrl).Page(page).Count(count).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetReleaseGroupDependencies``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -551,6 +596,13 @@ Name | Type | Description  | Notes
  **confidence** | **[]string** | Filter dependencies by confidence | 
  **sources** | **[]string** | Filter dependencies by source type (managed or vendored). Only supported on project scope. | 
  **rootProjects** | **[]string** | Filter release group dependencies by root projects | 
+ **packageLabels** | **[]string** | Filter dependencies by package label IDs | 
+ **vendoredPath** | **string** | Filter to vendored dependencies found under this path prefix. Only supported on project scope. | 
+ **includeResolutionNotes** | **bool** | Include resolution notes in issue data | 
+ **includeLicenseText** | **bool** | Include full license text in license data | 
+ **includeCopyright** | **bool** | Include copyright information in license data | 
+ **includeMatches** | **bool** | Include license match details in license data | 
+ **includeDownloadUrl** | **bool** | Include download URL in package data | 
  **page** | **int32** | The specific page of data to return | [default to 1]
  **count** | **int32** | The number of items to return in each page of results | [default to 50]
 
@@ -574,7 +626,7 @@ Name | Type | Description  | Notes
 
 ## GetReleaseGroupDependency
 
-> GetProjectDependency200Response GetReleaseGroupDependency(ctx, projectGroupId, projectGroupReleaseId, dependencyRevisionLocator).Execute()
+> GetProjectDependency200Response GetReleaseGroupDependency(ctx, projectGroupId, projectGroupReleaseId, dependencyRevisionLocator).IncludeResolutionNotes(includeResolutionNotes).IncludeLicenseText(includeLicenseText).IncludeCopyright(includeCopyright).IncludeMatches(includeMatches).IncludeDownloadUrl(includeDownloadUrl).Execute()
 
 
 
@@ -596,10 +648,15 @@ func main() {
 	projectGroupId := int32(56) // int32 | The ID of the release group
 	projectGroupReleaseId := int32(56) // int32 | The ID of the release
 	dependencyRevisionLocator := "dependencyRevisionLocator_example" // string | The locator of the dependency to retrieve
+	includeResolutionNotes := true // bool | Include resolution notes in issue data (optional)
+	includeLicenseText := true // bool | Include full license text in license data (optional)
+	includeCopyright := true // bool | Include copyright information in license data (optional)
+	includeMatches := true // bool | Include license match details in license data (optional)
+	includeDownloadUrl := true // bool | Include download URL in package data (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DependenciesAPI.GetReleaseGroupDependency(context.Background(), projectGroupId, projectGroupReleaseId, dependencyRevisionLocator).Execute()
+	resp, r, err := apiClient.DependenciesAPI.GetReleaseGroupDependency(context.Background(), projectGroupId, projectGroupReleaseId, dependencyRevisionLocator).IncludeResolutionNotes(includeResolutionNotes).IncludeLicenseText(includeLicenseText).IncludeCopyright(includeCopyright).IncludeMatches(includeMatches).IncludeDownloadUrl(includeDownloadUrl).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetReleaseGroupDependency``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -629,6 +686,11 @@ Name | Type | Description  | Notes
 
 
 
+ **includeResolutionNotes** | **bool** | Include resolution notes in issue data | 
+ **includeLicenseText** | **bool** | Include full license text in license data | 
+ **includeCopyright** | **bool** | Include copyright information in license data | 
+ **includeMatches** | **bool** | Include license match details in license data | 
+ **includeDownloadUrl** | **bool** | Include download URL in package data | 
 
 ### Return type
 
@@ -650,7 +712,7 @@ Name | Type | Description  | Notes
 
 ## GetReleaseGroupDependencyCount
 
-> GetReleaseGroupDependencyCount200Response GetReleaseGroupDependencyCount(ctx, projectGroupId, projectGroupReleaseId).Sources(sources).Execute()
+> GetReleaseGroupDependencyCount200Response GetReleaseGroupDependencyCount(ctx, projectGroupId, projectGroupReleaseId).Sources(sources).Status(status).Execute()
 
 
 
@@ -672,10 +734,11 @@ func main() {
 	projectGroupId := int32(56) // int32 | The ID of the release group
 	projectGroupReleaseId := int32(56) // int32 | The ID of the release
 	sources := []string{"Sources_example"} // []string | Filter dependencies by source type (managed or vendored). Only supported on project scope. (optional)
+	status := []string{"Status_example"} // []string | Filter dependencies by status (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DependenciesAPI.GetReleaseGroupDependencyCount(context.Background(), projectGroupId, projectGroupReleaseId).Sources(sources).Execute()
+	resp, r, err := apiClient.DependenciesAPI.GetReleaseGroupDependencyCount(context.Background(), projectGroupId, projectGroupReleaseId).Sources(sources).Status(status).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DependenciesAPI.GetReleaseGroupDependencyCount``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -704,6 +767,7 @@ Name | Type | Description  | Notes
 
 
  **sources** | **[]string** | Filter dependencies by source type (managed or vendored). Only supported on project scope. | 
+ **status** | **[]string** | Filter dependencies by status | 
 
 ### Return type
 
@@ -891,7 +955,7 @@ import (
 
 func main() {
 	locator := "custom+1234/my-project$abcd1234" // string | The URL-encoded locator of the revision
-	limit := int32(100) // int32 | Maximum number of dependencies to return (min 1, max 10000) (optional)
+	limit := int32(100) // int32 | Maximum number of dependencies to return. The value is clamped server-side to the range 25–100: any value below 25 is treated as 25, and any value above 100 is treated as 100.  (optional)
 	offset := int32(0) // int32 | Number of dependencies to skip for pagination (optional)
 	includeIgnored := true // bool | Whether to include ignored dependencies in the response (optional) (default to false)
 	includeHashData := true // bool | Whether to include hash and version data for dependencies (optional) (default to false)
@@ -926,7 +990,7 @@ Other parameters are passed through a pointer to a apiGetRevisionDependenciesReq
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **limit** | **int32** | Maximum number of dependencies to return (min 1, max 10000) | 
+ **limit** | **int32** | Maximum number of dependencies to return. The value is clamped server-side to the range 25–100: any value below 25 is treated as 25, and any value above 100 is treated as 100.  | 
  **offset** | **int32** | Number of dependencies to skip for pagination | 
  **includeIgnored** | **bool** | Whether to include ignored dependencies in the response | [default to false]
  **includeHashData** | **bool** | Whether to include hash and version data for dependencies | [default to false]
@@ -944,7 +1008,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/json, text/plain
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1016,7 +1080,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: application/json
+- **Accept**: application/json, text/plain
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
