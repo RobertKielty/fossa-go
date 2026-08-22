@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.78
 Contact: support@fossa.com
 */
 
@@ -29,6 +29,10 @@ type GetReleaseGroupReleaseRevisions200ResponseInner struct {
 	ProjectId *string `json:"projectId,omitempty"`
 	// FOSSA internal representation of the source language for the given repository/project
 	SourceType NullableString `json:"source_type,omitempty"`
+	// The source the Revision originated from (for example `github`, `cli`, `archive`, `container`, `sbom`, or `binary`)
+	Source NullableString `json:"source,omitempty"`
+	// The number of unresolved issues found for this Revision
+	UnresolvedIssueCount NullableFloat32 `json:"unresolved_issue_count,omitempty"`
 	// Error message during analysis (if any)
 	Error NullableString `json:"error,omitempty"`
 	// Message of the revision or commit
@@ -43,12 +47,6 @@ type GetReleaseGroupReleaseRevisions200ResponseInner struct {
 	CreatedAt *string `json:"createdAt,omitempty"`
 	// when the Revision was last updated in the FOSSA Database
 	UpdatedAt *string `json:"updatedAt,omitempty"`
-	// The author of the Revision
-	Author NullableString `json:"author,omitempty"`
-	// The link associated with the Revision
-	Link NullableString `json:"link,omitempty"`
-	// The url associated with the Revision
-	Url NullableString `json:"url,omitempty"`
 	Licenses []GetReleaseGroupReleaseRevisions200ResponseInnerAllOfLicensesInner `json:"licenses,omitempty"`
 }
 
@@ -237,6 +235,90 @@ func (o *GetReleaseGroupReleaseRevisions200ResponseInner) SetSourceTypeNil() {
 // UnsetSourceType ensures that no value is present for SourceType, not even an explicit nil
 func (o *GetReleaseGroupReleaseRevisions200ResponseInner) UnsetSourceType() {
 	o.SourceType.Unset()
+}
+
+// GetSource returns the Source field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetReleaseGroupReleaseRevisions200ResponseInner) GetSource() string {
+	if o == nil || IsNil(o.Source.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Source.Get()
+}
+
+// GetSourceOk returns a tuple with the Source field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetReleaseGroupReleaseRevisions200ResponseInner) GetSourceOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Source.Get(), o.Source.IsSet()
+}
+
+// HasSource returns a boolean if a field has been set.
+func (o *GetReleaseGroupReleaseRevisions200ResponseInner) HasSource() bool {
+	if o != nil && o.Source.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetSource gets a reference to the given NullableString and assigns it to the Source field.
+func (o *GetReleaseGroupReleaseRevisions200ResponseInner) SetSource(v string) {
+	o.Source.Set(&v)
+}
+// SetSourceNil sets the value for Source to be an explicit nil
+func (o *GetReleaseGroupReleaseRevisions200ResponseInner) SetSourceNil() {
+	o.Source.Set(nil)
+}
+
+// UnsetSource ensures that no value is present for Source, not even an explicit nil
+func (o *GetReleaseGroupReleaseRevisions200ResponseInner) UnsetSource() {
+	o.Source.Unset()
+}
+
+// GetUnresolvedIssueCount returns the UnresolvedIssueCount field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetReleaseGroupReleaseRevisions200ResponseInner) GetUnresolvedIssueCount() float32 {
+	if o == nil || IsNil(o.UnresolvedIssueCount.Get()) {
+		var ret float32
+		return ret
+	}
+	return *o.UnresolvedIssueCount.Get()
+}
+
+// GetUnresolvedIssueCountOk returns a tuple with the UnresolvedIssueCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetReleaseGroupReleaseRevisions200ResponseInner) GetUnresolvedIssueCountOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.UnresolvedIssueCount.Get(), o.UnresolvedIssueCount.IsSet()
+}
+
+// HasUnresolvedIssueCount returns a boolean if a field has been set.
+func (o *GetReleaseGroupReleaseRevisions200ResponseInner) HasUnresolvedIssueCount() bool {
+	if o != nil && o.UnresolvedIssueCount.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetUnresolvedIssueCount gets a reference to the given NullableFloat32 and assigns it to the UnresolvedIssueCount field.
+func (o *GetReleaseGroupReleaseRevisions200ResponseInner) SetUnresolvedIssueCount(v float32) {
+	o.UnresolvedIssueCount.Set(&v)
+}
+// SetUnresolvedIssueCountNil sets the value for UnresolvedIssueCount to be an explicit nil
+func (o *GetReleaseGroupReleaseRevisions200ResponseInner) SetUnresolvedIssueCountNil() {
+	o.UnresolvedIssueCount.Set(nil)
+}
+
+// UnsetUnresolvedIssueCount ensures that no value is present for UnresolvedIssueCount, not even an explicit nil
+func (o *GetReleaseGroupReleaseRevisions200ResponseInner) UnsetUnresolvedIssueCount() {
+	o.UnresolvedIssueCount.Unset()
 }
 
 // GetError returns the Error field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -513,132 +595,6 @@ func (o *GetReleaseGroupReleaseRevisions200ResponseInner) SetUpdatedAt(v string)
 	o.UpdatedAt = &v
 }
 
-// GetAuthor returns the Author field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) GetAuthor() string {
-	if o == nil || IsNil(o.Author.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.Author.Get()
-}
-
-// GetAuthorOk returns a tuple with the Author field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) GetAuthorOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.Author.Get(), o.Author.IsSet()
-}
-
-// HasAuthor returns a boolean if a field has been set.
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) HasAuthor() bool {
-	if o != nil && o.Author.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetAuthor gets a reference to the given NullableString and assigns it to the Author field.
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) SetAuthor(v string) {
-	o.Author.Set(&v)
-}
-// SetAuthorNil sets the value for Author to be an explicit nil
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) SetAuthorNil() {
-	o.Author.Set(nil)
-}
-
-// UnsetAuthor ensures that no value is present for Author, not even an explicit nil
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) UnsetAuthor() {
-	o.Author.Unset()
-}
-
-// GetLink returns the Link field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) GetLink() string {
-	if o == nil || IsNil(o.Link.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.Link.Get()
-}
-
-// GetLinkOk returns a tuple with the Link field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) GetLinkOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.Link.Get(), o.Link.IsSet()
-}
-
-// HasLink returns a boolean if a field has been set.
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) HasLink() bool {
-	if o != nil && o.Link.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetLink gets a reference to the given NullableString and assigns it to the Link field.
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) SetLink(v string) {
-	o.Link.Set(&v)
-}
-// SetLinkNil sets the value for Link to be an explicit nil
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) SetLinkNil() {
-	o.Link.Set(nil)
-}
-
-// UnsetLink ensures that no value is present for Link, not even an explicit nil
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) UnsetLink() {
-	o.Link.Unset()
-}
-
-// GetUrl returns the Url field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) GetUrl() string {
-	if o == nil || IsNil(o.Url.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.Url.Get()
-}
-
-// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) GetUrlOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.Url.Get(), o.Url.IsSet()
-}
-
-// HasUrl returns a boolean if a field has been set.
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) HasUrl() bool {
-	if o != nil && o.Url.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetUrl gets a reference to the given NullableString and assigns it to the Url field.
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) SetUrl(v string) {
-	o.Url.Set(&v)
-}
-// SetUrlNil sets the value for Url to be an explicit nil
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) SetUrlNil() {
-	o.Url.Set(nil)
-}
-
-// UnsetUrl ensures that no value is present for Url, not even an explicit nil
-func (o *GetReleaseGroupReleaseRevisions200ResponseInner) UnsetUrl() {
-	o.Url.Unset()
-}
-
 // GetLicenses returns the Licenses field value if set, zero value otherwise.
 func (o *GetReleaseGroupReleaseRevisions200ResponseInner) GetLicenses() []GetReleaseGroupReleaseRevisions200ResponseInnerAllOfLicensesInner {
 	if o == nil || IsNil(o.Licenses) {
@@ -696,6 +652,12 @@ func (o GetReleaseGroupReleaseRevisions200ResponseInner) ToMap() (map[string]int
 	if o.SourceType.IsSet() {
 		toSerialize["source_type"] = o.SourceType.Get()
 	}
+	if o.Source.IsSet() {
+		toSerialize["source"] = o.Source.Get()
+	}
+	if o.UnresolvedIssueCount.IsSet() {
+		toSerialize["unresolved_issue_count"] = o.UnresolvedIssueCount.Get()
+	}
 	if o.Error.IsSet() {
 		toSerialize["error"] = o.Error.Get()
 	}
@@ -716,15 +678,6 @@ func (o GetReleaseGroupReleaseRevisions200ResponseInner) ToMap() (map[string]int
 	}
 	if !IsNil(o.UpdatedAt) {
 		toSerialize["updatedAt"] = o.UpdatedAt
-	}
-	if o.Author.IsSet() {
-		toSerialize["author"] = o.Author.Get()
-	}
-	if o.Link.IsSet() {
-		toSerialize["link"] = o.Link.Get()
-	}
-	if o.Url.IsSet() {
-		toSerialize["url"] = o.Url.Get()
 	}
 	if !IsNil(o.Licenses) {
 		toSerialize["licenses"] = o.Licenses
