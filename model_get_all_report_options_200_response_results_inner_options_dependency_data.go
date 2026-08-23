@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.78
 Contact: support@fossa.com
 */
 
@@ -24,8 +24,6 @@ var _ MappedNullable = &GetAllReportOptions200ResponseResultsInnerOptionsDepende
 type GetAllReportOptions200ResponseResultsInnerOptionsDependencyData struct {
 	// For release group reports, show which projects the dependency is present in
 	Projects bool `json:"projects"`
-	// The name of the dependency
-	Name bool `json:"name"`
 	// The authors of the dependency
 	Authors bool `json:"authors"`
 	// The description of the dependency
@@ -68,10 +66,9 @@ type _GetAllReportOptions200ResponseResultsInnerOptionsDependencyData GetAllRepo
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetAllReportOptions200ResponseResultsInnerOptionsDependencyData(projects bool, name bool, authors bool, description bool, homepage bool, packageManager bool, downloadUrl bool, concludedLicenses bool, declaredLicenses bool, discoveredLicenses bool, copyrights bool, licenseUrl bool, licenseFileMatches bool, issueResolutionNotes bool, packageLabels bool, dependencyPaths bool, filePaths bool, noticeFiles bool, fullLicenseText bool) *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData {
+func NewGetAllReportOptions200ResponseResultsInnerOptionsDependencyData(projects bool, authors bool, description bool, homepage bool, packageManager bool, downloadUrl bool, concludedLicenses bool, declaredLicenses bool, discoveredLicenses bool, copyrights bool, licenseUrl bool, licenseFileMatches bool, issueResolutionNotes bool, packageLabels bool, dependencyPaths bool, filePaths bool, noticeFiles bool, fullLicenseText bool) *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData {
 	this := GetAllReportOptions200ResponseResultsInnerOptionsDependencyData{}
 	this.Projects = projects
-	this.Name = name
 	this.Authors = authors
 	this.Description = description
 	this.Homepage = homepage
@@ -122,30 +119,6 @@ func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) GetPro
 // SetProjects sets field value
 func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) SetProjects(v bool) {
 	o.Projects = v
-}
-
-// GetName returns the Name field value
-func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) GetName() bool {
-	if o == nil {
-		var ret bool
-		return ret
-	}
-
-	return o.Name
-}
-
-// GetNameOk returns a tuple with the Name field value
-// and a boolean to check if the value has been set.
-func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) GetNameOk() (*bool, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Name, true
-}
-
-// SetName sets field value
-func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) SetName(v bool) {
-	o.Name = v
 }
 
 // GetAuthors returns the Authors field value
@@ -567,7 +540,6 @@ func (o GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) Marshal
 func (o GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["projects"] = o.Projects
-	toSerialize["name"] = o.Name
 	toSerialize["authors"] = o.Authors
 	toSerialize["description"] = o.Description
 	toSerialize["homepage"] = o.Homepage
@@ -594,7 +566,6 @@ func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) Unmars
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"projects",
-		"name",
 		"authors",
 		"description",
 		"homepage",
