@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.78
 Contact: support@fossa.com
 */
 
@@ -13,22 +13,28 @@ package fossa
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the GetPackageLabelAssignments200Response type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &GetPackageLabelAssignments200Response{}
 
-// GetPackageLabelAssignments200Response struct for GetPackageLabelAssignments200Response
+// GetPackageLabelAssignments200Response The list of Package Label assignments matching the supplied filters.
 type GetPackageLabelAssignments200Response struct {
-	PackageLabelAssignmentResponse *GetPackageLabelAssignments200ResponsePackageLabelAssignmentResponse `json:"packageLabelAssignmentResponse,omitempty"`
+	// The matching package label assignments, each including the nested label that was assigned.
+	PackageLabelAssignments []GetPackageLabelAssignments200ResponsePackageLabelAssignmentsInner `json:"packageLabelAssignments"`
 }
+
+type _GetPackageLabelAssignments200Response GetPackageLabelAssignments200Response
 
 // NewGetPackageLabelAssignments200Response instantiates a new GetPackageLabelAssignments200Response object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetPackageLabelAssignments200Response() *GetPackageLabelAssignments200Response {
+func NewGetPackageLabelAssignments200Response(packageLabelAssignments []GetPackageLabelAssignments200ResponsePackageLabelAssignmentsInner) *GetPackageLabelAssignments200Response {
 	this := GetPackageLabelAssignments200Response{}
+	this.PackageLabelAssignments = packageLabelAssignments
 	return &this
 }
 
@@ -40,36 +46,28 @@ func NewGetPackageLabelAssignments200ResponseWithDefaults() *GetPackageLabelAssi
 	return &this
 }
 
-// GetPackageLabelAssignmentResponse returns the PackageLabelAssignmentResponse field value if set, zero value otherwise.
-func (o *GetPackageLabelAssignments200Response) GetPackageLabelAssignmentResponse() GetPackageLabelAssignments200ResponsePackageLabelAssignmentResponse {
-	if o == nil || IsNil(o.PackageLabelAssignmentResponse) {
-		var ret GetPackageLabelAssignments200ResponsePackageLabelAssignmentResponse
+// GetPackageLabelAssignments returns the PackageLabelAssignments field value
+func (o *GetPackageLabelAssignments200Response) GetPackageLabelAssignments() []GetPackageLabelAssignments200ResponsePackageLabelAssignmentsInner {
+	if o == nil {
+		var ret []GetPackageLabelAssignments200ResponsePackageLabelAssignmentsInner
 		return ret
 	}
-	return *o.PackageLabelAssignmentResponse
+
+	return o.PackageLabelAssignments
 }
 
-// GetPackageLabelAssignmentResponseOk returns a tuple with the PackageLabelAssignmentResponse field value if set, nil otherwise
+// GetPackageLabelAssignmentsOk returns a tuple with the PackageLabelAssignments field value
 // and a boolean to check if the value has been set.
-func (o *GetPackageLabelAssignments200Response) GetPackageLabelAssignmentResponseOk() (*GetPackageLabelAssignments200ResponsePackageLabelAssignmentResponse, bool) {
-	if o == nil || IsNil(o.PackageLabelAssignmentResponse) {
+func (o *GetPackageLabelAssignments200Response) GetPackageLabelAssignmentsOk() ([]GetPackageLabelAssignments200ResponsePackageLabelAssignmentsInner, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.PackageLabelAssignmentResponse, true
+	return o.PackageLabelAssignments, true
 }
 
-// HasPackageLabelAssignmentResponse returns a boolean if a field has been set.
-func (o *GetPackageLabelAssignments200Response) HasPackageLabelAssignmentResponse() bool {
-	if o != nil && !IsNil(o.PackageLabelAssignmentResponse) {
-		return true
-	}
-
-	return false
-}
-
-// SetPackageLabelAssignmentResponse gets a reference to the given GetPackageLabelAssignments200ResponsePackageLabelAssignmentResponse and assigns it to the PackageLabelAssignmentResponse field.
-func (o *GetPackageLabelAssignments200Response) SetPackageLabelAssignmentResponse(v GetPackageLabelAssignments200ResponsePackageLabelAssignmentResponse) {
-	o.PackageLabelAssignmentResponse = &v
+// SetPackageLabelAssignments sets field value
+func (o *GetPackageLabelAssignments200Response) SetPackageLabelAssignments(v []GetPackageLabelAssignments200ResponsePackageLabelAssignmentsInner) {
+	o.PackageLabelAssignments = v
 }
 
 func (o GetPackageLabelAssignments200Response) MarshalJSON() ([]byte, error) {
@@ -82,10 +80,45 @@ func (o GetPackageLabelAssignments200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetPackageLabelAssignments200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.PackageLabelAssignmentResponse) {
-		toSerialize["packageLabelAssignmentResponse"] = o.PackageLabelAssignmentResponse
-	}
+	toSerialize["packageLabelAssignments"] = o.PackageLabelAssignments
 	return toSerialize, nil
+}
+
+func (o *GetPackageLabelAssignments200Response) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"packageLabelAssignments",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varGetPackageLabelAssignments200Response := _GetPackageLabelAssignments200Response{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varGetPackageLabelAssignments200Response)
+
+	if err != nil {
+		return err
+	}
+
+	*o = GetPackageLabelAssignments200Response(varGetPackageLabelAssignments200Response)
+
+	return err
 }
 
 type NullableGetPackageLabelAssignments200Response struct {
