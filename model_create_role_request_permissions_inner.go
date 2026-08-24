@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.78
 Contact: support@fossa.com
 */
 
@@ -22,9 +22,9 @@ var _ MappedNullable = &CreateRoleRequestPermissionsInner{}
 
 // CreateRoleRequestPermissionsInner struct for CreateRoleRequestPermissionsInner
 type CreateRoleRequestPermissionsInner struct {
-	// Resource type for the permission
+	// Resource type for the permission. Must be a valid `resourceType` returned by `GET /api/roles/all-permissions`, and the `resourceType`/`action` combination must be valid for the role's `scope`. 
 	ResourceType string `json:"resourceType"`
-	// Action for the permission
+	// Action for the permission. Must be a valid `action` returned by `GET /api/roles/all-permissions`, and the `resourceType`/`action` combination must be valid for the role's `scope`. 
 	Action string `json:"action"`
 }
 
