@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.88
 Contact: support@fossa.com
 */
 
@@ -38,7 +38,7 @@ type ApiGetAuditLogsRequest struct {
 	actions *[]string
 	topics *[]string
 	topicActions *[]string
-	startingAfter *time.Time
+	startingAfter *string
 	endingBefore *string
 }
 
@@ -102,8 +102,8 @@ func (r ApiGetAuditLogsRequest) TopicActions(topicActions []string) ApiGetAuditL
 	return r
 }
 
-// The id to start after to filter audit logs to
-func (r ApiGetAuditLogsRequest) StartingAfter(startingAfter time.Time) ApiGetAuditLogsRequest {
+// The audit log row id to start after (exclusive). Used as a cursor for pagination.
+func (r ApiGetAuditLogsRequest) StartingAfter(startingAfter string) ApiGetAuditLogsRequest {
 	r.startingAfter = &startingAfter
 	return r
 }
@@ -310,7 +310,7 @@ type ApiGetAuditLogsCountRequest struct {
 	actions *[]string
 	topics *[]string
 	topicActions *[]string
-	startingAfter *time.Time
+	startingAfter *string
 	endingBefore *string
 }
 
@@ -374,8 +374,8 @@ func (r ApiGetAuditLogsCountRequest) TopicActions(topicActions []string) ApiGetA
 	return r
 }
 
-// The id to start after to filter audit logs to
-func (r ApiGetAuditLogsCountRequest) StartingAfter(startingAfter time.Time) ApiGetAuditLogsCountRequest {
+// The audit log row id to start after (exclusive). Used as a cursor for pagination.
+func (r ApiGetAuditLogsCountRequest) StartingAfter(startingAfter string) ApiGetAuditLogsCountRequest {
 	r.startingAfter = &startingAfter
 	return r
 }
