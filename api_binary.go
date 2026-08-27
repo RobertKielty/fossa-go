@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.88
 Contact: support@fossa.com
 */
 
@@ -138,6 +138,17 @@ func (a *BinaryAPIService) GetReleaseComponentsCountExecute(r ApiGetReleaseCompo
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 404 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -180,11 +191,18 @@ type ApiGetReleaseComponentsPathsRequest struct {
 	releaseGroupId float32
 	releaseId float32
 	path *string
+	search *string
 }
 
 // Path to find components at
 func (r ApiGetReleaseComponentsPathsRequest) Path(path string) ApiGetReleaseComponentsPathsRequest {
 	r.path = &path
+	return r
+}
+
+// Filter the results to dependencies whose title matches this search string.
+func (r ApiGetReleaseComponentsPathsRequest) Search(search string) ApiGetReleaseComponentsPathsRequest {
+	r.search = &search
 	return r
 }
 
@@ -195,7 +213,7 @@ func (r ApiGetReleaseComponentsPathsRequest) Execute() (*GetRevisionComponentsPa
 /*
 GetReleaseComponentsPaths Method for GetReleaseComponentsPaths
 
-Get Binary Decomposition Components by path for a a Release of a Release Group with at least one associated Binary Decomposition Scan
+Get Binary Decomposition Components by path for a Release of a Release Group with at least one associated Binary Decomposition Scan
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param releaseGroupId Release group id
@@ -236,6 +254,9 @@ func (a *BinaryAPIService) GetReleaseComponentsPathsExecute(r ApiGetReleaseCompo
 
 	if r.path != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "path", r.path, "form", "")
+	}
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -298,6 +319,17 @@ func (a *BinaryAPIService) GetReleaseComponentsPathsExecute(r ApiGetReleaseCompo
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 404 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -340,7 +372,7 @@ type ApiGetReleaseDependencyConfidenceRequest struct {
 	releaseId float32
 }
 
-func (r ApiGetReleaseDependencyConfidenceRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiGetReleaseDependencyConfidenceRequest) Execute() (*GetRevisionDependencyConfidence200Response, *http.Response, error) {
 	return r.ApiService.GetReleaseDependencyConfidenceExecute(r)
 }
 
@@ -362,13 +394,13 @@ func (a *BinaryAPIService) GetReleaseDependencyConfidence(ctx context.Context, r
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *BinaryAPIService) GetReleaseDependencyConfidenceExecute(r ApiGetReleaseDependencyConfidenceRequest) (map[string]interface{}, *http.Response, error) {
+//  @return GetRevisionDependencyConfidence200Response
+func (a *BinaryAPIService) GetReleaseDependencyConfidenceExecute(r ApiGetReleaseDependencyConfidenceRequest) (*GetRevisionDependencyConfidence200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  map[string]interface{}
+		localVarReturnValue  *GetRevisionDependencyConfidence200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BinaryAPIService.GetReleaseDependencyConfidence")
@@ -444,6 +476,17 @@ func (a *BinaryAPIService) GetReleaseDependencyConfidenceExecute(r ApiGetRelease
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 404 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -485,6 +528,20 @@ type ApiGetRevisionComponentMatchesRequest struct {
 	ApiService *BinaryAPIService
 	revisionLocator string
 	componentId string
+	page *int32
+	pageSize *int32
+}
+
+// The specific page of data to return
+func (r ApiGetRevisionComponentMatchesRequest) Page(page int32) ApiGetRevisionComponentMatchesRequest {
+	r.page = &page
+	return r
+}
+
+// The number of items to return in each page of results
+func (r ApiGetRevisionComponentMatchesRequest) PageSize(pageSize int32) ApiGetRevisionComponentMatchesRequest {
+	r.pageSize = &pageSize
+	return r
 }
 
 func (r ApiGetRevisionComponentMatchesRequest) Execute() (*GetRevisionComponentMatches200Response, *http.Response, error) {
@@ -533,6 +590,20 @@ func (a *BinaryAPIService) GetRevisionComponentMatchesExecute(r ApiGetRevisionCo
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	} else {
+		var defaultValue int32 = 1
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
+		r.page = &defaultValue
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
+	} else {
+		var defaultValue int32 = 10
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", defaultValue, "form", "")
+		r.pageSize = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -584,6 +655,17 @@ func (a *BinaryAPIService) GetRevisionComponentMatchesExecute(r ApiGetRevisionCo
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -740,6 +822,17 @@ func (a *BinaryAPIService) GetRevisionComponentsCountExecute(r ApiGetRevisionCom
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 404 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -781,11 +874,18 @@ type ApiGetRevisionComponentsPathsRequest struct {
 	ApiService *BinaryAPIService
 	revisionLocator string
 	path *string
+	search *string
 }
 
 // Path to find components at
 func (r ApiGetRevisionComponentsPathsRequest) Path(path string) ApiGetRevisionComponentsPathsRequest {
 	r.path = &path
+	return r
+}
+
+// Filter the results to dependencies whose title matches this search string.
+func (r ApiGetRevisionComponentsPathsRequest) Search(search string) ApiGetRevisionComponentsPathsRequest {
+	r.search = &search
 	return r
 }
 
@@ -834,6 +934,9 @@ func (a *BinaryAPIService) GetRevisionComponentsPathsExecute(r ApiGetRevisionCom
 
 	if r.path != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "path", r.path, "form", "")
+	}
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -886,6 +989,17 @@ func (a *BinaryAPIService) GetRevisionComponentsPathsExecute(r ApiGetRevisionCom
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -937,6 +1051,20 @@ type ApiGetRevisionDependencyComponentsRequest struct {
 	ApiService *BinaryAPIService
 	revisionLocator string
 	dependencyLocator string
+	page *int32
+	pageSize *int32
+}
+
+// The specific page of data to return
+func (r ApiGetRevisionDependencyComponentsRequest) Page(page int32) ApiGetRevisionDependencyComponentsRequest {
+	r.page = &page
+	return r
+}
+
+// The number of items to return in each page of results
+func (r ApiGetRevisionDependencyComponentsRequest) PageSize(pageSize int32) ApiGetRevisionDependencyComponentsRequest {
+	r.pageSize = &pageSize
+	return r
 }
 
 func (r ApiGetRevisionDependencyComponentsRequest) Execute() (*GetRevisionDependencyComponents200Response, *http.Response, error) {
@@ -985,6 +1113,20 @@ func (a *BinaryAPIService) GetRevisionDependencyComponentsExecute(r ApiGetRevisi
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	} else {
+		var defaultValue int32 = 1
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
+		r.page = &defaultValue
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
+	} else {
+		var defaultValue int32 = 10
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", defaultValue, "form", "")
+		r.pageSize = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1036,6 +1178,17 @@ func (a *BinaryAPIService) GetRevisionDependencyComponentsExecute(r ApiGetRevisi
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -1088,7 +1241,7 @@ type ApiGetRevisionDependencyConfidenceRequest struct {
 	revisionLocator string
 }
 
-func (r ApiGetRevisionDependencyConfidenceRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiGetRevisionDependencyConfidenceRequest) Execute() (*GetRevisionDependencyConfidence200Response, *http.Response, error) {
 	return r.ApiService.GetRevisionDependencyConfidenceExecute(r)
 }
 
@@ -1110,13 +1263,13 @@ func (a *BinaryAPIService) GetRevisionDependencyConfidence(ctx context.Context, 
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *BinaryAPIService) GetRevisionDependencyConfidenceExecute(r ApiGetRevisionDependencyConfidenceRequest) (map[string]interface{}, *http.Response, error) {
+//  @return GetRevisionDependencyConfidence200Response
+func (a *BinaryAPIService) GetRevisionDependencyConfidenceExecute(r ApiGetRevisionDependencyConfidenceRequest) (*GetRevisionDependencyConfidence200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  map[string]interface{}
+		localVarReturnValue  *GetRevisionDependencyConfidence200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BinaryAPIService.GetRevisionDependencyConfidence")
@@ -1192,6 +1345,17 @@ func (a *BinaryAPIService) GetRevisionDependencyConfidenceExecute(r ApiGetRevisi
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 404 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1235,7 +1399,7 @@ type ApiGetSingleReleaseDependencyConfidenceRequest struct {
 	dependencyLocator string
 }
 
-func (r ApiGetSingleReleaseDependencyConfidenceRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiGetSingleReleaseDependencyConfidenceRequest) Execute() (*GetRevisionDependencyConfidence200Response, *http.Response, error) {
 	return r.ApiService.GetSingleReleaseDependencyConfidenceExecute(r)
 }
 
@@ -1259,13 +1423,13 @@ func (a *BinaryAPIService) GetSingleReleaseDependencyConfidence(ctx context.Cont
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *BinaryAPIService) GetSingleReleaseDependencyConfidenceExecute(r ApiGetSingleReleaseDependencyConfidenceRequest) (map[string]interface{}, *http.Response, error) {
+//  @return GetRevisionDependencyConfidence200Response
+func (a *BinaryAPIService) GetSingleReleaseDependencyConfidenceExecute(r ApiGetSingleReleaseDependencyConfidenceRequest) (*GetRevisionDependencyConfidence200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  map[string]interface{}
+		localVarReturnValue  *GetRevisionDependencyConfidence200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BinaryAPIService.GetSingleReleaseDependencyConfidence")
@@ -1342,6 +1506,17 @@ func (a *BinaryAPIService) GetSingleReleaseDependencyConfidenceExecute(r ApiGetS
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 404 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1385,7 +1560,7 @@ type ApiGetSingleRevisionDependencyConfidenceRequest struct {
 	dependencyLocator string
 }
 
-func (r ApiGetSingleRevisionDependencyConfidenceRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiGetSingleRevisionDependencyConfidenceRequest) Execute() (*GetRevisionDependencyConfidence200Response, *http.Response, error) {
 	return r.ApiService.GetSingleRevisionDependencyConfidenceExecute(r)
 }
 
@@ -1409,13 +1584,13 @@ func (a *BinaryAPIService) GetSingleRevisionDependencyConfidence(ctx context.Con
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *BinaryAPIService) GetSingleRevisionDependencyConfidenceExecute(r ApiGetSingleRevisionDependencyConfidenceRequest) (map[string]interface{}, *http.Response, error) {
+//  @return GetRevisionDependencyConfidence200Response
+func (a *BinaryAPIService) GetSingleRevisionDependencyConfidenceExecute(r ApiGetSingleRevisionDependencyConfidenceRequest) (*GetRevisionDependencyConfidence200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  map[string]interface{}
+		localVarReturnValue  *GetRevisionDependencyConfidence200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BinaryAPIService.GetSingleRevisionDependencyConfidence")
@@ -1482,6 +1657,17 @@ func (a *BinaryAPIService) GetSingleRevisionDependencyConfidenceExecute(r ApiGet
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
