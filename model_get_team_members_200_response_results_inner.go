@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.92
 Contact: support@fossa.com
 */
 
@@ -26,10 +26,10 @@ type GetTeamMembers200ResponseResultsInner struct {
 	UserId int32 `json:"userId"`
 	// ID of the role assigned to the user in the team
 	RoleId int32 `json:"roleId"`
-	// Username of the user
-	Username string `json:"username"`
-	// Email of the user
-	Email string `json:"email"`
+	// Username of the user. Can be null when the underlying user record has no username.
+	Username NullableString `json:"username"`
+	// Email of the user. Can be null when the underlying user record has no email.
+	Email NullableString `json:"email"`
 	// Whether the user is a service account
 	IsServiceAccount *bool `json:"isServiceAccount,omitempty"`
 }
@@ -40,7 +40,7 @@ type _GetTeamMembers200ResponseResultsInner GetTeamMembers200ResponseResultsInne
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetTeamMembers200ResponseResultsInner(userId int32, roleId int32, username string, email string) *GetTeamMembers200ResponseResultsInner {
+func NewGetTeamMembers200ResponseResultsInner(userId int32, roleId int32, username NullableString, email NullableString) *GetTeamMembers200ResponseResultsInner {
 	this := GetTeamMembers200ResponseResultsInner{}
 	this.UserId = userId
 	this.RoleId = roleId
@@ -106,51 +106,55 @@ func (o *GetTeamMembers200ResponseResultsInner) SetRoleId(v int32) {
 }
 
 // GetUsername returns the Username field value
+// If the value is explicit nil, the zero value for string will be returned
 func (o *GetTeamMembers200ResponseResultsInner) GetUsername() string {
-	if o == nil {
+	if o == nil || o.Username.Get() == nil {
 		var ret string
 		return ret
 	}
 
-	return o.Username
+	return *o.Username.Get()
 }
 
 // GetUsernameOk returns a tuple with the Username field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetTeamMembers200ResponseResultsInner) GetUsernameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Username, true
+	return o.Username.Get(), o.Username.IsSet()
 }
 
 // SetUsername sets field value
 func (o *GetTeamMembers200ResponseResultsInner) SetUsername(v string) {
-	o.Username = v
+	o.Username.Set(&v)
 }
 
 // GetEmail returns the Email field value
+// If the value is explicit nil, the zero value for string will be returned
 func (o *GetTeamMembers200ResponseResultsInner) GetEmail() string {
-	if o == nil {
+	if o == nil || o.Email.Get() == nil {
 		var ret string
 		return ret
 	}
 
-	return o.Email
+	return *o.Email.Get()
 }
 
 // GetEmailOk returns a tuple with the Email field value
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *GetTeamMembers200ResponseResultsInner) GetEmailOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Email, true
+	return o.Email.Get(), o.Email.IsSet()
 }
 
 // SetEmail sets field value
 func (o *GetTeamMembers200ResponseResultsInner) SetEmail(v string) {
-	o.Email = v
+	o.Email.Set(&v)
 }
 
 // GetIsServiceAccount returns the IsServiceAccount field value if set, zero value otherwise.
@@ -197,8 +201,8 @@ func (o GetTeamMembers200ResponseResultsInner) ToMap() (map[string]interface{}, 
 	toSerialize := map[string]interface{}{}
 	toSerialize["userId"] = o.UserId
 	toSerialize["roleId"] = o.RoleId
-	toSerialize["username"] = o.Username
-	toSerialize["email"] = o.Email
+	toSerialize["username"] = o.Username.Get()
+	toSerialize["email"] = o.Email.Get()
 	if !IsNil(o.IsServiceAccount) {
 		toSerialize["isServiceAccount"] = o.IsServiceAccount
 	}
