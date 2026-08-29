@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Projects** | **bool** | For release group reports, show which projects the dependency is present in | 
-**Name** | **bool** | The name of the dependency | 
 **Authors** | **bool** | The authors of the dependency | 
 **Description** | **bool** | The description of the dependency | 
 **Homepage** | **bool** | The homepage of the dependency | 
@@ -28,7 +27,7 @@ Name | Type | Description | Notes
 
 ### NewGetAllReportOptions200ResponseResultsInnerOptionsDependencyData
 
-`func NewGetAllReportOptions200ResponseResultsInnerOptionsDependencyData(projects bool, name bool, authors bool, description bool, homepage bool, packageManager bool, downloadUrl bool, concludedLicenses bool, declaredLicenses bool, discoveredLicenses bool, copyrights bool, licenseUrl bool, licenseFileMatches bool, issueResolutionNotes bool, packageLabels bool, dependencyPaths bool, filePaths bool, noticeFiles bool, fullLicenseText bool, ) *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData`
+`func NewGetAllReportOptions200ResponseResultsInnerOptionsDependencyData(projects bool, authors bool, description bool, homepage bool, packageManager bool, downloadUrl bool, concludedLicenses bool, declaredLicenses bool, discoveredLicenses bool, copyrights bool, licenseUrl bool, licenseFileMatches bool, issueResolutionNotes bool, packageLabels bool, dependencyPaths bool, filePaths bool, noticeFiles bool, fullLicenseText bool, ) *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData`
 
 NewGetAllReportOptions200ResponseResultsInnerOptionsDependencyData instantiates a new GetAllReportOptions200ResponseResultsInnerOptionsDependencyData object
 This constructor will assign default values to properties that have it defined,
@@ -61,26 +60,6 @@ and a boolean to check if the value has been set.
 `func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) SetProjects(v bool)`
 
 SetProjects sets Projects field to given value.
-
-
-### GetName
-
-`func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) GetName() bool`
-
-GetName returns the Name field if non-nil, zero value otherwise.
-
-### GetNameOk
-
-`func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) GetNameOk() (*bool, bool)`
-
-GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetName
-
-`func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) SetName(v bool)`
-
-SetName sets Name field to given value.
 
 
 ### GetAuthors
