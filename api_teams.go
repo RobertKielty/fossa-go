@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.92
 Contact: support@fossa.com
 */
 
@@ -476,7 +476,7 @@ type ApiGetAddableProjectsFromReleaseGroupRequest struct {
 	releaseGroupId int32
 }
 
-func (r ApiGetAddableProjectsFromReleaseGroupRequest) Execute() (*GetAddableTeamProjectsAndReleaseGroups200Response, *http.Response, error) {
+func (r ApiGetAddableProjectsFromReleaseGroupRequest) Execute() (*GetAddableProjectsFromReleaseGroup200Response, *http.Response, error) {
 	return r.ApiService.GetAddableProjectsFromReleaseGroupExecute(r)
 }
 
@@ -500,13 +500,13 @@ func (a *TeamsAPIService) GetAddableProjectsFromReleaseGroup(ctx context.Context
 }
 
 // Execute executes the request
-//  @return GetAddableTeamProjectsAndReleaseGroups200Response
-func (a *TeamsAPIService) GetAddableProjectsFromReleaseGroupExecute(r ApiGetAddableProjectsFromReleaseGroupRequest) (*GetAddableTeamProjectsAndReleaseGroups200Response, *http.Response, error) {
+//  @return GetAddableProjectsFromReleaseGroup200Response
+func (a *TeamsAPIService) GetAddableProjectsFromReleaseGroupExecute(r ApiGetAddableProjectsFromReleaseGroupRequest) (*GetAddableProjectsFromReleaseGroup200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetAddableTeamProjectsAndReleaseGroups200Response
+		localVarReturnValue  *GetAddableProjectsFromReleaseGroup200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TeamsAPIService.GetAddableProjectsFromReleaseGroup")
@@ -999,10 +999,12 @@ func (r ApiGetAllTeamsRequest) Execute() ([]GetAllTeams200ResponseInner, *http.R
 /*
 GetAllTeams Method for GetAllTeams
 
-Get all teams in your organization
+This endpoint is deprecated. Please use the paginated /v2/teams/ endpoint instead.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetAllTeamsRequest
+
+Deprecated
 */
 func (a *TeamsAPIService) GetAllTeams(ctx context.Context) ApiGetAllTeamsRequest {
 	return ApiGetAllTeamsRequest{
@@ -1013,6 +1015,7 @@ func (a *TeamsAPIService) GetAllTeams(ctx context.Context) ApiGetAllTeamsRequest
 
 // Execute executes the request
 //  @return []GetAllTeams200ResponseInner
+// Deprecated
 func (a *TeamsAPIService) GetAllTeamsExecute(r ApiGetAllTeamsRequest) ([]GetAllTeams200ResponseInner, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
@@ -1081,6 +1084,153 @@ func (a *TeamsAPIService) GetAllTeamsExecute(r ApiGetAllTeamsRequest) ([]GetAllT
 					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetAllTeamsV2Request struct {
+	ctx context.Context
+	ApiService *TeamsAPIService
+	page *int32
+	pageSize *int32
+	search *string
+}
+
+// Page number (1-indexed, defaults to 1)
+func (r ApiGetAllTeamsV2Request) Page(page int32) ApiGetAllTeamsV2Request {
+	r.page = &page
+	return r
+}
+
+// Number of items per page (defaults to 10, max 50)
+func (r ApiGetAllTeamsV2Request) PageSize(pageSize int32) ApiGetAllTeamsV2Request {
+	r.pageSize = &pageSize
+	return r
+}
+
+// Search term to filter teams by name (max 255)
+func (r ApiGetAllTeamsV2Request) Search(search string) ApiGetAllTeamsV2Request {
+	r.search = &search
+	return r
+}
+
+func (r ApiGetAllTeamsV2Request) Execute() (*GetAllTeamsV2200Response, *http.Response, error) {
+	return r.ApiService.GetAllTeamsV2Execute(r)
+}
+
+/*
+GetAllTeamsV2 Method for GetAllTeamsV2
+
+Get a paginated list of teams in your organization
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiGetAllTeamsV2Request
+*/
+func (a *TeamsAPIService) GetAllTeamsV2(ctx context.Context) ApiGetAllTeamsV2Request {
+	return ApiGetAllTeamsV2Request{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return GetAllTeamsV2200Response
+func (a *TeamsAPIService) GetAllTeamsV2Execute(r ApiGetAllTeamsV2Request) (*GetAllTeamsV2200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetAllTeamsV2200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TeamsAPIService.GetAllTeamsV2")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/teams"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	} else {
+		var defaultValue int32 = 1
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", defaultValue, "form", "")
+		r.page = &defaultValue
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "form", "")
+	} else {
+		var defaultValue int32 = 10
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", defaultValue, "form", "")
+		r.pageSize = &defaultValue
+	}
+	if r.search != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "search", r.search, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v AddLicenseConclusion400Response

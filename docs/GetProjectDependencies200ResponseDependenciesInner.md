@@ -9,9 +9,13 @@ Name | Type | Description | Notes
 **IsManual** | Pointer to **bool** |  | [optional] 
 **IsIgnored** | Pointer to **bool** |  | [optional] 
 **IsUnknown** | Pointer to **bool** |  | [optional] 
-**ConcludedLicenses** | Pointer to [**GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses**](GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses.md) |  | [optional] 
+**IsSnippetConversion** | Pointer to **bool** |  | [optional] 
+**Conclusions** | Pointer to [**GetProjectDependencies200ResponseDependenciesInnerConclusions**](GetProjectDependencies200ResponseDependenciesInnerConclusions.md) |  | [optional] 
 **Licenses** | Pointer to **[]string** |  | [optional] 
 **DeclaredLicenses** | Pointer to **[]string** |  | [optional] 
+**DiscoveredLicenses** | Pointer to **[]string** |  | [optional] 
+**LicenseGroups** | Pointer to [**[]GetProjectDependencies200ResponseDependenciesInnerLicenseGroupsInner**](GetProjectDependencies200ResponseDependenciesInnerLicenseGroupsInner.md) | The grouped licenses discovered for this dependency. | [optional] 
+**Labels** | Pointer to [**[]GetProjectDependencies200ResponseDependenciesInnerLabelsInner**](GetProjectDependencies200ResponseDependenciesInnerLabelsInner.md) | The package label assignments applied to this dependency. | [optional] 
 **Depth** | Pointer to **int32** |  | [optional] 
 **OriginPaths** | Pointer to **[]string** |  | [optional] 
 **Status** | Pointer to [**GetProjectDependencies200ResponseDependenciesInnerStatus**](GetProjectDependencies200ResponseDependenciesInnerStatus.md) |  | [optional] 
@@ -166,30 +170,55 @@ SetIsUnknown sets IsUnknown field to given value.
 
 HasIsUnknown returns a boolean if a field has been set.
 
-### GetConcludedLicenses
+### GetIsSnippetConversion
 
-`func (o *GetProjectDependencies200ResponseDependenciesInner) GetConcludedLicenses() GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses`
+`func (o *GetProjectDependencies200ResponseDependenciesInner) GetIsSnippetConversion() bool`
 
-GetConcludedLicenses returns the ConcludedLicenses field if non-nil, zero value otherwise.
+GetIsSnippetConversion returns the IsSnippetConversion field if non-nil, zero value otherwise.
 
-### GetConcludedLicensesOk
+### GetIsSnippetConversionOk
 
-`func (o *GetProjectDependencies200ResponseDependenciesInner) GetConcludedLicensesOk() (*GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses, bool)`
+`func (o *GetProjectDependencies200ResponseDependenciesInner) GetIsSnippetConversionOk() (*bool, bool)`
 
-GetConcludedLicensesOk returns a tuple with the ConcludedLicenses field if it's non-nil, zero value otherwise
+GetIsSnippetConversionOk returns a tuple with the IsSnippetConversion field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetConcludedLicenses
+### SetIsSnippetConversion
 
-`func (o *GetProjectDependencies200ResponseDependenciesInner) SetConcludedLicenses(v GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses)`
+`func (o *GetProjectDependencies200ResponseDependenciesInner) SetIsSnippetConversion(v bool)`
 
-SetConcludedLicenses sets ConcludedLicenses field to given value.
+SetIsSnippetConversion sets IsSnippetConversion field to given value.
 
-### HasConcludedLicenses
+### HasIsSnippetConversion
 
-`func (o *GetProjectDependencies200ResponseDependenciesInner) HasConcludedLicenses() bool`
+`func (o *GetProjectDependencies200ResponseDependenciesInner) HasIsSnippetConversion() bool`
 
-HasConcludedLicenses returns a boolean if a field has been set.
+HasIsSnippetConversion returns a boolean if a field has been set.
+
+### GetConclusions
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) GetConclusions() GetProjectDependencies200ResponseDependenciesInnerConclusions`
+
+GetConclusions returns the Conclusions field if non-nil, zero value otherwise.
+
+### GetConclusionsOk
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) GetConclusionsOk() (*GetProjectDependencies200ResponseDependenciesInnerConclusions, bool)`
+
+GetConclusionsOk returns a tuple with the Conclusions field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConclusions
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) SetConclusions(v GetProjectDependencies200ResponseDependenciesInnerConclusions)`
+
+SetConclusions sets Conclusions field to given value.
+
+### HasConclusions
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) HasConclusions() bool`
+
+HasConclusions returns a boolean if a field has been set.
 
 ### GetLicenses
 
@@ -240,6 +269,81 @@ SetDeclaredLicenses sets DeclaredLicenses field to given value.
 `func (o *GetProjectDependencies200ResponseDependenciesInner) HasDeclaredLicenses() bool`
 
 HasDeclaredLicenses returns a boolean if a field has been set.
+
+### GetDiscoveredLicenses
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) GetDiscoveredLicenses() []string`
+
+GetDiscoveredLicenses returns the DiscoveredLicenses field if non-nil, zero value otherwise.
+
+### GetDiscoveredLicensesOk
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) GetDiscoveredLicensesOk() (*[]string, bool)`
+
+GetDiscoveredLicensesOk returns a tuple with the DiscoveredLicenses field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDiscoveredLicenses
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) SetDiscoveredLicenses(v []string)`
+
+SetDiscoveredLicenses sets DiscoveredLicenses field to given value.
+
+### HasDiscoveredLicenses
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) HasDiscoveredLicenses() bool`
+
+HasDiscoveredLicenses returns a boolean if a field has been set.
+
+### GetLicenseGroups
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) GetLicenseGroups() []GetProjectDependencies200ResponseDependenciesInnerLicenseGroupsInner`
+
+GetLicenseGroups returns the LicenseGroups field if non-nil, zero value otherwise.
+
+### GetLicenseGroupsOk
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) GetLicenseGroupsOk() (*[]GetProjectDependencies200ResponseDependenciesInnerLicenseGroupsInner, bool)`
+
+GetLicenseGroupsOk returns a tuple with the LicenseGroups field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLicenseGroups
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) SetLicenseGroups(v []GetProjectDependencies200ResponseDependenciesInnerLicenseGroupsInner)`
+
+SetLicenseGroups sets LicenseGroups field to given value.
+
+### HasLicenseGroups
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) HasLicenseGroups() bool`
+
+HasLicenseGroups returns a boolean if a field has been set.
+
+### GetLabels
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) GetLabels() []GetProjectDependencies200ResponseDependenciesInnerLabelsInner`
+
+GetLabels returns the Labels field if non-nil, zero value otherwise.
+
+### GetLabelsOk
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) GetLabelsOk() (*[]GetProjectDependencies200ResponseDependenciesInnerLabelsInner, bool)`
+
+GetLabelsOk returns a tuple with the Labels field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLabels
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) SetLabels(v []GetProjectDependencies200ResponseDependenciesInnerLabelsInner)`
+
+SetLabels sets Labels field to given value.
+
+### HasLabels
+
+`func (o *GetProjectDependencies200ResponseDependenciesInner) HasLabels() bool`
+
+HasLabels returns a boolean if a field has been set.
 
 ### GetDepth
 

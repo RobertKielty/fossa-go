@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.92
 Contact: support@fossa.com
 */
 
@@ -24,54 +24,50 @@ import (
 // OrganizationLimitsAPIService OrganizationLimitsAPI service
 type OrganizationLimitsAPIService service
 
-type ApiGetOrganizationLimitsRequest struct {
+type ApiGetOrganizationContributorLimitsRequest struct {
 	ctx context.Context
 	ApiService *OrganizationLimitsAPIService
-	id float32
-	resource string
+	id int32
 }
 
-func (r ApiGetOrganizationLimitsRequest) Execute() (*GetOrganizationLimits200Response, *http.Response, error) {
-	return r.ApiService.GetOrganizationLimitsExecute(r)
+func (r ApiGetOrganizationContributorLimitsRequest) Execute() (*GetOrganizationContributorLimits200Response, *http.Response, error) {
+	return r.ApiService.GetOrganizationContributorLimitsExecute(r)
 }
 
 /*
-GetOrganizationLimits Method for GetOrganizationLimits
+GetOrganizationContributorLimits Method for GetOrganizationContributorLimits
 
-Fetch the organization's limit for subscription limited resource and its current usage.
+Fetch the organization's contributor limit and its current usage.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id The organization ID.
- @param resource
- @return ApiGetOrganizationLimitsRequest
+ @return ApiGetOrganizationContributorLimitsRequest
 */
-func (a *OrganizationLimitsAPIService) GetOrganizationLimits(ctx context.Context, id float32, resource string) ApiGetOrganizationLimitsRequest {
-	return ApiGetOrganizationLimitsRequest{
+func (a *OrganizationLimitsAPIService) GetOrganizationContributorLimits(ctx context.Context, id int32) ApiGetOrganizationContributorLimitsRequest {
+	return ApiGetOrganizationContributorLimitsRequest{
 		ApiService: a,
 		ctx: ctx,
 		id: id,
-		resource: resource,
 	}
 }
 
 // Execute executes the request
-//  @return GetOrganizationLimits200Response
-func (a *OrganizationLimitsAPIService) GetOrganizationLimitsExecute(r ApiGetOrganizationLimitsRequest) (*GetOrganizationLimits200Response, *http.Response, error) {
+//  @return GetOrganizationContributorLimits200Response
+func (a *OrganizationLimitsAPIService) GetOrganizationContributorLimitsExecute(r ApiGetOrganizationContributorLimitsRequest) (*GetOrganizationContributorLimits200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetOrganizationLimits200Response
+		localVarReturnValue  *GetOrganizationContributorLimits200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationLimitsAPIService.GetOrganizationLimits")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationLimitsAPIService.GetOrganizationContributorLimits")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/organizations/{id}/limits/{resource}"
+	localVarPath := localBasePath + "/organizations/{id}/limits/contributors"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"resource"+"}", url.PathEscape(parameterValueToString(r.resource, "resource")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -128,6 +124,152 @@ func (a *OrganizationLimitsAPIService) GetOrganizationLimitsExecute(r ApiGetOrga
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetOrganizationReleaseGroupLimitsRequest struct {
+	ctx context.Context
+	ApiService *OrganizationLimitsAPIService
+	id int32
+}
+
+func (r ApiGetOrganizationReleaseGroupLimitsRequest) Execute() (*GetOrganizationContributorLimits200Response, *http.Response, error) {
+	return r.ApiService.GetOrganizationReleaseGroupLimitsExecute(r)
+}
+
+/*
+GetOrganizationReleaseGroupLimits Method for GetOrganizationReleaseGroupLimits
+
+Fetch the organization's release group limit and its current usage.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id The organization ID.
+ @return ApiGetOrganizationReleaseGroupLimitsRequest
+*/
+func (a *OrganizationLimitsAPIService) GetOrganizationReleaseGroupLimits(ctx context.Context, id int32) ApiGetOrganizationReleaseGroupLimitsRequest {
+	return ApiGetOrganizationReleaseGroupLimitsRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return GetOrganizationContributorLimits200Response
+func (a *OrganizationLimitsAPIService) GetOrganizationReleaseGroupLimitsExecute(r ApiGetOrganizationReleaseGroupLimitsRequest) (*GetOrganizationContributorLimits200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetOrganizationContributorLimits200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationLimitsAPIService.GetOrganizationReleaseGroupLimits")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/organizations/{id}/limits/release-groups"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
