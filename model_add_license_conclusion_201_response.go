@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.94
 Contact: support@fossa.com
 */
 
@@ -25,9 +25,9 @@ var _ MappedNullable = &AddLicenseConclusion201Response{}
 type AddLicenseConclusion201Response struct {
 	// The locator of the dependency revision
 	DependencyRevisionLocator string `json:"dependencyRevisionLocator"`
-	// The scope of the license conclusion
+	// The scope of the license conclusion. May be `null` for auto-generated conclusions.
 	Scope string `json:"scope"`
-	// The ID of the scope (project locator, revision locator, release group ID, etc.)
+	// The ID of the scope (project locator, revision locator, release group ID, etc.). `null` for global conclusions.
 	ScopeId string `json:"scopeId"`
 	// The list of concluded licenses for this dependency
 	ConcludedLicenses []string `json:"concludedLicenses"`
