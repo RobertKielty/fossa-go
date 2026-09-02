@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.95
 Contact: support@fossa.com
 */
 
@@ -72,7 +72,7 @@ func (r ApiGetBuildsRequest) Page(page int32) ApiGetBuildsRequest {
 	return r
 }
 
-// The sort order(s) to apply to the builds
+// The sort order(s) to apply to the builds. Accepts a comma-separated list of one or more columns. Prefix a column with &#x60;-&#x60; to sort it in descending order (ascending is the default). Valid columns are: &#x60;cliVersionId&#x60;, &#x60;createdAt&#x60;, &#x60;id&#x60;, &#x60;locator&#x60;, &#x60;ownerId&#x60;, &#x60;taskId&#x60;, &#x60;updatedAt&#x60;. For example, &#x60;-createdAt,id&#x60; sorts by &#x60;createdAt&#x60; descending then &#x60;id&#x60; ascending. 
 func (r ApiGetBuildsRequest) Sort(sort string) ApiGetBuildsRequest {
 	r.sort = &sort
 	return r
@@ -262,7 +262,7 @@ func (r ApiGetBuildsCountRequest) Page(page int32) ApiGetBuildsCountRequest {
 	return r
 }
 
-// The sort order(s) to apply to the builds
+// The sort order(s) to apply to the builds. Accepts a comma-separated list of one or more columns. Prefix a column with &#x60;-&#x60; to sort it in descending order (ascending is the default). Valid columns are: &#x60;cliVersionId&#x60;, &#x60;createdAt&#x60;, &#x60;id&#x60;, &#x60;locator&#x60;, &#x60;ownerId&#x60;, &#x60;taskId&#x60;, &#x60;updatedAt&#x60;. For example, &#x60;-createdAt,id&#x60; sorts by &#x60;createdAt&#x60; descending then &#x60;id&#x60; ascending. 
 func (r ApiGetBuildsCountRequest) Sort(sort string) ApiGetBuildsCountRequest {
 	r.sort = &sort
 	return r
