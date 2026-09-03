@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.96
 Contact: support@fossa.com
 */
 
@@ -23,6 +23,8 @@ type AddLicenseConclusionRequestScope struct {
 	AddLicenseConclusionRequestScopeOneOf1 *AddLicenseConclusionRequestScopeOneOf1
 	AddLicenseConclusionRequestScopeOneOf2 *AddLicenseConclusionRequestScopeOneOf2
 	AddLicenseConclusionRequestScopeOneOf3 *AddLicenseConclusionRequestScopeOneOf3
+	AddLicenseConclusionRequestScopeOneOf4 *AddLicenseConclusionRequestScopeOneOf4
+	AddLicenseConclusionRequestScopeOneOf5 *AddLicenseConclusionRequestScopeOneOf5
 }
 
 // AddLicenseConclusionRequestScopeOneOfAsAddLicenseConclusionRequestScope is a convenience function that returns AddLicenseConclusionRequestScopeOneOf wrapped in AddLicenseConclusionRequestScope
@@ -50,6 +52,20 @@ func AddLicenseConclusionRequestScopeOneOf2AsAddLicenseConclusionRequestScope(v 
 func AddLicenseConclusionRequestScopeOneOf3AsAddLicenseConclusionRequestScope(v *AddLicenseConclusionRequestScopeOneOf3) AddLicenseConclusionRequestScope {
 	return AddLicenseConclusionRequestScope{
 		AddLicenseConclusionRequestScopeOneOf3: v,
+	}
+}
+
+// AddLicenseConclusionRequestScopeOneOf4AsAddLicenseConclusionRequestScope is a convenience function that returns AddLicenseConclusionRequestScopeOneOf4 wrapped in AddLicenseConclusionRequestScope
+func AddLicenseConclusionRequestScopeOneOf4AsAddLicenseConclusionRequestScope(v *AddLicenseConclusionRequestScopeOneOf4) AddLicenseConclusionRequestScope {
+	return AddLicenseConclusionRequestScope{
+		AddLicenseConclusionRequestScopeOneOf4: v,
+	}
+}
+
+// AddLicenseConclusionRequestScopeOneOf5AsAddLicenseConclusionRequestScope is a convenience function that returns AddLicenseConclusionRequestScopeOneOf5 wrapped in AddLicenseConclusionRequestScope
+func AddLicenseConclusionRequestScopeOneOf5AsAddLicenseConclusionRequestScope(v *AddLicenseConclusionRequestScopeOneOf5) AddLicenseConclusionRequestScope {
+	return AddLicenseConclusionRequestScope{
+		AddLicenseConclusionRequestScopeOneOf5: v,
 	}
 }
 
@@ -126,17 +142,57 @@ func (dst *AddLicenseConclusionRequestScope) UnmarshalJSON(data []byte) error {
 		dst.AddLicenseConclusionRequestScopeOneOf3 = nil
 	}
 
+	// try to unmarshal data into AddLicenseConclusionRequestScopeOneOf4
+	err = newStrictDecoder(data).Decode(&dst.AddLicenseConclusionRequestScopeOneOf4)
+	if err == nil {
+		jsonAddLicenseConclusionRequestScopeOneOf4, _ := json.Marshal(dst.AddLicenseConclusionRequestScopeOneOf4)
+		if string(jsonAddLicenseConclusionRequestScopeOneOf4) == "{}" { // empty struct
+			dst.AddLicenseConclusionRequestScopeOneOf4 = nil
+		} else {
+			if err = validator.Validate(dst.AddLicenseConclusionRequestScopeOneOf4); err != nil {
+				dst.AddLicenseConclusionRequestScopeOneOf4 = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.AddLicenseConclusionRequestScopeOneOf4 = nil
+	}
+
+	// try to unmarshal data into AddLicenseConclusionRequestScopeOneOf5
+	err = newStrictDecoder(data).Decode(&dst.AddLicenseConclusionRequestScopeOneOf5)
+	if err == nil {
+		jsonAddLicenseConclusionRequestScopeOneOf5, _ := json.Marshal(dst.AddLicenseConclusionRequestScopeOneOf5)
+		if string(jsonAddLicenseConclusionRequestScopeOneOf5) == "{}" { // empty struct
+			dst.AddLicenseConclusionRequestScopeOneOf5 = nil
+		} else {
+			if err = validator.Validate(dst.AddLicenseConclusionRequestScopeOneOf5); err != nil {
+				dst.AddLicenseConclusionRequestScopeOneOf5 = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.AddLicenseConclusionRequestScopeOneOf5 = nil
+	}
+
 	if match > 1 { // more than 1 match
 		// reset to nil
 		dst.AddLicenseConclusionRequestScopeOneOf = nil
 		dst.AddLicenseConclusionRequestScopeOneOf1 = nil
 		dst.AddLicenseConclusionRequestScopeOneOf2 = nil
 		dst.AddLicenseConclusionRequestScopeOneOf3 = nil
+		dst.AddLicenseConclusionRequestScopeOneOf4 = nil
+		dst.AddLicenseConclusionRequestScopeOneOf5 = nil
 
 		return fmt.Errorf("data matches more than one schema in oneOf(AddLicenseConclusionRequestScope)")
 	} else if match == 1 {
 		return nil // exactly one match
 	} else { // no match
+		if err != nil {
+			return fmt.Errorf("data failed to match schemas in oneOf(AddLicenseConclusionRequestScope): %v", err)
+		}
+
 		return fmt.Errorf("data failed to match schemas in oneOf(AddLicenseConclusionRequestScope)")
 	}
 }
@@ -157,6 +213,14 @@ func (src AddLicenseConclusionRequestScope) MarshalJSON() ([]byte, error) {
 
 	if src.AddLicenseConclusionRequestScopeOneOf3 != nil {
 		return json.Marshal(&src.AddLicenseConclusionRequestScopeOneOf3)
+	}
+
+	if src.AddLicenseConclusionRequestScopeOneOf4 != nil {
+		return json.Marshal(&src.AddLicenseConclusionRequestScopeOneOf4)
+	}
+
+	if src.AddLicenseConclusionRequestScopeOneOf5 != nil {
+		return json.Marshal(&src.AddLicenseConclusionRequestScopeOneOf5)
 	}
 
 	return nil, nil // no data in oneOf schemas
@@ -183,6 +247,14 @@ func (obj *AddLicenseConclusionRequestScope) GetActualInstance() (interface{}) {
 		return obj.AddLicenseConclusionRequestScopeOneOf3
 	}
 
+	if obj.AddLicenseConclusionRequestScopeOneOf4 != nil {
+		return obj.AddLicenseConclusionRequestScopeOneOf4
+	}
+
+	if obj.AddLicenseConclusionRequestScopeOneOf5 != nil {
+		return obj.AddLicenseConclusionRequestScopeOneOf5
+	}
+
 	// all schemas are nil
 	return nil
 }
@@ -203,6 +275,14 @@ func (obj AddLicenseConclusionRequestScope) GetActualInstanceValue() (interface{
 
 	if obj.AddLicenseConclusionRequestScopeOneOf3 != nil {
 		return *obj.AddLicenseConclusionRequestScopeOneOf3
+	}
+
+	if obj.AddLicenseConclusionRequestScopeOneOf4 != nil {
+		return *obj.AddLicenseConclusionRequestScopeOneOf4
+	}
+
+	if obj.AddLicenseConclusionRequestScopeOneOf5 != nil {
+		return *obj.AddLicenseConclusionRequestScopeOneOf5
 	}
 
 	// all schemas are nil

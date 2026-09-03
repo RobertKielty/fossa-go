@@ -52,7 +52,7 @@ import (
 
 func main() {
 	issueId := int32(56) // int32 | ID of the issue that is being disputed.
-	createIssueDisputeRequest := *openapiclient.NewCreateIssueDisputeRequest() // CreateIssueDisputeRequest | 
+	createIssueDisputeRequest := *openapiclient.NewCreateIssueDisputeRequest("Reason_example") // CreateIssueDisputeRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -379,7 +379,7 @@ Name | Type | Description  | Notes
 
 ## GetGlobalIssuesCSV
 
-> *os.File GetGlobalIssuesCSV(ctx).Email(email).Execute()
+> *os.File GetGlobalIssuesCSV(ctx).Email(email).TeamIds(teamIds).ReleaseGroupId(releaseGroupId).IncludeIssuesList(includeIssuesList).IncludeDailyCounts(includeDailyCounts).Execute()
 
 
 
@@ -398,11 +398,15 @@ import (
 )
 
 func main() {
-	email := true // bool | When provided, we will submit the report for background processing and deliver via email when ready. Otherwise the report will be streamed via API (optional)
+	email := true // bool | When `true`, we will submit the report for background processing and deliver via email when ready. Otherwise the report will be streamed via API (optional)
+	teamIds := openapiclient.getIssuesByCategory_teamId_parameter{ArrayOfString: new([]string)} // GetIssuesByCategoryTeamIdParameter | Scope the report to one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string `\"null\"`. Invalid (non-integer) team IDs are rejected with a `400`. Ignored for organizations on the free tier.  (optional)
+	releaseGroupId := int32(56) // int32 | Scope the issue-list export to a single release group, using its latest release (the issues shown on the release group's Issues page). Requires view access to the release group; otherwise rejected with a `403`. When set, `teamIds` is ignored — the export is scoped to the release group only, not an intersection of both filters. When combined with `includeDailyCounts`, the bundle's counts CSV is `release_counts.csv` rather than the daily `issue_counts.csv`.  (optional)
+	includeIssuesList := true // bool | Whether to include the per-category issue-list CSVs in the bundle. Defaults to `true` when omitted. Setting this to `false` without `includeDailyCounts=true` selects no reports and is rejected with a `400`.  (optional) (default to true)
+	includeDailyCounts := true // bool | Whether to include a counts CSV in the bundle. Defaults to `false`. For team/organization scope this is `issue_counts.csv`, a daily time series of active, ignored, and remediated counts. When `releaseGroupId` is set it is instead `release_counts.csv`, holding one row per release (New / Remediated / Unchanged versus the previous release), capped at the 10 most recent scanned releases.  (optional) (default to false)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IssuesAPI.GetGlobalIssuesCSV(context.Background()).Email(email).Execute()
+	resp, r, err := apiClient.IssuesAPI.GetGlobalIssuesCSV(context.Background()).Email(email).TeamIds(teamIds).ReleaseGroupId(releaseGroupId).IncludeIssuesList(includeIssuesList).IncludeDailyCounts(includeDailyCounts).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.GetGlobalIssuesCSV``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -423,7 +427,11 @@ Other parameters are passed through a pointer to a apiGetGlobalIssuesCSVRequest 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **email** | **bool** | When provided, we will submit the report for background processing and deliver via email when ready. Otherwise the report will be streamed via API | 
+ **email** | **bool** | When &#x60;true&#x60;, we will submit the report for background processing and deliver via email when ready. Otherwise the report will be streamed via API | 
+ **teamIds** | [**GetIssuesByCategoryTeamIdParameter**](GetIssuesByCategoryTeamIdParameter.md) | Scope the report to one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60;. Invalid (non-integer) team IDs are rejected with a &#x60;400&#x60;. Ignored for organizations on the free tier.  | 
+ **releaseGroupId** | **int32** | Scope the issue-list export to a single release group, using its latest release (the issues shown on the release group&#39;s Issues page). Requires view access to the release group; otherwise rejected with a &#x60;403&#x60;. When set, &#x60;teamIds&#x60; is ignored — the export is scoped to the release group only, not an intersection of both filters. When combined with &#x60;includeDailyCounts&#x60;, the bundle&#39;s counts CSV is &#x60;release_counts.csv&#x60; rather than the daily &#x60;issue_counts.csv&#x60;.  | 
+ **includeIssuesList** | **bool** | Whether to include the per-category issue-list CSVs in the bundle. Defaults to &#x60;true&#x60; when omitted. Setting this to &#x60;false&#x60; without &#x60;includeDailyCounts&#x3D;true&#x60; selects no reports and is rejected with a &#x60;400&#x60;.  | [default to true]
+ **includeDailyCounts** | **bool** | Whether to include a counts CSV in the bundle. Defaults to &#x60;false&#x60;. For team/organization scope this is &#x60;issue_counts.csv&#x60;, a daily time series of active, ignored, and remediated counts. When &#x60;releaseGroupId&#x60; is set it is instead &#x60;release_counts.csv&#x60;, holding one row per release (New / Remediated / Unchanged versus the previous release), capped at the 10 most recent scanned releases.  | [default to false]
 
 ### Return type
 
@@ -641,7 +649,7 @@ func main() {
 	scopeReleaseScanId := "scopeReleaseScanId_example" // string | Release scan ID (when scope[type] is \"releaseGroup\") (optional)
 	scopeCompareToRevision := "scopeCompareToRevision_example" // string | The revision ID to compare issues with. Only available for Project Scope. (optional)
 	scopeCompareToChangeStatus := "scopeCompareToChangeStatus_example" // string | The status of issues to fetch when comparing issues. - New issues are present in the current revision but not in the comparison revision. - Remediated issues are present in the comparison revision but not in the current revision. - Unchanged issues are present in both revisions. Only available for Project Scope.  (optional)
-	teamId := []openapiclient.GetIssueCWEsTeamIdParameterInner{openapiclient.getIssueCWEs_teamId___parameter_inner{Float32: new(float32)}} // []GetIssueCWEsTeamIdParameterInner | Filter by one or more team IDs. Providing \"null\" will return all unassigned projects. (optional)
+	teamId := openapiclient.getIssuesByCategory_teamId_parameter{ArrayOfString: new([]string)} // GetIssuesByCategoryTeamIdParameter | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string `\"null\"` to scope to unassigned projects. Requires the `View` permission on each requested team; otherwise the request is rejected with a `403`. Ignored for organizations on the free tier.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -675,7 +683,7 @@ Name | Type | Description  | Notes
  **scopeReleaseScanId** | **string** | Release scan ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
  **scopeCompareToRevision** | **string** | The revision ID to compare issues with. Only available for Project Scope. | 
  **scopeCompareToChangeStatus** | **string** | The status of issues to fetch when comparing issues. - New issues are present in the current revision but not in the comparison revision. - Remediated issues are present in the comparison revision but not in the current revision. - Unchanged issues are present in both revisions. Only available for Project Scope.  | 
- **teamId** | [**[]GetIssueCWEsTeamIdParameterInner**](GetIssueCWEsTeamIdParameterInner.md) | Filter by one or more team IDs. Providing \&quot;null\&quot; will return all unassigned projects. | 
+ **teamId** | [**GetIssuesByCategoryTeamIdParameter**](GetIssuesByCategoryTeamIdParameter.md) | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier.  | 
 
 ### Return type
 
@@ -972,7 +980,7 @@ Name | Type | Description  | Notes
 
 ## GetIssuePackageManagers
 
-> GetIssuePackageManagers200Response GetIssuePackageManagers(ctx).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).Execute()
+> GetIssuePackageManagers200Response GetIssuePackageManagers(ctx).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).TeamId(teamId).Execute()
 
 
 
@@ -999,10 +1007,11 @@ func main() {
 	scopeRevisionScanId := int32(56) // int32 | Revision scan ID (when scope[type] is \"project\") (optional)
 	scopeRelease := "scopeRelease_example" // string | Release group ID (when scope[type] is \"releaseGroup\") (optional)
 	scopeReleaseScanId := "scopeReleaseScanId_example" // string | Release scan ID (when scope[type] is \"releaseGroup\") (optional)
+	teamId := openapiclient.getIssuesByCategory_teamId_parameter{ArrayOfString: new([]string)} // GetIssuesByCategoryTeamIdParameter | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string `\"null\"` to scope to unassigned projects. Requires the `View` permission on each requested team; otherwise the request is rejected with a `403`. Ignored for organizations on the free tier.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IssuesAPI.GetIssuePackageManagers(context.Background()).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).Execute()
+	resp, r, err := apiClient.IssuesAPI.GetIssuePackageManagers(context.Background()).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).TeamId(teamId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.GetIssuePackageManagers``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1031,6 +1040,7 @@ Name | Type | Description  | Notes
  **scopeRevisionScanId** | **int32** | Revision scan ID (when scope[type] is \&quot;project\&quot;) | 
  **scopeRelease** | **string** | Release group ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
  **scopeReleaseScanId** | **string** | Release scan ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
+ **teamId** | [**GetIssuesByCategoryTeamIdParameter**](GetIssuesByCategoryTeamIdParameter.md) | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier.  | 
 
 ### Return type
 
@@ -1052,7 +1062,7 @@ Name | Type | Description  | Notes
 
 ## GetIssueStatuses
 
-> GetIssueStatuses200Response GetIssueStatuses(ctx).Category(category).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterIssueSource(filterIssueSource).Execute()
+> GetIssueStatuses200Response GetIssueStatuses(ctx).Category(category).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterIssueSource(filterIssueSource).TeamId(teamId).Execute()
 
 
 
@@ -1099,10 +1109,11 @@ func main() {
 	filterIgnoreReason := []string{"FilterIgnoreReason_example"} // []string | Filter by vuln ignore reason (when category is \"vulnerability\") This value appears in the vulnerabilities.analysis.detail field in CycloneDX SBOM reports  (optional)
 	filterLicenses := []string{"Inner_example"} // []string | Filter by issues affected by a set of license ID's (when category is \"licensing\") (optional)
 	filterIssueSource := openapiclient.getIssueStatuses_filter_issueSource____parameter{ArrayOfString: new([]string)} // GetIssueStatusesFilterIssueSourceParameter | Filter by issue source. Use 'dependency' and 'snippet' to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use 'managed-dependency' and 'vendored-dependency' to filter dependency issues by whether the dependency is managed or vendored.  (optional)
+	teamId := openapiclient.getIssuesByCategory_teamId_parameter{ArrayOfString: new([]string)} // GetIssuesByCategoryTeamIdParameter | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string `\"null\"` to scope to unassigned projects. Requires the `View` permission on each requested team; otherwise the request is rejected with a `403`. Ignored for organizations on the free tier.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IssuesAPI.GetIssueStatuses(context.Background()).Category(category).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterIssueSource(filterIssueSource).Execute()
+	resp, r, err := apiClient.IssuesAPI.GetIssueStatuses(context.Background()).Category(category).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterIssueSource(filterIssueSource).TeamId(teamId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.GetIssueStatuses``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1150,6 +1161,7 @@ Name | Type | Description  | Notes
  **filterIgnoreReason** | **[]string** | Filter by vuln ignore reason (when category is \&quot;vulnerability\&quot;) This value appears in the vulnerabilities.analysis.detail field in CycloneDX SBOM reports  | 
  **filterLicenses** | **[]string** | Filter by issues affected by a set of license ID&#39;s (when category is \&quot;licensing\&quot;) | 
  **filterIssueSource** | [**GetIssueStatusesFilterIssueSourceParameter**](GetIssueStatusesFilterIssueSourceParameter.md) | Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored.  | 
+ **teamId** | [**GetIssuesByCategoryTeamIdParameter**](GetIssuesByCategoryTeamIdParameter.md) | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier.  | 
 
 ### Return type
 
@@ -1171,7 +1183,7 @@ Name | Type | Description  | Notes
 
 ## GetIssues
 
-> GetIssues200Response GetIssues(ctx).Category(category).ScopeType(scopeType).Csv(csv).IncludeDirectDependencyOriginPaths(includeDirectDependencyOriginPaths).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterCwes(filterCwes).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundBefore(filterFoundBefore).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterEpss(filterEpss).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).Sort(sort).Page(page).Count(count).Execute()
+> GetIssues200Response GetIssues(ctx).Category(category).ScopeType(scopeType).Csv(csv).IncludeDirectDependencyOriginPaths(includeDirectDependencyOriginPaths).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterCwes(filterCwes).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterSeveritySource(filterSeveritySource).FilterFoundBefore(filterFoundBefore).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterEpss(filterEpss).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).FilterCvssAttackVector(filterCvssAttackVector).FilterCvssAttackComplexity(filterCvssAttackComplexity).FilterCvssPrivilegesRequired(filterCvssPrivilegesRequired).Sort(sort).Page(page).Count(count).TeamId(teamId).Email(email).Execute()
 
 
 
@@ -1215,6 +1227,7 @@ func main() {
 	filterProjectLabels := []string{"Inner_example"} // []string | Filter by specific project labels (optional)
 	filterIdentification := []string{"FilterIdentification_example"} // []string | Filter by license identification (when category is \"licensing\") (optional)
 	filterSeverity := []string{"FilterSeverity_example"} // []string | Filter by vuln severity (when category is \"vulnerability\") (optional)
+	filterSeveritySource := []string{"FilterSeveritySource_example"} // []string | Filter by severity source (when category is \"vulnerability\"). Use 'standard' to filter by CVSS score, 'custom' to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to 'standard' when not provided. Custom risk score filtering is not available for global scope.  (optional)
 	filterFoundBefore := time.Now() // time.Time | Include only issues found on before a given ISO timestamp.  Only available to premium users (optional)
 	filterFoundAfter := time.Now() // time.Time | Include only issues found on after a given ISO timestamp.  Only available to premium users (optional)
 	filterHasFix := []string{"FilterHasFix_example"} // []string | Filter by vuln fixability (when category is \"vulnerability\") (optional)
@@ -1224,13 +1237,18 @@ func main() {
 	filterEpss := *openapiclient.NewGetIssueDiffComparisonSummariesFilterEpssParameter() // GetIssueDiffComparisonSummariesFilterEpssParameter | Filter by epss 'score' or 'percentile'. All fields are required.  Only available to premium users. (optional)
 	filterConfidence := []string{"FilterConfidence_example"} // []string | Filter issues by their binary dependency confidence level(s) (optional)
 	filterIssueSource := openapiclient.getIssueStatuses_filter_issueSource____parameter{ArrayOfString: new([]string)} // GetIssueStatusesFilterIssueSourceParameter | Filter by issue source. Use 'dependency' and 'snippet' to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use 'managed-dependency' and 'vendored-dependency' to filter dependency issues by whether the dependency is managed or vendored.  (optional)
+	filterCvssAttackVector := []string{"FilterCvssAttackVector_example"} // []string | Filter by CVSS attack vector (when category is \"vulnerability\") (optional)
+	filterCvssAttackComplexity := []string{"FilterCvssAttackComplexity_example"} // []string | Filter by CVSS attack complexity (when category is \"vulnerability\"). For CVSS v4, this includes the Attack Requirements (AT) metric. (optional)
+	filterCvssPrivilegesRequired := []string{"FilterCvssPrivilegesRequired_example"} // []string | Filter by CVSS privileges required (when category is \"vulnerability\") (optional)
 	sort := "sort_example" // string | Sort by package name, when the issue was created, or severity (when category is \"vulnerability\")  (optional)
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
 	count := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 20)
+	teamId := openapiclient.getIssuesByCategory_teamId_parameter{ArrayOfString: new([]string)} // GetIssuesByCategoryTeamIdParameter | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string `\"null\"` to scope to unassigned projects. Requires the `View` permission on each requested team; otherwise the request is rejected with a `403`. Ignored for organizations on the free tier.  (optional)
+	email := true // bool | Only applies when `csv=true`. When provided, the CSV report is generated as a background task and emailed to the requesting user once ready; the response is then a `201` with the task metadata. When omitted, the CSV is streamed directly in the response.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IssuesAPI.GetIssues(context.Background()).Category(category).ScopeType(scopeType).Csv(csv).IncludeDirectDependencyOriginPaths(includeDirectDependencyOriginPaths).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterCwes(filterCwes).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundBefore(filterFoundBefore).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterEpss(filterEpss).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).Sort(sort).Page(page).Count(count).Execute()
+	resp, r, err := apiClient.IssuesAPI.GetIssues(context.Background()).Category(category).ScopeType(scopeType).Csv(csv).IncludeDirectDependencyOriginPaths(includeDirectDependencyOriginPaths).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterCwes(filterCwes).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterSeveritySource(filterSeveritySource).FilterFoundBefore(filterFoundBefore).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterEpss(filterEpss).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).FilterCvssAttackVector(filterCvssAttackVector).FilterCvssAttackComplexity(filterCvssAttackComplexity).FilterCvssPrivilegesRequired(filterCvssPrivilegesRequired).Sort(sort).Page(page).Count(count).TeamId(teamId).Email(email).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.GetIssues``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1275,6 +1293,7 @@ Name | Type | Description  | Notes
  **filterProjectLabels** | **[]string** | Filter by specific project labels | 
  **filterIdentification** | **[]string** | Filter by license identification (when category is \&quot;licensing\&quot;) | 
  **filterSeverity** | **[]string** | Filter by vuln severity (when category is \&quot;vulnerability\&quot;) | 
+ **filterSeveritySource** | **[]string** | Filter by severity source (when category is \&quot;vulnerability\&quot;). Use &#39;standard&#39; to filter by CVSS score, &#39;custom&#39; to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to &#39;standard&#39; when not provided. Custom risk score filtering is not available for global scope.  | 
  **filterFoundBefore** | **time.Time** | Include only issues found on before a given ISO timestamp.  Only available to premium users | 
  **filterFoundAfter** | **time.Time** | Include only issues found on after a given ISO timestamp.  Only available to premium users | 
  **filterHasFix** | **[]string** | Filter by vuln fixability (when category is \&quot;vulnerability\&quot;) | 
@@ -1284,9 +1303,14 @@ Name | Type | Description  | Notes
  **filterEpss** | [**GetIssueDiffComparisonSummariesFilterEpssParameter**](GetIssueDiffComparisonSummariesFilterEpssParameter.md) | Filter by epss &#39;score&#39; or &#39;percentile&#39;. All fields are required.  Only available to premium users. | 
  **filterConfidence** | **[]string** | Filter issues by their binary dependency confidence level(s) | 
  **filterIssueSource** | [**GetIssueStatusesFilterIssueSourceParameter**](GetIssueStatusesFilterIssueSourceParameter.md) | Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored.  | 
+ **filterCvssAttackVector** | **[]string** | Filter by CVSS attack vector (when category is \&quot;vulnerability\&quot;) | 
+ **filterCvssAttackComplexity** | **[]string** | Filter by CVSS attack complexity (when category is \&quot;vulnerability\&quot;). For CVSS v4, this includes the Attack Requirements (AT) metric. | 
+ **filterCvssPrivilegesRequired** | **[]string** | Filter by CVSS privileges required (when category is \&quot;vulnerability\&quot;) | 
  **sort** | **string** | Sort by package name, when the issue was created, or severity (when category is \&quot;vulnerability\&quot;)  | 
  **page** | **int32** | The specific page of data to return | [default to 1]
  **count** | **int32** | The number of items to return in each page of results | [default to 20]
+ **teamId** | [**GetIssuesByCategoryTeamIdParameter**](GetIssuesByCategoryTeamIdParameter.md) | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier.  | 
+ **email** | **bool** | Only applies when &#x60;csv&#x3D;true&#x60;. When provided, the CSV report is generated as a background task and emailed to the requesting user once ready; the response is then a &#x60;201&#x60; with the task metadata. When omitted, the CSV is streamed directly in the response.  | 
 
 ### Return type
 
@@ -1299,7 +1323,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/json, text/csv
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1308,7 +1332,7 @@ Name | Type | Description  | Notes
 
 ## GetIssuesByCategory
 
-> GetIssuesByCategory200Response GetIssuesByCategory(ctx).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).Execute()
+> GetIssuesByCategory200Response GetIssuesByCategory(ctx).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ReleaseGroupId(releaseGroupId).TeamId(teamId).Execute()
 
 
 
@@ -1333,10 +1357,12 @@ func main() {
 	scopeRevisionScanId := int32(56) // int32 | Revision scan ID (when scope[type] is \"project\") (optional)
 	scopeRelease := "scopeRelease_example" // string | Release group ID (when scope[type] is \"releaseGroup\") (optional)
 	scopeReleaseScanId := "scopeReleaseScanId_example" // string | Release scan ID (when scope[type] is \"releaseGroup\") (optional)
+	releaseGroupId := int32(56) // int32 | Scope the category counts to a single release group, using its latest release. When set, the counts are release-scoped, so the `teamId` filter does not apply. Requires view access to the release group; otherwise rejected with a `403`. Rejected with a `404` when the release group has no release to scope to.  (optional)
+	teamId := openapiclient.getIssuesByCategory_teamId_parameter{ArrayOfString: new([]string)} // GetIssuesByCategoryTeamIdParameter | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string `\"null\"` to scope to unassigned projects. Requires the `View` permission on each requested team; otherwise the request is rejected with a `403`. Ignored for organizations on the free tier.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IssuesAPI.GetIssuesByCategory(context.Background()).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).Execute()
+	resp, r, err := apiClient.IssuesAPI.GetIssuesByCategory(context.Background()).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ReleaseGroupId(releaseGroupId).TeamId(teamId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.GetIssuesByCategory``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1363,6 +1389,8 @@ Name | Type | Description  | Notes
  **scopeRevisionScanId** | **int32** | Revision scan ID (when scope[type] is \&quot;project\&quot;) | 
  **scopeRelease** | **string** | Release group ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
  **scopeReleaseScanId** | **string** | Release scan ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
+ **releaseGroupId** | **int32** | Scope the category counts to a single release group, using its latest release. When set, the counts are release-scoped, so the &#x60;teamId&#x60; filter does not apply. Requires view access to the release group; otherwise rejected with a &#x60;403&#x60;. Rejected with a &#x60;404&#x60; when the release group has no release to scope to.  | 
+ **teamId** | [**GetIssuesByCategoryTeamIdParameter**](GetIssuesByCategoryTeamIdParameter.md) | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier.  | 
 
 ### Return type
 
@@ -1384,7 +1412,7 @@ Name | Type | Description  | Notes
 
 ## GetIssuesByRevision
 
-> GetIssuesByRevision200Response GetIssuesByRevision(ctx).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterIssueSource(filterIssueSource).Sort(sort).Page(page).Count(count).Execute()
+> GetIssuesByRevision200Response GetIssuesByRevision(ctx).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterIssueSource(filterIssueSource).Sort(sort).Page(page).Count(count).TeamId(teamId).Execute()
 
 
 
@@ -1435,10 +1463,11 @@ func main() {
 	sort := "sort_example" // string | Sort by package name, when the issue was created, or total number of issues  (optional)
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
 	count := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 20)
+	teamId := openapiclient.getIssuesByCategory_teamId_parameter{ArrayOfString: new([]string)} // GetIssuesByCategoryTeamIdParameter | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string `\"null\"` to scope to unassigned projects. Requires the `View` permission on each requested team; otherwise the request is rejected with a `403`. Ignored for organizations on the free tier.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IssuesAPI.GetIssuesByRevision(context.Background()).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterIssueSource(filterIssueSource).Sort(sort).Page(page).Count(count).Execute()
+	resp, r, err := apiClient.IssuesAPI.GetIssuesByRevision(context.Background()).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterIssueSource(filterIssueSource).Sort(sort).Page(page).Count(count).TeamId(teamId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.GetIssuesByRevision``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1490,6 +1519,7 @@ Name | Type | Description  | Notes
  **sort** | **string** | Sort by package name, when the issue was created, or total number of issues  | 
  **page** | **int32** | The specific page of data to return | [default to 1]
  **count** | **int32** | The number of items to return in each page of results | [default to 20]
+ **teamId** | [**GetIssuesByCategoryTeamIdParameter**](GetIssuesByCategoryTeamIdParameter.md) | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier.  | 
 
 ### Return type
 
@@ -1511,7 +1541,7 @@ Name | Type | Description  | Notes
 
 ## GetIssuesByType
 
-> GetIssuesByType200Response GetIssuesByType(ctx).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).Execute()
+> GetIssuesByType200Response GetIssuesByType(ctx).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).TeamId(teamId).Execute()
 
 
 
@@ -1536,10 +1566,11 @@ func main() {
 	scopeRevisionScanId := int32(56) // int32 | Revision scan ID (when scope[type] is \"project\") (optional)
 	scopeRelease := "scopeRelease_example" // string | Release group ID (when scope[type] is \"releaseGroup\") (optional)
 	scopeReleaseScanId := "scopeReleaseScanId_example" // string | Release scan ID (when scope[type] is \"releaseGroup\") (optional)
+	teamId := openapiclient.getIssuesByCategory_teamId_parameter{ArrayOfString: new([]string)} // GetIssuesByCategoryTeamIdParameter | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string `\"null\"` to scope to unassigned projects. Requires the `View` permission on each requested team; otherwise the request is rejected with a `403`. Ignored for organizations on the free tier.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IssuesAPI.GetIssuesByType(context.Background()).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).Execute()
+	resp, r, err := apiClient.IssuesAPI.GetIssuesByType(context.Background()).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).TeamId(teamId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.GetIssuesByType``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1566,6 +1597,7 @@ Name | Type | Description  | Notes
  **scopeRevisionScanId** | **int32** | Revision scan ID (when scope[type] is \&quot;project\&quot;) | 
  **scopeRelease** | **string** | Release group ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
  **scopeReleaseScanId** | **string** | Release scan ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
+ **teamId** | [**GetIssuesByCategoryTeamIdParameter**](GetIssuesByCategoryTeamIdParameter.md) | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier.  | 
 
 ### Return type
 
@@ -1587,7 +1619,7 @@ Name | Type | Description  | Notes
 
 ## GetLicenseList
 
-> GetLicenseList200Response GetLicenseList(ctx).Category(category).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).Execute()
+> GetLicenseList200Response GetLicenseList(ctx).Category(category).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).TeamId(teamId).Execute()
 
 
 
@@ -1613,10 +1645,11 @@ func main() {
 	scopeRevisionScanId := int32(56) // int32 | Revision scan ID (when scope[type] is \"project\") (optional)
 	scopeRelease := "scopeRelease_example" // string | Release group ID (when scope[type] is \"releaseGroup\") (optional)
 	scopeReleaseScanId := "scopeReleaseScanId_example" // string | Release scan ID (when scope[type] is \"releaseGroup\") (optional)
+	teamId := openapiclient.getIssuesByCategory_teamId_parameter{ArrayOfString: new([]string)} // GetIssuesByCategoryTeamIdParameter | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string `\"null\"` to scope to unassigned projects. Requires the `View` permission on each requested team; otherwise the request is rejected with a `403`. Ignored for organizations on the free tier.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IssuesAPI.GetLicenseList(context.Background()).Category(category).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).Execute()
+	resp, r, err := apiClient.IssuesAPI.GetLicenseList(context.Background()).Category(category).ScopeType(scopeType).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).TeamId(teamId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.GetLicenseList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1644,6 +1677,7 @@ Name | Type | Description  | Notes
  **scopeRevisionScanId** | **int32** | Revision scan ID (when scope[type] is \&quot;project\&quot;) | 
  **scopeRelease** | **string** | Release group ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
  **scopeReleaseScanId** | **string** | Release scan ID (when scope[type] is \&quot;releaseGroup\&quot;) | 
+ **teamId** | [**GetIssuesByCategoryTeamIdParameter**](GetIssuesByCategoryTeamIdParameter.md) | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier.  | 
 
 ### Return type
 
@@ -1665,7 +1699,7 @@ Name | Type | Description  | Notes
 
 ## GetProjectCSVExportIssues
 
-> string GetProjectCSVExportIssues(ctx, locator).RevisionId(revisionId).Status(status).Ref(ref).RefType(refType).Execute()
+> *os.File GetProjectCSVExportIssues(ctx, locator).RevisionId(revisionId).Status(status).Ref(ref).RefType(refType).Execute()
 
 
 
@@ -1697,7 +1731,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.GetProjectCSVExportIssues``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetProjectCSVExportIssues`: string
+	// response from `GetProjectCSVExportIssues`: *os.File
 	fmt.Fprintf(os.Stdout, "Response from `IssuesAPI.GetProjectCSVExportIssues`: %v\n", resp)
 }
 ```
@@ -1725,7 +1759,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**string**
+[***os.File**](*os.File.md)
 
 ### Authorization
 
@@ -1734,7 +1768,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: text/csv, application/json
+- **Accept**: application/octet-stream, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1814,7 +1848,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json, text/csv
+- **Accept**: application/json, application/octet-stream
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1901,7 +1935,7 @@ Name | Type | Description  | Notes
 
 ## UpdateIssues
 
-> UpdateIssues200Response UpdateIssues(ctx).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).UpdateIssuesRequest(updateIssuesRequest).Execute()
+> UpdateIssues200Response UpdateIssues(ctx).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterSeveritySource(filterSeveritySource).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).FilterCvssAttackVector(filterCvssAttackVector).FilterCvssAttackComplexity(filterCvssAttackComplexity).FilterCvssPrivilegesRequired(filterCvssPrivilegesRequired).TeamId(teamId).UpdateIssuesRequest(updateIssuesRequest).Execute()
 
 
 
@@ -1942,6 +1976,7 @@ func main() {
 	filterProjectLabels := []string{"Inner_example"} // []string | Filter by specific project labels (optional)
 	filterIdentification := []string{"FilterIdentification_example"} // []string | Filter by license identification (when category is \"licensing\") (optional)
 	filterSeverity := []string{"FilterSeverity_example"} // []string | Filter by vuln severity (when category is \"vulnerability\") (optional)
+	filterSeveritySource := []string{"FilterSeveritySource_example"} // []string | Filter by severity source (when category is \"vulnerability\"). Use 'standard' to filter by CVSS score, 'custom' to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to 'standard' when not provided. Custom risk score filtering is not available for global scope.  (optional)
 	filterFoundAfter := time.Now() // time.Time | Include only issues found on after a given ISO timestamp.  Only available to premium users (optional)
 	filterHasFix := []string{"FilterHasFix_example"} // []string | Filter by vuln fixability (when category is \"vulnerability\") (optional)
 	filterUpgradeDistance := []string{"FilterUpgradeDistance_example"} // []string | Filter by vuln upgrade distance (when category is \"vulnerability\") (optional)
@@ -1950,11 +1985,15 @@ func main() {
 	filterLicenses := []string{"Inner_example"} // []string | Filter by issues affected by a set of license ID's (when category is \"licensing\") (optional)
 	filterConfidence := []string{"FilterConfidence_example"} // []string | Filter issues by their binary dependency confidence level(s) (optional)
 	filterIssueSource := openapiclient.getIssueStatuses_filter_issueSource____parameter{ArrayOfString: new([]string)} // GetIssueStatusesFilterIssueSourceParameter | Filter by issue source. Use 'dependency' and 'snippet' to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use 'managed-dependency' and 'vendored-dependency' to filter dependency issues by whether the dependency is managed or vendored.  (optional)
+	filterCvssAttackVector := []string{"FilterCvssAttackVector_example"} // []string | Filter by CVSS attack vector (when category is \"vulnerability\") (optional)
+	filterCvssAttackComplexity := []string{"FilterCvssAttackComplexity_example"} // []string | Filter by CVSS attack complexity (when category is \"vulnerability\"). For CVSS v4, this includes the Attack Requirements (AT) metric. (optional)
+	filterCvssPrivilegesRequired := []string{"FilterCvssPrivilegesRequired_example"} // []string | Filter by CVSS privileges required (when category is \"vulnerability\") (optional)
+	teamId := openapiclient.getIssuesByCategory_teamId_parameter{ArrayOfString: new([]string)} // GetIssuesByCategoryTeamIdParameter | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string `\"null\"` to scope to unassigned projects. Requires the `View` permission on each requested team; otherwise the request is rejected with a `403`. Ignored for organizations on the free tier.  (optional)
 	updateIssuesRequest := openapiclient.updateIssues_request{UpdateIssuesRequestOneOf: openapiclient.NewUpdateIssuesRequestOneOf()} // UpdateIssuesRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IssuesAPI.UpdateIssues(context.Background()).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).UpdateIssuesRequest(updateIssuesRequest).Execute()
+	resp, r, err := apiClient.IssuesAPI.UpdateIssues(context.Background()).Category(category).ScopeType(scopeType).Status(status).ScopeId(scopeId).ScopeRevision(scopeRevision).ScopeRevisionScanId(scopeRevisionScanId).ScopeRelease(scopeRelease).ScopeReleaseScanId(scopeReleaseScanId).ScopeCompareToRevision(scopeCompareToRevision).ScopeCompareToChangeStatus(scopeCompareToChangeStatus).Ids(ids).FilterRevisionIds(filterRevisionIds).FilterSearch(filterSearch).FilterDepths(filterDepths).FilterTicketed(filterTicketed).FilterContainerLayers(filterContainerLayers).FilterType(filterType).FilterPackageManagers(filterPackageManagers).FilterProjectLabels(filterProjectLabels).FilterIdentification(filterIdentification).FilterSeverity(filterSeverity).FilterSeveritySource(filterSeveritySource).FilterFoundAfter(filterFoundAfter).FilterHasFix(filterHasFix).FilterUpgradeDistance(filterUpgradeDistance).FilterExploitMaturity(filterExploitMaturity).FilterIgnoreReason(filterIgnoreReason).FilterLicenses(filterLicenses).FilterConfidence(filterConfidence).FilterIssueSource(filterIssueSource).FilterCvssAttackVector(filterCvssAttackVector).FilterCvssAttackComplexity(filterCvssAttackComplexity).FilterCvssPrivilegesRequired(filterCvssPrivilegesRequired).TeamId(teamId).UpdateIssuesRequest(updateIssuesRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IssuesAPI.UpdateIssues``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -1996,6 +2035,7 @@ Name | Type | Description  | Notes
  **filterProjectLabels** | **[]string** | Filter by specific project labels | 
  **filterIdentification** | **[]string** | Filter by license identification (when category is \&quot;licensing\&quot;) | 
  **filterSeverity** | **[]string** | Filter by vuln severity (when category is \&quot;vulnerability\&quot;) | 
+ **filterSeveritySource** | **[]string** | Filter by severity source (when category is \&quot;vulnerability\&quot;). Use &#39;standard&#39; to filter by CVSS score, &#39;custom&#39; to filter by custom risk score. When both are provided, issues matching either source are returned. Defaults to &#39;standard&#39; when not provided. Custom risk score filtering is not available for global scope.  | 
  **filterFoundAfter** | **time.Time** | Include only issues found on after a given ISO timestamp.  Only available to premium users | 
  **filterHasFix** | **[]string** | Filter by vuln fixability (when category is \&quot;vulnerability\&quot;) | 
  **filterUpgradeDistance** | **[]string** | Filter by vuln upgrade distance (when category is \&quot;vulnerability\&quot;) | 
@@ -2004,6 +2044,10 @@ Name | Type | Description  | Notes
  **filterLicenses** | **[]string** | Filter by issues affected by a set of license ID&#39;s (when category is \&quot;licensing\&quot;) | 
  **filterConfidence** | **[]string** | Filter issues by their binary dependency confidence level(s) | 
  **filterIssueSource** | [**GetIssueStatusesFilterIssueSourceParameter**](GetIssueStatusesFilterIssueSourceParameter.md) | Filter by issue source. Use &#39;dependency&#39; and &#39;snippet&#39; to filter by whether the issue comes from a dependency or a code snippet. When the vendored dependency detection feature is enabled, use &#39;managed-dependency&#39; and &#39;vendored-dependency&#39; to filter dependency issues by whether the dependency is managed or vendored.  | 
+ **filterCvssAttackVector** | **[]string** | Filter by CVSS attack vector (when category is \&quot;vulnerability\&quot;) | 
+ **filterCvssAttackComplexity** | **[]string** | Filter by CVSS attack complexity (when category is \&quot;vulnerability\&quot;). For CVSS v4, this includes the Attack Requirements (AT) metric. | 
+ **filterCvssPrivilegesRequired** | **[]string** | Filter by CVSS privileges required (when category is \&quot;vulnerability\&quot;) | 
+ **teamId** | [**GetIssuesByCategoryTeamIdParameter**](GetIssuesByCategoryTeamIdParameter.md) | Filter issues by one or more team IDs. Accepts a single team ID, an array of team IDs, or the literal string &#x60;\&quot;null\&quot;&#x60; to scope to unassigned projects. Requires the &#x60;View&#x60; permission on each requested team; otherwise the request is rejected with a &#x60;403&#x60;. Ignored for organizations on the free tier.  | 
  **updateIssuesRequest** | [**UpdateIssuesRequest**](UpdateIssuesRequest.md) |  | 
 
 ### Return type

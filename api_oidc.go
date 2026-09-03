@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.96
 Contact: support@fossa.com
 */
 
@@ -42,7 +42,11 @@ func (r ApiCreateOIDCProviderRequest) Execute() (*CreateOIDCProvider201Response,
 /*
 CreateOIDCProvider Method for CreateOIDCProvider
 
-Create a new OIDC Provider
+Create a new OIDC Provider.
+
+Requires a **premium** subscription; organizations below that tier receive a `403`.
+If the caller lacks permission to create the provider, the endpoint responds with `401`.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateOIDCProviderRequest
@@ -345,6 +349,13 @@ DeleteOIDCProvider Method for DeleteOIDCProvider
 
 Delete an OIDC Provider. All associated trust relationships will be deleted as well.
 
+Requires a **premium** subscription; organizations below that tier receive a `403`.
+
+If the provider does not exist, belongs to another organization, or the caller
+lacks permission to delete it, the endpoint responds with `401` (it does not
+distinguish these cases with a `404`).
+
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id The ID of the OIDC Provider to delete
  @return ApiDeleteOIDCProviderRequest
@@ -439,17 +450,6 @@ func (a *OIDCAPIService) DeleteOIDCProviderExecute(r ApiDeleteOIDCProviderReques
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v AddLicenseConclusion400Response
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 404 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -640,7 +640,13 @@ func (r ApiExchangeOIDCTokenRequest) Execute() (*ExchangeOIDCToken200Response, *
 /*
 ExchangeOIDCToken Method for ExchangeOIDCToken
 
-Exchange an OIDC token for a FOSSA API token
+Exchange an OIDC token for a FOSSA API token.
+
+This endpoint is unauthenticated (no FOSSA API token is required); the caller
+presents an OIDC token issued by a trusted provider. Validation or lookup
+failures (invalid token, unknown provider, or no matching trust relationship)
+are reported as a `400`.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiExchangeOIDCTokenRequest
@@ -728,28 +734,6 @@ func (a *OIDCAPIService) ExchangeOIDCTokenExecute(r ApiExchangeOIDCTokenRequest)
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 401 {
-			var v AddLicenseConclusion400Response
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 403 {
-			var v AddLicenseConclusion400Response
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -788,7 +772,14 @@ func (r ApiGetOIDCProviderRequest) Execute() (*CreateOIDCProvider201Response, *h
 /*
 GetOIDCProvider Method for GetOIDCProvider
 
-Get a specific OIDC Provider by ID
+Get a specific OIDC Provider by ID.
+
+Requires a **premium** subscription; organizations below that tier receive a `403`.
+
+If the provider does not exist, belongs to another organization, or the caller
+lacks permission to view it, the endpoint responds with `401` (it does not
+distinguish these cases with a `404`).
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id The ID of the OIDC Provider
@@ -875,17 +866,6 @@ func (a *OIDCAPIService) GetOIDCProviderExecute(r ApiGetOIDCProviderRequest) (*C
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v AddLicenseConclusion400Response
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 404 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -1134,7 +1114,14 @@ func (r ApiGetOIDCTrustRelationshipRequest) Execute() (*GetOIDCTrustRelationship
 /*
 GetOIDCTrustRelationship Method for GetOIDCTrustRelationship
 
-Get a specific OIDC Trust Relationship by ID
+Get a specific OIDC Trust Relationship by ID.
+
+Requires a **premium** subscription; organizations below that tier receive a `403`.
+
+If the trust relationship does not exist, belongs to another organization, or the
+caller lacks permission to view it, the endpoint responds with `401` (it does not
+distinguish these cases with a `404`).
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id The ID of the OIDC Trust Relationship
@@ -1231,17 +1218,6 @@ func (a *OIDCAPIService) GetOIDCTrustRelationshipExecute(r ApiGetOIDCTrustRelati
 					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v AddLicenseConclusion400Response
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1307,7 +1283,10 @@ func (r ApiListOIDCProvidersRequest) Execute() (*ListOIDCProviders200Response, *
 /*
 ListOIDCProviders Method for ListOIDCProviders
 
-List OIDC Providers
+List OIDC Providers.
+
+Requires a **premium** subscription; organizations below that tier receive a `403`.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListOIDCProvidersRequest
