@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.99
 Contact: support@fossa.com
 */
 
@@ -34,7 +34,7 @@ type ApiGetPackageIndexExportRequest struct {
 	projectName *string
 	sources *[]string
 	visibility *[]string
-	blockType *string
+	blockTypes *[]string
 	cve *string
 	cwes *[]string
 	locators *[]string
@@ -86,8 +86,8 @@ func (r ApiGetPackageIndexExportRequest) Visibility(visibility []string) ApiGetP
 }
 
 // Filter packages to include only packages that do or do not have packages as dependencies which are blocked by your organization
-func (r ApiGetPackageIndexExportRequest) BlockType(blockType string) ApiGetPackageIndexExportRequest {
-	r.blockType = &blockType
+func (r ApiGetPackageIndexExportRequest) BlockTypes(blockTypes []string) ApiGetPackageIndexExportRequest {
+	r.blockTypes = &blockTypes
 	return r
 }
 
@@ -228,8 +228,16 @@ func (a *PackageObservabilityAPIService) GetPackageIndexExportExecute(r ApiGetPa
 			parameterAddToHeaderOrQuery(localVarQueryParams, "visibility", t, "form", "multi")
 		}
 	}
-	if r.blockType != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "blockType", r.blockType, "form", "")
+	if r.blockTypes != nil {
+		t := *r.blockTypes
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "blockTypes", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "blockTypes", t, "form", "multi")
+		}
 	}
 	if r.cve != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "cve", r.cve, "form", "")
@@ -374,7 +382,7 @@ type ApiGetPackagesRequest struct {
 	projectName *string
 	sources *[]string
 	visibility *[]string
-	blockType *string
+	blockTypes *[]string
 	cve *string
 	cwes *[]string
 	fixTypes *[]string
@@ -429,8 +437,8 @@ func (r ApiGetPackagesRequest) Visibility(visibility []string) ApiGetPackagesReq
 }
 
 // Filter packages to include only packages that do or do not have packages as dependencies which are blocked by your organization
-func (r ApiGetPackagesRequest) BlockType(blockType string) ApiGetPackagesRequest {
-	r.blockType = &blockType
+func (r ApiGetPackagesRequest) BlockTypes(blockTypes []string) ApiGetPackagesRequest {
+	r.blockTypes = &blockTypes
 	return r
 }
 
@@ -476,7 +484,7 @@ func (r ApiGetPackagesRequest) Page(page int32) ApiGetPackagesRequest {
 	return r
 }
 
-// The number of results to return per page
+// The number of results to return per page. Values above the maximum of 50 are silently clamped to 50.
 func (r ApiGetPackagesRequest) Count(count int32) ApiGetPackagesRequest {
 	r.count = &count
 	return r
@@ -488,7 +496,7 @@ func (r ApiGetPackagesRequest) Sort(sort string) ApiGetPackagesRequest {
 	return r
 }
 
-func (r ApiGetPackagesRequest) Execute() (*GetPackageIndexExport201Response, *http.Response, error) {
+func (r ApiGetPackagesRequest) Execute() (*GetPackages200Response, *http.Response, error) {
 	return r.ApiService.GetPackagesExecute(r)
 }
 
@@ -508,13 +516,13 @@ func (a *PackageObservabilityAPIService) GetPackages(ctx context.Context) ApiGet
 }
 
 // Execute executes the request
-//  @return GetPackageIndexExport201Response
-func (a *PackageObservabilityAPIService) GetPackagesExecute(r ApiGetPackagesRequest) (*GetPackageIndexExport201Response, *http.Response, error) {
+//  @return GetPackages200Response
+func (a *PackageObservabilityAPIService) GetPackagesExecute(r ApiGetPackagesRequest) (*GetPackages200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetPackageIndexExport201Response
+		localVarReturnValue  *GetPackages200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PackageObservabilityAPIService.GetPackages")
@@ -589,8 +597,16 @@ func (a *PackageObservabilityAPIService) GetPackagesExecute(r ApiGetPackagesRequ
 			parameterAddToHeaderOrQuery(localVarQueryParams, "visibility", t, "form", "multi")
 		}
 	}
-	if r.blockType != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "blockType", r.blockType, "form", "")
+	if r.blockTypes != nil {
+		t := *r.blockTypes
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "blockTypes", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "blockTypes", t, "form", "multi")
+		}
 	}
 	if r.cve != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "cve", r.cve, "form", "")
@@ -751,7 +767,7 @@ func (r ApiGetPackagesPackageLocatorsRequest) PackageLocator(packageLocator stri
 	return r
 }
 
-// The number of results to return.
+// The number of results to return. Values above the maximum of 50 are silently clamped to 50.
 func (r ApiGetPackagesPackageLocatorsRequest) Count(count int32) ApiGetPackagesPackageLocatorsRequest {
 	r.count = &count
 	return r
