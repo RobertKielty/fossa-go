@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.99
 Contact: support@fossa.com
 */
 
@@ -22,6 +22,7 @@ var _ MappedNullable = &UpdateIssuesRequestOneOf{}
 type UpdateIssuesRequestOneOf struct {
 	Type *string `json:"type,omitempty"`
 	Notes *string `json:"notes,omitempty"`
+	// Provided reason for ignoring or resolving a security issue. 'Fixed' and 'Under_investigation' map to VEX statuses with the same names. All other values map to the VEX status 'Not Affected'. This value appears in the vulnerabilities.analysis.justification field of CycloneDX SBOM reports. 
 	Reason *string `json:"reason,omitempty"`
 }
 
