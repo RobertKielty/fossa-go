@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.100
 Contact: support@fossa.com
 */
 
@@ -26,8 +26,9 @@ type GetAllReportOptions200ResponseResultsInnerOptionsSections struct {
 	ProjectDeclaredLicenses bool `json:"projectDeclaredLicenses"`
 	// Include first party licenses section
 	FirstPartyLicenses bool `json:"firstPartyLicenses"`
-	// Include license list section
-	LicenseList bool `json:"licenseList"`
+	// Deprecated and ignored. Accepted so existing saved presets keep validating.
+	// Deprecated
+	LicenseList *bool `json:"licenseList,omitempty"`
 	// Include direct dependencies section
 	DirectDependencies bool `json:"directDependencies"`
 	// Include deep dependencies section
@@ -44,11 +45,10 @@ type _GetAllReportOptions200ResponseResultsInnerOptionsSections GetAllReportOpti
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetAllReportOptions200ResponseResultsInnerOptionsSections(projectDeclaredLicenses bool, firstPartyLicenses bool, licenseList bool, directDependencies bool, deepDependencies bool, snippetDependencies bool, copyrightList bool) *GetAllReportOptions200ResponseResultsInnerOptionsSections {
+func NewGetAllReportOptions200ResponseResultsInnerOptionsSections(projectDeclaredLicenses bool, firstPartyLicenses bool, directDependencies bool, deepDependencies bool, snippetDependencies bool, copyrightList bool) *GetAllReportOptions200ResponseResultsInnerOptionsSections {
 	this := GetAllReportOptions200ResponseResultsInnerOptionsSections{}
 	this.ProjectDeclaredLicenses = projectDeclaredLicenses
 	this.FirstPartyLicenses = firstPartyLicenses
-	this.LicenseList = licenseList
 	this.DirectDependencies = directDependencies
 	this.DeepDependencies = deepDependencies
 	this.SnippetDependencies = snippetDependencies
@@ -112,28 +112,39 @@ func (o *GetAllReportOptions200ResponseResultsInnerOptionsSections) SetFirstPart
 	o.FirstPartyLicenses = v
 }
 
-// GetLicenseList returns the LicenseList field value
+// GetLicenseList returns the LicenseList field value if set, zero value otherwise.
+// Deprecated
 func (o *GetAllReportOptions200ResponseResultsInnerOptionsSections) GetLicenseList() bool {
-	if o == nil {
+	if o == nil || IsNil(o.LicenseList) {
 		var ret bool
 		return ret
 	}
-
-	return o.LicenseList
+	return *o.LicenseList
 }
 
-// GetLicenseListOk returns a tuple with the LicenseList field value
+// GetLicenseListOk returns a tuple with the LicenseList field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *GetAllReportOptions200ResponseResultsInnerOptionsSections) GetLicenseListOk() (*bool, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.LicenseList) {
 		return nil, false
 	}
-	return &o.LicenseList, true
+	return o.LicenseList, true
 }
 
-// SetLicenseList sets field value
+// HasLicenseList returns a boolean if a field has been set.
+func (o *GetAllReportOptions200ResponseResultsInnerOptionsSections) HasLicenseList() bool {
+	if o != nil && !IsNil(o.LicenseList) {
+		return true
+	}
+
+	return false
+}
+
+// SetLicenseList gets a reference to the given bool and assigns it to the LicenseList field.
+// Deprecated
 func (o *GetAllReportOptions200ResponseResultsInnerOptionsSections) SetLicenseList(v bool) {
-	o.LicenseList = v
+	o.LicenseList = &v
 }
 
 // GetDirectDependencies returns the DirectDependencies field value
@@ -244,7 +255,9 @@ func (o GetAllReportOptions200ResponseResultsInnerOptionsSections) ToMap() (map[
 	toSerialize := map[string]interface{}{}
 	toSerialize["projectDeclaredLicenses"] = o.ProjectDeclaredLicenses
 	toSerialize["firstPartyLicenses"] = o.FirstPartyLicenses
-	toSerialize["licenseList"] = o.LicenseList
+	if !IsNil(o.LicenseList) {
+		toSerialize["licenseList"] = o.LicenseList
+	}
 	toSerialize["directDependencies"] = o.DirectDependencies
 	toSerialize["deepDependencies"] = o.DeepDependencies
 	toSerialize["snippetDependencies"] = o.SnippetDependencies
@@ -259,7 +272,6 @@ func (o *GetAllReportOptions200ResponseResultsInnerOptionsSections) UnmarshalJSO
 	requiredProperties := []string{
 		"projectDeclaredLicenses",
 		"firstPartyLicenses",
-		"licenseList",
 		"directDependencies",
 		"deepDependencies",
 		"snippetDependencies",

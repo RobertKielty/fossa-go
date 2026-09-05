@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.100
 Contact: support@fossa.com
 */
 
@@ -153,7 +153,7 @@ func (r ApiBuildRequest) Execute() (*http.Response, error) {
 /*
 Build Method for Build
 
-Upload a component and start asynchronously building it.  Only SBOM imports are supported for non-premium accounts.
+Upload a component and start asynchronously building it.  Only SBOM imports are supported for non-premium accounts.  This endpoint accepts push-only tokens in addition to full API tokens.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiBuildRequest
@@ -330,7 +330,7 @@ func (r ApiGetSignedUrlRequest) Revision(revision string) ApiGetSignedUrlRequest
 	return r
 }
 
-// The kind of file to be uploaded to the signed URL. If &#39;archive&#39;, the signed URL is for uplaoding a directory of source code. If &#39;sbom&#39;, the signed URL is for uploading an SBOM file (CycloneDX or SPDX). 
+// The kind of file to be uploaded to the signed URL. If &#39;archive&#39;, the signed URL is for uplaoding a directory of source code. If &#39;sbom&#39;, the signed URL is for uploading an SBOM file (CycloneDX or SPDX). If &#39;binary&#39;, the signed URL is for uploading a binary for binary decomposition; this is billing-gated and may return a 403 if the organization is outside its binary decomposition billing term or has exhausted its allowance. 
 func (r ApiGetSignedUrlRequest) FileType(fileType string) ApiGetSignedUrlRequest {
 	r.fileType = &fileType
 	return r
@@ -343,7 +343,7 @@ func (r ApiGetSignedUrlRequest) Execute() (*GetSignedUrl200Response, *http.Respo
 /*
 GetSignedUrl Method for GetSignedUrl
 
-Get a signed URL for uploading component files to FOSSA, to expire in 5 minutes' time.  Only SBOM imports are supported for non-premium accounts.
+Get a signed URL for uploading component files to FOSSA, to expire in 5 minutes' time.  Only SBOM imports are supported for non-premium accounts.  This endpoint accepts push-only tokens in addition to full API tokens.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetSignedUrlRequest
@@ -439,6 +439,138 @@ func (a *ComponentsAPIService) GetSignedUrlExecute(r ApiGetSignedUrlRequest) (*G
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
 			var v string
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v FossaApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiResolvePurlsRequest struct {
+	ctx context.Context
+	ApiService *ComponentsAPIService
+	resolvePurlsRequest *ResolvePurlsRequest
+}
+
+func (r ApiResolvePurlsRequest) ResolvePurlsRequest(resolvePurlsRequest ResolvePurlsRequest) ApiResolvePurlsRequest {
+	r.resolvePurlsRequest = &resolvePurlsRequest
+	return r
+}
+
+func (r ApiResolvePurlsRequest) Execute() (*ResolvePurls200Response, *http.Response, error) {
+	return r.ApiService.ResolvePurlsExecute(r)
+}
+
+/*
+ResolvePurls Method for ResolvePurls
+
+Resolve a list of PURLs to the FOSSA components they identify and return the licensing data FOSSA has for each. PURLs that FOSSA has not analyzed yet are queued for an asynchronous build; poll again to retrieve their licensing once the build resolves. This endpoint accepts push-only tokens in addition to full API tokens.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiResolvePurlsRequest
+*/
+func (a *ComponentsAPIService) ResolvePurls(ctx context.Context) ApiResolvePurlsRequest {
+	return ApiResolvePurlsRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ResolvePurls200Response
+func (a *ComponentsAPIService) ResolvePurlsExecute(r ApiResolvePurlsRequest) (*ResolvePurls200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ResolvePurls200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ComponentsAPIService.ResolvePurls")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/components/resolve-purls"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.resolvePurlsRequest == nil {
+		return localVarReturnValue, nil, reportError("resolvePurlsRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.resolvePurlsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v FossaForbiddenError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
