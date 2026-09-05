@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectDeclaredLicenses** | **bool** | Include project declared licenses section | 
 **FirstPartyLicenses** | **bool** | Include first party licenses section | 
-**LicenseList** | **bool** | Include license list section | 
+**LicenseList** | Pointer to **bool** | Deprecated and ignored. Accepted so existing saved presets keep validating. | [optional] 
 **DirectDependencies** | **bool** | Include direct dependencies section | 
 **DeepDependencies** | **bool** | Include deep dependencies section | 
 **SnippetDependencies** | **bool** | Include snippet dependencies section | 
@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 
 ### NewGetAllReportOptions200ResponseResultsInnerOptionsSections
 
-`func NewGetAllReportOptions200ResponseResultsInnerOptionsSections(projectDeclaredLicenses bool, firstPartyLicenses bool, licenseList bool, directDependencies bool, deepDependencies bool, snippetDependencies bool, copyrightList bool, ) *GetAllReportOptions200ResponseResultsInnerOptionsSections`
+`func NewGetAllReportOptions200ResponseResultsInnerOptionsSections(projectDeclaredLicenses bool, firstPartyLicenses bool, directDependencies bool, deepDependencies bool, snippetDependencies bool, copyrightList bool, ) *GetAllReportOptions200ResponseResultsInnerOptionsSections`
 
 NewGetAllReportOptions200ResponseResultsInnerOptionsSections instantiates a new GetAllReportOptions200ResponseResultsInnerOptionsSections object
 This constructor will assign default values to properties that have it defined,
@@ -90,6 +90,11 @@ and a boolean to check if the value has been set.
 
 SetLicenseList sets LicenseList field to given value.
 
+### HasLicenseList
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptionsSections) HasLicenseList() bool`
+
+HasLicenseList returns a boolean if a field has been set.
 
 ### GetDirectDependencies
 
