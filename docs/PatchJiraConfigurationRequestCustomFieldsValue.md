@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **FieldId** | Pointer to **string** | The corresponding Field ID in the Jira site for the given field | [optional] 
 **DisplayName** | Pointer to **string** | Display name to use in FOSSA | [optional] 
-**IsRequired** | Pointer to **string** | On/off switch to tell FOSSA if the field is required when exporting tickets | [optional] 
+**IsRequired** | Pointer to **bool** | On/off switch to tell FOSSA if the field is required when exporting tickets | [optional] 
 **DefaultValue** | Pointer to **string** | When provided, is the default value used when exporting a ticket | [optional] 
 
 ## Methods
@@ -80,20 +80,20 @@ HasDisplayName returns a boolean if a field has been set.
 
 ### GetIsRequired
 
-`func (o *PatchJiraConfigurationRequestCustomFieldsValue) GetIsRequired() string`
+`func (o *PatchJiraConfigurationRequestCustomFieldsValue) GetIsRequired() bool`
 
 GetIsRequired returns the IsRequired field if non-nil, zero value otherwise.
 
 ### GetIsRequiredOk
 
-`func (o *PatchJiraConfigurationRequestCustomFieldsValue) GetIsRequiredOk() (*string, bool)`
+`func (o *PatchJiraConfigurationRequestCustomFieldsValue) GetIsRequiredOk() (*bool, bool)`
 
 GetIsRequiredOk returns a tuple with the IsRequired field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIsRequired
 
-`func (o *PatchJiraConfigurationRequestCustomFieldsValue) SetIsRequired(v string)`
+`func (o *PatchJiraConfigurationRequestCustomFieldsValue) SetIsRequired(v bool)`
 
 SetIsRequired sets IsRequired field to given value.
 
