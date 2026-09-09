@@ -17,6 +17,14 @@ Name | Type | Description | Notes
 **SupportsFirstPartyScans** | Pointer to **bool** | True if the FOSSA instance supports first-party scans. Otherwise False. | [optional] 
 **DefaultToFirstPartyScans** | Pointer to **bool** | True if the organization defaults to first-party scans. Otherwise False. | [optional] 
 **CustomLicenseScanConfigs** | Pointer to [**[]GetOrganizationCLI200ResponseCustomLicenseScanConfigsInner**](GetOrganizationCLI200ResponseCustomLicenseScanConfigsInner.md) | Configuration for custom license scans | [optional] 
+**RequirePolicyOnUpload** | Pointer to **bool** | True if the organization requires a policy to be assigned when uploading, otherwise False. | [optional] 
+**ArchiveUploadAndCLILicenseScanEnabled** | Pointer to **bool** | True if the organization is permissioned for CLI license scanning and archive uploads, otherwise False. | [optional] 
+**SupportsPreflightChecks** | Pointer to **bool** | True if the organization supports CLI preflight checks, otherwise False. | [optional] 
+**SupportsGitBackedCargoLocators** | Pointer to **bool** | True if Core understands git-backed cargo locators in the format &#x60;cargo+&lt;repoUrl&gt;#&lt;crateName&gt;$&lt;version&gt;&#x60;. When False, the CLI should fall back to plain crate names for git-sourced cargo dependencies. | [optional] 
+**SupportsFasterRGAddProject** | Pointer to **bool** | True if Core exposes the &#x60;cli/project_group/release_lookup&#x60; endpoint, which resolves a release group title and release title to their numeric ids server-side. When False, the CLI falls back to listing all release groups and releases and filtering client-side. | [optional] 
+**Subscription** | Pointer to **string** | The organization subscription access level. | [optional] 
+**PackageLabelScopes** | Pointer to **[]string** | The package label scopes supported by the organization. | [optional] 
+**SnippetScanSourceCodeRetentionDays** | Pointer to **int32** | Number of days source code from snippet scans is retained for the organization. | [optional] 
 
 ## Methods
 
@@ -361,6 +369,206 @@ SetCustomLicenseScanConfigs sets CustomLicenseScanConfigs field to given value.
 `func (o *GetOrganizationCLI200Response) HasCustomLicenseScanConfigs() bool`
 
 HasCustomLicenseScanConfigs returns a boolean if a field has been set.
+
+### GetRequirePolicyOnUpload
+
+`func (o *GetOrganizationCLI200Response) GetRequirePolicyOnUpload() bool`
+
+GetRequirePolicyOnUpload returns the RequirePolicyOnUpload field if non-nil, zero value otherwise.
+
+### GetRequirePolicyOnUploadOk
+
+`func (o *GetOrganizationCLI200Response) GetRequirePolicyOnUploadOk() (*bool, bool)`
+
+GetRequirePolicyOnUploadOk returns a tuple with the RequirePolicyOnUpload field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequirePolicyOnUpload
+
+`func (o *GetOrganizationCLI200Response) SetRequirePolicyOnUpload(v bool)`
+
+SetRequirePolicyOnUpload sets RequirePolicyOnUpload field to given value.
+
+### HasRequirePolicyOnUpload
+
+`func (o *GetOrganizationCLI200Response) HasRequirePolicyOnUpload() bool`
+
+HasRequirePolicyOnUpload returns a boolean if a field has been set.
+
+### GetArchiveUploadAndCLILicenseScanEnabled
+
+`func (o *GetOrganizationCLI200Response) GetArchiveUploadAndCLILicenseScanEnabled() bool`
+
+GetArchiveUploadAndCLILicenseScanEnabled returns the ArchiveUploadAndCLILicenseScanEnabled field if non-nil, zero value otherwise.
+
+### GetArchiveUploadAndCLILicenseScanEnabledOk
+
+`func (o *GetOrganizationCLI200Response) GetArchiveUploadAndCLILicenseScanEnabledOk() (*bool, bool)`
+
+GetArchiveUploadAndCLILicenseScanEnabledOk returns a tuple with the ArchiveUploadAndCLILicenseScanEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetArchiveUploadAndCLILicenseScanEnabled
+
+`func (o *GetOrganizationCLI200Response) SetArchiveUploadAndCLILicenseScanEnabled(v bool)`
+
+SetArchiveUploadAndCLILicenseScanEnabled sets ArchiveUploadAndCLILicenseScanEnabled field to given value.
+
+### HasArchiveUploadAndCLILicenseScanEnabled
+
+`func (o *GetOrganizationCLI200Response) HasArchiveUploadAndCLILicenseScanEnabled() bool`
+
+HasArchiveUploadAndCLILicenseScanEnabled returns a boolean if a field has been set.
+
+### GetSupportsPreflightChecks
+
+`func (o *GetOrganizationCLI200Response) GetSupportsPreflightChecks() bool`
+
+GetSupportsPreflightChecks returns the SupportsPreflightChecks field if non-nil, zero value otherwise.
+
+### GetSupportsPreflightChecksOk
+
+`func (o *GetOrganizationCLI200Response) GetSupportsPreflightChecksOk() (*bool, bool)`
+
+GetSupportsPreflightChecksOk returns a tuple with the SupportsPreflightChecks field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSupportsPreflightChecks
+
+`func (o *GetOrganizationCLI200Response) SetSupportsPreflightChecks(v bool)`
+
+SetSupportsPreflightChecks sets SupportsPreflightChecks field to given value.
+
+### HasSupportsPreflightChecks
+
+`func (o *GetOrganizationCLI200Response) HasSupportsPreflightChecks() bool`
+
+HasSupportsPreflightChecks returns a boolean if a field has been set.
+
+### GetSupportsGitBackedCargoLocators
+
+`func (o *GetOrganizationCLI200Response) GetSupportsGitBackedCargoLocators() bool`
+
+GetSupportsGitBackedCargoLocators returns the SupportsGitBackedCargoLocators field if non-nil, zero value otherwise.
+
+### GetSupportsGitBackedCargoLocatorsOk
+
+`func (o *GetOrganizationCLI200Response) GetSupportsGitBackedCargoLocatorsOk() (*bool, bool)`
+
+GetSupportsGitBackedCargoLocatorsOk returns a tuple with the SupportsGitBackedCargoLocators field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSupportsGitBackedCargoLocators
+
+`func (o *GetOrganizationCLI200Response) SetSupportsGitBackedCargoLocators(v bool)`
+
+SetSupportsGitBackedCargoLocators sets SupportsGitBackedCargoLocators field to given value.
+
+### HasSupportsGitBackedCargoLocators
+
+`func (o *GetOrganizationCLI200Response) HasSupportsGitBackedCargoLocators() bool`
+
+HasSupportsGitBackedCargoLocators returns a boolean if a field has been set.
+
+### GetSupportsFasterRGAddProject
+
+`func (o *GetOrganizationCLI200Response) GetSupportsFasterRGAddProject() bool`
+
+GetSupportsFasterRGAddProject returns the SupportsFasterRGAddProject field if non-nil, zero value otherwise.
+
+### GetSupportsFasterRGAddProjectOk
+
+`func (o *GetOrganizationCLI200Response) GetSupportsFasterRGAddProjectOk() (*bool, bool)`
+
+GetSupportsFasterRGAddProjectOk returns a tuple with the SupportsFasterRGAddProject field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSupportsFasterRGAddProject
+
+`func (o *GetOrganizationCLI200Response) SetSupportsFasterRGAddProject(v bool)`
+
+SetSupportsFasterRGAddProject sets SupportsFasterRGAddProject field to given value.
+
+### HasSupportsFasterRGAddProject
+
+`func (o *GetOrganizationCLI200Response) HasSupportsFasterRGAddProject() bool`
+
+HasSupportsFasterRGAddProject returns a boolean if a field has been set.
+
+### GetSubscription
+
+`func (o *GetOrganizationCLI200Response) GetSubscription() string`
+
+GetSubscription returns the Subscription field if non-nil, zero value otherwise.
+
+### GetSubscriptionOk
+
+`func (o *GetOrganizationCLI200Response) GetSubscriptionOk() (*string, bool)`
+
+GetSubscriptionOk returns a tuple with the Subscription field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSubscription
+
+`func (o *GetOrganizationCLI200Response) SetSubscription(v string)`
+
+SetSubscription sets Subscription field to given value.
+
+### HasSubscription
+
+`func (o *GetOrganizationCLI200Response) HasSubscription() bool`
+
+HasSubscription returns a boolean if a field has been set.
+
+### GetPackageLabelScopes
+
+`func (o *GetOrganizationCLI200Response) GetPackageLabelScopes() []string`
+
+GetPackageLabelScopes returns the PackageLabelScopes field if non-nil, zero value otherwise.
+
+### GetPackageLabelScopesOk
+
+`func (o *GetOrganizationCLI200Response) GetPackageLabelScopesOk() (*[]string, bool)`
+
+GetPackageLabelScopesOk returns a tuple with the PackageLabelScopes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPackageLabelScopes
+
+`func (o *GetOrganizationCLI200Response) SetPackageLabelScopes(v []string)`
+
+SetPackageLabelScopes sets PackageLabelScopes field to given value.
+
+### HasPackageLabelScopes
+
+`func (o *GetOrganizationCLI200Response) HasPackageLabelScopes() bool`
+
+HasPackageLabelScopes returns a boolean if a field has been set.
+
+### GetSnippetScanSourceCodeRetentionDays
+
+`func (o *GetOrganizationCLI200Response) GetSnippetScanSourceCodeRetentionDays() int32`
+
+GetSnippetScanSourceCodeRetentionDays returns the SnippetScanSourceCodeRetentionDays field if non-nil, zero value otherwise.
+
+### GetSnippetScanSourceCodeRetentionDaysOk
+
+`func (o *GetOrganizationCLI200Response) GetSnippetScanSourceCodeRetentionDaysOk() (*int32, bool)`
+
+GetSnippetScanSourceCodeRetentionDaysOk returns a tuple with the SnippetScanSourceCodeRetentionDays field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSnippetScanSourceCodeRetentionDays
+
+`func (o *GetOrganizationCLI200Response) SetSnippetScanSourceCodeRetentionDays(v int32)`
+
+SetSnippetScanSourceCodeRetentionDays sets SnippetScanSourceCodeRetentionDays field to given value.
+
+### HasSnippetScanSourceCodeRetentionDays
+
+`func (o *GetOrganizationCLI200Response) HasSnippetScanSourceCodeRetentionDays() bool`
+
+HasSnippetScanSourceCodeRetentionDays returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
