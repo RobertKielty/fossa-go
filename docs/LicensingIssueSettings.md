@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **ProjectDefaultLicensingStatusCheckEnabled** | Pointer to **bool** |  | [optional] 
 **ProjectDefaultStatusCheckFilterLicensing** | Pointer to **int32** |  | [optional] 
 **ProjectDefaultSnippetLicensingIssueScanningEnabled** | Pointer to **bool** | Enable or disable snippet licensing issue scanning by default for projects in the organization | [optional] 
+**ProjectDefaultVendoredLicensingIssueScanningEnabled** | Pointer to **bool** | Enable or disable licensing issue scanning for vendored dependencies by default for projects in the organization | [optional] 
 
 ## Methods
 
@@ -153,6 +154,31 @@ SetProjectDefaultSnippetLicensingIssueScanningEnabled sets ProjectDefaultSnippet
 `func (o *LicensingIssueSettings) HasProjectDefaultSnippetLicensingIssueScanningEnabled() bool`
 
 HasProjectDefaultSnippetLicensingIssueScanningEnabled returns a boolean if a field has been set.
+
+### GetProjectDefaultVendoredLicensingIssueScanningEnabled
+
+`func (o *LicensingIssueSettings) GetProjectDefaultVendoredLicensingIssueScanningEnabled() bool`
+
+GetProjectDefaultVendoredLicensingIssueScanningEnabled returns the ProjectDefaultVendoredLicensingIssueScanningEnabled field if non-nil, zero value otherwise.
+
+### GetProjectDefaultVendoredLicensingIssueScanningEnabledOk
+
+`func (o *LicensingIssueSettings) GetProjectDefaultVendoredLicensingIssueScanningEnabledOk() (*bool, bool)`
+
+GetProjectDefaultVendoredLicensingIssueScanningEnabledOk returns a tuple with the ProjectDefaultVendoredLicensingIssueScanningEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectDefaultVendoredLicensingIssueScanningEnabled
+
+`func (o *LicensingIssueSettings) SetProjectDefaultVendoredLicensingIssueScanningEnabled(v bool)`
+
+SetProjectDefaultVendoredLicensingIssueScanningEnabled sets ProjectDefaultVendoredLicensingIssueScanningEnabled field to given value.
+
+### HasProjectDefaultVendoredLicensingIssueScanningEnabled
+
+`func (o *LicensingIssueSettings) HasProjectDefaultVendoredLicensingIssueScanningEnabled() bool`
+
+HasProjectDefaultVendoredLicensingIssueScanningEnabled returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
