@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **ProjectDefaultSecurityStatusCheckEnabled** | Pointer to **bool** |  | [optional] 
 **ProjectDefaultStatusCheckFilterVulnerability** | Pointer to **int32** |  | [optional] 
 **ProjectDefaultSnippetSecurityIssueScanningEnabled** | Pointer to **bool** | Enable or disable snippet security issue scanning by default for projects in the organization | [optional] 
+**ProjectDefaultVendoredSecurityIssueScanningEnabled** | Pointer to **bool** | Enable or disable security issue scanning for vendored dependencies by default for projects in the organization | [optional] 
 
 ## Methods
 
@@ -153,6 +154,31 @@ SetProjectDefaultSnippetSecurityIssueScanningEnabled sets ProjectDefaultSnippetS
 `func (o *GetOrganizationSecurityIssueSettings200Response) HasProjectDefaultSnippetSecurityIssueScanningEnabled() bool`
 
 HasProjectDefaultSnippetSecurityIssueScanningEnabled returns a boolean if a field has been set.
+
+### GetProjectDefaultVendoredSecurityIssueScanningEnabled
+
+`func (o *GetOrganizationSecurityIssueSettings200Response) GetProjectDefaultVendoredSecurityIssueScanningEnabled() bool`
+
+GetProjectDefaultVendoredSecurityIssueScanningEnabled returns the ProjectDefaultVendoredSecurityIssueScanningEnabled field if non-nil, zero value otherwise.
+
+### GetProjectDefaultVendoredSecurityIssueScanningEnabledOk
+
+`func (o *GetOrganizationSecurityIssueSettings200Response) GetProjectDefaultVendoredSecurityIssueScanningEnabledOk() (*bool, bool)`
+
+GetProjectDefaultVendoredSecurityIssueScanningEnabledOk returns a tuple with the ProjectDefaultVendoredSecurityIssueScanningEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectDefaultVendoredSecurityIssueScanningEnabled
+
+`func (o *GetOrganizationSecurityIssueSettings200Response) SetProjectDefaultVendoredSecurityIssueScanningEnabled(v bool)`
+
+SetProjectDefaultVendoredSecurityIssueScanningEnabled sets ProjectDefaultVendoredSecurityIssueScanningEnabled field to given value.
+
+### HasProjectDefaultVendoredSecurityIssueScanningEnabled
+
+`func (o *GetOrganizationSecurityIssueSettings200Response) HasProjectDefaultVendoredSecurityIssueScanningEnabled() bool`
+
+HasProjectDefaultVendoredSecurityIssueScanningEnabled returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
