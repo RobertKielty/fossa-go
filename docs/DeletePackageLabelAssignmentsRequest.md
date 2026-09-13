@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AssignmentLabelIds** | Pointer to **[]int32** | The IDs of the package label assignments to delete. | [optional] 
+**AssignmentIds** | **[]int32** | The IDs of the package label assignments to delete. | 
 
 ## Methods
 
 ### NewDeletePackageLabelAssignmentsRequest
 
-`func NewDeletePackageLabelAssignmentsRequest() *DeletePackageLabelAssignmentsRequest`
+`func NewDeletePackageLabelAssignmentsRequest(assignmentIds []int32, ) *DeletePackageLabelAssignmentsRequest`
 
 NewDeletePackageLabelAssignmentsRequest instantiates a new DeletePackageLabelAssignmentsRequest object
 This constructor will assign default values to properties that have it defined,
@@ -25,30 +25,25 @@ NewDeletePackageLabelAssignmentsRequestWithDefaults instantiates a new DeletePac
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetAssignmentLabelIds
+### GetAssignmentIds
 
-`func (o *DeletePackageLabelAssignmentsRequest) GetAssignmentLabelIds() []int32`
+`func (o *DeletePackageLabelAssignmentsRequest) GetAssignmentIds() []int32`
 
-GetAssignmentLabelIds returns the AssignmentLabelIds field if non-nil, zero value otherwise.
+GetAssignmentIds returns the AssignmentIds field if non-nil, zero value otherwise.
 
-### GetAssignmentLabelIdsOk
+### GetAssignmentIdsOk
 
-`func (o *DeletePackageLabelAssignmentsRequest) GetAssignmentLabelIdsOk() (*[]int32, bool)`
+`func (o *DeletePackageLabelAssignmentsRequest) GetAssignmentIdsOk() (*[]int32, bool)`
 
-GetAssignmentLabelIdsOk returns a tuple with the AssignmentLabelIds field if it's non-nil, zero value otherwise
+GetAssignmentIdsOk returns a tuple with the AssignmentIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAssignmentLabelIds
+### SetAssignmentIds
 
-`func (o *DeletePackageLabelAssignmentsRequest) SetAssignmentLabelIds(v []int32)`
+`func (o *DeletePackageLabelAssignmentsRequest) SetAssignmentIds(v []int32)`
 
-SetAssignmentLabelIds sets AssignmentLabelIds field to given value.
+SetAssignmentIds sets AssignmentIds field to given value.
 
-### HasAssignmentLabelIds
-
-`func (o *DeletePackageLabelAssignmentsRequest) HasAssignmentLabelIds() bool`
-
-HasAssignmentLabelIds returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
