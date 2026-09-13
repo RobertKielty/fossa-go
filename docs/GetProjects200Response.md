@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Total** | Pointer to **int32** |  | [optional] 
-**Projects** | Pointer to **[]interface{}** |  | [optional] 
+**Projects** | Pointer to [**[]GetProjects200ResponseProjectsInner**](GetProjects200ResponseProjectsInner.md) |  | [optional] 
 
 ## Methods
 
@@ -53,20 +53,20 @@ HasTotal returns a boolean if a field has been set.
 
 ### GetProjects
 
-`func (o *GetProjects200Response) GetProjects() []interface{}`
+`func (o *GetProjects200Response) GetProjects() []GetProjects200ResponseProjectsInner`
 
 GetProjects returns the Projects field if non-nil, zero value otherwise.
 
 ### GetProjectsOk
 
-`func (o *GetProjects200Response) GetProjectsOk() (*[]interface{}, bool)`
+`func (o *GetProjects200Response) GetProjectsOk() (*[]GetProjects200ResponseProjectsInner, bool)`
 
 GetProjectsOk returns a tuple with the Projects field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetProjects
 
-`func (o *GetProjects200Response) SetProjects(v []interface{})`
+`func (o *GetProjects200Response) SetProjects(v []GetProjects200ResponseProjectsInner)`
 
 SetProjects sets Projects field to given value.
 

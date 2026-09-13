@@ -6,15 +6,15 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PackageId** | **string** | The ID of the package to assign labels to. | 
 **PackageVersion** | Pointer to **string** | The version of the package to assign labels to or blank for all versions. | [optional] 
-**Scope** | Pointer to **string** | The scope of the package label assignment. | [optional] 
+**Scope** | **string** | The scope of the package label assignment. | 
 **ScopeId** | Pointer to **string** | The ID of the scope to assign labels to. | [optional] 
-**LabelIds** | Pointer to **[]int32** | The IDs of the labels to assign to the package. | [optional] 
+**LabelIds** | **[]int32** | The IDs of the labels to assign to the package. | 
 
 ## Methods
 
 ### NewCreatePackageLabelAssignmentsRequest
 
-`func NewCreatePackageLabelAssignmentsRequest(packageId string, ) *CreatePackageLabelAssignmentsRequest`
+`func NewCreatePackageLabelAssignmentsRequest(packageId string, scope string, labelIds []int32, ) *CreatePackageLabelAssignmentsRequest`
 
 NewCreatePackageLabelAssignmentsRequest instantiates a new CreatePackageLabelAssignmentsRequest object
 This constructor will assign default values to properties that have it defined,
@@ -93,11 +93,6 @@ and a boolean to check if the value has been set.
 
 SetScope sets Scope field to given value.
 
-### HasScope
-
-`func (o *CreatePackageLabelAssignmentsRequest) HasScope() bool`
-
-HasScope returns a boolean if a field has been set.
 
 ### GetScopeId
 
@@ -143,11 +138,6 @@ and a boolean to check if the value has been set.
 
 SetLabelIds sets LabelIds field to given value.
 
-### HasLabelIds
-
-`func (o *CreatePackageLabelAssignmentsRequest) HasLabelIds() bool`
-
-HasLabelIds returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
