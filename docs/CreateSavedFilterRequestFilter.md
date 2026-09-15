@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | Pointer to **string** |  | [optional] 
 **Identification** | Pointer to **string** |  | [optional] 
+**IgnoreReason** | Pointer to **string** | Filterable vuln ignore reason. Superset of VulnIgnoreReason that also includes the NotDistributed auto-ignore reason, which can be filtered on but never provided when ignoring or excepting an issue.  | [optional] 
 **PackageManagers** | Pointer to **[]string** |  | [optional] 
 **ProjectLabels** | Pointer to **[]string** |  | [optional] 
 **Search** | Pointer to **string** |  | [optional] 
@@ -17,8 +18,6 @@ Name | Type | Description | Notes
 **HasFix** | Pointer to **string** |  | [optional] 
 **UpgradeDistance** | Pointer to **string** |  | [optional] 
 **ExploitMaturity** | Pointer to **string** |  | [optional] 
-**IgnoreReason** | Pointer to **string** | Provided reason for ignoring or resolving a security issue. &#39;Fixed&#39; and &#39;Under_investigation&#39; map to VEX statuses with the same names. All other values map to the VEX status &#39;Not Affected&#39;. This value appears in the vulnerabilities.analysis.justification field of CycloneDX SBOM reports.  | [optional] 
-**Reachability** | Pointer to **string** |  | [optional] 
 **Cwes** | Pointer to **[]string** |  | [optional] 
 
 ## Methods
@@ -89,6 +88,31 @@ SetIdentification sets Identification field to given value.
 `func (o *CreateSavedFilterRequestFilter) HasIdentification() bool`
 
 HasIdentification returns a boolean if a field has been set.
+
+### GetIgnoreReason
+
+`func (o *CreateSavedFilterRequestFilter) GetIgnoreReason() string`
+
+GetIgnoreReason returns the IgnoreReason field if non-nil, zero value otherwise.
+
+### GetIgnoreReasonOk
+
+`func (o *CreateSavedFilterRequestFilter) GetIgnoreReasonOk() (*string, bool)`
+
+GetIgnoreReasonOk returns a tuple with the IgnoreReason field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIgnoreReason
+
+`func (o *CreateSavedFilterRequestFilter) SetIgnoreReason(v string)`
+
+SetIgnoreReason sets IgnoreReason field to given value.
+
+### HasIgnoreReason
+
+`func (o *CreateSavedFilterRequestFilter) HasIgnoreReason() bool`
+
+HasIgnoreReason returns a boolean if a field has been set.
 
 ### GetPackageManagers
 
@@ -364,56 +388,6 @@ SetExploitMaturity sets ExploitMaturity field to given value.
 `func (o *CreateSavedFilterRequestFilter) HasExploitMaturity() bool`
 
 HasExploitMaturity returns a boolean if a field has been set.
-
-### GetIgnoreReason
-
-`func (o *CreateSavedFilterRequestFilter) GetIgnoreReason() string`
-
-GetIgnoreReason returns the IgnoreReason field if non-nil, zero value otherwise.
-
-### GetIgnoreReasonOk
-
-`func (o *CreateSavedFilterRequestFilter) GetIgnoreReasonOk() (*string, bool)`
-
-GetIgnoreReasonOk returns a tuple with the IgnoreReason field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIgnoreReason
-
-`func (o *CreateSavedFilterRequestFilter) SetIgnoreReason(v string)`
-
-SetIgnoreReason sets IgnoreReason field to given value.
-
-### HasIgnoreReason
-
-`func (o *CreateSavedFilterRequestFilter) HasIgnoreReason() bool`
-
-HasIgnoreReason returns a boolean if a field has been set.
-
-### GetReachability
-
-`func (o *CreateSavedFilterRequestFilter) GetReachability() string`
-
-GetReachability returns the Reachability field if non-nil, zero value otherwise.
-
-### GetReachabilityOk
-
-`func (o *CreateSavedFilterRequestFilter) GetReachabilityOk() (*string, bool)`
-
-GetReachabilityOk returns a tuple with the Reachability field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetReachability
-
-`func (o *CreateSavedFilterRequestFilter) SetReachability(v string)`
-
-SetReachability sets Reachability field to given value.
-
-### HasReachability
-
-`func (o *CreateSavedFilterRequestFilter) HasReachability() bool`
-
-HasReachability returns a boolean if a field has been set.
 
 ### GetCwes
 
