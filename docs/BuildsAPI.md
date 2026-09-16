@@ -37,7 +37,7 @@ func main() {
 	endDate := time.Now() // time.Time | The end date to filter builds to (optional)
 	pageSize := int32(56) // int32 | The number of builds to return (optional)
 	page := int32(56) // int32 | The page number to return (optional)
-	sort := "sort_example" // string | The sort order(s) to apply to the builds (optional)
+	sort := "-createdAt,id" // string | The sort order(s) to apply to the builds. Accepts a comma-separated list of one or more columns. Prefix a column with `-` to sort it in descending order (ascending is the default). Valid columns are: `cliVersionId`, `createdAt`, `id`, `locator`, `ownerId`, `taskId`, `updatedAt`. For example, `-createdAt,id` sorts by `createdAt` descending then `id` ascending.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -68,7 +68,7 @@ Name | Type | Description  | Notes
  **endDate** | **time.Time** | The end date to filter builds to | 
  **pageSize** | **int32** | The number of builds to return | 
  **page** | **int32** | The page number to return | 
- **sort** | **string** | The sort order(s) to apply to the builds | 
+ **sort** | **string** | The sort order(s) to apply to the builds. Accepts a comma-separated list of one or more columns. Prefix a column with &#x60;-&#x60; to sort it in descending order (ascending is the default). Valid columns are: &#x60;cliVersionId&#x60;, &#x60;createdAt&#x60;, &#x60;id&#x60;, &#x60;locator&#x60;, &#x60;ownerId&#x60;, &#x60;taskId&#x60;, &#x60;updatedAt&#x60;. For example, &#x60;-createdAt,id&#x60; sorts by &#x60;createdAt&#x60; descending then &#x60;id&#x60; ascending.  | 
 
 ### Return type
 
@@ -116,7 +116,7 @@ func main() {
 	endDate := time.Now() // time.Time | The end date to filter builds to (optional)
 	pageSize := int32(56) // int32 | The number of builds to return (optional)
 	page := int32(56) // int32 | The page number to return (optional)
-	sort := "sort_example" // string | The sort order(s) to apply to the builds (optional)
+	sort := "-createdAt,id" // string | The sort order(s) to apply to the builds. Accepts a comma-separated list of one or more columns. Prefix a column with `-` to sort it in descending order (ascending is the default). Valid columns are: `cliVersionId`, `createdAt`, `id`, `locator`, `ownerId`, `taskId`, `updatedAt`. For example, `-createdAt,id` sorts by `createdAt` descending then `id` ascending.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -147,7 +147,7 @@ Name | Type | Description  | Notes
  **endDate** | **time.Time** | The end date to filter builds to | 
  **pageSize** | **int32** | The number of builds to return | 
  **page** | **int32** | The page number to return | 
- **sort** | **string** | The sort order(s) to apply to the builds | 
+ **sort** | **string** | The sort order(s) to apply to the builds. Accepts a comma-separated list of one or more columns. Prefix a column with &#x60;-&#x60; to sort it in descending order (ascending is the default). Valid columns are: &#x60;cliVersionId&#x60;, &#x60;createdAt&#x60;, &#x60;id&#x60;, &#x60;locator&#x60;, &#x60;ownerId&#x60;, &#x60;taskId&#x60;, &#x60;updatedAt&#x60;. For example, &#x60;-createdAt,id&#x60; sorts by &#x60;createdAt&#x60; descending then &#x60;id&#x60; ascending.  | 
 
 ### Return type
 
