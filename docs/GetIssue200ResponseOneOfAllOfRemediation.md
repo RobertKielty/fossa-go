@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 **PartialFixDistance** | Pointer to **string** |  | [optional] 
 **CompleteFix** | Pointer to **string** |  | [optional] 
 **CompleteFixDistance** | Pointer to **string** |  | [optional] 
+**PartialFixResolves** | Pointer to [**[]GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner**](GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner.md) | Vulnerabilities on this dependency revision that upgrading to partialFix resolves. Absent when the fix could not be calculated. | [optional] 
+**CompleteFixResolves** | Pointer to [**[]GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner**](GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner.md) | Vulnerabilities on this dependency revision that upgrading to completeFix resolves. Absent when the fix could not be calculated. | [optional] 
 
 ## Methods
 
@@ -127,6 +129,56 @@ SetCompleteFixDistance sets CompleteFixDistance field to given value.
 `func (o *GetIssue200ResponseOneOfAllOfRemediation) HasCompleteFixDistance() bool`
 
 HasCompleteFixDistance returns a boolean if a field has been set.
+
+### GetPartialFixResolves
+
+`func (o *GetIssue200ResponseOneOfAllOfRemediation) GetPartialFixResolves() []GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner`
+
+GetPartialFixResolves returns the PartialFixResolves field if non-nil, zero value otherwise.
+
+### GetPartialFixResolvesOk
+
+`func (o *GetIssue200ResponseOneOfAllOfRemediation) GetPartialFixResolvesOk() (*[]GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner, bool)`
+
+GetPartialFixResolvesOk returns a tuple with the PartialFixResolves field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPartialFixResolves
+
+`func (o *GetIssue200ResponseOneOfAllOfRemediation) SetPartialFixResolves(v []GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner)`
+
+SetPartialFixResolves sets PartialFixResolves field to given value.
+
+### HasPartialFixResolves
+
+`func (o *GetIssue200ResponseOneOfAllOfRemediation) HasPartialFixResolves() bool`
+
+HasPartialFixResolves returns a boolean if a field has been set.
+
+### GetCompleteFixResolves
+
+`func (o *GetIssue200ResponseOneOfAllOfRemediation) GetCompleteFixResolves() []GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner`
+
+GetCompleteFixResolves returns the CompleteFixResolves field if non-nil, zero value otherwise.
+
+### GetCompleteFixResolvesOk
+
+`func (o *GetIssue200ResponseOneOfAllOfRemediation) GetCompleteFixResolvesOk() (*[]GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner, bool)`
+
+GetCompleteFixResolvesOk returns a tuple with the CompleteFixResolves field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCompleteFixResolves
+
+`func (o *GetIssue200ResponseOneOfAllOfRemediation) SetCompleteFixResolves(v []GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner)`
+
+SetCompleteFixResolves sets CompleteFixResolves field to given value.
+
+### HasCompleteFixResolves
+
+`func (o *GetIssue200ResponseOneOfAllOfRemediation) HasCompleteFixResolves() bool`
+
+HasCompleteFixResolves returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

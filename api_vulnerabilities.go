@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.112
 Contact: support@fossa.com
 */
 
@@ -173,7 +173,7 @@ type ApiGetRemediationGuidanceRequest struct {
 	revisionId string
 }
 
-func (r ApiGetRemediationGuidanceRequest) Execute() (*GetIssue200ResponseOneOfAllOfRemediation, *http.Response, error) {
+func (r ApiGetRemediationGuidanceRequest) Execute() (*GetRemediationGuidance200Response, *http.Response, error) {
 	return r.ApiService.GetRemediationGuidanceExecute(r)
 }
 
@@ -197,13 +197,13 @@ func (a *VulnerabilitiesAPIService) GetRemediationGuidance(ctx context.Context, 
 }
 
 // Execute executes the request
-//  @return GetIssue200ResponseOneOfAllOfRemediation
-func (a *VulnerabilitiesAPIService) GetRemediationGuidanceExecute(r ApiGetRemediationGuidanceRequest) (*GetIssue200ResponseOneOfAllOfRemediation, *http.Response, error) {
+//  @return GetRemediationGuidance200Response
+func (a *VulnerabilitiesAPIService) GetRemediationGuidanceExecute(r ApiGetRemediationGuidanceRequest) (*GetRemediationGuidance200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetIssue200ResponseOneOfAllOfRemediation
+		localVarReturnValue  *GetRemediationGuidance200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VulnerabilitiesAPIService.GetRemediationGuidance")
