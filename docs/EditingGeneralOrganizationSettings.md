@@ -5,11 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Labels** | Pointer to **[]string** |  | [optional] 
+**PackageLabels** | Pointer to **[]string** | Package label names to set on the organization. | [optional] 
 **Title** | Pointer to **string** |  | [optional] 
 **Email** | Pointer to **string** |  | [optional] 
 **DefaultRoleId** | Pointer to **int32** |  | [optional] 
 **DependencySignatures** | Pointer to **string** |  | [optional] 
 **DisableNonCustomTeamUserRoles** | Pointer to **bool** |  | [optional] 
+**SnippetSourceCodeRetentionDays** | Pointer to **int32** | Number of days to retain source code from snippet matches. Must be between 1 and 30, or a 400 is returned. | [optional] 
+**LicenseConcludedEnabled** | Pointer to **bool** | Whether the license-concluded workflow is enabled for the organization. | [optional] 
 
 ## Methods
 
@@ -54,6 +57,31 @@ SetLabels sets Labels field to given value.
 `func (o *EditingGeneralOrganizationSettings) HasLabels() bool`
 
 HasLabels returns a boolean if a field has been set.
+
+### GetPackageLabels
+
+`func (o *EditingGeneralOrganizationSettings) GetPackageLabels() []string`
+
+GetPackageLabels returns the PackageLabels field if non-nil, zero value otherwise.
+
+### GetPackageLabelsOk
+
+`func (o *EditingGeneralOrganizationSettings) GetPackageLabelsOk() (*[]string, bool)`
+
+GetPackageLabelsOk returns a tuple with the PackageLabels field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPackageLabels
+
+`func (o *EditingGeneralOrganizationSettings) SetPackageLabels(v []string)`
+
+SetPackageLabels sets PackageLabels field to given value.
+
+### HasPackageLabels
+
+`func (o *EditingGeneralOrganizationSettings) HasPackageLabels() bool`
+
+HasPackageLabels returns a boolean if a field has been set.
 
 ### GetTitle
 
@@ -179,6 +207,56 @@ SetDisableNonCustomTeamUserRoles sets DisableNonCustomTeamUserRoles field to giv
 `func (o *EditingGeneralOrganizationSettings) HasDisableNonCustomTeamUserRoles() bool`
 
 HasDisableNonCustomTeamUserRoles returns a boolean if a field has been set.
+
+### GetSnippetSourceCodeRetentionDays
+
+`func (o *EditingGeneralOrganizationSettings) GetSnippetSourceCodeRetentionDays() int32`
+
+GetSnippetSourceCodeRetentionDays returns the SnippetSourceCodeRetentionDays field if non-nil, zero value otherwise.
+
+### GetSnippetSourceCodeRetentionDaysOk
+
+`func (o *EditingGeneralOrganizationSettings) GetSnippetSourceCodeRetentionDaysOk() (*int32, bool)`
+
+GetSnippetSourceCodeRetentionDaysOk returns a tuple with the SnippetSourceCodeRetentionDays field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSnippetSourceCodeRetentionDays
+
+`func (o *EditingGeneralOrganizationSettings) SetSnippetSourceCodeRetentionDays(v int32)`
+
+SetSnippetSourceCodeRetentionDays sets SnippetSourceCodeRetentionDays field to given value.
+
+### HasSnippetSourceCodeRetentionDays
+
+`func (o *EditingGeneralOrganizationSettings) HasSnippetSourceCodeRetentionDays() bool`
+
+HasSnippetSourceCodeRetentionDays returns a boolean if a field has been set.
+
+### GetLicenseConcludedEnabled
+
+`func (o *EditingGeneralOrganizationSettings) GetLicenseConcludedEnabled() bool`
+
+GetLicenseConcludedEnabled returns the LicenseConcludedEnabled field if non-nil, zero value otherwise.
+
+### GetLicenseConcludedEnabledOk
+
+`func (o *EditingGeneralOrganizationSettings) GetLicenseConcludedEnabledOk() (*bool, bool)`
+
+GetLicenseConcludedEnabledOk returns a tuple with the LicenseConcludedEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLicenseConcludedEnabled
+
+`func (o *EditingGeneralOrganizationSettings) SetLicenseConcludedEnabled(v bool)`
+
+SetLicenseConcludedEnabled sets LicenseConcludedEnabled field to given value.
+
+### HasLicenseConcludedEnabled
+
+`func (o *EditingGeneralOrganizationSettings) HasLicenseConcludedEnabled() bool`
+
+HasLicenseConcludedEnabled returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
