@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**Build**](ComponentsAPI.md#Build) | **Post** /components/build | 
 [**GetSignedUrl**](ComponentsAPI.md#GetSignedUrl) | **Get** /components/signed_url | 
+[**ResolvePurls**](ComponentsAPI.md#ResolvePurls) | **Post** /components/resolve-purls | 
 
 
 
@@ -128,7 +129,7 @@ import (
 func main() {
 	packageSpec := "packageSpec_example" // string | the package spec
 	revision := "revision_example" // string | The branch or revision of the component project being built.
-	fileType := "fileType_example" // string | The kind of file to be uploaded to the signed URL. If 'archive', the signed URL is for uplaoding a directory of source code. If 'sbom', the signed URL is for uploading an SBOM file (CycloneDX or SPDX).  (optional)
+	fileType := "fileType_example" // string | The kind of file to be uploaded to the signed URL. If 'archive', the signed URL is for uplaoding a directory of source code. If 'sbom', the signed URL is for uploading an SBOM file (CycloneDX or SPDX). If 'binary', the signed URL is for uploading a binary for binary decomposition; this is billing-gated and may return a 403 if the organization is outside its binary decomposition billing term or has exhausted its allowance.  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -155,7 +156,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **packageSpec** | **string** | the package spec | 
  **revision** | **string** | The branch or revision of the component project being built. | 
- **fileType** | **string** | The kind of file to be uploaded to the signed URL. If &#39;archive&#39;, the signed URL is for uplaoding a directory of source code. If &#39;sbom&#39;, the signed URL is for uploading an SBOM file (CycloneDX or SPDX).  | 
+ **fileType** | **string** | The kind of file to be uploaded to the signed URL. If &#39;archive&#39;, the signed URL is for uplaoding a directory of source code. If &#39;sbom&#39;, the signed URL is for uploading an SBOM file (CycloneDX or SPDX). If &#39;binary&#39;, the signed URL is for uploading a binary for binary decomposition; this is billing-gated and may return a 403 if the organization is outside its binary decomposition billing term or has exhausted its allowance.  | 
 
 ### Return type
 
@@ -168,6 +169,72 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ResolvePurls
+
+> ResolvePurls200Response ResolvePurls(ctx).ResolvePurlsRequest(resolvePurlsRequest).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	resolvePurlsRequest := *openapiclient.NewResolvePurlsRequest([]string{"pkg:maven/org.springframework.boot/spring-boot@3.5.6"}) // ResolvePurlsRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ComponentsAPI.ResolvePurls(context.Background()).ResolvePurlsRequest(resolvePurlsRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ComponentsAPI.ResolvePurls``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ResolvePurls`: ResolvePurls200Response
+	fmt.Fprintf(os.Stdout, "Response from `ComponentsAPI.ResolvePurls`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiResolvePurlsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **resolvePurlsRequest** | [**ResolvePurlsRequest**](ResolvePurlsRequest.md) |  | 
+
+### Return type
+
+[**ResolvePurls200Response**](ResolvePurls200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
