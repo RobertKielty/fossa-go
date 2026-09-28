@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**GetAddableTeamProjectsAndReleaseGroups**](TeamsAPI.md#GetAddableTeamProjectsAndReleaseGroups) | **Get** /teams/{id}/addable-projects-and-release-groups | 
 [**GetAddableTeamUsers**](TeamsAPI.md#GetAddableTeamUsers) | **Get** /teams/{id}/members/addable | 
 [**GetAllTeams**](TeamsAPI.md#GetAllTeams) | **Get** /teams | 
+[**GetAllTeamsV2**](TeamsAPI.md#GetAllTeamsV2) | **Get** /v2/teams | 
 [**GetTeamByIdV2**](TeamsAPI.md#GetTeamByIdV2) | **Get** /v2/teams/{id} | 
 [**GetTeamMembers**](TeamsAPI.md#GetTeamMembers) | **Get** /teams/{id}/members | 
 [**GetTeamProjects**](TeamsAPI.md#GetTeamProjects) | **Get** /teams/{id}/projects | 
@@ -230,7 +231,7 @@ Name | Type | Description  | Notes
 
 ## GetAddableProjectsFromReleaseGroup
 
-> GetAddableTeamProjectsAndReleaseGroups200Response GetAddableProjectsFromReleaseGroup(ctx, id, releaseGroupId).Execute()
+> GetAddableProjectsFromReleaseGroup200Response GetAddableProjectsFromReleaseGroup(ctx, id, releaseGroupId).Execute()
 
 
 
@@ -259,7 +260,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `TeamsAPI.GetAddableProjectsFromReleaseGroup``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetAddableProjectsFromReleaseGroup`: GetAddableTeamProjectsAndReleaseGroups200Response
+	// response from `GetAddableProjectsFromReleaseGroup`: GetAddableProjectsFromReleaseGroup200Response
 	fmt.Fprintf(os.Stdout, "Response from `TeamsAPI.GetAddableProjectsFromReleaseGroup`: %v\n", resp)
 }
 ```
@@ -285,7 +286,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetAddableTeamProjectsAndReleaseGroups200Response**](GetAddableTeamProjectsAndReleaseGroups200Response.md)
+[**GetAddableProjectsFromReleaseGroup200Response**](GetAddableProjectsFromReleaseGroup200Response.md)
 
 ### Authorization
 
@@ -514,9 +515,9 @@ Other parameters are passed through a pointer to a apiGetAllTeamsRequest struct 
 [[Back to README]](../README.md)
 
 
-## GetTeamByIdV2
+## GetAllTeamsV2
 
-> GetTeamByIdV2200Response GetTeamByIdV2(ctx, id).Execute()
+> GetAllTeamsV2200Response GetAllTeamsV2(ctx).Page(page).PageSize(pageSize).Search(search).Execute()
 
 
 
@@ -535,11 +536,82 @@ import (
 )
 
 func main() {
-	id := int32(56) // int32 | ID of the team
+	page := int32(56) // int32 | Page number (1-indexed, defaults to 1) (optional) (default to 1)
+	pageSize := int32(56) // int32 | Number of items per page (defaults to 10, max 50) (optional) (default to 10)
+	search := "search_example" // string | Search term to filter teams by name (max 255) (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TeamsAPI.GetTeamByIdV2(context.Background(), id).Execute()
+	resp, r, err := apiClient.TeamsAPI.GetAllTeamsV2(context.Background()).Page(page).PageSize(pageSize).Search(search).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `TeamsAPI.GetAllTeamsV2``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAllTeamsV2`: GetAllTeamsV2200Response
+	fmt.Fprintf(os.Stdout, "Response from `TeamsAPI.GetAllTeamsV2`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAllTeamsV2Request struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **page** | **int32** | Page number (1-indexed, defaults to 1) | [default to 1]
+ **pageSize** | **int32** | Number of items per page (defaults to 10, max 50) | [default to 10]
+ **search** | **string** | Search term to filter teams by name (max 255) | 
+
+### Return type
+
+[**GetAllTeamsV2200Response**](GetAllTeamsV2200Response.md)
+
+### Authorization
+
+[ApiToken](../README.md#ApiToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetTeamByIdV2
+
+> GetTeamByIdV2200Response GetTeamByIdV2(ctx, id).IdType(idType).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	id := "id_example" // string | Identifier of the team. Interpreted as the team's numeric ID unless `idType` is `uniqueIdentifier`, in which case it is the team's customer-assigned unique identifier, which requires the \"Team Unique ID\" feature flag.
+	idType := "idType_example" // string | How to interpret the `id` path parameter. Defaults to `id` (the team's numeric ID). Unique identifiers are resolved within the requesting user's organization, and are only available to organizations with the \"Team Unique ID\" feature flag enabled; without it, teams have no unique identifier to look up. (optional) (default to "id")
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.TeamsAPI.GetTeamByIdV2(context.Background(), id).IdType(idType).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TeamsAPI.GetTeamByIdV2``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -555,7 +627,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **int32** | ID of the team | 
+**id** | **string** | Identifier of the team. Interpreted as the team&#39;s numeric ID unless &#x60;idType&#x60; is &#x60;uniqueIdentifier&#x60;, in which case it is the team&#39;s customer-assigned unique identifier, which requires the \&quot;Team Unique ID\&quot; feature flag. | 
 
 ### Other Parameters
 
@@ -565,6 +637,7 @@ Other parameters are passed through a pointer to a apiGetTeamByIdV2Request struc
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **idType** | **string** | How to interpret the &#x60;id&#x60; path parameter. Defaults to &#x60;id&#x60; (the team&#39;s numeric ID). Unique identifiers are resolved within the requesting user&#39;s organization, and are only available to organizations with the \&quot;Team Unique ID\&quot; feature flag enabled; without it, teams have no unique identifier to look up. | [default to &quot;id&quot;]
 
 ### Return type
 
@@ -586,7 +659,7 @@ Name | Type | Description  | Notes
 
 ## GetTeamMembers
 
-> GetTeamMembers200Response GetTeamMembers(ctx, id).Page(page).PageSize(pageSize).Search(search).Execute()
+> GetTeamMembers200Response GetTeamMembers(ctx, id).IdType(idType).Page(page).PageSize(pageSize).Search(search).Execute()
 
 
 
@@ -605,14 +678,15 @@ import (
 )
 
 func main() {
-	id := int32(56) // int32 | ID of the team
+	id := "id_example" // string | Identifier of the team. Interpreted as the team's numeric ID unless `idType` is `uniqueIdentifier`, in which case it is the team's customer-assigned unique identifier, which requires the \"Team Unique ID\" feature flag.
+	idType := "idType_example" // string | How to interpret the `id` path parameter. Defaults to `id` (the team's numeric ID). Unique identifiers are resolved within the requesting user's organization, and are only available to organizations with the \"Team Unique ID\" feature flag enabled; without it, teams have no unique identifier to look up. (optional) (default to "id")
 	page := int32(56) // int32 | Page number (1-indexed, defaults to 1) (optional) (default to 1)
 	pageSize := int32(56) // int32 | Number of items per page (defaults to 10, max 50) (optional) (default to 10)
 	search := "search_example" // string | Search term to filter team members by username or email (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.TeamsAPI.GetTeamMembers(context.Background(), id).Page(page).PageSize(pageSize).Search(search).Execute()
+	resp, r, err := apiClient.TeamsAPI.GetTeamMembers(context.Background(), id).IdType(idType).Page(page).PageSize(pageSize).Search(search).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TeamsAPI.GetTeamMembers``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -628,7 +702,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **int32** | ID of the team | 
+**id** | **string** | Identifier of the team. Interpreted as the team&#39;s numeric ID unless &#x60;idType&#x60; is &#x60;uniqueIdentifier&#x60;, in which case it is the team&#39;s customer-assigned unique identifier, which requires the \&quot;Team Unique ID\&quot; feature flag. | 
 
 ### Other Parameters
 
@@ -638,6 +712,7 @@ Other parameters are passed through a pointer to a apiGetTeamMembersRequest stru
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **idType** | **string** | How to interpret the &#x60;id&#x60; path parameter. Defaults to &#x60;id&#x60; (the team&#39;s numeric ID). Unique identifiers are resolved within the requesting user&#39;s organization, and are only available to organizations with the \&quot;Team Unique ID\&quot; feature flag enabled; without it, teams have no unique identifier to look up. | [default to &quot;id&quot;]
  **page** | **int32** | Page number (1-indexed, defaults to 1) | [default to 1]
  **pageSize** | **int32** | Number of items per page (defaults to 10, max 50) | [default to 10]
  **search** | **string** | Search term to filter team members by username or email | 
