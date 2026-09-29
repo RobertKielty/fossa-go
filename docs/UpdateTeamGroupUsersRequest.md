@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Action** | **string** | Action to perform on team group users | 
-**Users** | [**[]UpdateTeamGroupUsersRequestUsersInner**](UpdateTeamGroupUsersRequestUsersInner.md) | List of users to add, remove, or replace | 
+**Users** | [**[]UpdateTeamUsersRequestUsersInner**](UpdateTeamUsersRequestUsersInner.md) | List of users to add, remove, or replace | 
 
 ## Methods
 
 ### NewUpdateTeamGroupUsersRequest
 
-`func NewUpdateTeamGroupUsersRequest(action string, users []UpdateTeamGroupUsersRequestUsersInner, ) *UpdateTeamGroupUsersRequest`
+`func NewUpdateTeamGroupUsersRequest(action string, users []UpdateTeamUsersRequestUsersInner, ) *UpdateTeamGroupUsersRequest`
 
 NewUpdateTeamGroupUsersRequest instantiates a new UpdateTeamGroupUsersRequest object
 This constructor will assign default values to properties that have it defined,
@@ -48,20 +48,20 @@ SetAction sets Action field to given value.
 
 ### GetUsers
 
-`func (o *UpdateTeamGroupUsersRequest) GetUsers() []UpdateTeamGroupUsersRequestUsersInner`
+`func (o *UpdateTeamGroupUsersRequest) GetUsers() []UpdateTeamUsersRequestUsersInner`
 
 GetUsers returns the Users field if non-nil, zero value otherwise.
 
 ### GetUsersOk
 
-`func (o *UpdateTeamGroupUsersRequest) GetUsersOk() (*[]UpdateTeamGroupUsersRequestUsersInner, bool)`
+`func (o *UpdateTeamGroupUsersRequest) GetUsersOk() (*[]UpdateTeamUsersRequestUsersInner, bool)`
 
 GetUsersOk returns a tuple with the Users field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUsers
 
-`func (o *UpdateTeamGroupUsersRequest) SetUsers(v []UpdateTeamGroupUsersRequestUsersInner)`
+`func (o *UpdateTeamGroupUsersRequest) SetUsers(v []UpdateTeamUsersRequestUsersInner)`
 
 SetUsers sets Users field to given value.
 
