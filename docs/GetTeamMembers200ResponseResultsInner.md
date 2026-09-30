@@ -6,15 +6,15 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **UserId** | **int32** | ID of the user | 
 **RoleId** | **int32** | ID of the role assigned to the user in the team | 
-**Username** | **string** | Username of the user | 
-**Email** | **string** | Email of the user | 
+**Username** | **NullableString** | Username of the user. Can be null when the underlying user record has no username. | 
+**Email** | **NullableString** | Email of the user. Can be null when the underlying user record has no email. | 
 **IsServiceAccount** | Pointer to **bool** | Whether the user is a service account | [optional] 
 
 ## Methods
 
 ### NewGetTeamMembers200ResponseResultsInner
 
-`func NewGetTeamMembers200ResponseResultsInner(userId int32, roleId int32, username string, email string, ) *GetTeamMembers200ResponseResultsInner`
+`func NewGetTeamMembers200ResponseResultsInner(userId int32, roleId int32, username NullableString, email NullableString, ) *GetTeamMembers200ResponseResultsInner`
 
 NewGetTeamMembers200ResponseResultsInner instantiates a new GetTeamMembers200ResponseResultsInner object
 This constructor will assign default values to properties that have it defined,
@@ -89,6 +89,16 @@ and a boolean to check if the value has been set.
 SetUsername sets Username field to given value.
 
 
+### SetUsernameNil
+
+`func (o *GetTeamMembers200ResponseResultsInner) SetUsernameNil(b bool)`
+
+ SetUsernameNil sets the value for Username to be an explicit nil
+
+### UnsetUsername
+`func (o *GetTeamMembers200ResponseResultsInner) UnsetUsername()`
+
+UnsetUsername ensures that no value is present for Username, not even an explicit nil
 ### GetEmail
 
 `func (o *GetTeamMembers200ResponseResultsInner) GetEmail() string`
@@ -109,6 +119,16 @@ and a boolean to check if the value has been set.
 SetEmail sets Email field to given value.
 
 
+### SetEmailNil
+
+`func (o *GetTeamMembers200ResponseResultsInner) SetEmailNil(b bool)`
+
+ SetEmailNil sets the value for Email to be an explicit nil
+
+### UnsetEmail
+`func (o *GetTeamMembers200ResponseResultsInner) UnsetEmail()`
+
+UnsetEmail ensures that no value is present for Email, not even an explicit nil
 ### GetIsServiceAccount
 
 `func (o *GetTeamMembers200ResponseResultsInner) GetIsServiceAccount() bool`
