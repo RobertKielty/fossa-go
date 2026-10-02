@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Scope** | **string** | Scope of the role | 
 **Name** | **string** | Name of the role | 
 **Description** | **string** | Description of the role | 
-**Permissions** | Pointer to [**[]CreateRoleRequestPermissionsInner**](CreateRoleRequestPermissionsInner.md) | List of permissions for this role | [optional] 
+**Permissions** | Pointer to [**[]CreateRoleRequestPermissionsInner**](CreateRoleRequestPermissionsInner.md) | List of permissions for this role. Each entry must be a permission that exists in the system (see &#x60;GET /api/roles/all-permissions&#x60;) and is valid for the role&#39;s &#x60;scope&#x60;; otherwise the request is rejected with a &#x60;400&#x60;.  | [optional] 
 
 ## Methods
 

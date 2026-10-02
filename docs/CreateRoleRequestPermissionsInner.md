@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ResourceType** | **string** | Resource type for the permission | 
-**Action** | **string** | Action for the permission | 
+**ResourceType** | **string** | Resource type for the permission. Must be a valid &#x60;resourceType&#x60; returned by &#x60;GET /api/roles/all-permissions&#x60;, and the &#x60;resourceType&#x60;/&#x60;action&#x60; combination must be valid for the role&#39;s &#x60;scope&#x60;.  | 
+**Action** | **string** | Action for the permission. Must be a valid &#x60;action&#x60; returned by &#x60;GET /api/roles/all-permissions&#x60;, and the &#x60;resourceType&#x60;/&#x60;action&#x60; combination must be valid for the role&#39;s &#x60;scope&#x60;.  | 
 
 ## Methods
 
