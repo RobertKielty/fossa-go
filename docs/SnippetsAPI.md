@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 ## GetComparedSnippetPackages
 
-> GetSnippetPackages200Response GetComparedSnippetPackages(ctx, locator, olderRevisionLocator, status).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).Sort(sort).Page(page).PageSize(pageSize).Execute()
+> GetSnippetPackages200Response GetComparedSnippetPackages(ctx, locator, olderRevisionLocator, status).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).VendoredMatch(vendoredMatch).Sort(sort).Page(page).PageSize(pageSize).Execute()
 
 Get compared snippet packages between two revisions
 
@@ -48,13 +48,14 @@ func main() {
 	search := "search_example" // string | Search term for filtering snippets by package name (optional)
 	rejectionStatus := []string{"RejectionStatus_example"} // []string | Filter by rejection status (optional)
 	packageLabels := []string{"Inner_example"} // []string | Filter by package labels (optional)
+	vendoredMatch := []string{"VendoredMatch_example"} // []string | Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | `vendored` | Include snippets that exist as a vendored dependency | | `exVendored` | Exclude snippets that exist as a vendored dependency | | `converted` | Include snippets that have been converted to vendored dependencies | | `exConverted` | Exclude snippets that have been converted to vendored dependencies |  (optional)
 	sort := "sort_example" // string | Sort order for results (optional) (default to "matchCount_desc")
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
 	pageSize := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 10)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SnippetsAPI.GetComparedSnippetPackages(context.Background(), locator, olderRevisionLocator, status).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).Sort(sort).Page(page).PageSize(pageSize).Execute()
+	resp, r, err := apiClient.SnippetsAPI.GetComparedSnippetPackages(context.Background(), locator, olderRevisionLocator, status).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).VendoredMatch(vendoredMatch).Sort(sort).Page(page).PageSize(pageSize).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SnippetsAPI.GetComparedSnippetPackages``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -90,6 +91,7 @@ Name | Type | Description  | Notes
  **search** | **string** | Search term for filtering snippets by package name | 
  **rejectionStatus** | **[]string** | Filter by rejection status | 
  **packageLabels** | **[]string** | Filter by package labels | 
+ **vendoredMatch** | **[]string** | Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | &#x60;vendored&#x60; | Include snippets that exist as a vendored dependency | | &#x60;exVendored&#x60; | Exclude snippets that exist as a vendored dependency | | &#x60;converted&#x60; | Include snippets that have been converted to vendored dependencies | | &#x60;exConverted&#x60; | Exclude snippets that have been converted to vendored dependencies |  | 
  **sort** | **string** | Sort order for results | [default to &quot;matchCount_desc&quot;]
  **page** | **int32** | The specific page of data to return | [default to 1]
  **pageSize** | **int32** | The number of items to return in each page of results | [default to 10]
@@ -114,7 +116,7 @@ No authorization required
 
 ## GetComparedSnippetPaths
 
-> GetSnippetPaths200Response GetComparedSnippetPaths(ctx, locator, olderRevisionLocator, status).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).Execute()
+> GetSnippetPaths200Response GetComparedSnippetPaths(ctx, locator, olderRevisionLocator, status).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).VendoredMatch(vendoredMatch).Execute()
 
 Get compared snippet paths between two revisions
 
@@ -136,16 +138,17 @@ func main() {
 	locator := "locator_example" // string | The base revision locator
 	olderRevisionLocator := "olderRevisionLocator_example" // string | An older revision locator from the same project
 	status := "status_example" // string | The status of snippets to retrieve
-	path := "path_example" // string | The path to filter snippets by
+	path := "path_example" // string | The path to filter snippets by. When omitted, paths are aggregated from the root. (optional)
 	ids := []string{"Inner_example"} // []string | Filter by specific snippet IDs (optional)
 	packageIds := []string{"Inner_example"} // []string | Filter by specific snippet package IDs (optional)
 	search := "search_example" // string | Search term for filtering snippets by package name (optional)
 	rejectionStatus := []string{"RejectionStatus_example"} // []string | Filter by rejection status (optional)
 	packageLabels := []string{"Inner_example"} // []string | Filter by package labels (optional)
+	vendoredMatch := []string{"VendoredMatch_example"} // []string | Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | `vendored` | Include snippets that exist as a vendored dependency | | `exVendored` | Exclude snippets that exist as a vendored dependency | | `converted` | Include snippets that have been converted to vendored dependencies | | `exConverted` | Exclude snippets that have been converted to vendored dependencies |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SnippetsAPI.GetComparedSnippetPaths(context.Background(), locator, olderRevisionLocator, status).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).Execute()
+	resp, r, err := apiClient.SnippetsAPI.GetComparedSnippetPaths(context.Background(), locator, olderRevisionLocator, status).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).VendoredMatch(vendoredMatch).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SnippetsAPI.GetComparedSnippetPaths``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -175,12 +178,13 @@ Name | Type | Description  | Notes
 
 
 
- **path** | **string** | The path to filter snippets by | 
+ **path** | **string** | The path to filter snippets by. When omitted, paths are aggregated from the root. | 
  **ids** | **[]string** | Filter by specific snippet IDs | 
  **packageIds** | **[]string** | Filter by specific snippet package IDs | 
  **search** | **string** | Search term for filtering snippets by package name | 
  **rejectionStatus** | **[]string** | Filter by rejection status | 
  **packageLabels** | **[]string** | Filter by package labels | 
+ **vendoredMatch** | **[]string** | Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | &#x60;vendored&#x60; | Include snippets that exist as a vendored dependency | | &#x60;exVendored&#x60; | Exclude snippets that exist as a vendored dependency | | &#x60;converted&#x60; | Include snippets that have been converted to vendored dependencies | | &#x60;exConverted&#x60; | Exclude snippets that have been converted to vendored dependencies |  | 
 
 ### Return type
 
@@ -202,7 +206,7 @@ No authorization required
 
 ## GetComparedSnippets
 
-> GetSnippets200Response GetComparedSnippets(ctx, locator, olderRevisionLocator, status).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).Sort(sort).Page(page).PageSize(pageSize).Execute()
+> GetSnippets200Response GetComparedSnippets(ctx, locator, olderRevisionLocator, status).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).VendoredMatch(vendoredMatch).Sort(sort).Page(page).PageSize(pageSize).Execute()
 
 Get compared snippets between two revisions
 
@@ -230,13 +234,14 @@ func main() {
 	search := "search_example" // string | Search term for filtering snippets by package name (optional)
 	rejectionStatus := []string{"RejectionStatus_example"} // []string | Filter by rejection status (optional)
 	packageLabels := []string{"Inner_example"} // []string | Filter by package labels (optional)
+	vendoredMatch := []string{"VendoredMatch_example"} // []string | Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | `vendored` | Include snippets that exist as a vendored dependency | | `exVendored` | Exclude snippets that exist as a vendored dependency | | `converted` | Include snippets that have been converted to vendored dependencies | | `exConverted` | Exclude snippets that have been converted to vendored dependencies |  (optional)
 	sort := "sort_example" // string | Sort order for results (optional) (default to "matchCount_desc")
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
 	pageSize := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 10)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SnippetsAPI.GetComparedSnippets(context.Background(), locator, olderRevisionLocator, status).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).Sort(sort).Page(page).PageSize(pageSize).Execute()
+	resp, r, err := apiClient.SnippetsAPI.GetComparedSnippets(context.Background(), locator, olderRevisionLocator, status).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).VendoredMatch(vendoredMatch).Sort(sort).Page(page).PageSize(pageSize).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SnippetsAPI.GetComparedSnippets``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -272,6 +277,7 @@ Name | Type | Description  | Notes
  **search** | **string** | Search term for filtering snippets by package name | 
  **rejectionStatus** | **[]string** | Filter by rejection status | 
  **packageLabels** | **[]string** | Filter by package labels | 
+ **vendoredMatch** | **[]string** | Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | &#x60;vendored&#x60; | Include snippets that exist as a vendored dependency | | &#x60;exVendored&#x60; | Exclude snippets that exist as a vendored dependency | | &#x60;converted&#x60; | Include snippets that have been converted to vendored dependencies | | &#x60;exConverted&#x60; | Exclude snippets that have been converted to vendored dependencies |  | 
  **sort** | **string** | Sort order for results | [default to &quot;matchCount_desc&quot;]
  **page** | **int32** | The specific page of data to return | [default to 1]
  **pageSize** | **int32** | The number of items to return in each page of results | [default to 10]
@@ -296,7 +302,7 @@ No authorization required
 
 ## GetSnippetCount
 
-> GetSnippetCount200Response GetSnippetCount(ctx, locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).Execute()
+> GetSnippetCount200Response GetSnippetCount(ctx, locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).VendoredMatch(vendoredMatch).Execute()
 
 Get snippet count
 
@@ -322,10 +328,11 @@ func main() {
 	search := "search_example" // string | Search term for filtering snippets by package name (optional)
 	rejectionStatus := []string{"RejectionStatus_example"} // []string | Filter by rejection status (optional)
 	packageLabels := []string{"Inner_example"} // []string | Filter by package labels (optional)
+	vendoredMatch := []string{"VendoredMatch_example"} // []string | Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | `vendored` | Include snippets that exist as a vendored dependency | | `exVendored` | Exclude snippets that exist as a vendored dependency | | `converted` | Include snippets that have been converted to vendored dependencies | | `exConverted` | Exclude snippets that have been converted to vendored dependencies |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SnippetsAPI.GetSnippetCount(context.Background(), locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).Execute()
+	resp, r, err := apiClient.SnippetsAPI.GetSnippetCount(context.Background(), locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).VendoredMatch(vendoredMatch).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SnippetsAPI.GetSnippetCount``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -357,6 +364,7 @@ Name | Type | Description  | Notes
  **search** | **string** | Search term for filtering snippets by package name | 
  **rejectionStatus** | **[]string** | Filter by rejection status | 
  **packageLabels** | **[]string** | Filter by package labels | 
+ **vendoredMatch** | **[]string** | Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | &#x60;vendored&#x60; | Include snippets that exist as a vendored dependency | | &#x60;exVendored&#x60; | Exclude snippets that exist as a vendored dependency | | &#x60;converted&#x60; | Include snippets that have been converted to vendored dependencies | | &#x60;exConverted&#x60; | Exclude snippets that have been converted to vendored dependencies |  | 
 
 ### Return type
 
@@ -378,7 +386,7 @@ No authorization required
 
 ## GetSnippetDetails
 
-> GetSnippetDetails200Response GetSnippetDetails(ctx, locator, snippetId).Execute()
+> GetSnippetDetails200Response GetSnippetDetails(ctx, locator, snippetId).Path(path).Execute()
 
 Get the details of a specific snippet
 
@@ -399,10 +407,11 @@ import (
 func main() {
 	locator := "locator_example" // string | The revision locator
 	snippetId := "snippetId_example" // string | The unique identifier of the snippet
+	path := "path_example" // string | An optional file path used to hydrate the snippet match details for that path. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SnippetsAPI.GetSnippetDetails(context.Background(), locator, snippetId).Execute()
+	resp, r, err := apiClient.SnippetsAPI.GetSnippetDetails(context.Background(), locator, snippetId).Path(path).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SnippetsAPI.GetSnippetDetails``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -430,6 +439,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **path** | **string** | An optional file path used to hydrate the snippet match details for that path. | 
 
 ### Return type
 
@@ -527,7 +537,7 @@ No authorization required
 
 ## GetSnippetPackages
 
-> GetSnippetPackages200Response GetSnippetPackages(ctx, locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).Sort(sort).Page(page).PageSize(pageSize).Execute()
+> GetSnippetPackages200Response GetSnippetPackages(ctx, locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).VendoredMatch(vendoredMatch).Sort(sort).Page(page).PageSize(pageSize).Execute()
 
 Get snippet packages
 
@@ -553,13 +563,14 @@ func main() {
 	search := "search_example" // string | Search term for filtering snippets by package name (optional)
 	rejectionStatus := []string{"RejectionStatus_example"} // []string | Filter by rejection status (optional)
 	packageLabels := []string{"Inner_example"} // []string | Filter by package labels (optional)
+	vendoredMatch := []string{"VendoredMatch_example"} // []string | Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | `vendored` | Include snippets that exist as a vendored dependency | | `exVendored` | Exclude snippets that exist as a vendored dependency | | `converted` | Include snippets that have been converted to vendored dependencies | | `exConverted` | Exclude snippets that have been converted to vendored dependencies |  (optional)
 	sort := "sort_example" // string | Sort order for results (optional) (default to "matchCount_desc")
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
 	pageSize := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 10)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SnippetsAPI.GetSnippetPackages(context.Background(), locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).Sort(sort).Page(page).PageSize(pageSize).Execute()
+	resp, r, err := apiClient.SnippetsAPI.GetSnippetPackages(context.Background(), locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).VendoredMatch(vendoredMatch).Sort(sort).Page(page).PageSize(pageSize).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SnippetsAPI.GetSnippetPackages``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -591,6 +602,7 @@ Name | Type | Description  | Notes
  **search** | **string** | Search term for filtering snippets by package name | 
  **rejectionStatus** | **[]string** | Filter by rejection status | 
  **packageLabels** | **[]string** | Filter by package labels | 
+ **vendoredMatch** | **[]string** | Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | &#x60;vendored&#x60; | Include snippets that exist as a vendored dependency | | &#x60;exVendored&#x60; | Exclude snippets that exist as a vendored dependency | | &#x60;converted&#x60; | Include snippets that have been converted to vendored dependencies | | &#x60;exConverted&#x60; | Exclude snippets that have been converted to vendored dependencies |  | 
  **sort** | **string** | Sort order for results | [default to &quot;matchCount_desc&quot;]
  **page** | **int32** | The specific page of data to return | [default to 1]
  **pageSize** | **int32** | The number of items to return in each page of results | [default to 10]
@@ -615,7 +627,7 @@ No authorization required
 
 ## GetSnippetPaths
 
-> GetSnippetPaths200Response GetSnippetPaths(ctx, locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).Execute()
+> GetSnippetPaths200Response GetSnippetPaths(ctx, locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).VendoredMatch(vendoredMatch).Execute()
 
 Get snippet paths
 
@@ -635,16 +647,17 @@ import (
 
 func main() {
 	locator := "locator_example" // string | The revision locator
-	path := "path_example" // string | The path to filter snippets by
+	path := "path_example" // string | The path to filter snippets by. When omitted, paths are aggregated from the root. (optional)
 	ids := []string{"Inner_example"} // []string | Filter by specific snippet IDs (optional)
 	packageIds := []string{"Inner_example"} // []string | Filter by specific snippet package IDs (optional)
 	search := "search_example" // string | Search term for filtering snippets by package name (optional)
 	rejectionStatus := []string{"RejectionStatus_example"} // []string | Filter by rejection status (optional)
 	packageLabels := []string{"Inner_example"} // []string | Filter by package labels (optional)
+	vendoredMatch := []string{"VendoredMatch_example"} // []string | Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | `vendored` | Include snippets that exist as a vendored dependency | | `exVendored` | Exclude snippets that exist as a vendored dependency | | `converted` | Include snippets that have been converted to vendored dependencies | | `exConverted` | Exclude snippets that have been converted to vendored dependencies |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SnippetsAPI.GetSnippetPaths(context.Background(), locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).Execute()
+	resp, r, err := apiClient.SnippetsAPI.GetSnippetPaths(context.Background(), locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).VendoredMatch(vendoredMatch).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SnippetsAPI.GetSnippetPaths``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -670,12 +683,13 @@ Other parameters are passed through a pointer to a apiGetSnippetPathsRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **path** | **string** | The path to filter snippets by | 
+ **path** | **string** | The path to filter snippets by. When omitted, paths are aggregated from the root. | 
  **ids** | **[]string** | Filter by specific snippet IDs | 
  **packageIds** | **[]string** | Filter by specific snippet package IDs | 
  **search** | **string** | Search term for filtering snippets by package name | 
  **rejectionStatus** | **[]string** | Filter by rejection status | 
  **packageLabels** | **[]string** | Filter by package labels | 
+ **vendoredMatch** | **[]string** | Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | &#x60;vendored&#x60; | Include snippets that exist as a vendored dependency | | &#x60;exVendored&#x60; | Exclude snippets that exist as a vendored dependency | | &#x60;converted&#x60; | Include snippets that have been converted to vendored dependencies | | &#x60;exConverted&#x60; | Exclude snippets that have been converted to vendored dependencies |  | 
 
 ### Return type
 
@@ -697,7 +711,7 @@ No authorization required
 
 ## GetSnippets
 
-> GetSnippets200Response GetSnippets(ctx, locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).Sort(sort).Page(page).PageSize(pageSize).Execute()
+> GetSnippets200Response GetSnippets(ctx, locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).VendoredMatch(vendoredMatch).Sort(sort).Page(page).PageSize(pageSize).Execute()
 
 Get snippets
 
@@ -723,13 +737,14 @@ func main() {
 	search := "search_example" // string | Search term for filtering snippets by package name (optional)
 	rejectionStatus := []string{"RejectionStatus_example"} // []string | Filter by rejection status (optional)
 	packageLabels := []string{"Inner_example"} // []string | Filter by package labels (optional)
+	vendoredMatch := []string{"VendoredMatch_example"} // []string | Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | `vendored` | Include snippets that exist as a vendored dependency | | `exVendored` | Exclude snippets that exist as a vendored dependency | | `converted` | Include snippets that have been converted to vendored dependencies | | `exConverted` | Exclude snippets that have been converted to vendored dependencies |  (optional)
 	sort := "sort_example" // string | Sort order for results (optional) (default to "matchCount_desc")
 	page := int32(56) // int32 | The specific page of data to return (optional) (default to 1)
 	pageSize := int32(56) // int32 | The number of items to return in each page of results (optional) (default to 10)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SnippetsAPI.GetSnippets(context.Background(), locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).Sort(sort).Page(page).PageSize(pageSize).Execute()
+	resp, r, err := apiClient.SnippetsAPI.GetSnippets(context.Background(), locator).Path(path).Ids(ids).PackageIds(packageIds).Search(search).RejectionStatus(rejectionStatus).PackageLabels(packageLabels).VendoredMatch(vendoredMatch).Sort(sort).Page(page).PageSize(pageSize).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SnippetsAPI.GetSnippets``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -761,6 +776,7 @@ Name | Type | Description  | Notes
  **search** | **string** | Search term for filtering snippets by package name | 
  **rejectionStatus** | **[]string** | Filter by rejection status | 
  **packageLabels** | **[]string** | Filter by package labels | 
+ **vendoredMatch** | **[]string** | Filter snippets by vendored/converted match status. Accepts one or more of:  | Value | Description | |-------|-------------| | &#x60;vendored&#x60; | Include snippets that exist as a vendored dependency | | &#x60;exVendored&#x60; | Exclude snippets that exist as a vendored dependency | | &#x60;converted&#x60; | Include snippets that have been converted to vendored dependencies | | &#x60;exConverted&#x60; | Exclude snippets that have been converted to vendored dependencies |  | 
  **sort** | **string** | Sort order for results | [default to &quot;matchCount_desc&quot;]
  **page** | **int32** | The specific page of data to return | [default to 1]
  **pageSize** | **int32** | The number of items to return in each page of results | [default to 10]

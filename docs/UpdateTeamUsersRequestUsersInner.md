@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**UserId** | **int32** | ID of the user | 
-**RoleId** | Pointer to **int32** | Role ID for the user (required for add and update actions) | [optional] 
+**Id** | **int32** | ID of the user | 
+**RoleId** | Pointer to **int32** | Role ID for the user (required for add and replace actions) | [optional] 
 
 ## Methods
 
 ### NewUpdateTeamUsersRequestUsersInner
 
-`func NewUpdateTeamUsersRequestUsersInner(userId int32, ) *UpdateTeamUsersRequestUsersInner`
+`func NewUpdateTeamUsersRequestUsersInner(id int32, ) *UpdateTeamUsersRequestUsersInner`
 
 NewUpdateTeamUsersRequestUsersInner instantiates a new UpdateTeamUsersRequestUsersInner object
 This constructor will assign default values to properties that have it defined,
@@ -26,24 +26,24 @@ NewUpdateTeamUsersRequestUsersInnerWithDefaults instantiates a new UpdateTeamUse
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetUserId
+### GetId
 
-`func (o *UpdateTeamUsersRequestUsersInner) GetUserId() int32`
+`func (o *UpdateTeamUsersRequestUsersInner) GetId() int32`
 
-GetUserId returns the UserId field if non-nil, zero value otherwise.
+GetId returns the Id field if non-nil, zero value otherwise.
 
-### GetUserIdOk
+### GetIdOk
 
-`func (o *UpdateTeamUsersRequestUsersInner) GetUserIdOk() (*int32, bool)`
+`func (o *UpdateTeamUsersRequestUsersInner) GetIdOk() (*int32, bool)`
 
-GetUserIdOk returns a tuple with the UserId field if it's non-nil, zero value otherwise
+GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetUserId
+### SetId
 
-`func (o *UpdateTeamUsersRequestUsersInner) SetUserId(v int32)`
+`func (o *UpdateTeamUsersRequestUsersInner) SetId(v int32)`
 
-SetUserId sets UserId field to given value.
+SetId sets Id field to given value.
 
 
 ### GetRoleId
