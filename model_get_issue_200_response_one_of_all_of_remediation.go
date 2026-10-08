@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.34.139
 Contact: support@fossa.com
 */
 
@@ -24,6 +24,10 @@ type GetIssue200ResponseOneOfAllOfRemediation struct {
 	PartialFixDistance *string `json:"partialFixDistance,omitempty"`
 	CompleteFix *string `json:"completeFix,omitempty"`
 	CompleteFixDistance *string `json:"completeFixDistance,omitempty"`
+	// Vulnerabilities on this dependency revision that upgrading to partialFix resolves. Absent when the fix could not be calculated.
+	PartialFixResolves []GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner `json:"partialFixResolves,omitempty"`
+	// Vulnerabilities on this dependency revision that upgrading to completeFix resolves. Absent when the fix could not be calculated.
+	CompleteFixResolves []GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner `json:"completeFixResolves,omitempty"`
 }
 
 // NewGetIssue200ResponseOneOfAllOfRemediation instantiates a new GetIssue200ResponseOneOfAllOfRemediation object
@@ -171,6 +175,70 @@ func (o *GetIssue200ResponseOneOfAllOfRemediation) SetCompleteFixDistance(v stri
 	o.CompleteFixDistance = &v
 }
 
+// GetPartialFixResolves returns the PartialFixResolves field value if set, zero value otherwise.
+func (o *GetIssue200ResponseOneOfAllOfRemediation) GetPartialFixResolves() []GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner {
+	if o == nil || IsNil(o.PartialFixResolves) {
+		var ret []GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner
+		return ret
+	}
+	return o.PartialFixResolves
+}
+
+// GetPartialFixResolvesOk returns a tuple with the PartialFixResolves field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetIssue200ResponseOneOfAllOfRemediation) GetPartialFixResolvesOk() ([]GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner, bool) {
+	if o == nil || IsNil(o.PartialFixResolves) {
+		return nil, false
+	}
+	return o.PartialFixResolves, true
+}
+
+// HasPartialFixResolves returns a boolean if a field has been set.
+func (o *GetIssue200ResponseOneOfAllOfRemediation) HasPartialFixResolves() bool {
+	if o != nil && !IsNil(o.PartialFixResolves) {
+		return true
+	}
+
+	return false
+}
+
+// SetPartialFixResolves gets a reference to the given []GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner and assigns it to the PartialFixResolves field.
+func (o *GetIssue200ResponseOneOfAllOfRemediation) SetPartialFixResolves(v []GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner) {
+	o.PartialFixResolves = v
+}
+
+// GetCompleteFixResolves returns the CompleteFixResolves field value if set, zero value otherwise.
+func (o *GetIssue200ResponseOneOfAllOfRemediation) GetCompleteFixResolves() []GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner {
+	if o == nil || IsNil(o.CompleteFixResolves) {
+		var ret []GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner
+		return ret
+	}
+	return o.CompleteFixResolves
+}
+
+// GetCompleteFixResolvesOk returns a tuple with the CompleteFixResolves field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetIssue200ResponseOneOfAllOfRemediation) GetCompleteFixResolvesOk() ([]GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner, bool) {
+	if o == nil || IsNil(o.CompleteFixResolves) {
+		return nil, false
+	}
+	return o.CompleteFixResolves, true
+}
+
+// HasCompleteFixResolves returns a boolean if a field has been set.
+func (o *GetIssue200ResponseOneOfAllOfRemediation) HasCompleteFixResolves() bool {
+	if o != nil && !IsNil(o.CompleteFixResolves) {
+		return true
+	}
+
+	return false
+}
+
+// SetCompleteFixResolves gets a reference to the given []GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner and assigns it to the CompleteFixResolves field.
+func (o *GetIssue200ResponseOneOfAllOfRemediation) SetCompleteFixResolves(v []GetIssue200ResponseOneOfAllOfRemediationPartialFixResolvesInner) {
+	o.CompleteFixResolves = v
+}
+
 func (o GetIssue200ResponseOneOfAllOfRemediation) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -192,6 +260,12 @@ func (o GetIssue200ResponseOneOfAllOfRemediation) ToMap() (map[string]interface{
 	}
 	if !IsNil(o.CompleteFixDistance) {
 		toSerialize["completeFixDistance"] = o.CompleteFixDistance
+	}
+	if !IsNil(o.PartialFixResolves) {
+		toSerialize["partialFixResolves"] = o.PartialFixResolves
+	}
+	if !IsNil(o.CompleteFixResolves) {
+		toSerialize["completeFixResolves"] = o.CompleteFixResolves
 	}
 	return toSerialize, nil
 }
