@@ -4,16 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**NotificationDefaultEnabled** | Pointer to **bool** | the on/off status of project notifications | [optional] 
-**NotificationDefaultSlackScan** | Pointer to **bool** | the on/off status of slack notifications for scans | [optional] 
-**NotificationDefaultEmailScanUsers** | Pointer to **[]float32** |  | [optional] 
-**NotificationDefaultEmailScanUserType** | Pointer to **string** | The type of users to email for scan notifications. Each option represents a different set of users: - current: Only the current user will receive scan notifications. - all: All users will receive scan notifications. - custom: Custom set of users will receive scan notifications.  | [optional] 
+**NotificationDefaultEnabled** | **bool** | the on/off status of project notifications | 
+**NotificationDefaultSlackScan** | **bool** | the on/off status of slack notifications for scans | 
+**NotificationDefaultApiWebhookScan** | **bool** | the on/off status of API webhook notifications for scans | 
+**NotificationDefaultEmailScanUsers** | **[]float32** |  | 
+**NotificationDefaultEmailScanUserType** | **string** | The type of users to email for scan notifications. Each option represents a different set of users: - current: Only the current user will receive scan notifications. - all: All users will receive scan notifications. - custom: Custom set of users will receive scan notifications.  | 
 
 ## Methods
 
 ### NewGetOrganizationNotificationSettings200Response
 
-`func NewGetOrganizationNotificationSettings200Response() *GetOrganizationNotificationSettings200Response`
+`func NewGetOrganizationNotificationSettings200Response(notificationDefaultEnabled bool, notificationDefaultSlackScan bool, notificationDefaultApiWebhookScan bool, notificationDefaultEmailScanUsers []float32, notificationDefaultEmailScanUserType string, ) *GetOrganizationNotificationSettings200Response`
 
 NewGetOrganizationNotificationSettings200Response instantiates a new GetOrganizationNotificationSettings200Response object
 This constructor will assign default values to properties that have it defined,
@@ -47,11 +48,6 @@ and a boolean to check if the value has been set.
 
 SetNotificationDefaultEnabled sets NotificationDefaultEnabled field to given value.
 
-### HasNotificationDefaultEnabled
-
-`func (o *GetOrganizationNotificationSettings200Response) HasNotificationDefaultEnabled() bool`
-
-HasNotificationDefaultEnabled returns a boolean if a field has been set.
 
 ### GetNotificationDefaultSlackScan
 
@@ -72,11 +68,26 @@ and a boolean to check if the value has been set.
 
 SetNotificationDefaultSlackScan sets NotificationDefaultSlackScan field to given value.
 
-### HasNotificationDefaultSlackScan
 
-`func (o *GetOrganizationNotificationSettings200Response) HasNotificationDefaultSlackScan() bool`
+### GetNotificationDefaultApiWebhookScan
 
-HasNotificationDefaultSlackScan returns a boolean if a field has been set.
+`func (o *GetOrganizationNotificationSettings200Response) GetNotificationDefaultApiWebhookScan() bool`
+
+GetNotificationDefaultApiWebhookScan returns the NotificationDefaultApiWebhookScan field if non-nil, zero value otherwise.
+
+### GetNotificationDefaultApiWebhookScanOk
+
+`func (o *GetOrganizationNotificationSettings200Response) GetNotificationDefaultApiWebhookScanOk() (*bool, bool)`
+
+GetNotificationDefaultApiWebhookScanOk returns a tuple with the NotificationDefaultApiWebhookScan field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNotificationDefaultApiWebhookScan
+
+`func (o *GetOrganizationNotificationSettings200Response) SetNotificationDefaultApiWebhookScan(v bool)`
+
+SetNotificationDefaultApiWebhookScan sets NotificationDefaultApiWebhookScan field to given value.
+
 
 ### GetNotificationDefaultEmailScanUsers
 
@@ -97,11 +108,6 @@ and a boolean to check if the value has been set.
 
 SetNotificationDefaultEmailScanUsers sets NotificationDefaultEmailScanUsers field to given value.
 
-### HasNotificationDefaultEmailScanUsers
-
-`func (o *GetOrganizationNotificationSettings200Response) HasNotificationDefaultEmailScanUsers() bool`
-
-HasNotificationDefaultEmailScanUsers returns a boolean if a field has been set.
 
 ### GetNotificationDefaultEmailScanUserType
 
@@ -122,11 +128,6 @@ and a boolean to check if the value has been set.
 
 SetNotificationDefaultEmailScanUserType sets NotificationDefaultEmailScanUserType field to given value.
 
-### HasNotificationDefaultEmailScanUserType
-
-`func (o *GetOrganizationNotificationSettings200Response) HasNotificationDefaultEmailScanUserType() bool`
-
-HasNotificationDefaultEmailScanUserType returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
