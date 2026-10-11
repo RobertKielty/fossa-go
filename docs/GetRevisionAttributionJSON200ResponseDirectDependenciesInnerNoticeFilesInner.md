@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **int32** | The ID of the notice match | [optional] 
 **RevisionId** | Pointer to **string** | The revision ID of the notice match | [optional] 
+**Path** | Pointer to **string** | The file path of the notice match | [optional] 
 **Contents** | Pointer to **string** | The contents of the notice match | [optional] 
 **Copyrights** | Pointer to **[]string** | The copyrights of the notice match | [optional] 
 **CreatedAt** | Pointer to **time.Time** | The creation date of the notice match | [optional] 
@@ -81,6 +82,31 @@ SetRevisionId sets RevisionId field to given value.
 `func (o *GetRevisionAttributionJSON200ResponseDirectDependenciesInnerNoticeFilesInner) HasRevisionId() bool`
 
 HasRevisionId returns a boolean if a field has been set.
+
+### GetPath
+
+`func (o *GetRevisionAttributionJSON200ResponseDirectDependenciesInnerNoticeFilesInner) GetPath() string`
+
+GetPath returns the Path field if non-nil, zero value otherwise.
+
+### GetPathOk
+
+`func (o *GetRevisionAttributionJSON200ResponseDirectDependenciesInnerNoticeFilesInner) GetPathOk() (*string, bool)`
+
+GetPathOk returns a tuple with the Path field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPath
+
+`func (o *GetRevisionAttributionJSON200ResponseDirectDependenciesInnerNoticeFilesInner) SetPath(v string)`
+
+SetPath sets Path field to given value.
+
+### HasPath
+
+`func (o *GetRevisionAttributionJSON200ResponseDirectDependenciesInnerNoticeFilesInner) HasPath() bool`
+
+HasPath returns a boolean if a field has been set.
 
 ### GetContents
 
