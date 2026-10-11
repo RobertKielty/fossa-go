@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Limit** | Pointer to **int32** | Maximum number of dependencies to return (min 1, max 10000) | [optional] 
+**Limit** | Pointer to **int32** | Maximum number of dependencies to return. The value is clamped server-side to the range 25–100: any value below 25 is treated as 25, and any value above 100 is treated as 100.  | [optional] 
 **Offset** | Pointer to **int32** | Number of dependencies to skip for pagination | [optional] 
 **IncludeIgnored** | Pointer to **bool** | Whether to include ignored dependencies in the response | [optional] [default to false]
 **IncludeHashData** | Pointer to **bool** | Whether to include hash and version data for dependencies | [optional] [default to false]
