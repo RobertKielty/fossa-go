@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.35.7
 Contact: support@fossa.com
 */
 
@@ -24,7 +24,7 @@ type ListSavedFilters200ResponseInner struct {
 	Name *string `json:"name,omitempty"`
 	Category *string `json:"category,omitempty"`
 	// A JSON object representing the specific filter criteria.
-	Filter map[string]Json `json:"filter,omitempty"`
+	Filter *map[string]Json `json:"filter,omitempty"`
 	// Can be any of the sort options related to issue or revision.
 	Sort *string `json:"sort,omitempty"`
 	Group *string `json:"group,omitempty"`
@@ -149,14 +149,14 @@ func (o *ListSavedFilters200ResponseInner) GetFilter() map[string]Json {
 		var ret map[string]Json
 		return ret
 	}
-	return o.Filter
+	return *o.Filter
 }
 
 // GetFilterOk returns a tuple with the Filter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListSavedFilters200ResponseInner) GetFilterOk() (map[string]Json, bool) {
+func (o *ListSavedFilters200ResponseInner) GetFilterOk() (*map[string]Json, bool) {
 	if o == nil || IsNil(o.Filter) {
-		return map[string]Json{}, false
+		return nil, false
 	}
 	return o.Filter, true
 }
@@ -172,7 +172,7 @@ func (o *ListSavedFilters200ResponseInner) HasFilter() bool {
 
 // SetFilter gets a reference to the given map[string]Json and assigns it to the Filter field.
 func (o *ListSavedFilters200ResponseInner) SetFilter(v map[string]Json) {
-	o.Filter = v
+	o.Filter = &v
 }
 
 // GetSort returns the Sort field value if set, zero value otherwise.
