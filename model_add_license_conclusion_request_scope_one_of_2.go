@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.35.7
 Contact: support@fossa.com
 */
 
@@ -22,10 +22,8 @@ var _ MappedNullable = &AddLicenseConclusionRequestScopeOneOf2{}
 
 // AddLicenseConclusionRequestScopeOneOf2 struct for AddLicenseConclusionRequestScopeOneOf2
 type AddLicenseConclusionRequestScopeOneOf2 struct {
-	// Release group-scoped conclusion
+	// Global conclusion (FOSSA admins only)
 	Scope string `json:"scope"`
-	// The ID of the release group
-	ReleaseGroupId int32 `json:"releaseGroupId"`
 }
 
 type _AddLicenseConclusionRequestScopeOneOf2 AddLicenseConclusionRequestScopeOneOf2
@@ -34,10 +32,9 @@ type _AddLicenseConclusionRequestScopeOneOf2 AddLicenseConclusionRequestScopeOne
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAddLicenseConclusionRequestScopeOneOf2(scope string, releaseGroupId int32) *AddLicenseConclusionRequestScopeOneOf2 {
+func NewAddLicenseConclusionRequestScopeOneOf2(scope string) *AddLicenseConclusionRequestScopeOneOf2 {
 	this := AddLicenseConclusionRequestScopeOneOf2{}
 	this.Scope = scope
-	this.ReleaseGroupId = releaseGroupId
 	return &this
 }
 
@@ -73,30 +70,6 @@ func (o *AddLicenseConclusionRequestScopeOneOf2) SetScope(v string) {
 	o.Scope = v
 }
 
-// GetReleaseGroupId returns the ReleaseGroupId field value
-func (o *AddLicenseConclusionRequestScopeOneOf2) GetReleaseGroupId() int32 {
-	if o == nil {
-		var ret int32
-		return ret
-	}
-
-	return o.ReleaseGroupId
-}
-
-// GetReleaseGroupIdOk returns a tuple with the ReleaseGroupId field value
-// and a boolean to check if the value has been set.
-func (o *AddLicenseConclusionRequestScopeOneOf2) GetReleaseGroupIdOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.ReleaseGroupId, true
-}
-
-// SetReleaseGroupId sets field value
-func (o *AddLicenseConclusionRequestScopeOneOf2) SetReleaseGroupId(v int32) {
-	o.ReleaseGroupId = v
-}
-
 func (o AddLicenseConclusionRequestScopeOneOf2) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -108,7 +81,6 @@ func (o AddLicenseConclusionRequestScopeOneOf2) MarshalJSON() ([]byte, error) {
 func (o AddLicenseConclusionRequestScopeOneOf2) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["scope"] = o.Scope
-	toSerialize["releaseGroupId"] = o.ReleaseGroupId
 	return toSerialize, nil
 }
 
@@ -118,7 +90,6 @@ func (o *AddLicenseConclusionRequestScopeOneOf2) UnmarshalJSON(data []byte) (err
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"scope",
-		"releaseGroupId",
 	}
 
 	allProperties := make(map[string]interface{})
