@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.35.9
 Contact: support@fossa.com
 */
 
@@ -25,10 +25,18 @@ type GetProjectDependencies200ResponseDependenciesInner struct {
 	IsManual *bool `json:"isManual,omitempty"`
 	IsIgnored *bool `json:"isIgnored,omitempty"`
 	IsUnknown *bool `json:"isUnknown,omitempty"`
-	ConcludedLicenses *GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses `json:"concludedLicenses,omitempty"`
+	IsSnippetConversion *bool `json:"isSnippetConversion,omitempty"`
+	Conclusions *GetProjectDependencies200ResponseDependenciesInnerConclusions `json:"conclusions,omitempty"`
 	Licenses []string `json:"licenses,omitempty"`
 	DeclaredLicenses []string `json:"declaredLicenses,omitempty"`
+	DiscoveredLicenses []string `json:"discoveredLicenses,omitempty"`
+	// The grouped licenses discovered for this dependency.
+	LicenseGroups []GetProjectDependencies200ResponseDependenciesInnerLicenseGroupsInner `json:"licenseGroups,omitempty"`
+	// The package label assignments applied to this dependency.
+	Labels []GetProjectDependencies200ResponseDependenciesInnerLabelsInner `json:"labels,omitempty"`
 	Depth *int32 `json:"depth,omitempty"`
+	// Whether the dependency is reachable through at least one transitive path. `depth` is the minimum path length across all importing projects, so a direct dependency (`depth <= 1`) can also be transitive when another dependency imports it too. Absent on responses generated before this field was introduced.
+	HasTransitivePath *bool `json:"hasTransitivePath,omitempty"`
 	OriginPaths []string `json:"originPaths,omitempty"`
 	Status *GetProjectDependencies200ResponseDependenciesInnerStatus `json:"status,omitempty"`
 	Issues []GetProjectDependencies200ResponseDependenciesInnerIssuesInner `json:"issues,omitempty"`
@@ -216,36 +224,68 @@ func (o *GetProjectDependencies200ResponseDependenciesInner) SetIsUnknown(v bool
 	o.IsUnknown = &v
 }
 
-// GetConcludedLicenses returns the ConcludedLicenses field value if set, zero value otherwise.
-func (o *GetProjectDependencies200ResponseDependenciesInner) GetConcludedLicenses() GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses {
-	if o == nil || IsNil(o.ConcludedLicenses) {
-		var ret GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses
+// GetIsSnippetConversion returns the IsSnippetConversion field value if set, zero value otherwise.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetIsSnippetConversion() bool {
+	if o == nil || IsNil(o.IsSnippetConversion) {
+		var ret bool
 		return ret
 	}
-	return *o.ConcludedLicenses
+	return *o.IsSnippetConversion
 }
 
-// GetConcludedLicensesOk returns a tuple with the ConcludedLicenses field value if set, nil otherwise
+// GetIsSnippetConversionOk returns a tuple with the IsSnippetConversion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetProjectDependencies200ResponseDependenciesInner) GetConcludedLicensesOk() (*GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses, bool) {
-	if o == nil || IsNil(o.ConcludedLicenses) {
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetIsSnippetConversionOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsSnippetConversion) {
 		return nil, false
 	}
-	return o.ConcludedLicenses, true
+	return o.IsSnippetConversion, true
 }
 
-// HasConcludedLicenses returns a boolean if a field has been set.
-func (o *GetProjectDependencies200ResponseDependenciesInner) HasConcludedLicenses() bool {
-	if o != nil && !IsNil(o.ConcludedLicenses) {
+// HasIsSnippetConversion returns a boolean if a field has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) HasIsSnippetConversion() bool {
+	if o != nil && !IsNil(o.IsSnippetConversion) {
 		return true
 	}
 
 	return false
 }
 
-// SetConcludedLicenses gets a reference to the given GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses and assigns it to the ConcludedLicenses field.
-func (o *GetProjectDependencies200ResponseDependenciesInner) SetConcludedLicenses(v GetProjectDependencies200ResponseDependenciesInnerConcludedLicenses) {
-	o.ConcludedLicenses = &v
+// SetIsSnippetConversion gets a reference to the given bool and assigns it to the IsSnippetConversion field.
+func (o *GetProjectDependencies200ResponseDependenciesInner) SetIsSnippetConversion(v bool) {
+	o.IsSnippetConversion = &v
+}
+
+// GetConclusions returns the Conclusions field value if set, zero value otherwise.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetConclusions() GetProjectDependencies200ResponseDependenciesInnerConclusions {
+	if o == nil || IsNil(o.Conclusions) {
+		var ret GetProjectDependencies200ResponseDependenciesInnerConclusions
+		return ret
+	}
+	return *o.Conclusions
+}
+
+// GetConclusionsOk returns a tuple with the Conclusions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetConclusionsOk() (*GetProjectDependencies200ResponseDependenciesInnerConclusions, bool) {
+	if o == nil || IsNil(o.Conclusions) {
+		return nil, false
+	}
+	return o.Conclusions, true
+}
+
+// HasConclusions returns a boolean if a field has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) HasConclusions() bool {
+	if o != nil && !IsNil(o.Conclusions) {
+		return true
+	}
+
+	return false
+}
+
+// SetConclusions gets a reference to the given GetProjectDependencies200ResponseDependenciesInnerConclusions and assigns it to the Conclusions field.
+func (o *GetProjectDependencies200ResponseDependenciesInner) SetConclusions(v GetProjectDependencies200ResponseDependenciesInnerConclusions) {
+	o.Conclusions = &v
 }
 
 // GetLicenses returns the Licenses field value if set, zero value otherwise.
@@ -312,6 +352,102 @@ func (o *GetProjectDependencies200ResponseDependenciesInner) SetDeclaredLicenses
 	o.DeclaredLicenses = v
 }
 
+// GetDiscoveredLicenses returns the DiscoveredLicenses field value if set, zero value otherwise.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetDiscoveredLicenses() []string {
+	if o == nil || IsNil(o.DiscoveredLicenses) {
+		var ret []string
+		return ret
+	}
+	return o.DiscoveredLicenses
+}
+
+// GetDiscoveredLicensesOk returns a tuple with the DiscoveredLicenses field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetDiscoveredLicensesOk() ([]string, bool) {
+	if o == nil || IsNil(o.DiscoveredLicenses) {
+		return nil, false
+	}
+	return o.DiscoveredLicenses, true
+}
+
+// HasDiscoveredLicenses returns a boolean if a field has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) HasDiscoveredLicenses() bool {
+	if o != nil && !IsNil(o.DiscoveredLicenses) {
+		return true
+	}
+
+	return false
+}
+
+// SetDiscoveredLicenses gets a reference to the given []string and assigns it to the DiscoveredLicenses field.
+func (o *GetProjectDependencies200ResponseDependenciesInner) SetDiscoveredLicenses(v []string) {
+	o.DiscoveredLicenses = v
+}
+
+// GetLicenseGroups returns the LicenseGroups field value if set, zero value otherwise.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetLicenseGroups() []GetProjectDependencies200ResponseDependenciesInnerLicenseGroupsInner {
+	if o == nil || IsNil(o.LicenseGroups) {
+		var ret []GetProjectDependencies200ResponseDependenciesInnerLicenseGroupsInner
+		return ret
+	}
+	return o.LicenseGroups
+}
+
+// GetLicenseGroupsOk returns a tuple with the LicenseGroups field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetLicenseGroupsOk() ([]GetProjectDependencies200ResponseDependenciesInnerLicenseGroupsInner, bool) {
+	if o == nil || IsNil(o.LicenseGroups) {
+		return nil, false
+	}
+	return o.LicenseGroups, true
+}
+
+// HasLicenseGroups returns a boolean if a field has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) HasLicenseGroups() bool {
+	if o != nil && !IsNil(o.LicenseGroups) {
+		return true
+	}
+
+	return false
+}
+
+// SetLicenseGroups gets a reference to the given []GetProjectDependencies200ResponseDependenciesInnerLicenseGroupsInner and assigns it to the LicenseGroups field.
+func (o *GetProjectDependencies200ResponseDependenciesInner) SetLicenseGroups(v []GetProjectDependencies200ResponseDependenciesInnerLicenseGroupsInner) {
+	o.LicenseGroups = v
+}
+
+// GetLabels returns the Labels field value if set, zero value otherwise.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetLabels() []GetProjectDependencies200ResponseDependenciesInnerLabelsInner {
+	if o == nil || IsNil(o.Labels) {
+		var ret []GetProjectDependencies200ResponseDependenciesInnerLabelsInner
+		return ret
+	}
+	return o.Labels
+}
+
+// GetLabelsOk returns a tuple with the Labels field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetLabelsOk() ([]GetProjectDependencies200ResponseDependenciesInnerLabelsInner, bool) {
+	if o == nil || IsNil(o.Labels) {
+		return nil, false
+	}
+	return o.Labels, true
+}
+
+// HasLabels returns a boolean if a field has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) HasLabels() bool {
+	if o != nil && !IsNil(o.Labels) {
+		return true
+	}
+
+	return false
+}
+
+// SetLabels gets a reference to the given []GetProjectDependencies200ResponseDependenciesInnerLabelsInner and assigns it to the Labels field.
+func (o *GetProjectDependencies200ResponseDependenciesInner) SetLabels(v []GetProjectDependencies200ResponseDependenciesInnerLabelsInner) {
+	o.Labels = v
+}
+
 // GetDepth returns the Depth field value if set, zero value otherwise.
 func (o *GetProjectDependencies200ResponseDependenciesInner) GetDepth() int32 {
 	if o == nil || IsNil(o.Depth) {
@@ -342,6 +478,38 @@ func (o *GetProjectDependencies200ResponseDependenciesInner) HasDepth() bool {
 // SetDepth gets a reference to the given int32 and assigns it to the Depth field.
 func (o *GetProjectDependencies200ResponseDependenciesInner) SetDepth(v int32) {
 	o.Depth = &v
+}
+
+// GetHasTransitivePath returns the HasTransitivePath field value if set, zero value otherwise.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetHasTransitivePath() bool {
+	if o == nil || IsNil(o.HasTransitivePath) {
+		var ret bool
+		return ret
+	}
+	return *o.HasTransitivePath
+}
+
+// GetHasTransitivePathOk returns a tuple with the HasTransitivePath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) GetHasTransitivePathOk() (*bool, bool) {
+	if o == nil || IsNil(o.HasTransitivePath) {
+		return nil, false
+	}
+	return o.HasTransitivePath, true
+}
+
+// HasHasTransitivePath returns a boolean if a field has been set.
+func (o *GetProjectDependencies200ResponseDependenciesInner) HasHasTransitivePath() bool {
+	if o != nil && !IsNil(o.HasTransitivePath) {
+		return true
+	}
+
+	return false
+}
+
+// SetHasTransitivePath gets a reference to the given bool and assigns it to the HasTransitivePath field.
+func (o *GetProjectDependencies200ResponseDependenciesInner) SetHasTransitivePath(v bool) {
+	o.HasTransitivePath = &v
 }
 
 // GetOriginPaths returns the OriginPaths field value if set, zero value otherwise.
@@ -625,8 +793,11 @@ func (o GetProjectDependencies200ResponseDependenciesInner) ToMap() (map[string]
 	if !IsNil(o.IsUnknown) {
 		toSerialize["isUnknown"] = o.IsUnknown
 	}
-	if !IsNil(o.ConcludedLicenses) {
-		toSerialize["concludedLicenses"] = o.ConcludedLicenses
+	if !IsNil(o.IsSnippetConversion) {
+		toSerialize["isSnippetConversion"] = o.IsSnippetConversion
+	}
+	if !IsNil(o.Conclusions) {
+		toSerialize["conclusions"] = o.Conclusions
 	}
 	if !IsNil(o.Licenses) {
 		toSerialize["licenses"] = o.Licenses
@@ -634,8 +805,20 @@ func (o GetProjectDependencies200ResponseDependenciesInner) ToMap() (map[string]
 	if !IsNil(o.DeclaredLicenses) {
 		toSerialize["declaredLicenses"] = o.DeclaredLicenses
 	}
+	if !IsNil(o.DiscoveredLicenses) {
+		toSerialize["discoveredLicenses"] = o.DiscoveredLicenses
+	}
+	if !IsNil(o.LicenseGroups) {
+		toSerialize["licenseGroups"] = o.LicenseGroups
+	}
+	if !IsNil(o.Labels) {
+		toSerialize["labels"] = o.Labels
+	}
 	if !IsNil(o.Depth) {
 		toSerialize["depth"] = o.Depth
+	}
+	if !IsNil(o.HasTransitivePath) {
+		toSerialize["hasTransitivePath"] = o.HasTransitivePath
 	}
 	if !IsNil(o.OriginPaths) {
 		toSerialize["originPaths"] = o.OriginPaths
