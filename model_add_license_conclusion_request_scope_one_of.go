@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.35.9
 Contact: support@fossa.com
 */
 
@@ -13,141 +13,204 @@ package fossa
 
 import (
 	"encoding/json"
-	"bytes"
 	"fmt"
+	"gopkg.in/validator.v2"
 )
 
-// checks if the AddLicenseConclusionRequestScopeOneOf type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &AddLicenseConclusionRequestScopeOneOf{}
-
-// AddLicenseConclusionRequestScopeOneOf struct for AddLicenseConclusionRequestScopeOneOf
+// AddLicenseConclusionRequestScopeOneOf - struct for AddLicenseConclusionRequestScopeOneOf
 type AddLicenseConclusionRequestScopeOneOf struct {
-	// Project-scoped conclusion
-	Scope string `json:"scope"`
-	// The locator of the project
-	ProjectLocator string `json:"projectLocator"`
+	AddLicenseConclusionRequestScopeOneOfOneOf *AddLicenseConclusionRequestScopeOneOfOneOf
+	AddLicenseConclusionRequestScopeOneOfOneOf1 *AddLicenseConclusionRequestScopeOneOfOneOf1
+	AddLicenseConclusionRequestScopeOneOfOneOf2 *AddLicenseConclusionRequestScopeOneOfOneOf2
+	AddLicenseConclusionRequestScopeOneOfOneOf3 *AddLicenseConclusionRequestScopeOneOfOneOf3
 }
 
-type _AddLicenseConclusionRequestScopeOneOf AddLicenseConclusionRequestScopeOneOf
-
-// NewAddLicenseConclusionRequestScopeOneOf instantiates a new AddLicenseConclusionRequestScopeOneOf object
-// This constructor will assign default values to properties that have it defined,
-// and makes sure properties required by API are set, but the set of arguments
-// will change when the set of required properties is changed
-func NewAddLicenseConclusionRequestScopeOneOf(scope string, projectLocator string) *AddLicenseConclusionRequestScopeOneOf {
-	this := AddLicenseConclusionRequestScopeOneOf{}
-	this.Scope = scope
-	this.ProjectLocator = projectLocator
-	return &this
-}
-
-// NewAddLicenseConclusionRequestScopeOneOfWithDefaults instantiates a new AddLicenseConclusionRequestScopeOneOf object
-// This constructor will only assign default values to properties that have it defined,
-// but it doesn't guarantee that properties required by API are set
-func NewAddLicenseConclusionRequestScopeOneOfWithDefaults() *AddLicenseConclusionRequestScopeOneOf {
-	this := AddLicenseConclusionRequestScopeOneOf{}
-	return &this
-}
-
-// GetScope returns the Scope field value
-func (o *AddLicenseConclusionRequestScopeOneOf) GetScope() string {
-	if o == nil {
-		var ret string
-		return ret
+// AddLicenseConclusionRequestScopeOneOfOneOfAsAddLicenseConclusionRequestScopeOneOf is a convenience function that returns AddLicenseConclusionRequestScopeOneOfOneOf wrapped in AddLicenseConclusionRequestScopeOneOf
+func AddLicenseConclusionRequestScopeOneOfOneOfAsAddLicenseConclusionRequestScopeOneOf(v *AddLicenseConclusionRequestScopeOneOfOneOf) AddLicenseConclusionRequestScopeOneOf {
+	return AddLicenseConclusionRequestScopeOneOf{
+		AddLicenseConclusionRequestScopeOneOfOneOf: v,
 	}
-
-	return o.Scope
 }
 
-// GetScopeOk returns a tuple with the Scope field value
-// and a boolean to check if the value has been set.
-func (o *AddLicenseConclusionRequestScopeOneOf) GetScopeOk() (*string, bool) {
-	if o == nil {
-		return nil, false
+// AddLicenseConclusionRequestScopeOneOfOneOf1AsAddLicenseConclusionRequestScopeOneOf is a convenience function that returns AddLicenseConclusionRequestScopeOneOfOneOf1 wrapped in AddLicenseConclusionRequestScopeOneOf
+func AddLicenseConclusionRequestScopeOneOfOneOf1AsAddLicenseConclusionRequestScopeOneOf(v *AddLicenseConclusionRequestScopeOneOfOneOf1) AddLicenseConclusionRequestScopeOneOf {
+	return AddLicenseConclusionRequestScopeOneOf{
+		AddLicenseConclusionRequestScopeOneOfOneOf1: v,
 	}
-	return &o.Scope, true
 }
 
-// SetScope sets field value
-func (o *AddLicenseConclusionRequestScopeOneOf) SetScope(v string) {
-	o.Scope = v
-}
-
-// GetProjectLocator returns the ProjectLocator field value
-func (o *AddLicenseConclusionRequestScopeOneOf) GetProjectLocator() string {
-	if o == nil {
-		var ret string
-		return ret
+// AddLicenseConclusionRequestScopeOneOfOneOf2AsAddLicenseConclusionRequestScopeOneOf is a convenience function that returns AddLicenseConclusionRequestScopeOneOfOneOf2 wrapped in AddLicenseConclusionRequestScopeOneOf
+func AddLicenseConclusionRequestScopeOneOfOneOf2AsAddLicenseConclusionRequestScopeOneOf(v *AddLicenseConclusionRequestScopeOneOfOneOf2) AddLicenseConclusionRequestScopeOneOf {
+	return AddLicenseConclusionRequestScopeOneOf{
+		AddLicenseConclusionRequestScopeOneOfOneOf2: v,
 	}
-
-	return o.ProjectLocator
 }
 
-// GetProjectLocatorOk returns a tuple with the ProjectLocator field value
-// and a boolean to check if the value has been set.
-func (o *AddLicenseConclusionRequestScopeOneOf) GetProjectLocatorOk() (*string, bool) {
-	if o == nil {
-		return nil, false
+// AddLicenseConclusionRequestScopeOneOfOneOf3AsAddLicenseConclusionRequestScopeOneOf is a convenience function that returns AddLicenseConclusionRequestScopeOneOfOneOf3 wrapped in AddLicenseConclusionRequestScopeOneOf
+func AddLicenseConclusionRequestScopeOneOfOneOf3AsAddLicenseConclusionRequestScopeOneOf(v *AddLicenseConclusionRequestScopeOneOfOneOf3) AddLicenseConclusionRequestScopeOneOf {
+	return AddLicenseConclusionRequestScopeOneOf{
+		AddLicenseConclusionRequestScopeOneOfOneOf3: v,
 	}
-	return &o.ProjectLocator, true
 }
 
-// SetProjectLocator sets field value
-func (o *AddLicenseConclusionRequestScopeOneOf) SetProjectLocator(v string) {
-	o.ProjectLocator = v
-}
 
-func (o AddLicenseConclusionRequestScopeOneOf) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
-	if err != nil {
-		return []byte{}, err
-	}
-	return json.Marshal(toSerialize)
-}
-
-func (o AddLicenseConclusionRequestScopeOneOf) ToMap() (map[string]interface{}, error) {
-	toSerialize := map[string]interface{}{}
-	toSerialize["scope"] = o.Scope
-	toSerialize["projectLocator"] = o.ProjectLocator
-	return toSerialize, nil
-}
-
-func (o *AddLicenseConclusionRequestScopeOneOf) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"scope",
-		"projectLocator",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err;
-	}
-
-	for _, requiredProperty := range(requiredProperties) {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
+// Unmarshal JSON data into one of the pointers in the struct
+func (dst *AddLicenseConclusionRequestScopeOneOf) UnmarshalJSON(data []byte) error {
+	var err error
+	match := 0
+	// try to unmarshal data into AddLicenseConclusionRequestScopeOneOfOneOf
+	err = newStrictDecoder(data).Decode(&dst.AddLicenseConclusionRequestScopeOneOfOneOf)
+	if err == nil {
+		jsonAddLicenseConclusionRequestScopeOneOfOneOf, _ := json.Marshal(dst.AddLicenseConclusionRequestScopeOneOfOneOf)
+		if string(jsonAddLicenseConclusionRequestScopeOneOfOneOf) == "{}" { // empty struct
+			dst.AddLicenseConclusionRequestScopeOneOfOneOf = nil
+		} else {
+			if err = validator.Validate(dst.AddLicenseConclusionRequestScopeOneOfOneOf); err != nil {
+				dst.AddLicenseConclusionRequestScopeOneOfOneOf = nil
+			} else {
+				match++
+			}
 		}
+	} else {
+		dst.AddLicenseConclusionRequestScopeOneOfOneOf = nil
 	}
 
-	varAddLicenseConclusionRequestScopeOneOf := _AddLicenseConclusionRequestScopeOneOf{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varAddLicenseConclusionRequestScopeOneOf)
-
-	if err != nil {
-		return err
+	// try to unmarshal data into AddLicenseConclusionRequestScopeOneOfOneOf1
+	err = newStrictDecoder(data).Decode(&dst.AddLicenseConclusionRequestScopeOneOfOneOf1)
+	if err == nil {
+		jsonAddLicenseConclusionRequestScopeOneOfOneOf1, _ := json.Marshal(dst.AddLicenseConclusionRequestScopeOneOfOneOf1)
+		if string(jsonAddLicenseConclusionRequestScopeOneOfOneOf1) == "{}" { // empty struct
+			dst.AddLicenseConclusionRequestScopeOneOfOneOf1 = nil
+		} else {
+			if err = validator.Validate(dst.AddLicenseConclusionRequestScopeOneOfOneOf1); err != nil {
+				dst.AddLicenseConclusionRequestScopeOneOfOneOf1 = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.AddLicenseConclusionRequestScopeOneOfOneOf1 = nil
 	}
 
-	*o = AddLicenseConclusionRequestScopeOneOf(varAddLicenseConclusionRequestScopeOneOf)
+	// try to unmarshal data into AddLicenseConclusionRequestScopeOneOfOneOf2
+	err = newStrictDecoder(data).Decode(&dst.AddLicenseConclusionRequestScopeOneOfOneOf2)
+	if err == nil {
+		jsonAddLicenseConclusionRequestScopeOneOfOneOf2, _ := json.Marshal(dst.AddLicenseConclusionRequestScopeOneOfOneOf2)
+		if string(jsonAddLicenseConclusionRequestScopeOneOfOneOf2) == "{}" { // empty struct
+			dst.AddLicenseConclusionRequestScopeOneOfOneOf2 = nil
+		} else {
+			if err = validator.Validate(dst.AddLicenseConclusionRequestScopeOneOfOneOf2); err != nil {
+				dst.AddLicenseConclusionRequestScopeOneOfOneOf2 = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.AddLicenseConclusionRequestScopeOneOfOneOf2 = nil
+	}
 
-	return err
+	// try to unmarshal data into AddLicenseConclusionRequestScopeOneOfOneOf3
+	err = newStrictDecoder(data).Decode(&dst.AddLicenseConclusionRequestScopeOneOfOneOf3)
+	if err == nil {
+		jsonAddLicenseConclusionRequestScopeOneOfOneOf3, _ := json.Marshal(dst.AddLicenseConclusionRequestScopeOneOfOneOf3)
+		if string(jsonAddLicenseConclusionRequestScopeOneOfOneOf3) == "{}" { // empty struct
+			dst.AddLicenseConclusionRequestScopeOneOfOneOf3 = nil
+		} else {
+			if err = validator.Validate(dst.AddLicenseConclusionRequestScopeOneOfOneOf3); err != nil {
+				dst.AddLicenseConclusionRequestScopeOneOfOneOf3 = nil
+			} else {
+				match++
+			}
+		}
+	} else {
+		dst.AddLicenseConclusionRequestScopeOneOfOneOf3 = nil
+	}
+
+	if match > 1 { // more than 1 match
+		// reset to nil
+		dst.AddLicenseConclusionRequestScopeOneOfOneOf = nil
+		dst.AddLicenseConclusionRequestScopeOneOfOneOf1 = nil
+		dst.AddLicenseConclusionRequestScopeOneOfOneOf2 = nil
+		dst.AddLicenseConclusionRequestScopeOneOfOneOf3 = nil
+
+		return fmt.Errorf("data matches more than one schema in oneOf(AddLicenseConclusionRequestScopeOneOf)")
+	} else if match == 1 {
+		return nil // exactly one match
+	} else { // no match
+		if err != nil {
+			return fmt.Errorf("data failed to match schemas in oneOf(AddLicenseConclusionRequestScopeOneOf): %v", err)
+		}
+
+		return fmt.Errorf("data failed to match schemas in oneOf(AddLicenseConclusionRequestScopeOneOf)")
+	}
+}
+
+// Marshal data from the first non-nil pointers in the struct to JSON
+func (src AddLicenseConclusionRequestScopeOneOf) MarshalJSON() ([]byte, error) {
+	if src.AddLicenseConclusionRequestScopeOneOfOneOf != nil {
+		return json.Marshal(&src.AddLicenseConclusionRequestScopeOneOfOneOf)
+	}
+
+	if src.AddLicenseConclusionRequestScopeOneOfOneOf1 != nil {
+		return json.Marshal(&src.AddLicenseConclusionRequestScopeOneOfOneOf1)
+	}
+
+	if src.AddLicenseConclusionRequestScopeOneOfOneOf2 != nil {
+		return json.Marshal(&src.AddLicenseConclusionRequestScopeOneOfOneOf2)
+	}
+
+	if src.AddLicenseConclusionRequestScopeOneOfOneOf3 != nil {
+		return json.Marshal(&src.AddLicenseConclusionRequestScopeOneOfOneOf3)
+	}
+
+	return nil, nil // no data in oneOf schemas
+}
+
+// Get the actual instance
+func (obj *AddLicenseConclusionRequestScopeOneOf) GetActualInstance() (interface{}) {
+	if obj == nil {
+		return nil
+	}
+	if obj.AddLicenseConclusionRequestScopeOneOfOneOf != nil {
+		return obj.AddLicenseConclusionRequestScopeOneOfOneOf
+	}
+
+	if obj.AddLicenseConclusionRequestScopeOneOfOneOf1 != nil {
+		return obj.AddLicenseConclusionRequestScopeOneOfOneOf1
+	}
+
+	if obj.AddLicenseConclusionRequestScopeOneOfOneOf2 != nil {
+		return obj.AddLicenseConclusionRequestScopeOneOfOneOf2
+	}
+
+	if obj.AddLicenseConclusionRequestScopeOneOfOneOf3 != nil {
+		return obj.AddLicenseConclusionRequestScopeOneOfOneOf3
+	}
+
+	// all schemas are nil
+	return nil
+}
+
+// Get the actual instance value
+func (obj AddLicenseConclusionRequestScopeOneOf) GetActualInstanceValue() (interface{}) {
+	if obj.AddLicenseConclusionRequestScopeOneOfOneOf != nil {
+		return *obj.AddLicenseConclusionRequestScopeOneOfOneOf
+	}
+
+	if obj.AddLicenseConclusionRequestScopeOneOfOneOf1 != nil {
+		return *obj.AddLicenseConclusionRequestScopeOneOfOneOf1
+	}
+
+	if obj.AddLicenseConclusionRequestScopeOneOfOneOf2 != nil {
+		return *obj.AddLicenseConclusionRequestScopeOneOfOneOf2
+	}
+
+	if obj.AddLicenseConclusionRequestScopeOneOfOneOf3 != nil {
+		return *obj.AddLicenseConclusionRequestScopeOneOfOneOf3
+	}
+
+	// all schemas are nil
+	return nil
 }
 
 type NullableAddLicenseConclusionRequestScopeOneOf struct {
