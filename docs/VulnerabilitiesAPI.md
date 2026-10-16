@@ -77,7 +77,7 @@ Name | Type | Description  | Notes
 
 ## GetRemediationGuidance
 
-> GetIssue200ResponseOneOfAllOfRemediation GetRemediationGuidance(ctx, vulnId, revisionId).Execute()
+> GetRemediationGuidance200Response GetRemediationGuidance(ctx, vulnId, revisionId).Execute()
 
 
 
@@ -106,7 +106,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `VulnerabilitiesAPI.GetRemediationGuidance``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetRemediationGuidance`: GetIssue200ResponseOneOfAllOfRemediation
+	// response from `GetRemediationGuidance`: GetRemediationGuidance200Response
 	fmt.Fprintf(os.Stdout, "Response from `VulnerabilitiesAPI.GetRemediationGuidance`: %v\n", resp)
 }
 ```
@@ -132,7 +132,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetIssue200ResponseOneOfAllOfRemediation**](GetIssue200ResponseOneOfAllOfRemediation.md)
+[**GetRemediationGuidance200Response**](GetRemediationGuidance200Response.md)
 
 ### Authorization
 
