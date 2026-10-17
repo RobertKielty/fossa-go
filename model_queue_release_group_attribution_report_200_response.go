@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.35.12
 Contact: support@fossa.com
 */
 
@@ -21,6 +21,8 @@ var _ MappedNullable = &QueueReleaseGroupAttributionReport200Response{}
 // QueueReleaseGroupAttributionReport200Response struct for QueueReleaseGroupAttributionReport200Response
 type QueueReleaseGroupAttributionReport200Response struct {
 	TaskId *int32 `json:"taskId,omitempty"`
+	// The report's ID. Once the task finishes, fetch the report from `https://<host>/attribution/{reportId}?download=true` (not under `/api`), which responds with a redirect to a short-lived signed URL. 
+	ReportId *string `json:"reportId,omitempty"`
 }
 
 // NewQueueReleaseGroupAttributionReport200Response instantiates a new QueueReleaseGroupAttributionReport200Response object
@@ -72,6 +74,38 @@ func (o *QueueReleaseGroupAttributionReport200Response) SetTaskId(v int32) {
 	o.TaskId = &v
 }
 
+// GetReportId returns the ReportId field value if set, zero value otherwise.
+func (o *QueueReleaseGroupAttributionReport200Response) GetReportId() string {
+	if o == nil || IsNil(o.ReportId) {
+		var ret string
+		return ret
+	}
+	return *o.ReportId
+}
+
+// GetReportIdOk returns a tuple with the ReportId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueueReleaseGroupAttributionReport200Response) GetReportIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ReportId) {
+		return nil, false
+	}
+	return o.ReportId, true
+}
+
+// HasReportId returns a boolean if a field has been set.
+func (o *QueueReleaseGroupAttributionReport200Response) HasReportId() bool {
+	if o != nil && !IsNil(o.ReportId) {
+		return true
+	}
+
+	return false
+}
+
+// SetReportId gets a reference to the given string and assigns it to the ReportId field.
+func (o *QueueReleaseGroupAttributionReport200Response) SetReportId(v string) {
+	o.ReportId = &v
+}
+
 func (o QueueReleaseGroupAttributionReport200Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -84,6 +118,9 @@ func (o QueueReleaseGroupAttributionReport200Response) ToMap() (map[string]inter
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.TaskId) {
 		toSerialize["taskId"] = o.TaskId
+	}
+	if !IsNil(o.ReportId) {
+		toSerialize["reportId"] = o.ReportId
 	}
 	return toSerialize, nil
 }
