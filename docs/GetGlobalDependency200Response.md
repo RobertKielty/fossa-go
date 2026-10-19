@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Dependency** | Pointer to [**GetProjectDependencies200ResponseDependenciesInner**](GetProjectDependencies200ResponseDependenciesInner.md) |  | [optional] 
+**Dependency** | Pointer to [**GetGlobalDependency200ResponseDependency**](GetGlobalDependency200ResponseDependency.md) |  | [optional] 
 
 ## Methods
 
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetDependency
 
-`func (o *GetGlobalDependency200Response) GetDependency() GetProjectDependencies200ResponseDependenciesInner`
+`func (o *GetGlobalDependency200Response) GetDependency() GetGlobalDependency200ResponseDependency`
 
 GetDependency returns the Dependency field if non-nil, zero value otherwise.
 
 ### GetDependencyOk
 
-`func (o *GetGlobalDependency200Response) GetDependencyOk() (*GetProjectDependencies200ResponseDependenciesInner, bool)`
+`func (o *GetGlobalDependency200Response) GetDependencyOk() (*GetGlobalDependency200ResponseDependency, bool)`
 
 GetDependencyOk returns a tuple with the Dependency field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDependency
 
-`func (o *GetGlobalDependency200Response) SetDependency(v GetProjectDependencies200ResponseDependenciesInner)`
+`func (o *GetGlobalDependency200Response) SetDependency(v GetGlobalDependency200ResponseDependency)`
 
 SetDependency sets Dependency field to given value.
 
