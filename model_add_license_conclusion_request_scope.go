@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.35.14
 Contact: support@fossa.com
 */
 
@@ -22,7 +22,6 @@ type AddLicenseConclusionRequestScope struct {
 	AddLicenseConclusionRequestScopeOneOf *AddLicenseConclusionRequestScopeOneOf
 	AddLicenseConclusionRequestScopeOneOf1 *AddLicenseConclusionRequestScopeOneOf1
 	AddLicenseConclusionRequestScopeOneOf2 *AddLicenseConclusionRequestScopeOneOf2
-	AddLicenseConclusionRequestScopeOneOf3 *AddLicenseConclusionRequestScopeOneOf3
 }
 
 // AddLicenseConclusionRequestScopeOneOfAsAddLicenseConclusionRequestScope is a convenience function that returns AddLicenseConclusionRequestScopeOneOf wrapped in AddLicenseConclusionRequestScope
@@ -43,13 +42,6 @@ func AddLicenseConclusionRequestScopeOneOf1AsAddLicenseConclusionRequestScope(v 
 func AddLicenseConclusionRequestScopeOneOf2AsAddLicenseConclusionRequestScope(v *AddLicenseConclusionRequestScopeOneOf2) AddLicenseConclusionRequestScope {
 	return AddLicenseConclusionRequestScope{
 		AddLicenseConclusionRequestScopeOneOf2: v,
-	}
-}
-
-// AddLicenseConclusionRequestScopeOneOf3AsAddLicenseConclusionRequestScope is a convenience function that returns AddLicenseConclusionRequestScopeOneOf3 wrapped in AddLicenseConclusionRequestScope
-func AddLicenseConclusionRequestScopeOneOf3AsAddLicenseConclusionRequestScope(v *AddLicenseConclusionRequestScopeOneOf3) AddLicenseConclusionRequestScope {
-	return AddLicenseConclusionRequestScope{
-		AddLicenseConclusionRequestScopeOneOf3: v,
 	}
 }
 
@@ -109,34 +101,20 @@ func (dst *AddLicenseConclusionRequestScope) UnmarshalJSON(data []byte) error {
 		dst.AddLicenseConclusionRequestScopeOneOf2 = nil
 	}
 
-	// try to unmarshal data into AddLicenseConclusionRequestScopeOneOf3
-	err = newStrictDecoder(data).Decode(&dst.AddLicenseConclusionRequestScopeOneOf3)
-	if err == nil {
-		jsonAddLicenseConclusionRequestScopeOneOf3, _ := json.Marshal(dst.AddLicenseConclusionRequestScopeOneOf3)
-		if string(jsonAddLicenseConclusionRequestScopeOneOf3) == "{}" { // empty struct
-			dst.AddLicenseConclusionRequestScopeOneOf3 = nil
-		} else {
-			if err = validator.Validate(dst.AddLicenseConclusionRequestScopeOneOf3); err != nil {
-				dst.AddLicenseConclusionRequestScopeOneOf3 = nil
-			} else {
-				match++
-			}
-		}
-	} else {
-		dst.AddLicenseConclusionRequestScopeOneOf3 = nil
-	}
-
 	if match > 1 { // more than 1 match
 		// reset to nil
 		dst.AddLicenseConclusionRequestScopeOneOf = nil
 		dst.AddLicenseConclusionRequestScopeOneOf1 = nil
 		dst.AddLicenseConclusionRequestScopeOneOf2 = nil
-		dst.AddLicenseConclusionRequestScopeOneOf3 = nil
 
 		return fmt.Errorf("data matches more than one schema in oneOf(AddLicenseConclusionRequestScope)")
 	} else if match == 1 {
 		return nil // exactly one match
 	} else { // no match
+		if err != nil {
+			return fmt.Errorf("data failed to match schemas in oneOf(AddLicenseConclusionRequestScope): %v", err)
+		}
+
 		return fmt.Errorf("data failed to match schemas in oneOf(AddLicenseConclusionRequestScope)")
 	}
 }
@@ -153,10 +131,6 @@ func (src AddLicenseConclusionRequestScope) MarshalJSON() ([]byte, error) {
 
 	if src.AddLicenseConclusionRequestScopeOneOf2 != nil {
 		return json.Marshal(&src.AddLicenseConclusionRequestScopeOneOf2)
-	}
-
-	if src.AddLicenseConclusionRequestScopeOneOf3 != nil {
-		return json.Marshal(&src.AddLicenseConclusionRequestScopeOneOf3)
 	}
 
 	return nil, nil // no data in oneOf schemas
@@ -179,10 +153,6 @@ func (obj *AddLicenseConclusionRequestScope) GetActualInstance() (interface{}) {
 		return obj.AddLicenseConclusionRequestScopeOneOf2
 	}
 
-	if obj.AddLicenseConclusionRequestScopeOneOf3 != nil {
-		return obj.AddLicenseConclusionRequestScopeOneOf3
-	}
-
 	// all schemas are nil
 	return nil
 }
@@ -199,10 +169,6 @@ func (obj AddLicenseConclusionRequestScope) GetActualInstanceValue() (interface{
 
 	if obj.AddLicenseConclusionRequestScopeOneOf2 != nil {
 		return *obj.AddLicenseConclusionRequestScopeOneOf2
-	}
-
-	if obj.AddLicenseConclusionRequestScopeOneOf3 != nil {
-		return *obj.AddLicenseConclusionRequestScopeOneOf3
 	}
 
 	// all schemas are nil
