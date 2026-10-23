@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.35.23
 Contact: support@fossa.com
 */
 
@@ -29,6 +29,7 @@ type AddLicenseConclusionRequest struct {
 	LicenseId string `json:"licenseId"`
 	// Optional origin revision or release ID to trigger an issue scan
 	OriginId *string `json:"originId,omitempty"`
+	ReplaceScope *AddLicenseConclusionRequestReplaceScope `json:"replaceScope,omitempty"`
 }
 
 type _AddLicenseConclusionRequest AddLicenseConclusionRequest
@@ -157,6 +158,38 @@ func (o *AddLicenseConclusionRequest) SetOriginId(v string) {
 	o.OriginId = &v
 }
 
+// GetReplaceScope returns the ReplaceScope field value if set, zero value otherwise.
+func (o *AddLicenseConclusionRequest) GetReplaceScope() AddLicenseConclusionRequestReplaceScope {
+	if o == nil || IsNil(o.ReplaceScope) {
+		var ret AddLicenseConclusionRequestReplaceScope
+		return ret
+	}
+	return *o.ReplaceScope
+}
+
+// GetReplaceScopeOk returns a tuple with the ReplaceScope field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddLicenseConclusionRequest) GetReplaceScopeOk() (*AddLicenseConclusionRequestReplaceScope, bool) {
+	if o == nil || IsNil(o.ReplaceScope) {
+		return nil, false
+	}
+	return o.ReplaceScope, true
+}
+
+// HasReplaceScope returns a boolean if a field has been set.
+func (o *AddLicenseConclusionRequest) HasReplaceScope() bool {
+	if o != nil && !IsNil(o.ReplaceScope) {
+		return true
+	}
+
+	return false
+}
+
+// SetReplaceScope gets a reference to the given AddLicenseConclusionRequestReplaceScope and assigns it to the ReplaceScope field.
+func (o *AddLicenseConclusionRequest) SetReplaceScope(v AddLicenseConclusionRequestReplaceScope) {
+	o.ReplaceScope = &v
+}
+
 func (o AddLicenseConclusionRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -172,6 +205,9 @@ func (o AddLicenseConclusionRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["licenseId"] = o.LicenseId
 	if !IsNil(o.OriginId) {
 		toSerialize["originId"] = o.OriginId
+	}
+	if !IsNil(o.ReplaceScope) {
+		toSerialize["replaceScope"] = o.ReplaceScope
 	}
 	return toSerialize, nil
 }
