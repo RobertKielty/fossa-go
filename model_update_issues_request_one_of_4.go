@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.35.23
 Contact: support@fossa.com
 */
 
@@ -27,7 +27,7 @@ type UpdateIssuesRequestOneOf4 struct {
 	ExpiresAfter *string `json:"expiresAfter,omitempty"`
 	// This is a free-form field for users to provide additional context for the exception. This value appears in the vulnerabilities.analysis.detail field in CycloneDX SBOM reports 
 	Notes *string `json:"notes,omitempty"`
-	// Provided reason for ignoring or resolving a security issue. 'Fixed' and 'Under_investigation' map to VEX statuses with the same names. All other values map to the VEX status 'Not Affected'. This value appears in the vulnerabilities.analysis.justification field of CycloneDX SBOM reports. 
+	// Provided reason for ignoring or resolving a security issue. 'Fixed' and 'Under_investigation' map to VEX statuses with the same names. All other values map to the VEX status 'Not Affected'. This value appears in the vulnerabilities.analysis.justification field of CycloneDX SBOM reports, unless the report uses the CycloneDX Vuln Analysis State option, which writes the matching CycloneDX justification instead (or leaves the field out when there is none). 
 	Reason *string `json:"reason,omitempty"`
 	// Set a license ID to create exceptions for a specific license ID. 
 	LicenseId *string `json:"licenseId,omitempty"`
