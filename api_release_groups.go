@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.35.24
 Contact: support@fossa.com
 */
 
@@ -168,7 +168,7 @@ func (r ApiCreateReleaseGroupReleasesRequest) CreateReleaseGroupReleasesRequest(
 	return r
 }
 
-func (r ApiCreateReleaseGroupReleasesRequest) Execute() (*CreateReleaseGroup200Response, *http.Response, error) {
+func (r ApiCreateReleaseGroupReleasesRequest) Execute() (*CreateReleaseGroupReleases200Response, *http.Response, error) {
 	return r.ApiService.CreateReleaseGroupReleasesExecute(r)
 }
 
@@ -190,13 +190,13 @@ func (a *ReleaseGroupsAPIService) CreateReleaseGroupReleases(ctx context.Context
 }
 
 // Execute executes the request
-//  @return CreateReleaseGroup200Response
-func (a *ReleaseGroupsAPIService) CreateReleaseGroupReleasesExecute(r ApiCreateReleaseGroupReleasesRequest) (*CreateReleaseGroup200Response, *http.Response, error) {
+//  @return CreateReleaseGroupReleases200Response
+func (a *ReleaseGroupsAPIService) CreateReleaseGroupReleasesExecute(r ApiCreateReleaseGroupReleasesRequest) (*CreateReleaseGroupReleases200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *CreateReleaseGroup200Response
+		localVarReturnValue  *CreateReleaseGroupReleases200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReleaseGroupsAPIService.CreateReleaseGroupReleases")
@@ -267,7 +267,7 @@ func (a *ReleaseGroupsAPIService) CreateReleaseGroupReleasesExecute(r ApiCreateR
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GenerateProjectGenerateAttributionSlug401Response
+			var v UpdateReleaseGroupById403Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -389,7 +389,7 @@ func (a *ReleaseGroupsAPIService) DeleteReleaseGroupByIdExecute(r ApiDeleteRelea
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GenerateProjectGenerateAttributionSlug401Response
+			var v UpdateReleaseGroupById403Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1012,11 +1012,13 @@ func (r ApiGetReleaseGroupByIdRequest) Execute() (*GetReleaseGroupById200Respons
 /*
 GetReleaseGroupById Method for GetReleaseGroupById
 
-Get a release group by ID
+This endpoint is deprecated because it embeds every release, which is slow for release groups with many releases. Please use /v2/release-groups/{id} and the paginated /project_group/{groupId}/releases endpoint instead.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param groupId
  @return ApiGetReleaseGroupByIdRequest
+
+Deprecated
 */
 func (a *ReleaseGroupsAPIService) GetReleaseGroupById(ctx context.Context, groupId int32) ApiGetReleaseGroupByIdRequest {
 	return ApiGetReleaseGroupByIdRequest{
@@ -1028,6 +1030,7 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupById(ctx context.Context, group
 
 // Execute executes the request
 //  @return GetReleaseGroupById200Response
+// Deprecated
 func (a *ReleaseGroupsAPIService) GetReleaseGroupByIdExecute(r ApiGetReleaseGroupByIdRequest) (*GetReleaseGroupById200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
@@ -1112,6 +1115,152 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupByIdExecute(r ApiGetReleaseGrou
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetReleaseGroupByIdV2Request struct {
+	ctx context.Context
+	ApiService *ReleaseGroupsAPIService
+	id int32
+}
+
+func (r ApiGetReleaseGroupByIdV2Request) Execute() (*GetReleaseGroupByIdV2200Response, *http.Response, error) {
+	return r.ApiService.GetReleaseGroupByIdV2Execute(r)
+}
+
+/*
+GetReleaseGroupByIdV2 Method for GetReleaseGroupByIdV2
+
+Get a release group by ID. Unlike the v1 endpoint, the response does not include the release group's releases; use the paginated /project_group/{groupId}/releases endpoint with this id for those.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return ApiGetReleaseGroupByIdV2Request
+*/
+func (a *ReleaseGroupsAPIService) GetReleaseGroupByIdV2(ctx context.Context, id int32) ApiGetReleaseGroupByIdV2Request {
+	return ApiGetReleaseGroupByIdV2Request{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return GetReleaseGroupByIdV2200Response
+func (a *ReleaseGroupsAPIService) GetReleaseGroupByIdV2Execute(r ApiGetReleaseGroupByIdV2Request) (*GetReleaseGroupByIdV2200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetReleaseGroupByIdV2200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReleaseGroupsAPIService.GetReleaseGroupByIdV2")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/release-groups/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetReleaseGroupReleaseByIdRequest struct {
 	ctx context.Context
 	ApiService *ReleaseGroupsAPIService
@@ -1119,7 +1268,7 @@ type ApiGetReleaseGroupReleaseByIdRequest struct {
 	projectGroupReleaseId int32
 }
 
-func (r ApiGetReleaseGroupReleaseByIdRequest) Execute() ([]GetReleaseGroupReleaseById200ResponseInner, *http.Response, error) {
+func (r ApiGetReleaseGroupReleaseByIdRequest) Execute() (*GetReleaseGroupReleaseById200Response, *http.Response, error) {
 	return r.ApiService.GetReleaseGroupReleaseByIdExecute(r)
 }
 
@@ -1143,13 +1292,13 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseById(ctx context.Context
 }
 
 // Execute executes the request
-//  @return []GetReleaseGroupReleaseById200ResponseInner
-func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseByIdExecute(r ApiGetReleaseGroupReleaseByIdRequest) ([]GetReleaseGroupReleaseById200ResponseInner, *http.Response, error) {
+//  @return GetReleaseGroupReleaseById200Response
+func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseByIdExecute(r ApiGetReleaseGroupReleaseByIdRequest) (*GetReleaseGroupReleaseById200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  []GetReleaseGroupReleaseById200ResponseInner
+		localVarReturnValue  *GetReleaseGroupReleaseById200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReleaseGroupsAPIService.GetReleaseGroupReleaseById")
@@ -1609,7 +1758,7 @@ type ApiGetReleaseGroupReleaseScansRequest struct {
 	projectGroupReleaseId int32
 }
 
-func (r ApiGetReleaseGroupReleaseScansRequest) Execute() (*GetReleaseGroupReleaseScans200Response, *http.Response, error) {
+func (r ApiGetReleaseGroupReleaseScansRequest) Execute() ([]GetReleaseGroupReleaseScans200ResponseInner, *http.Response, error) {
 	return r.ApiService.GetReleaseGroupReleaseScansExecute(r)
 }
 
@@ -1633,13 +1782,13 @@ func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseScans(ctx context.Contex
 }
 
 // Execute executes the request
-//  @return GetReleaseGroupReleaseScans200Response
-func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseScansExecute(r ApiGetReleaseGroupReleaseScansRequest) (*GetReleaseGroupReleaseScans200Response, *http.Response, error) {
+//  @return []GetReleaseGroupReleaseScans200ResponseInner
+func (a *ReleaseGroupsAPIService) GetReleaseGroupReleaseScansExecute(r ApiGetReleaseGroupReleaseScansRequest) ([]GetReleaseGroupReleaseScans200ResponseInner, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *GetReleaseGroupReleaseScans200Response
+		localVarReturnValue  []GetReleaseGroupReleaseScans200ResponseInner
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReleaseGroupsAPIService.GetReleaseGroupReleaseScans")
@@ -2015,6 +2164,7 @@ type ApiQueueReleaseGroupAttributionReportRequest struct {
 	includeLicenseHeaders *bool
 	dependencyInfoOptions *[]string
 	isPublishing *bool
+	delivery *string
 }
 
 func (r ApiQueueReleaseGroupAttributionReportRequest) IncludeDeepDependencies(includeDeepDependencies bool) ApiQueueReleaseGroupAttributionReportRequest {
@@ -2085,6 +2235,12 @@ func (r ApiQueueReleaseGroupAttributionReportRequest) DependencyInfoOptions(depe
 // Whether to publish the report to the portal
 func (r ApiQueueReleaseGroupAttributionReportRequest) IsPublishing(isPublishing bool) ApiQueueReleaseGroupAttributionReportRequest {
 	r.isPublishing = &isPublishing
+	return r
+}
+
+// How a queued report reaches the user. &#x60;email&#x60; sends it to the requesting user (or &#x60;emails&#x60;). &#x60;download&#x60; skips the email; once the task finishes, fetch the report from &#x60;https://&lt;host&gt;/attribution/{reportId}?download&#x3D;true&#x60; (not under &#x60;/api&#x60;), which responds with a redirect to a short-lived signed URL. Only applies to queued reports; ignored when &#x60;preview&#x60; or &#x60;download&#x3D;true&#x60; is set. Cannot be combined with &#x60;isPublishing&#x60;. 
+func (r ApiQueueReleaseGroupAttributionReportRequest) Delivery(delivery string) ApiQueueReleaseGroupAttributionReportRequest {
+	r.delivery = &delivery
 	return r
 }
 
@@ -2191,6 +2347,13 @@ func (a *ReleaseGroupsAPIService) QueueReleaseGroupAttributionReportExecute(r Ap
 		parameterAddToHeaderOrQuery(localVarQueryParams, "isPublishing", defaultValue, "form", "")
 		r.isPublishing = &defaultValue
 	}
+	if r.delivery != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "delivery", r.delivery, "form", "")
+	} else {
+		var defaultValue string = "email"
+		parameterAddToHeaderOrQuery(localVarQueryParams, "delivery", defaultValue, "form", "")
+		r.delivery = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -2253,6 +2416,491 @@ func (a *ReleaseGroupsAPIService) QueueReleaseGroupAttributionReportExecute(r Ap
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiQueueReleaseGroupAttributionReportV2Request struct {
+	ctx context.Context
+	ApiService *ReleaseGroupsAPIService
+	groupId int32
+	releaseId int32
+	format string
+	preview *bool
+	download *bool
+	isPublishing *bool
+	delivery *string
+	projectGroupTitle *string
+	projectGroupReleaseTitle *string
+	projectGroupUrl *string
+	dependencyInfoOptions *[]string
+	includeDeepDependencies *bool
+	includeDirectDependencies *bool
+	includeFOSSADependencies *bool
+	includeLicenseList *bool
+	includeLicenseScan *bool
+	includeProjectLicense *bool
+	includeCopyrightList *bool
+	includeFileMatches *bool
+	includeOpenVulnerabilities *bool
+	includeClosedVulnerabilities *bool
+	includeDependencySummary *bool
+	includeLicenseHeaders *bool
+	includePackageLabels *bool
+	excludeUnknownDependencies *bool
+	excludeFields *QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter
+}
+
+// Whether to preview the report inline rather than generate a downloadable file (default is false)
+func (r ApiQueueReleaseGroupAttributionReportV2Request) Preview(preview bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.preview = &preview
+	return r
+}
+
+// Whether to stream the report back directly for download (default is false)
+func (r ApiQueueReleaseGroupAttributionReportV2Request) Download(download bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.download = &download
+	return r
+}
+
+// Whether to publish the report to the SBOM portal. Requires portal-manage permission and an enabled SBOM portal.
+func (r ApiQueueReleaseGroupAttributionReportV2Request) IsPublishing(isPublishing bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.isPublishing = &isPublishing
+	return r
+}
+
+// How a queued report reaches the user. &#x60;email&#x60; sends it to the requesting user (or &#x60;emails&#x60;). &#x60;download&#x60; skips the email; once the task finishes, fetch the report from &#x60;https://&lt;host&gt;/attribution/{reportId}?download&#x3D;true&#x60; (not under &#x60;/api&#x60;), which responds with a redirect to a short-lived signed URL. Only applies to queued reports; ignored when &#x60;preview&#x60; or &#x60;download&#x3D;true&#x60; is set. On release group routes, cannot be combined with &#x60;isPublishing&#x60;. 
+func (r ApiQueueReleaseGroupAttributionReportV2Request) Delivery(delivery string) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.delivery = &delivery
+	return r
+}
+
+// Override for the release group title shown in the report.
+func (r ApiQueueReleaseGroupAttributionReportV2Request) ProjectGroupTitle(projectGroupTitle string) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.projectGroupTitle = &projectGroupTitle
+	return r
+}
+
+// Override for the release title shown in the report.
+func (r ApiQueueReleaseGroupAttributionReportV2Request) ProjectGroupReleaseTitle(projectGroupReleaseTitle string) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.projectGroupReleaseTitle = &projectGroupReleaseTitle
+	return r
+}
+
+// URL to embed in the release group report metadata.
+func (r ApiQueueReleaseGroupAttributionReportV2Request) ProjectGroupUrl(projectGroupUrl string) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.projectGroupUrl = &projectGroupUrl
+	return r
+}
+
+// Per-dependency columns/fields to include in the report.
+func (r ApiQueueReleaseGroupAttributionReportV2Request) DependencyInfoOptions(dependencyInfoOptions []string) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.dependencyInfoOptions = &dependencyInfoOptions
+	return r
+}
+
+// Whether to include deep dependencies (default is false)
+func (r ApiQueueReleaseGroupAttributionReportV2Request) IncludeDeepDependencies(includeDeepDependencies bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.includeDeepDependencies = &includeDeepDependencies
+	return r
+}
+
+// Whether to include direct dependencies (default is false)
+func (r ApiQueueReleaseGroupAttributionReportV2Request) IncludeDirectDependencies(includeDirectDependencies bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.includeDirectDependencies = &includeDirectDependencies
+	return r
+}
+
+// Whether to include FOSSA-managed dependencies (default is false)
+func (r ApiQueueReleaseGroupAttributionReportV2Request) IncludeFOSSADependencies(includeFOSSADependencies bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.includeFOSSADependencies = &includeFOSSADependencies
+	return r
+}
+
+// Whether to include the license list (default is false)
+func (r ApiQueueReleaseGroupAttributionReportV2Request) IncludeLicenseList(includeLicenseList bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.includeLicenseList = &includeLicenseList
+	return r
+}
+
+// Whether to include the first-party license scan (default is false)
+func (r ApiQueueReleaseGroupAttributionReportV2Request) IncludeLicenseScan(includeLicenseScan bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.includeLicenseScan = &includeLicenseScan
+	return r
+}
+
+// Whether to include the project&#39;s declared license (default is false)
+func (r ApiQueueReleaseGroupAttributionReportV2Request) IncludeProjectLicense(includeProjectLicense bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.includeProjectLicense = &includeProjectLicense
+	return r
+}
+
+// Whether to include the copyright list (default is false)
+func (r ApiQueueReleaseGroupAttributionReportV2Request) IncludeCopyrightList(includeCopyrightList bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.includeCopyrightList = &includeCopyrightList
+	return r
+}
+
+// Whether to include license file matches (default is false)
+func (r ApiQueueReleaseGroupAttributionReportV2Request) IncludeFileMatches(includeFileMatches bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.includeFileMatches = &includeFileMatches
+	return r
+}
+
+// Whether to include open vulnerabilities (default is false)
+func (r ApiQueueReleaseGroupAttributionReportV2Request) IncludeOpenVulnerabilities(includeOpenVulnerabilities bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.includeOpenVulnerabilities = &includeOpenVulnerabilities
+	return r
+}
+
+// Whether to include closed vulnerabilities (default is false)
+func (r ApiQueueReleaseGroupAttributionReportV2Request) IncludeClosedVulnerabilities(includeClosedVulnerabilities bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.includeClosedVulnerabilities = &includeClosedVulnerabilities
+	return r
+}
+
+// Whether to include the dependency summary (default is false)
+func (r ApiQueueReleaseGroupAttributionReportV2Request) IncludeDependencySummary(includeDependencySummary bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.includeDependencySummary = &includeDependencySummary
+	return r
+}
+
+// Whether to include license headers (default is false)
+func (r ApiQueueReleaseGroupAttributionReportV2Request) IncludeLicenseHeaders(includeLicenseHeaders bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.includeLicenseHeaders = &includeLicenseHeaders
+	return r
+}
+
+// Whether to include the package labels assigned to each dependency (default is false)
+func (r ApiQueueReleaseGroupAttributionReportV2Request) IncludePackageLabels(includePackageLabels bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.includePackageLabels = &includePackageLabels
+	return r
+}
+
+// Whether to exclude unknown (unresolved) dependencies from the report (default is false, meaning unknown dependencies are included)
+func (r ApiQueueReleaseGroupAttributionReportV2Request) ExcludeUnknownDependencies(excludeUnknownDependencies bool) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.excludeUnknownDependencies = &excludeUnknownDependencies
+	return r
+}
+
+// Object controlling which dependencies are excluded from the report. The only supported nested field is &#x60;packageLabels&#x60;: a non-empty array of package-label values; dependencies carrying any of these labels are excluded from the report.  The server parses the query string with the &#x60;qs&#x60; library, so the array is sent using bracket-and-index notation rather than standard OpenAPI &#x60;deepObject&#x60; serialization. For example, to exclude two labels send (before URL-encoding): &#x60;excludeFields[packageLabels][0]&#x3D;internal&amp;excludeFields[packageLabels][1]&#x3D;vendored&#x60;. 
+func (r ApiQueueReleaseGroupAttributionReportV2Request) ExcludeFields(excludeFields QueueReleaseGroupAttributionReportV2ExcludeFieldsParameter) ApiQueueReleaseGroupAttributionReportV2Request {
+	r.excludeFields = &excludeFields
+	return r
+}
+
+func (r ApiQueueReleaseGroupAttributionReportV2Request) Execute() (*QueueReleaseGroupAttributionReportV2200Response, *http.Response, error) {
+	return r.ApiService.QueueReleaseGroupAttributionReportV2Execute(r)
+}
+
+/*
+QueueReleaseGroupAttributionReportV2 Method for QueueReleaseGroupAttributionReportV2
+
+Generate a release group release's attribution report (V2).
+
+Behavior depends on the query parameters:
+- When `preview` or `download` is set, the report is generated synchronously and streamed back.
+- Otherwise the report is queued as a background job and the response contains the `taskId`
+  to poll for completion (used for publishing, emailing and `delivery=download`) and the
+  `reportId` of the report it will store.
+
+**Note:** Not all report options are valid for every report format. Use your release
+group's Reports UI to see which options apply to a given format.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param groupId The ID of the release group
+ @param releaseId The ID of the release within the release group
+ @param format The format of the report
+ @return ApiQueueReleaseGroupAttributionReportV2Request
+*/
+func (a *ReleaseGroupsAPIService) QueueReleaseGroupAttributionReportV2(ctx context.Context, groupId int32, releaseId int32, format string) ApiQueueReleaseGroupAttributionReportV2Request {
+	return ApiQueueReleaseGroupAttributionReportV2Request{
+		ApiService: a,
+		ctx: ctx,
+		groupId: groupId,
+		releaseId: releaseId,
+		format: format,
+	}
+}
+
+// Execute executes the request
+//  @return QueueReleaseGroupAttributionReportV2200Response
+func (a *ReleaseGroupsAPIService) QueueReleaseGroupAttributionReportV2Execute(r ApiQueueReleaseGroupAttributionReportV2Request) (*QueueReleaseGroupAttributionReportV2200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *QueueReleaseGroupAttributionReportV2200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReleaseGroupsAPIService.QueueReleaseGroupAttributionReportV2")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/project_group/{groupId}/release/{releaseId}/attribution/{format}"
+	localVarPath = strings.Replace(localVarPath, "{"+"groupId"+"}", url.PathEscape(parameterValueToString(r.groupId, "groupId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"releaseId"+"}", url.PathEscape(parameterValueToString(r.releaseId, "releaseId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"format"+"}", url.PathEscape(parameterValueToString(r.format, "format")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.preview != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "preview", r.preview, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "preview", defaultValue, "form", "")
+		r.preview = &defaultValue
+	}
+	if r.download != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "download", r.download, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "download", defaultValue, "form", "")
+		r.download = &defaultValue
+	}
+	if r.isPublishing != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "isPublishing", r.isPublishing, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "isPublishing", defaultValue, "form", "")
+		r.isPublishing = &defaultValue
+	}
+	if r.delivery != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "delivery", r.delivery, "form", "")
+	} else {
+		var defaultValue string = "email"
+		parameterAddToHeaderOrQuery(localVarQueryParams, "delivery", defaultValue, "form", "")
+		r.delivery = &defaultValue
+	}
+	if r.projectGroupTitle != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "projectGroupTitle", r.projectGroupTitle, "form", "")
+	}
+	if r.projectGroupReleaseTitle != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "projectGroupReleaseTitle", r.projectGroupReleaseTitle, "form", "")
+	}
+	if r.projectGroupUrl != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "projectGroupUrl", r.projectGroupUrl, "form", "")
+	}
+	if r.dependencyInfoOptions != nil {
+		t := *r.dependencyInfoOptions
+		if reflect.TypeOf(t).Kind() == reflect.Slice {
+			s := reflect.ValueOf(t)
+			for i := 0; i < s.Len(); i++ {
+				parameterAddToHeaderOrQuery(localVarQueryParams, "dependencyInfoOptions[]", s.Index(i).Interface(), "form", "multi")
+			}
+		} else {
+			parameterAddToHeaderOrQuery(localVarQueryParams, "dependencyInfoOptions[]", t, "form", "multi")
+		}
+	}
+	if r.includeDeepDependencies != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDeepDependencies", r.includeDeepDependencies, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDeepDependencies", defaultValue, "form", "")
+		r.includeDeepDependencies = &defaultValue
+	}
+	if r.includeDirectDependencies != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDirectDependencies", r.includeDirectDependencies, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDirectDependencies", defaultValue, "form", "")
+		r.includeDirectDependencies = &defaultValue
+	}
+	if r.includeFOSSADependencies != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFOSSADependencies", r.includeFOSSADependencies, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFOSSADependencies", defaultValue, "form", "")
+		r.includeFOSSADependencies = &defaultValue
+	}
+	if r.includeLicenseList != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseList", r.includeLicenseList, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseList", defaultValue, "form", "")
+		r.includeLicenseList = &defaultValue
+	}
+	if r.includeLicenseScan != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseScan", r.includeLicenseScan, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseScan", defaultValue, "form", "")
+		r.includeLicenseScan = &defaultValue
+	}
+	if r.includeProjectLicense != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeProjectLicense", r.includeProjectLicense, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeProjectLicense", defaultValue, "form", "")
+		r.includeProjectLicense = &defaultValue
+	}
+	if r.includeCopyrightList != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyrightList", r.includeCopyrightList, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeCopyrightList", defaultValue, "form", "")
+		r.includeCopyrightList = &defaultValue
+	}
+	if r.includeFileMatches != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFileMatches", r.includeFileMatches, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeFileMatches", defaultValue, "form", "")
+		r.includeFileMatches = &defaultValue
+	}
+	if r.includeOpenVulnerabilities != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeOpenVulnerabilities", r.includeOpenVulnerabilities, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeOpenVulnerabilities", defaultValue, "form", "")
+		r.includeOpenVulnerabilities = &defaultValue
+	}
+	if r.includeClosedVulnerabilities != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeClosedVulnerabilities", r.includeClosedVulnerabilities, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeClosedVulnerabilities", defaultValue, "form", "")
+		r.includeClosedVulnerabilities = &defaultValue
+	}
+	if r.includeDependencySummary != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDependencySummary", r.includeDependencySummary, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeDependencySummary", defaultValue, "form", "")
+		r.includeDependencySummary = &defaultValue
+	}
+	if r.includeLicenseHeaders != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseHeaders", r.includeLicenseHeaders, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeLicenseHeaders", defaultValue, "form", "")
+		r.includeLicenseHeaders = &defaultValue
+	}
+	if r.includePackageLabels != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", r.includePackageLabels, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includePackageLabels", defaultValue, "form", "")
+		r.includePackageLabels = &defaultValue
+	}
+	if r.excludeUnknownDependencies != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeUnknownDependencies", r.excludeUnknownDependencies, "form", "")
+	} else {
+		var defaultValue bool = false
+		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeUnknownDependencies", defaultValue, "form", "")
+		r.excludeUnknownDependencies = &defaultValue
+	}
+	if r.excludeFields != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "excludeFields", r.excludeFields, "deepObject", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json", "application/octet-stream"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v AddLicenseConclusion400Response
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
 			var v AddLicenseConclusion400Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -2377,7 +3025,7 @@ func (a *ReleaseGroupsAPIService) UpdateReleaseGroupByIdExecute(r ApiUpdateRelea
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
-			var v GenerateProjectGenerateAttributionSlug401Response
+			var v UpdateReleaseGroupById403Response
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2425,7 +3073,7 @@ func (r ApiUpdateReleaseGroupReleaseByIdRequest) UpdateReleaseGroupReleaseByIdRe
 	return r
 }
 
-func (r ApiUpdateReleaseGroupReleaseByIdRequest) Execute() (*CreateReleaseGroup200Response, *http.Response, error) {
+func (r ApiUpdateReleaseGroupReleaseByIdRequest) Execute() (*CreateReleaseGroupReleases200Response, *http.Response, error) {
 	return r.ApiService.UpdateReleaseGroupReleaseByIdExecute(r)
 }
 
@@ -2449,13 +3097,13 @@ func (a *ReleaseGroupsAPIService) UpdateReleaseGroupReleaseById(ctx context.Cont
 }
 
 // Execute executes the request
-//  @return CreateReleaseGroup200Response
-func (a *ReleaseGroupsAPIService) UpdateReleaseGroupReleaseByIdExecute(r ApiUpdateReleaseGroupReleaseByIdRequest) (*CreateReleaseGroup200Response, *http.Response, error) {
+//  @return CreateReleaseGroupReleases200Response
+func (a *ReleaseGroupsAPIService) UpdateReleaseGroupReleaseByIdExecute(r ApiUpdateReleaseGroupReleaseByIdRequest) (*CreateReleaseGroupReleases200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *CreateReleaseGroup200Response
+		localVarReturnValue  *CreateReleaseGroupReleases200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReleaseGroupsAPIService.UpdateReleaseGroupReleaseById")
