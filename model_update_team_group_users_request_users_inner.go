@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.35.31
 Contact: support@fossa.com
 */
 
@@ -24,7 +24,7 @@ var _ MappedNullable = &UpdateTeamGroupUsersRequestUsersInner{}
 type UpdateTeamGroupUsersRequestUsersInner struct {
 	// ID of the user
 	Id int32 `json:"id"`
-	// Role ID for the user (required for add and replace actions)
+	// Role ID for the user (required for add and replace actions). When the organization disables built-in team roles, built-in roles (including a built-in team default role) are refused.
 	RoleId *int32 `json:"roleId,omitempty"`
 }
 

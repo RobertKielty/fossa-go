@@ -9,7 +9,6 @@ Name | Type | Description | Notes
 **SecurityPolicyId** | Pointer to **int32** |  | [optional] 
 **QualityPolicyId** | Pointer to **int32** |  | [optional] 
 **PublicOnPortal** | Pointer to **bool** |  | [optional] 
-**IssueTrackerType** | Pointer to **string** |  | [optional] 
 **Teams** | Pointer to **[]int32** |  | [optional] 
 **Release** | [**CreateReleaseGroupRequestRelease**](CreateReleaseGroupRequestRelease.md) |  | 
 
@@ -151,31 +150,6 @@ SetPublicOnPortal sets PublicOnPortal field to given value.
 `func (o *CreateReleaseGroupRequest) HasPublicOnPortal() bool`
 
 HasPublicOnPortal returns a boolean if a field has been set.
-
-### GetIssueTrackerType
-
-`func (o *CreateReleaseGroupRequest) GetIssueTrackerType() string`
-
-GetIssueTrackerType returns the IssueTrackerType field if non-nil, zero value otherwise.
-
-### GetIssueTrackerTypeOk
-
-`func (o *CreateReleaseGroupRequest) GetIssueTrackerTypeOk() (*string, bool)`
-
-GetIssueTrackerTypeOk returns a tuple with the IssueTrackerType field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIssueTrackerType
-
-`func (o *CreateReleaseGroupRequest) SetIssueTrackerType(v string)`
-
-SetIssueTrackerType sets IssueTrackerType field to given value.
-
-### HasIssueTrackerType
-
-`func (o *CreateReleaseGroupRequest) HasIssueTrackerType() bool`
-
-HasIssueTrackerType returns a boolean if a field has been set.
 
 ### GetTeams
 
