@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **IgnoreScope** | Pointer to **string** |  | [optional] 
 **ExpiresAfter** | Pointer to **string** | The UTC date after which the exception will expire. If not provided, the exception will never expire.  | [optional] 
 **Notes** | Pointer to **string** | This is a free-form field for users to provide additional context for the exception. This value appears in the vulnerabilities.analysis.detail field in CycloneDX SBOM reports  | [optional] 
-**Reason** | Pointer to **string** | Provided reason for ignoring or resolving a security issue. &#39;Fixed&#39; and &#39;Under_investigation&#39; map to VEX statuses with the same names. All other values map to the VEX status &#39;Not Affected&#39;. This value appears in the vulnerabilities.analysis.justification field of CycloneDX SBOM reports.  | [optional] 
+**Reason** | Pointer to **string** | Provided reason for ignoring or resolving a security issue. &#39;Fixed&#39; and &#39;Under_investigation&#39; map to VEX statuses with the same names. All other values map to the VEX status &#39;Not Affected&#39;. This value appears in the vulnerabilities.analysis.justification field of CycloneDX SBOM reports, unless the report uses the CycloneDX Vuln Analysis State option, which writes the matching CycloneDX justification instead (or leaves the field out when there is none).  | [optional] 
 **LicenseId** | Pointer to **string** | Set a license ID to create exceptions for a specific license ID.  | [optional] 
 
 ## Methods
