@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.35.36
 Contact: support@fossa.com
 */
 
@@ -22,12 +22,10 @@ var _ MappedNullable = &AddLicenseConclusionRequestScopeOneOf1{}
 
 // AddLicenseConclusionRequestScopeOneOf1 struct for AddLicenseConclusionRequestScopeOneOf1
 type AddLicenseConclusionRequestScopeOneOf1 struct {
-	// Revision-scoped conclusion
+	// Organization-scoped conclusion
 	Scope string `json:"scope"`
-	// The locator of the project
-	ProjectLocator string `json:"projectLocator"`
-	// The locator of the revision
-	RevisionLocator string `json:"revisionLocator"`
+	// The ID of the organization
+	OrganizationId int32 `json:"organizationId"`
 }
 
 type _AddLicenseConclusionRequestScopeOneOf1 AddLicenseConclusionRequestScopeOneOf1
@@ -36,11 +34,10 @@ type _AddLicenseConclusionRequestScopeOneOf1 AddLicenseConclusionRequestScopeOne
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAddLicenseConclusionRequestScopeOneOf1(scope string, projectLocator string, revisionLocator string) *AddLicenseConclusionRequestScopeOneOf1 {
+func NewAddLicenseConclusionRequestScopeOneOf1(scope string, organizationId int32) *AddLicenseConclusionRequestScopeOneOf1 {
 	this := AddLicenseConclusionRequestScopeOneOf1{}
 	this.Scope = scope
-	this.ProjectLocator = projectLocator
-	this.RevisionLocator = revisionLocator
+	this.OrganizationId = organizationId
 	return &this
 }
 
@@ -76,52 +73,28 @@ func (o *AddLicenseConclusionRequestScopeOneOf1) SetScope(v string) {
 	o.Scope = v
 }
 
-// GetProjectLocator returns the ProjectLocator field value
-func (o *AddLicenseConclusionRequestScopeOneOf1) GetProjectLocator() string {
+// GetOrganizationId returns the OrganizationId field value
+func (o *AddLicenseConclusionRequestScopeOneOf1) GetOrganizationId() int32 {
 	if o == nil {
-		var ret string
+		var ret int32
 		return ret
 	}
 
-	return o.ProjectLocator
+	return o.OrganizationId
 }
 
-// GetProjectLocatorOk returns a tuple with the ProjectLocator field value
+// GetOrganizationIdOk returns a tuple with the OrganizationId field value
 // and a boolean to check if the value has been set.
-func (o *AddLicenseConclusionRequestScopeOneOf1) GetProjectLocatorOk() (*string, bool) {
+func (o *AddLicenseConclusionRequestScopeOneOf1) GetOrganizationIdOk() (*int32, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.ProjectLocator, true
+	return &o.OrganizationId, true
 }
 
-// SetProjectLocator sets field value
-func (o *AddLicenseConclusionRequestScopeOneOf1) SetProjectLocator(v string) {
-	o.ProjectLocator = v
-}
-
-// GetRevisionLocator returns the RevisionLocator field value
-func (o *AddLicenseConclusionRequestScopeOneOf1) GetRevisionLocator() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.RevisionLocator
-}
-
-// GetRevisionLocatorOk returns a tuple with the RevisionLocator field value
-// and a boolean to check if the value has been set.
-func (o *AddLicenseConclusionRequestScopeOneOf1) GetRevisionLocatorOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.RevisionLocator, true
-}
-
-// SetRevisionLocator sets field value
-func (o *AddLicenseConclusionRequestScopeOneOf1) SetRevisionLocator(v string) {
-	o.RevisionLocator = v
+// SetOrganizationId sets field value
+func (o *AddLicenseConclusionRequestScopeOneOf1) SetOrganizationId(v int32) {
+	o.OrganizationId = v
 }
 
 func (o AddLicenseConclusionRequestScopeOneOf1) MarshalJSON() ([]byte, error) {
@@ -135,8 +108,7 @@ func (o AddLicenseConclusionRequestScopeOneOf1) MarshalJSON() ([]byte, error) {
 func (o AddLicenseConclusionRequestScopeOneOf1) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["scope"] = o.Scope
-	toSerialize["projectLocator"] = o.ProjectLocator
-	toSerialize["revisionLocator"] = o.RevisionLocator
+	toSerialize["organizationId"] = o.OrganizationId
 	return toSerialize, nil
 }
 
@@ -146,8 +118,7 @@ func (o *AddLicenseConclusionRequestScopeOneOf1) UnmarshalJSON(data []byte) (err
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"scope",
-		"projectLocator",
-		"revisionLocator",
+		"organizationId",
 	}
 
 	allProperties := make(map[string]interface{})
