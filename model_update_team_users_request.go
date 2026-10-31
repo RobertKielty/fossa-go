@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.35.43
 Contact: support@fossa.com
 */
 
@@ -25,7 +25,7 @@ type UpdateTeamUsersRequest struct {
 	// Action to perform on team users
 	Action string `json:"action"`
 	// List of users to add, remove, or replace
-	Users []UpdateTeamUsersRequestUsersInner `json:"users,omitempty"`
+	Users []UpdateTeamUsersRequestUsersInner `json:"users"`
 }
 
 type _UpdateTeamUsersRequest UpdateTeamUsersRequest
@@ -34,9 +34,10 @@ type _UpdateTeamUsersRequest UpdateTeamUsersRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUpdateTeamUsersRequest(action string) *UpdateTeamUsersRequest {
+func NewUpdateTeamUsersRequest(action string, users []UpdateTeamUsersRequestUsersInner) *UpdateTeamUsersRequest {
 	this := UpdateTeamUsersRequest{}
 	this.Action = action
+	this.Users = users
 	return &this
 }
 
@@ -72,34 +73,26 @@ func (o *UpdateTeamUsersRequest) SetAction(v string) {
 	o.Action = v
 }
 
-// GetUsers returns the Users field value if set, zero value otherwise.
+// GetUsers returns the Users field value
 func (o *UpdateTeamUsersRequest) GetUsers() []UpdateTeamUsersRequestUsersInner {
-	if o == nil || IsNil(o.Users) {
+	if o == nil {
 		var ret []UpdateTeamUsersRequestUsersInner
 		return ret
 	}
+
 	return o.Users
 }
 
-// GetUsersOk returns a tuple with the Users field value if set, nil otherwise
+// GetUsersOk returns a tuple with the Users field value
 // and a boolean to check if the value has been set.
 func (o *UpdateTeamUsersRequest) GetUsersOk() ([]UpdateTeamUsersRequestUsersInner, bool) {
-	if o == nil || IsNil(o.Users) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Users, true
 }
 
-// HasUsers returns a boolean if a field has been set.
-func (o *UpdateTeamUsersRequest) HasUsers() bool {
-	if o != nil && !IsNil(o.Users) {
-		return true
-	}
-
-	return false
-}
-
-// SetUsers gets a reference to the given []UpdateTeamUsersRequestUsersInner and assigns it to the Users field.
+// SetUsers sets field value
 func (o *UpdateTeamUsersRequest) SetUsers(v []UpdateTeamUsersRequestUsersInner) {
 	o.Users = v
 }
@@ -115,9 +108,7 @@ func (o UpdateTeamUsersRequest) MarshalJSON() ([]byte, error) {
 func (o UpdateTeamUsersRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["action"] = o.Action
-	if !IsNil(o.Users) {
-		toSerialize["users"] = o.Users
-	}
+	toSerialize["users"] = o.Users
 	return toSerialize, nil
 }
 
@@ -127,6 +118,7 @@ func (o *UpdateTeamUsersRequest) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"action",
+		"users",
 	}
 
 	allProperties := make(map[string]interface{})
