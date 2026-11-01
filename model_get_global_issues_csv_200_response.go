@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.35.43
 Contact: support@fossa.com
 */
 
@@ -13,15 +13,42 @@ package fossa
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the GetGlobalIssuesCSV200Response type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &GetGlobalIssuesCSV200Response{}
 
-// GetGlobalIssuesCSV200Response When an email is provided in the query parameter, we will queue the Report as a background task, and return information for the given job
+// GetGlobalIssuesCSV200Response When `email` or `delivery=email`/`async-download` is set, we will queue the report as a background task and return the metadata for the queued job. With `delivery=async-download` it also carries `reportId`. 
 type GetGlobalIssuesCSV200Response struct {
+	// Unique identifier for the task
+	Id *int32 `json:"id,omitempty"`
+	// Name of the task being run
 	Task *string `json:"task,omitempty"`
+	// Token used to poll for the task's status and result
 	JobToken *string `json:"jobToken,omitempty"`
+	// Current status of the task
+	Status *string `json:"status,omitempty"`
+	// Number of times the task has been attempted
+	AttemptNumber *int32 `json:"attempt_number,omitempty"`
+	// Maximum number of retries permitted for the task
+	MaxRetries NullableInt32 `json:"maxRetries,omitempty"`
+	// When the task started running, or null if it has not started
+	Started NullableTime `json:"started,omitempty"`
+	// When the task finished, or null if it has not finished
+	Finished NullableTime `json:"finished,omitempty"`
+	// When the task is scheduled to start, or null
+	ScheduledStartTime NullableTime `json:"scheduledStartTime,omitempty"`
+	// Identifier of the pod running the task, or null
+	Pod NullableString `json:"pod,omitempty"`
+	// Task-specific context payload
+	Context map[string]interface{} `json:"context,omitempty"`
+	// When the task record was created
+	CreatedAt *time.Time `json:"createdAt,omitempty"`
+	// When the task record was last updated
+	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	// Only with `delivery=async-download`. Once the task finishes, fetch the report from `https://<host>/attribution/{reportId}?download=true` (not under `/api`), which responds with a redirect to a short-lived signed URL. 
+	ReportId *string `json:"reportId,omitempty"`
 }
 
 // NewGetGlobalIssuesCSV200Response instantiates a new GetGlobalIssuesCSV200Response object
@@ -39,6 +66,38 @@ func NewGetGlobalIssuesCSV200Response() *GetGlobalIssuesCSV200Response {
 func NewGetGlobalIssuesCSV200ResponseWithDefaults() *GetGlobalIssuesCSV200Response {
 	this := GetGlobalIssuesCSV200Response{}
 	return &this
+}
+
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *GetGlobalIssuesCSV200Response) GetId() int32 {
+	if o == nil || IsNil(o.Id) {
+		var ret int32
+		return ret
+	}
+	return *o.Id
+}
+
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetGlobalIssuesCSV200Response) GetIdOk() (*int32, bool) {
+	if o == nil || IsNil(o.Id) {
+		return nil, false
+	}
+	return o.Id, true
+}
+
+// HasId returns a boolean if a field has been set.
+func (o *GetGlobalIssuesCSV200Response) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given int32 and assigns it to the Id field.
+func (o *GetGlobalIssuesCSV200Response) SetId(v int32) {
+	o.Id = &v
 }
 
 // GetTask returns the Task field value if set, zero value otherwise.
@@ -105,6 +164,408 @@ func (o *GetGlobalIssuesCSV200Response) SetJobToken(v string) {
 	o.JobToken = &v
 }
 
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *GetGlobalIssuesCSV200Response) GetStatus() string {
+	if o == nil || IsNil(o.Status) {
+		var ret string
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetGlobalIssuesCSV200Response) GetStatusOk() (*string, bool) {
+	if o == nil || IsNil(o.Status) {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *GetGlobalIssuesCSV200Response) HasStatus() bool {
+	if o != nil && !IsNil(o.Status) {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given string and assigns it to the Status field.
+func (o *GetGlobalIssuesCSV200Response) SetStatus(v string) {
+	o.Status = &v
+}
+
+// GetAttemptNumber returns the AttemptNumber field value if set, zero value otherwise.
+func (o *GetGlobalIssuesCSV200Response) GetAttemptNumber() int32 {
+	if o == nil || IsNil(o.AttemptNumber) {
+		var ret int32
+		return ret
+	}
+	return *o.AttemptNumber
+}
+
+// GetAttemptNumberOk returns a tuple with the AttemptNumber field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetGlobalIssuesCSV200Response) GetAttemptNumberOk() (*int32, bool) {
+	if o == nil || IsNil(o.AttemptNumber) {
+		return nil, false
+	}
+	return o.AttemptNumber, true
+}
+
+// HasAttemptNumber returns a boolean if a field has been set.
+func (o *GetGlobalIssuesCSV200Response) HasAttemptNumber() bool {
+	if o != nil && !IsNil(o.AttemptNumber) {
+		return true
+	}
+
+	return false
+}
+
+// SetAttemptNumber gets a reference to the given int32 and assigns it to the AttemptNumber field.
+func (o *GetGlobalIssuesCSV200Response) SetAttemptNumber(v int32) {
+	o.AttemptNumber = &v
+}
+
+// GetMaxRetries returns the MaxRetries field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetGlobalIssuesCSV200Response) GetMaxRetries() int32 {
+	if o == nil || IsNil(o.MaxRetries.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.MaxRetries.Get()
+}
+
+// GetMaxRetriesOk returns a tuple with the MaxRetries field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetGlobalIssuesCSV200Response) GetMaxRetriesOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MaxRetries.Get(), o.MaxRetries.IsSet()
+}
+
+// HasMaxRetries returns a boolean if a field has been set.
+func (o *GetGlobalIssuesCSV200Response) HasMaxRetries() bool {
+	if o != nil && o.MaxRetries.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMaxRetries gets a reference to the given NullableInt32 and assigns it to the MaxRetries field.
+func (o *GetGlobalIssuesCSV200Response) SetMaxRetries(v int32) {
+	o.MaxRetries.Set(&v)
+}
+// SetMaxRetriesNil sets the value for MaxRetries to be an explicit nil
+func (o *GetGlobalIssuesCSV200Response) SetMaxRetriesNil() {
+	o.MaxRetries.Set(nil)
+}
+
+// UnsetMaxRetries ensures that no value is present for MaxRetries, not even an explicit nil
+func (o *GetGlobalIssuesCSV200Response) UnsetMaxRetries() {
+	o.MaxRetries.Unset()
+}
+
+// GetStarted returns the Started field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetGlobalIssuesCSV200Response) GetStarted() time.Time {
+	if o == nil || IsNil(o.Started.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.Started.Get()
+}
+
+// GetStartedOk returns a tuple with the Started field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetGlobalIssuesCSV200Response) GetStartedOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Started.Get(), o.Started.IsSet()
+}
+
+// HasStarted returns a boolean if a field has been set.
+func (o *GetGlobalIssuesCSV200Response) HasStarted() bool {
+	if o != nil && o.Started.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetStarted gets a reference to the given NullableTime and assigns it to the Started field.
+func (o *GetGlobalIssuesCSV200Response) SetStarted(v time.Time) {
+	o.Started.Set(&v)
+}
+// SetStartedNil sets the value for Started to be an explicit nil
+func (o *GetGlobalIssuesCSV200Response) SetStartedNil() {
+	o.Started.Set(nil)
+}
+
+// UnsetStarted ensures that no value is present for Started, not even an explicit nil
+func (o *GetGlobalIssuesCSV200Response) UnsetStarted() {
+	o.Started.Unset()
+}
+
+// GetFinished returns the Finished field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetGlobalIssuesCSV200Response) GetFinished() time.Time {
+	if o == nil || IsNil(o.Finished.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.Finished.Get()
+}
+
+// GetFinishedOk returns a tuple with the Finished field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetGlobalIssuesCSV200Response) GetFinishedOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Finished.Get(), o.Finished.IsSet()
+}
+
+// HasFinished returns a boolean if a field has been set.
+func (o *GetGlobalIssuesCSV200Response) HasFinished() bool {
+	if o != nil && o.Finished.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetFinished gets a reference to the given NullableTime and assigns it to the Finished field.
+func (o *GetGlobalIssuesCSV200Response) SetFinished(v time.Time) {
+	o.Finished.Set(&v)
+}
+// SetFinishedNil sets the value for Finished to be an explicit nil
+func (o *GetGlobalIssuesCSV200Response) SetFinishedNil() {
+	o.Finished.Set(nil)
+}
+
+// UnsetFinished ensures that no value is present for Finished, not even an explicit nil
+func (o *GetGlobalIssuesCSV200Response) UnsetFinished() {
+	o.Finished.Unset()
+}
+
+// GetScheduledStartTime returns the ScheduledStartTime field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetGlobalIssuesCSV200Response) GetScheduledStartTime() time.Time {
+	if o == nil || IsNil(o.ScheduledStartTime.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.ScheduledStartTime.Get()
+}
+
+// GetScheduledStartTimeOk returns a tuple with the ScheduledStartTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetGlobalIssuesCSV200Response) GetScheduledStartTimeOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ScheduledStartTime.Get(), o.ScheduledStartTime.IsSet()
+}
+
+// HasScheduledStartTime returns a boolean if a field has been set.
+func (o *GetGlobalIssuesCSV200Response) HasScheduledStartTime() bool {
+	if o != nil && o.ScheduledStartTime.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetScheduledStartTime gets a reference to the given NullableTime and assigns it to the ScheduledStartTime field.
+func (o *GetGlobalIssuesCSV200Response) SetScheduledStartTime(v time.Time) {
+	o.ScheduledStartTime.Set(&v)
+}
+// SetScheduledStartTimeNil sets the value for ScheduledStartTime to be an explicit nil
+func (o *GetGlobalIssuesCSV200Response) SetScheduledStartTimeNil() {
+	o.ScheduledStartTime.Set(nil)
+}
+
+// UnsetScheduledStartTime ensures that no value is present for ScheduledStartTime, not even an explicit nil
+func (o *GetGlobalIssuesCSV200Response) UnsetScheduledStartTime() {
+	o.ScheduledStartTime.Unset()
+}
+
+// GetPod returns the Pod field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetGlobalIssuesCSV200Response) GetPod() string {
+	if o == nil || IsNil(o.Pod.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Pod.Get()
+}
+
+// GetPodOk returns a tuple with the Pod field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetGlobalIssuesCSV200Response) GetPodOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Pod.Get(), o.Pod.IsSet()
+}
+
+// HasPod returns a boolean if a field has been set.
+func (o *GetGlobalIssuesCSV200Response) HasPod() bool {
+	if o != nil && o.Pod.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetPod gets a reference to the given NullableString and assigns it to the Pod field.
+func (o *GetGlobalIssuesCSV200Response) SetPod(v string) {
+	o.Pod.Set(&v)
+}
+// SetPodNil sets the value for Pod to be an explicit nil
+func (o *GetGlobalIssuesCSV200Response) SetPodNil() {
+	o.Pod.Set(nil)
+}
+
+// UnsetPod ensures that no value is present for Pod, not even an explicit nil
+func (o *GetGlobalIssuesCSV200Response) UnsetPod() {
+	o.Pod.Unset()
+}
+
+// GetContext returns the Context field value if set, zero value otherwise.
+func (o *GetGlobalIssuesCSV200Response) GetContext() map[string]interface{} {
+	if o == nil || IsNil(o.Context) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.Context
+}
+
+// GetContextOk returns a tuple with the Context field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetGlobalIssuesCSV200Response) GetContextOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Context) {
+		return map[string]interface{}{}, false
+	}
+	return o.Context, true
+}
+
+// HasContext returns a boolean if a field has been set.
+func (o *GetGlobalIssuesCSV200Response) HasContext() bool {
+	if o != nil && !IsNil(o.Context) {
+		return true
+	}
+
+	return false
+}
+
+// SetContext gets a reference to the given map[string]interface{} and assigns it to the Context field.
+func (o *GetGlobalIssuesCSV200Response) SetContext(v map[string]interface{}) {
+	o.Context = v
+}
+
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
+func (o *GetGlobalIssuesCSV200Response) GetCreatedAt() time.Time {
+	if o == nil || IsNil(o.CreatedAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.CreatedAt
+}
+
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetGlobalIssuesCSV200Response) GetCreatedAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.CreatedAt) {
+		return nil, false
+	}
+	return o.CreatedAt, true
+}
+
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *GetGlobalIssuesCSV200Response) HasCreatedAt() bool {
+	if o != nil && !IsNil(o.CreatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
+func (o *GetGlobalIssuesCSV200Response) SetCreatedAt(v time.Time) {
+	o.CreatedAt = &v
+}
+
+// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+func (o *GetGlobalIssuesCSV200Response) GetUpdatedAt() time.Time {
+	if o == nil || IsNil(o.UpdatedAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.UpdatedAt
+}
+
+// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetGlobalIssuesCSV200Response) GetUpdatedAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.UpdatedAt) {
+		return nil, false
+	}
+	return o.UpdatedAt, true
+}
+
+// HasUpdatedAt returns a boolean if a field has been set.
+func (o *GetGlobalIssuesCSV200Response) HasUpdatedAt() bool {
+	if o != nil && !IsNil(o.UpdatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
+func (o *GetGlobalIssuesCSV200Response) SetUpdatedAt(v time.Time) {
+	o.UpdatedAt = &v
+}
+
+// GetReportId returns the ReportId field value if set, zero value otherwise.
+func (o *GetGlobalIssuesCSV200Response) GetReportId() string {
+	if o == nil || IsNil(o.ReportId) {
+		var ret string
+		return ret
+	}
+	return *o.ReportId
+}
+
+// GetReportIdOk returns a tuple with the ReportId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetGlobalIssuesCSV200Response) GetReportIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ReportId) {
+		return nil, false
+	}
+	return o.ReportId, true
+}
+
+// HasReportId returns a boolean if a field has been set.
+func (o *GetGlobalIssuesCSV200Response) HasReportId() bool {
+	if o != nil && !IsNil(o.ReportId) {
+		return true
+	}
+
+	return false
+}
+
+// SetReportId gets a reference to the given string and assigns it to the ReportId field.
+func (o *GetGlobalIssuesCSV200Response) SetReportId(v string) {
+	o.ReportId = &v
+}
+
 func (o GetGlobalIssuesCSV200Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -115,11 +576,47 @@ func (o GetGlobalIssuesCSV200Response) MarshalJSON() ([]byte, error) {
 
 func (o GetGlobalIssuesCSV200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	if !IsNil(o.Task) {
 		toSerialize["task"] = o.Task
 	}
 	if !IsNil(o.JobToken) {
 		toSerialize["jobToken"] = o.JobToken
+	}
+	if !IsNil(o.Status) {
+		toSerialize["status"] = o.Status
+	}
+	if !IsNil(o.AttemptNumber) {
+		toSerialize["attempt_number"] = o.AttemptNumber
+	}
+	if o.MaxRetries.IsSet() {
+		toSerialize["maxRetries"] = o.MaxRetries.Get()
+	}
+	if o.Started.IsSet() {
+		toSerialize["started"] = o.Started.Get()
+	}
+	if o.Finished.IsSet() {
+		toSerialize["finished"] = o.Finished.Get()
+	}
+	if o.ScheduledStartTime.IsSet() {
+		toSerialize["scheduledStartTime"] = o.ScheduledStartTime.Get()
+	}
+	if o.Pod.IsSet() {
+		toSerialize["pod"] = o.Pod.Get()
+	}
+	if !IsNil(o.Context) {
+		toSerialize["context"] = o.Context
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["createdAt"] = o.CreatedAt
+	}
+	if !IsNil(o.UpdatedAt) {
+		toSerialize["updatedAt"] = o.UpdatedAt
+	}
+	if !IsNil(o.ReportId) {
+		toSerialize["reportId"] = o.ReportId
 	}
 	return toSerialize, nil
 }
