@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | Name of the report option (1-80 characters). Must be unique within the organization. | 
-**Options** | [**GetAllReportOptions200ResponseResultsInnerOptions**](GetAllReportOptions200ResponseResultsInnerOptions.md) |  | 
+**Options** | [**CreateReportOptionRequestOptions**](CreateReportOptionRequestOptions.md) |  | 
 
 ## Methods
 
 ### NewCreateReportOptionRequest
 
-`func NewCreateReportOptionRequest(name string, options GetAllReportOptions200ResponseResultsInnerOptions, ) *CreateReportOptionRequest`
+`func NewCreateReportOptionRequest(name string, options CreateReportOptionRequestOptions, ) *CreateReportOptionRequest`
 
 NewCreateReportOptionRequest instantiates a new CreateReportOptionRequest object
 This constructor will assign default values to properties that have it defined,
@@ -48,20 +48,20 @@ SetName sets Name field to given value.
 
 ### GetOptions
 
-`func (o *CreateReportOptionRequest) GetOptions() GetAllReportOptions200ResponseResultsInnerOptions`
+`func (o *CreateReportOptionRequest) GetOptions() CreateReportOptionRequestOptions`
 
 GetOptions returns the Options field if non-nil, zero value otherwise.
 
 ### GetOptionsOk
 
-`func (o *CreateReportOptionRequest) GetOptionsOk() (*GetAllReportOptions200ResponseResultsInnerOptions, bool)`
+`func (o *CreateReportOptionRequest) GetOptionsOk() (*CreateReportOptionRequestOptions, bool)`
 
 GetOptionsOk returns a tuple with the Options field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetOptions
 
-`func (o *CreateReportOptionRequest) SetOptions(v GetAllReportOptions200ResponseResultsInnerOptions)`
+`func (o *CreateReportOptionRequest) SetOptions(v CreateReportOptionRequestOptions)`
 
 SetOptions sets Options field to given value.
 

@@ -30,7 +30,7 @@ import (
 )
 
 func main() {
-	addLicenseConclusionRequest := *openapiclient.NewAddLicenseConclusionRequest("DependencyRevisionLocator_example", openapiclient.addLicenseConclusion_request_scope{AddLicenseConclusionRequestScopeOneOf: openapiclient.NewAddLicenseConclusionRequestScopeOneOf("Scope_example", "ProjectLocator_example")}, "LicenseId_example") // AddLicenseConclusionRequest | 
+	addLicenseConclusionRequest := *openapiclient.NewAddLicenseConclusionRequest("DependencyRevisionLocator_example", openapiclient.addLicenseConclusion_request_scope{AddLicenseConclusionRequestScopeOneOf: openapiclient.addLicenseConclusion_request_scope_oneOf{AddLicenseConclusionRequestScopeOneOfOneOf: openapiclient.NewAddLicenseConclusionRequestScopeOneOfOneOf("Scope_example", "ProjectLocator_example")}}, "LicenseId_example") // AddLicenseConclusionRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -96,7 +96,7 @@ import (
 )
 
 func main() {
-	addLicenseConclusionRequest := *openapiclient.NewAddLicenseConclusionRequest("DependencyRevisionLocator_example", openapiclient.addLicenseConclusion_request_scope{AddLicenseConclusionRequestScopeOneOf: openapiclient.NewAddLicenseConclusionRequestScopeOneOf("Scope_example", "ProjectLocator_example")}, "LicenseId_example") // AddLicenseConclusionRequest | 
+	addLicenseConclusionRequest := *openapiclient.NewAddLicenseConclusionRequest("DependencyRevisionLocator_example", openapiclient.addLicenseConclusion_request_scope{AddLicenseConclusionRequestScopeOneOf: openapiclient.addLicenseConclusion_request_scope_oneOf{AddLicenseConclusionRequestScopeOneOfOneOf: openapiclient.NewAddLicenseConclusionRequestScopeOneOfOneOf("Scope_example", "ProjectLocator_example")}}, "LicenseId_example") // AddLicenseConclusionRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
