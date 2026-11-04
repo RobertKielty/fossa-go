@@ -4,15 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Scope** | **string** | Revision-scoped conclusion | 
-**ProjectLocator** | **string** | The locator of the project | 
-**RevisionLocator** | **string** | The locator of the revision | 
+**Scope** | **string** | Organization-scoped conclusion | 
+**OrganizationId** | **int32** | The ID of the organization | 
 
 ## Methods
 
 ### NewAddLicenseConclusionRequestScopeOneOf1
 
-`func NewAddLicenseConclusionRequestScopeOneOf1(scope string, projectLocator string, revisionLocator string, ) *AddLicenseConclusionRequestScopeOneOf1`
+`func NewAddLicenseConclusionRequestScopeOneOf1(scope string, organizationId int32, ) *AddLicenseConclusionRequestScopeOneOf1`
 
 NewAddLicenseConclusionRequestScopeOneOf1 instantiates a new AddLicenseConclusionRequestScopeOneOf1 object
 This constructor will assign default values to properties that have it defined,
@@ -47,44 +46,24 @@ and a boolean to check if the value has been set.
 SetScope sets Scope field to given value.
 
 
-### GetProjectLocator
+### GetOrganizationId
 
-`func (o *AddLicenseConclusionRequestScopeOneOf1) GetProjectLocator() string`
+`func (o *AddLicenseConclusionRequestScopeOneOf1) GetOrganizationId() int32`
 
-GetProjectLocator returns the ProjectLocator field if non-nil, zero value otherwise.
+GetOrganizationId returns the OrganizationId field if non-nil, zero value otherwise.
 
-### GetProjectLocatorOk
+### GetOrganizationIdOk
 
-`func (o *AddLicenseConclusionRequestScopeOneOf1) GetProjectLocatorOk() (*string, bool)`
+`func (o *AddLicenseConclusionRequestScopeOneOf1) GetOrganizationIdOk() (*int32, bool)`
 
-GetProjectLocatorOk returns a tuple with the ProjectLocator field if it's non-nil, zero value otherwise
+GetOrganizationIdOk returns a tuple with the OrganizationId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetProjectLocator
+### SetOrganizationId
 
-`func (o *AddLicenseConclusionRequestScopeOneOf1) SetProjectLocator(v string)`
+`func (o *AddLicenseConclusionRequestScopeOneOf1) SetOrganizationId(v int32)`
 
-SetProjectLocator sets ProjectLocator field to given value.
-
-
-### GetRevisionLocator
-
-`func (o *AddLicenseConclusionRequestScopeOneOf1) GetRevisionLocator() string`
-
-GetRevisionLocator returns the RevisionLocator field if non-nil, zero value otherwise.
-
-### GetRevisionLocatorOk
-
-`func (o *AddLicenseConclusionRequestScopeOneOf1) GetRevisionLocatorOk() (*string, bool)`
-
-GetRevisionLocatorOk returns a tuple with the RevisionLocator field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetRevisionLocator
-
-`func (o *AddLicenseConclusionRequestScopeOneOf1) SetRevisionLocator(v string)`
-
-SetRevisionLocator sets RevisionLocator field to given value.
+SetOrganizationId sets OrganizationId field to given value.
 
 
 
