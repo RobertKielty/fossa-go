@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.37.7
 Contact: support@fossa.com
 */
 
@@ -49,7 +49,7 @@ type GetRevisionDependenciesPost200ResponseInner struct {
 	Licenses []GetRevisionDependenciesPost200ResponseInnerLicensesInner `json:"licenses,omitempty"`
 	// Whether this dependency is ignored
 	Ignored *bool `json:"ignored,omitempty"`
-	// Download URL for the dependency package
+	// The URL the dependency's package was downloaded from when it was built, or `null` when no download was recorded. Callers outside the project's organization get `null` when the organization recorded a download from its own registry.
 	DownloadUrl *string `json:"downloadUrl,omitempty"`
 	// Hash of the dependency (included if includeHashData is true)
 	Hash *string `json:"hash,omitempty"`
