@@ -5,15 +5,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Results** | [**[]GetAllReportOptions200ResponseResultsInner**](GetAllReportOptions200ResponseResultsInner.md) |  | 
-**Page** | **int32** | Current page number | 
-**PageSize** | **int32** | Number of items per page | 
-**Total** | **int32** | Total number of report options | 
 
 ## Methods
 
 ### NewGetAllReportOptions200Response
 
-`func NewGetAllReportOptions200Response(results []GetAllReportOptions200ResponseResultsInner, page int32, pageSize int32, total int32, ) *GetAllReportOptions200Response`
+`func NewGetAllReportOptions200Response(results []GetAllReportOptions200ResponseResultsInner, ) *GetAllReportOptions200Response`
 
 NewGetAllReportOptions200Response instantiates a new GetAllReportOptions200Response object
 This constructor will assign default values to properties that have it defined,
@@ -46,66 +43,6 @@ and a boolean to check if the value has been set.
 `func (o *GetAllReportOptions200Response) SetResults(v []GetAllReportOptions200ResponseResultsInner)`
 
 SetResults sets Results field to given value.
-
-
-### GetPage
-
-`func (o *GetAllReportOptions200Response) GetPage() int32`
-
-GetPage returns the Page field if non-nil, zero value otherwise.
-
-### GetPageOk
-
-`func (o *GetAllReportOptions200Response) GetPageOk() (*int32, bool)`
-
-GetPageOk returns a tuple with the Page field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPage
-
-`func (o *GetAllReportOptions200Response) SetPage(v int32)`
-
-SetPage sets Page field to given value.
-
-
-### GetPageSize
-
-`func (o *GetAllReportOptions200Response) GetPageSize() int32`
-
-GetPageSize returns the PageSize field if non-nil, zero value otherwise.
-
-### GetPageSizeOk
-
-`func (o *GetAllReportOptions200Response) GetPageSizeOk() (*int32, bool)`
-
-GetPageSizeOk returns a tuple with the PageSize field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPageSize
-
-`func (o *GetAllReportOptions200Response) SetPageSize(v int32)`
-
-SetPageSize sets PageSize field to given value.
-
-
-### GetTotal
-
-`func (o *GetAllReportOptions200Response) GetTotal() int32`
-
-GetTotal returns the Total field if non-nil, zero value otherwise.
-
-### GetTotalOk
-
-`func (o *GetAllReportOptions200Response) GetTotalOk() (*int32, bool)`
-
-GetTotalOk returns a tuple with the Total field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTotal
-
-`func (o *GetAllReportOptions200Response) SetTotal(v int32)`
-
-SetTotal sets Total field to given value.
 
 
 
