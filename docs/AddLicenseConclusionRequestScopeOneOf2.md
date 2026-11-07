@@ -4,14 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Scope** | **string** | Release group-scoped conclusion | 
-**ReleaseGroupId** | **int32** | The ID of the release group | 
+**Scope** | **string** | Global conclusion (FOSSA admins only) | 
 
 ## Methods
 
 ### NewAddLicenseConclusionRequestScopeOneOf2
 
-`func NewAddLicenseConclusionRequestScopeOneOf2(scope string, releaseGroupId int32, ) *AddLicenseConclusionRequestScopeOneOf2`
+`func NewAddLicenseConclusionRequestScopeOneOf2(scope string, ) *AddLicenseConclusionRequestScopeOneOf2`
 
 NewAddLicenseConclusionRequestScopeOneOf2 instantiates a new AddLicenseConclusionRequestScopeOneOf2 object
 This constructor will assign default values to properties that have it defined,
@@ -44,26 +43,6 @@ and a boolean to check if the value has been set.
 `func (o *AddLicenseConclusionRequestScopeOneOf2) SetScope(v string)`
 
 SetScope sets Scope field to given value.
-
-
-### GetReleaseGroupId
-
-`func (o *AddLicenseConclusionRequestScopeOneOf2) GetReleaseGroupId() int32`
-
-GetReleaseGroupId returns the ReleaseGroupId field if non-nil, zero value otherwise.
-
-### GetReleaseGroupIdOk
-
-`func (o *AddLicenseConclusionRequestScopeOneOf2) GetReleaseGroupIdOk() (*int32, bool)`
-
-GetReleaseGroupIdOk returns a tuple with the ReleaseGroupId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetReleaseGroupId
-
-`func (o *AddLicenseConclusionRequestScopeOneOf2) SetReleaseGroupId(v int32)`
-
-SetReleaseGroupId sets ReleaseGroupId field to given value.
 
 
 
