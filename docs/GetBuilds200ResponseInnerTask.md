@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **UpdatedAt** | Pointer to **time.Time** | The date and time the task was last updated | [optional] 
 **AttemptNumber** | Pointer to **int32** | The number of attempts for the task | [optional] 
 **MaxRetries** | Pointer to **int32** | The maximum number of retries for the task | [optional] 
+**ScheduledStartTime** | Pointer to **NullableTime** | The date and time the task is scheduled to start | [optional] 
 
 ## Methods
 
@@ -206,6 +207,41 @@ SetMaxRetries sets MaxRetries field to given value.
 
 HasMaxRetries returns a boolean if a field has been set.
 
+### GetScheduledStartTime
+
+`func (o *GetBuilds200ResponseInnerTask) GetScheduledStartTime() time.Time`
+
+GetScheduledStartTime returns the ScheduledStartTime field if non-nil, zero value otherwise.
+
+### GetScheduledStartTimeOk
+
+`func (o *GetBuilds200ResponseInnerTask) GetScheduledStartTimeOk() (*time.Time, bool)`
+
+GetScheduledStartTimeOk returns a tuple with the ScheduledStartTime field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetScheduledStartTime
+
+`func (o *GetBuilds200ResponseInnerTask) SetScheduledStartTime(v time.Time)`
+
+SetScheduledStartTime sets ScheduledStartTime field to given value.
+
+### HasScheduledStartTime
+
+`func (o *GetBuilds200ResponseInnerTask) HasScheduledStartTime() bool`
+
+HasScheduledStartTime returns a boolean if a field has been set.
+
+### SetScheduledStartTimeNil
+
+`func (o *GetBuilds200ResponseInnerTask) SetScheduledStartTimeNil(b bool)`
+
+ SetScheduledStartTimeNil sets the value for ScheduledStartTime to be an explicit nil
+
+### UnsetScheduledStartTime
+`func (o *GetBuilds200ResponseInnerTask) UnsetScheduledStartTime()`
+
+UnsetScheduledStartTime ensures that no value is present for ScheduledStartTime, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
