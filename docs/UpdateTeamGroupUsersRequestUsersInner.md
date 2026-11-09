@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **int32** | ID of the user | 
-**RoleId** | Pointer to **int32** | Role ID for the user (required for add and replace actions) | [optional] 
+**RoleId** | Pointer to **int32** | Role ID for the user (required for add and replace actions). When the organization disables built-in team roles, built-in roles (including a built-in team default role) are refused. | [optional] 
 
 ## Methods
 
