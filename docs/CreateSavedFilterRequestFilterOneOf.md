@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | Pointer to **string** |  | [optional] 
 **Identification** | Pointer to **string** |  | [optional] 
+**IgnoreReason** | Pointer to **string** | Reason a licensing issue was automatically ignored. Licensing issues have no user-selectable ignore reason, so only auto-ignore reasons are filterable.  | [optional] 
 **PackageManagers** | Pointer to **[]string** |  | [optional] 
 **ProjectLabels** | Pointer to **[]string** |  | [optional] 
 **Search** | Pointer to **string** |  | [optional] 
@@ -82,6 +83,31 @@ SetIdentification sets Identification field to given value.
 `func (o *CreateSavedFilterRequestFilterOneOf) HasIdentification() bool`
 
 HasIdentification returns a boolean if a field has been set.
+
+### GetIgnoreReason
+
+`func (o *CreateSavedFilterRequestFilterOneOf) GetIgnoreReason() string`
+
+GetIgnoreReason returns the IgnoreReason field if non-nil, zero value otherwise.
+
+### GetIgnoreReasonOk
+
+`func (o *CreateSavedFilterRequestFilterOneOf) GetIgnoreReasonOk() (*string, bool)`
+
+GetIgnoreReasonOk returns a tuple with the IgnoreReason field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIgnoreReason
+
+`func (o *CreateSavedFilterRequestFilterOneOf) SetIgnoreReason(v string)`
+
+SetIgnoreReason sets IgnoreReason field to given value.
+
+### HasIgnoreReason
+
+`func (o *CreateSavedFilterRequestFilterOneOf) HasIgnoreReason() bool`
+
+HasIgnoreReason returns a boolean if a field has been set.
 
 ### GetPackageManagers
 
