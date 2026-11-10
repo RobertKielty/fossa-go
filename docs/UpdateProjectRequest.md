@@ -12,8 +12,8 @@ Name | Type | Description | Notes
 **ScmUrl** | Pointer to **string** | Source control management URL for the project repository | [optional] 
 **ManualScmUrl** | Pointer to **bool** | Whether the SCM URL was manually provided by the user | [optional] 
 **VcsHost** | Pointer to **string** | VCS hosting provider | [optional] 
-**DefaultBranch** | Pointer to **string** | The default branch to analyze for this project | [optional] 
-**TrackingBranches** | Pointer to **[]string** | Branches to actively track and analyze. Tags are automatically filtered out. Branches in this list are automatically removed from &#x60;hidden_branches&#x60;.  | [optional] 
+**DefaultBranch** | Pointer to **string** | The default branch to analyze for this project. It can&#39;t be set empty; a project already stored with an empty default branch can still send it unchanged. A new default branch is also tracked, so the &#x60;tracking_branches&#x60; limits apply to it.  | [optional] 
+**TrackingBranches** | Pointer to **[]string** | Branches to actively track and analyze. Tags are automatically filtered out. Branches in this list are automatically removed from &#x60;hidden_branches&#x60;. A request that adds a branch name over 1024 bytes (UTF-8), or grows the tracked set past 5000 branches, may be rejected with a 400; branches already tracked always stay.  | [optional] 
 **HiddenBranches** | Pointer to **[]string** | Branches to hide from the UI. Tags are automatically filtered out. Branches in this list are automatically removed from &#x60;tracking_branches&#x60;.  | [optional] 
 **PolicyId** | Pointer to **int32** | ID of the licensing policy to apply to this project. Requires SetPolicy permission for LICENSING policy type. | [optional] 
 **SecurityPolicyId** | Pointer to **int32** | ID of the security policy to apply to this project. Requires SetPolicy permission for SECURITY policy type. | [optional] 
@@ -26,6 +26,15 @@ Name | Type | Description | Notes
 **SbomAnalysisEnabled** | Pointer to **bool** | Enable or disable SBOM policy analysis for this project. Requires SetPolicy permission for SBOM policy type. | [optional] 
 **SnippetLicensingIssueScanningEnabled** | Pointer to **bool** | Enable or disable snippet licensing issue scanning for this project | [optional] 
 **SnippetSecurityIssueScanningEnabled** | Pointer to **bool** | Enable or disable snippet security issue scanning for this project | [optional] 
+**SnippetAutoRejectMatchPercentageThreshold** | Pointer to **int32** | Match percentage at (or above) which snippet matches are automatically rejected. Must be an integer between 1 and 100, or &#x60;null&#x60; to disable auto-rejection.  | [optional] 
+**VendoredLicensingIssueScanningEnabled** | Pointer to **bool** | Enable or disable licensing issue scanning for vendored dependencies in this project | [optional] 
+**VendoredSecurityIssueScanningEnabled** | Pointer to **bool** | Enable or disable security issue scanning for vendored dependencies in this project | [optional] 
+**VendoredQualityIssueScanningEnabled** | Pointer to **bool** | Enable or disable quality issue scanning for vendored dependencies in this project | [optional] 
+**QuickImportVendoredDetectionEnabled** | Pointer to **bool** | Enable or disable vendored dependency detection during quick imports for this project. Can only be modified if the organization has quick import vendored detection and vendored dependency detection features enabled.  | [optional] 
+**QuickImportSnippetDetectionEnabled** | Pointer to **bool** | Enable or disable snippet detection during quick imports for this project. Can only be modified if the organization has quick import snippet detection and snippet detection features enabled.  | [optional] 
+**DefaultSavedOptionLicensingReport** | Pointer to **int32** | ID of the saved report option to use as the default for licensing reports. Must reference a report option belonging to your organization, or &#x60;null&#x60; to clear it.  | [optional] 
+**DefaultSavedOptionSbom** | Pointer to **int32** | ID of the saved report option to use as the default for SBOM reports. Must reference a report option belonging to your organization, or &#x60;null&#x60; to clear it.  | [optional] 
+**InvalidCredential** | Pointer to **bool** | Whether the credential associated with this project is currently invalid. | [optional] 
 **LicensingStatusCheckEnabled** | Pointer to **bool** | Enable or disable licensing issue CI/CD status checks | [optional] 
 **SecurityStatusCheckEnabled** | Pointer to **bool** | Enable or disable security issue CI/CD status checks | [optional] 
 **QualityStatusCheckEnabled** | Pointer to **bool** | Enable or disable quality issue CI/CD status checks | [optional] 
@@ -41,10 +50,10 @@ Name | Type | Description | Notes
 **IssueTrackerProjectIds** | Pointer to **[]string** | Jira project IDs associated with this project | [optional] 
 **IssueTrackerCustomFields** | Pointer to [**map[string]UpdateProjectRequestIssueTrackerCustomFieldsValue**](UpdateProjectRequestIssueTrackerCustomFieldsValue.md) | Custom Jira fields configuration. The object keys are Jira field IDs, and values contain field metadata. The &#x60;isRequired&#x60; field accepts both boolean and stringified boolean values (\&quot;true\&quot;/\&quot;false\&quot;).  | [optional] 
 **UseGlobalTrackerSettings** | Pointer to **bool** | Whether to use organization-level issue tracker settings instead of project-specific settings | [optional] 
-**TransitiveExcludes** | Pointer to **[]string** | List of dependency locators to exclude from analysis. Removing items from this array is logged as \&quot;un-ignoring\&quot; dependencies. Format: \&quot;fetcher+package$revision\&quot; (e.g., \&quot;npm+lodash$4.17.21\&quot;)  | [optional] 
+**TransitiveExcludes** | Pointer to **[]string** | List of dependency locators to exclude from analysis. Removing items from this array is logged as \&quot;un-ignoring\&quot; dependencies. Format: \&quot;fetcher+package$revision\&quot; (e.g., \&quot;npm+lodash$4.17.21\&quot;) A request that adds a locator over 512 bytes (UTF-8), or grows the list past 5000 locators, may be rejected with a 400; locators already in the list always stay.  | [optional] 
 **ReportCustomText** | Pointer to **string** | Custom text to include in attribution reports for this project | [optional] 
-**BomColumnSettings** | Pointer to **[]string** | Columns to display in the Bill of Materials (BOM) report. Available options: All, Name, Version, Type, License, DirectLicense, DirectLicenseOrigin, DeepLicense, DeepLicenseOrigin, Description, Homepage, PrimaryLanguage, SourceLocation, ReleasePublishDate, OriginId, Tags, ComponentComment, Reachability  | [optional] 
-**BomPublicId** | Pointer to **string** | Public identifier for accessing the project&#39;s attribution report | [optional] 
+**BomColumnSettings** | Pointer to **[]string** | Columns to display in the Bill of Materials (BOM) report. Available options: All, Name, Version, Type, License, DirectLicense, DirectLicenseOrigin, DeepLicense, DeepLicenseOrigin, Description, Homepage, PrimaryLanguage, SourceLocation, ReleasePublishDate, OriginId, Tags, ComponentComment  | [optional] 
+**BomPublicId** | Pointer to **string** | Send &#x60;null&#x60; (or an empty string) to remove the project&#39;s public attribution report link. Any other value is ignored: the link can only be created with &#x60;PUT /projects/{locator}/generate_attribution_slug&#x60;.  | [optional] 
 **Labels** | Pointer to **[]int32** | Array of label IDs to associate with this project. This replaces all existing labels. Labels must exist in the organization before being assigned.  | [optional] 
 **Filters** | Pointer to [**UpdateProjectRequestFilters**](UpdateProjectRequestFilters.md) |  | [optional] 
 **Notifications** | Pointer to [**[]UpdateProjectRequestNotificationsInner**](UpdateProjectRequestNotificationsInner.md) | Array of notification configurations for this project. Empty notification objects are automatically filtered out. Changes are processed asynchronously alongside the main update.  | [optional] 
@@ -617,6 +626,231 @@ SetSnippetSecurityIssueScanningEnabled sets SnippetSecurityIssueScanningEnabled 
 `func (o *UpdateProjectRequest) HasSnippetSecurityIssueScanningEnabled() bool`
 
 HasSnippetSecurityIssueScanningEnabled returns a boolean if a field has been set.
+
+### GetSnippetAutoRejectMatchPercentageThreshold
+
+`func (o *UpdateProjectRequest) GetSnippetAutoRejectMatchPercentageThreshold() int32`
+
+GetSnippetAutoRejectMatchPercentageThreshold returns the SnippetAutoRejectMatchPercentageThreshold field if non-nil, zero value otherwise.
+
+### GetSnippetAutoRejectMatchPercentageThresholdOk
+
+`func (o *UpdateProjectRequest) GetSnippetAutoRejectMatchPercentageThresholdOk() (*int32, bool)`
+
+GetSnippetAutoRejectMatchPercentageThresholdOk returns a tuple with the SnippetAutoRejectMatchPercentageThreshold field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSnippetAutoRejectMatchPercentageThreshold
+
+`func (o *UpdateProjectRequest) SetSnippetAutoRejectMatchPercentageThreshold(v int32)`
+
+SetSnippetAutoRejectMatchPercentageThreshold sets SnippetAutoRejectMatchPercentageThreshold field to given value.
+
+### HasSnippetAutoRejectMatchPercentageThreshold
+
+`func (o *UpdateProjectRequest) HasSnippetAutoRejectMatchPercentageThreshold() bool`
+
+HasSnippetAutoRejectMatchPercentageThreshold returns a boolean if a field has been set.
+
+### GetVendoredLicensingIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) GetVendoredLicensingIssueScanningEnabled() bool`
+
+GetVendoredLicensingIssueScanningEnabled returns the VendoredLicensingIssueScanningEnabled field if non-nil, zero value otherwise.
+
+### GetVendoredLicensingIssueScanningEnabledOk
+
+`func (o *UpdateProjectRequest) GetVendoredLicensingIssueScanningEnabledOk() (*bool, bool)`
+
+GetVendoredLicensingIssueScanningEnabledOk returns a tuple with the VendoredLicensingIssueScanningEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVendoredLicensingIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) SetVendoredLicensingIssueScanningEnabled(v bool)`
+
+SetVendoredLicensingIssueScanningEnabled sets VendoredLicensingIssueScanningEnabled field to given value.
+
+### HasVendoredLicensingIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) HasVendoredLicensingIssueScanningEnabled() bool`
+
+HasVendoredLicensingIssueScanningEnabled returns a boolean if a field has been set.
+
+### GetVendoredSecurityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) GetVendoredSecurityIssueScanningEnabled() bool`
+
+GetVendoredSecurityIssueScanningEnabled returns the VendoredSecurityIssueScanningEnabled field if non-nil, zero value otherwise.
+
+### GetVendoredSecurityIssueScanningEnabledOk
+
+`func (o *UpdateProjectRequest) GetVendoredSecurityIssueScanningEnabledOk() (*bool, bool)`
+
+GetVendoredSecurityIssueScanningEnabledOk returns a tuple with the VendoredSecurityIssueScanningEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVendoredSecurityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) SetVendoredSecurityIssueScanningEnabled(v bool)`
+
+SetVendoredSecurityIssueScanningEnabled sets VendoredSecurityIssueScanningEnabled field to given value.
+
+### HasVendoredSecurityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) HasVendoredSecurityIssueScanningEnabled() bool`
+
+HasVendoredSecurityIssueScanningEnabled returns a boolean if a field has been set.
+
+### GetVendoredQualityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) GetVendoredQualityIssueScanningEnabled() bool`
+
+GetVendoredQualityIssueScanningEnabled returns the VendoredQualityIssueScanningEnabled field if non-nil, zero value otherwise.
+
+### GetVendoredQualityIssueScanningEnabledOk
+
+`func (o *UpdateProjectRequest) GetVendoredQualityIssueScanningEnabledOk() (*bool, bool)`
+
+GetVendoredQualityIssueScanningEnabledOk returns a tuple with the VendoredQualityIssueScanningEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVendoredQualityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) SetVendoredQualityIssueScanningEnabled(v bool)`
+
+SetVendoredQualityIssueScanningEnabled sets VendoredQualityIssueScanningEnabled field to given value.
+
+### HasVendoredQualityIssueScanningEnabled
+
+`func (o *UpdateProjectRequest) HasVendoredQualityIssueScanningEnabled() bool`
+
+HasVendoredQualityIssueScanningEnabled returns a boolean if a field has been set.
+
+### GetQuickImportVendoredDetectionEnabled
+
+`func (o *UpdateProjectRequest) GetQuickImportVendoredDetectionEnabled() bool`
+
+GetQuickImportVendoredDetectionEnabled returns the QuickImportVendoredDetectionEnabled field if non-nil, zero value otherwise.
+
+### GetQuickImportVendoredDetectionEnabledOk
+
+`func (o *UpdateProjectRequest) GetQuickImportVendoredDetectionEnabledOk() (*bool, bool)`
+
+GetQuickImportVendoredDetectionEnabledOk returns a tuple with the QuickImportVendoredDetectionEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetQuickImportVendoredDetectionEnabled
+
+`func (o *UpdateProjectRequest) SetQuickImportVendoredDetectionEnabled(v bool)`
+
+SetQuickImportVendoredDetectionEnabled sets QuickImportVendoredDetectionEnabled field to given value.
+
+### HasQuickImportVendoredDetectionEnabled
+
+`func (o *UpdateProjectRequest) HasQuickImportVendoredDetectionEnabled() bool`
+
+HasQuickImportVendoredDetectionEnabled returns a boolean if a field has been set.
+
+### GetQuickImportSnippetDetectionEnabled
+
+`func (o *UpdateProjectRequest) GetQuickImportSnippetDetectionEnabled() bool`
+
+GetQuickImportSnippetDetectionEnabled returns the QuickImportSnippetDetectionEnabled field if non-nil, zero value otherwise.
+
+### GetQuickImportSnippetDetectionEnabledOk
+
+`func (o *UpdateProjectRequest) GetQuickImportSnippetDetectionEnabledOk() (*bool, bool)`
+
+GetQuickImportSnippetDetectionEnabledOk returns a tuple with the QuickImportSnippetDetectionEnabled field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetQuickImportSnippetDetectionEnabled
+
+`func (o *UpdateProjectRequest) SetQuickImportSnippetDetectionEnabled(v bool)`
+
+SetQuickImportSnippetDetectionEnabled sets QuickImportSnippetDetectionEnabled field to given value.
+
+### HasQuickImportSnippetDetectionEnabled
+
+`func (o *UpdateProjectRequest) HasQuickImportSnippetDetectionEnabled() bool`
+
+HasQuickImportSnippetDetectionEnabled returns a boolean if a field has been set.
+
+### GetDefaultSavedOptionLicensingReport
+
+`func (o *UpdateProjectRequest) GetDefaultSavedOptionLicensingReport() int32`
+
+GetDefaultSavedOptionLicensingReport returns the DefaultSavedOptionLicensingReport field if non-nil, zero value otherwise.
+
+### GetDefaultSavedOptionLicensingReportOk
+
+`func (o *UpdateProjectRequest) GetDefaultSavedOptionLicensingReportOk() (*int32, bool)`
+
+GetDefaultSavedOptionLicensingReportOk returns a tuple with the DefaultSavedOptionLicensingReport field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDefaultSavedOptionLicensingReport
+
+`func (o *UpdateProjectRequest) SetDefaultSavedOptionLicensingReport(v int32)`
+
+SetDefaultSavedOptionLicensingReport sets DefaultSavedOptionLicensingReport field to given value.
+
+### HasDefaultSavedOptionLicensingReport
+
+`func (o *UpdateProjectRequest) HasDefaultSavedOptionLicensingReport() bool`
+
+HasDefaultSavedOptionLicensingReport returns a boolean if a field has been set.
+
+### GetDefaultSavedOptionSbom
+
+`func (o *UpdateProjectRequest) GetDefaultSavedOptionSbom() int32`
+
+GetDefaultSavedOptionSbom returns the DefaultSavedOptionSbom field if non-nil, zero value otherwise.
+
+### GetDefaultSavedOptionSbomOk
+
+`func (o *UpdateProjectRequest) GetDefaultSavedOptionSbomOk() (*int32, bool)`
+
+GetDefaultSavedOptionSbomOk returns a tuple with the DefaultSavedOptionSbom field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDefaultSavedOptionSbom
+
+`func (o *UpdateProjectRequest) SetDefaultSavedOptionSbom(v int32)`
+
+SetDefaultSavedOptionSbom sets DefaultSavedOptionSbom field to given value.
+
+### HasDefaultSavedOptionSbom
+
+`func (o *UpdateProjectRequest) HasDefaultSavedOptionSbom() bool`
+
+HasDefaultSavedOptionSbom returns a boolean if a field has been set.
+
+### GetInvalidCredential
+
+`func (o *UpdateProjectRequest) GetInvalidCredential() bool`
+
+GetInvalidCredential returns the InvalidCredential field if non-nil, zero value otherwise.
+
+### GetInvalidCredentialOk
+
+`func (o *UpdateProjectRequest) GetInvalidCredentialOk() (*bool, bool)`
+
+GetInvalidCredentialOk returns a tuple with the InvalidCredential field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetInvalidCredential
+
+`func (o *UpdateProjectRequest) SetInvalidCredential(v bool)`
+
+SetInvalidCredential sets InvalidCredential field to given value.
+
+### HasInvalidCredential
+
+`func (o *UpdateProjectRequest) HasInvalidCredential() bool`
+
+HasInvalidCredential returns a boolean if a field has been set.
 
 ### GetLicensingStatusCheckEnabled
 

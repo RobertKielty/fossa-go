@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **Search** | Pointer to **string** | Search term for filtering snippets | [optional] 
 **RejectionStatus** | Pointer to **[]string** | Filter by rejection status | [optional] 
 **PackageLabels** | Pointer to **[]string** | Filter by package labels | [optional] 
+**VendoredMatch** | Pointer to **[]string** | Filter by vendored/converted match status | [optional] 
 
 ## Methods
 
@@ -174,6 +175,31 @@ SetPackageLabels sets PackageLabels field to given value.
 `func (o *RejectSnippetsRequest) HasPackageLabels() bool`
 
 HasPackageLabels returns a boolean if a field has been set.
+
+### GetVendoredMatch
+
+`func (o *RejectSnippetsRequest) GetVendoredMatch() []string`
+
+GetVendoredMatch returns the VendoredMatch field if non-nil, zero value otherwise.
+
+### GetVendoredMatchOk
+
+`func (o *RejectSnippetsRequest) GetVendoredMatchOk() (*[]string, bool)`
+
+GetVendoredMatchOk returns a tuple with the VendoredMatch field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVendoredMatch
+
+`func (o *RejectSnippetsRequest) SetVendoredMatch(v []string)`
+
+SetVendoredMatch sets VendoredMatch field to given value.
+
+### HasVendoredMatch
+
+`func (o *RejectSnippetsRequest) HasVendoredMatch() bool`
+
+HasVendoredMatch returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
