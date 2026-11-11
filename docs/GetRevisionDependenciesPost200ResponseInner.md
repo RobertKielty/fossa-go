@@ -21,7 +21,7 @@ Name | Type | Description | Notes
 **IssueTargets** | Pointer to [**[]GetRevisionDependenciesPost200ResponseInnerIssueTargetsInner**](GetRevisionDependenciesPost200ResponseInnerIssueTargetsInner.md) |  | [optional] 
 **Licenses** | Pointer to [**[]GetRevisionDependenciesPost200ResponseInnerLicensesInner**](GetRevisionDependenciesPost200ResponseInnerLicensesInner.md) |  | [optional] 
 **Ignored** | Pointer to **bool** | Whether this dependency is ignored | [optional] 
-**DownloadUrl** | Pointer to **string** | Download URL for the dependency package | [optional] 
+**DownloadUrl** | Pointer to **string** | The URL the dependency&#39;s package was downloaded from when it was built, or &#x60;null&#x60; when no download was recorded. Callers outside the project&#39;s organization get &#x60;null&#x60; when the organization recorded a download from its own registry. | [optional] 
 **Hash** | Pointer to **string** | Hash of the dependency (included if includeHashData is true) | [optional] 
 **Version** | Pointer to **string** | Version of the dependency (included if includeHashData is true) | [optional] 
 **IsGolang** | Pointer to **bool** | Whether this is a Go dependency (included if includeHashData is true) | [optional] 
