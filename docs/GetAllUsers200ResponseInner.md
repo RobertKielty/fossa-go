@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **EmailVerified** | Pointer to **NullableBool** | Whether the user&#39;s email address has been verified | [optional] 
 **Demo** | Pointer to **bool** | Whether the user is a demo user | [optional] 
 **Super** | Pointer to **bool** | Whether the user is a super user | [optional] 
+**IsServiceAccount** | Pointer to **bool** | Whether the user is a service account | [optional] 
 **Joined** | Pointer to **NullableTime** | The date the user joined the organization | [optional] 
 **LastVisit** | Pointer to **NullableTime** | The date the user last visited the organization | [optional] 
 **TermsAgreed** | Pointer to **NullableTime** | The date the user agreed to the organization&#39;s terms | [optional] 
@@ -228,6 +229,31 @@ SetSuper sets Super field to given value.
 `func (o *GetAllUsers200ResponseInner) HasSuper() bool`
 
 HasSuper returns a boolean if a field has been set.
+
+### GetIsServiceAccount
+
+`func (o *GetAllUsers200ResponseInner) GetIsServiceAccount() bool`
+
+GetIsServiceAccount returns the IsServiceAccount field if non-nil, zero value otherwise.
+
+### GetIsServiceAccountOk
+
+`func (o *GetAllUsers200ResponseInner) GetIsServiceAccountOk() (*bool, bool)`
+
+GetIsServiceAccountOk returns a tuple with the IsServiceAccount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsServiceAccount
+
+`func (o *GetAllUsers200ResponseInner) SetIsServiceAccount(v bool)`
+
+SetIsServiceAccount sets IsServiceAccount field to given value.
+
+### HasIsServiceAccount
+
+`func (o *GetAllUsers200ResponseInner) HasIsServiceAccount() bool`
+
+HasIsServiceAccount returns a boolean if a field has been set.
 
 ### GetJoined
 
