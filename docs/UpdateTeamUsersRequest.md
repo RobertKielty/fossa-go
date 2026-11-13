@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Action** | **string** | Action to perform on team users | 
-**Users** | Pointer to [**[]UpdateTeamUsersRequestUsersInner**](UpdateTeamUsersRequestUsersInner.md) | List of users to add, remove, or replace | [optional] 
+**Users** | [**[]UpdateTeamUsersRequestUsersInner**](UpdateTeamUsersRequestUsersInner.md) | List of users to add, remove, or replace | 
 
 ## Methods
 
 ### NewUpdateTeamUsersRequest
 
-`func NewUpdateTeamUsersRequest(action string, ) *UpdateTeamUsersRequest`
+`func NewUpdateTeamUsersRequest(action string, users []UpdateTeamUsersRequestUsersInner, ) *UpdateTeamUsersRequest`
 
 NewUpdateTeamUsersRequest instantiates a new UpdateTeamUsersRequest object
 This constructor will assign default values to properties that have it defined,
@@ -65,11 +65,6 @@ and a boolean to check if the value has been set.
 
 SetUsers sets Users field to given value.
 
-### HasUsers
-
-`func (o *UpdateTeamUsersRequest) HasUsers() bool`
-
-HasUsers returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
