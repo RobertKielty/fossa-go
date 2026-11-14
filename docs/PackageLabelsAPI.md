@@ -11,12 +11,13 @@ Method | HTTP request | Description
 [**DeletePackageLabels**](PackageLabelsAPI.md#DeletePackageLabels) | **Delete** /package-labels | 
 [**GetPackageLabelAssignments**](PackageLabelsAPI.md#GetPackageLabelAssignments) | **Get** /package-label-assignments | 
 [**GetPackageLabels**](PackageLabelsAPI.md#GetPackageLabels) | **Get** /package-labels | 
+[**UpdatePackageLabelAssignments**](PackageLabelsAPI.md#UpdatePackageLabelAssignments) | **Put** /package-label-assignments | 
 
 
 
 ## BulkAssignPackageLabels
 
-> GetPackageLabelAssignments200Response BulkAssignPackageLabels(ctx).BulkAssignPackageLabelsRequest(bulkAssignPackageLabelsRequest).Execute()
+> UpdatePackageLabelAssignments200Response BulkAssignPackageLabels(ctx).BulkAssignPackageLabelsRequest(bulkAssignPackageLabelsRequest).Execute()
 
 
 
@@ -44,7 +45,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `PackageLabelsAPI.BulkAssignPackageLabels``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `BulkAssignPackageLabels`: GetPackageLabelAssignments200Response
+	// response from `BulkAssignPackageLabels`: UpdatePackageLabelAssignments200Response
 	fmt.Fprintf(os.Stdout, "Response from `PackageLabelsAPI.BulkAssignPackageLabels`: %v\n", resp)
 }
 ```
@@ -64,7 +65,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetPackageLabelAssignments200Response**](GetPackageLabelAssignments200Response.md)
+[**UpdatePackageLabelAssignments200Response**](UpdatePackageLabelAssignments200Response.md)
 
 ### Authorization
 
@@ -148,7 +149,7 @@ No authorization required
 
 ## CreatePackageLabelAssignments
 
-> GetPackageLabelAssignments200Response CreatePackageLabelAssignments(ctx).CreatePackageLabelAssignmentsRequest(createPackageLabelAssignmentsRequest).Execute()
+> UpdatePackageLabelAssignments200Response CreatePackageLabelAssignments(ctx).CreatePackageLabelAssignmentsRequest(createPackageLabelAssignmentsRequest).Execute()
 
 
 
@@ -167,7 +168,7 @@ import (
 )
 
 func main() {
-	createPackageLabelAssignmentsRequest := *openapiclient.NewCreatePackageLabelAssignmentsRequest("PackageId_example") // CreatePackageLabelAssignmentsRequest | 
+	createPackageLabelAssignmentsRequest := *openapiclient.NewCreatePackageLabelAssignmentsRequest("PackageId_example", "Scope_example", []int32{int32(123)}) // CreatePackageLabelAssignmentsRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -176,7 +177,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `PackageLabelsAPI.CreatePackageLabelAssignments``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `CreatePackageLabelAssignments`: GetPackageLabelAssignments200Response
+	// response from `CreatePackageLabelAssignments`: UpdatePackageLabelAssignments200Response
 	fmt.Fprintf(os.Stdout, "Response from `PackageLabelsAPI.CreatePackageLabelAssignments`: %v\n", resp)
 }
 ```
@@ -196,7 +197,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**GetPackageLabelAssignments200Response**](GetPackageLabelAssignments200Response.md)
+[**UpdatePackageLabelAssignments200Response**](UpdatePackageLabelAssignments200Response.md)
 
 ### Authorization
 
@@ -233,7 +234,7 @@ import (
 )
 
 func main() {
-	deletePackageLabelAssignmentsRequest := *openapiclient.NewDeletePackageLabelAssignmentsRequest() // DeletePackageLabelAssignmentsRequest | 
+	deletePackageLabelAssignmentsRequest := *openapiclient.NewDeletePackageLabelAssignmentsRequest([]int32{int32(123)}) // DeletePackageLabelAssignmentsRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -342,7 +343,7 @@ No authorization required
 
 ## GetPackageLabelAssignments
 
-> GetPackageLabelAssignments200Response GetPackageLabelAssignments(ctx).FiltersPackageId(filtersPackageId).FiltersPackageVersion(filtersPackageVersion).FiltersScope(filtersScope).FiltersScopeId(filtersScopeId).Execute()
+> GetPackageLabelAssignments200Response GetPackageLabelAssignments(ctx).FiltersPackageId(filtersPackageId).FiltersPackageVersion(filtersPackageVersion).FiltersScope(filtersScope).FiltersScopeId(filtersScopeId).FiltersShouldIncludePackageWideLabels(filtersShouldIncludePackageWideLabels).FiltersShouldIncludeRevisionScopedLabels(filtersShouldIncludeRevisionScopedLabels).Execute()
 
 
 
@@ -365,10 +366,12 @@ func main() {
 	filtersPackageVersion := "4.15.0" // string |  (optional)
 	filtersScope := "project" // string |  (optional)
 	filtersScopeId := "custom+1/my-cli-project or custom+1/my-cli-project/$revision1" // string |  (optional)
+	filtersShouldIncludePackageWideLabels := true // bool |  (optional)
+	filtersShouldIncludeRevisionScopedLabels := true // bool |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.PackageLabelsAPI.GetPackageLabelAssignments(context.Background()).FiltersPackageId(filtersPackageId).FiltersPackageVersion(filtersPackageVersion).FiltersScope(filtersScope).FiltersScopeId(filtersScopeId).Execute()
+	resp, r, err := apiClient.PackageLabelsAPI.GetPackageLabelAssignments(context.Background()).FiltersPackageId(filtersPackageId).FiltersPackageVersion(filtersPackageVersion).FiltersScope(filtersScope).FiltersScopeId(filtersScopeId).FiltersShouldIncludePackageWideLabels(filtersShouldIncludePackageWideLabels).FiltersShouldIncludeRevisionScopedLabels(filtersShouldIncludeRevisionScopedLabels).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `PackageLabelsAPI.GetPackageLabelAssignments``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -393,6 +396,8 @@ Name | Type | Description  | Notes
  **filtersPackageVersion** | **string** |  | 
  **filtersScope** | **string** |  | 
  **filtersScopeId** | **string** |  | 
+ **filtersShouldIncludePackageWideLabels** | **bool** |  | 
+ **filtersShouldIncludeRevisionScopedLabels** | **bool** |  | 
 
 ### Return type
 
@@ -466,6 +471,72 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpdatePackageLabelAssignments
+
+> UpdatePackageLabelAssignments200Response UpdatePackageLabelAssignments(ctx).UpdatePackageLabelAssignmentsRequest(updatePackageLabelAssignmentsRequest).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/RobertKielty/fossa-go"
+)
+
+func main() {
+	updatePackageLabelAssignmentsRequest := *openapiclient.NewUpdatePackageLabelAssignmentsRequest("PackageId_example", "Scope_example", map[string][]int32{"key": []int32{int32(123)}}) // UpdatePackageLabelAssignmentsRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.PackageLabelsAPI.UpdatePackageLabelAssignments(context.Background()).UpdatePackageLabelAssignmentsRequest(updatePackageLabelAssignmentsRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PackageLabelsAPI.UpdatePackageLabelAssignments``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `UpdatePackageLabelAssignments`: UpdatePackageLabelAssignments200Response
+	fmt.Fprintf(os.Stdout, "Response from `PackageLabelsAPI.UpdatePackageLabelAssignments`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiUpdatePackageLabelAssignmentsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **updatePackageLabelAssignmentsRequest** | [**UpdatePackageLabelAssignmentsRequest**](UpdatePackageLabelAssignmentsRequest.md) |  | 
+
+### Return type
+
+[**UpdatePackageLabelAssignments200Response**](UpdatePackageLabelAssignments200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
