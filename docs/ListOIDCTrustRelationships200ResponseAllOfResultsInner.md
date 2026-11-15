@@ -15,15 +15,15 @@ Name | Type | Description | Notes
 **CreatedAt** | **time.Time** | When the trust relationship was created | 
 **UpdatedAt** | **time.Time** | When the trust relationship was last updated | 
 **Username** | **string** | The username of the service account associated with this trust relationship | 
-**Email** | Pointer to **string** | The email of the service account associated with this trust relationship (if available) | [optional] 
-**TeamName** | **string** | The name of the team (if scope is team) | 
+**Email** | Pointer to **NullableString** | The email of the service account associated with this trust relationship (&#x60;null&#x60; if the account has no email) | [optional] 
+**TeamName** | Pointer to **NullableString** | The name of the team. &#x60;null&#x60; for organization-scoped trust relationships (only team-scoped relationships have a team name). | [optional] 
 **Issuer** | **string** | The issuer URL of the OIDC Provider | 
 
 ## Methods
 
 ### NewListOIDCTrustRelationships200ResponseAllOfResultsInner
 
-`func NewListOIDCTrustRelationships200ResponseAllOfResultsInner(id int32, organizationId int32, userId int32, providerId int32, audiences []string, requiredClaims []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner, createdAt time.Time, updatedAt time.Time, username string, teamName string, issuer string, ) *ListOIDCTrustRelationships200ResponseAllOfResultsInner`
+`func NewListOIDCTrustRelationships200ResponseAllOfResultsInner(id int32, organizationId int32, userId int32, providerId int32, audiences []string, requiredClaims []ListOIDCTrustRelationships200ResponseAllOfResultsInnerAllOfRequiredClaimsInner, createdAt time.Time, updatedAt time.Time, username string, issuer string, ) *ListOIDCTrustRelationships200ResponseAllOfResultsInner`
 
 NewListOIDCTrustRelationships200ResponseAllOfResultsInner instantiates a new ListOIDCTrustRelationships200ResponseAllOfResultsInner object
 This constructor will assign default values to properties that have it defined,
@@ -293,6 +293,16 @@ SetEmail sets Email field to given value.
 
 HasEmail returns a boolean if a field has been set.
 
+### SetEmailNil
+
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetEmailNil(b bool)`
+
+ SetEmailNil sets the value for Email to be an explicit nil
+
+### UnsetEmail
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) UnsetEmail()`
+
+UnsetEmail ensures that no value is present for Email, not even an explicit nil
 ### GetTeamName
 
 `func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetTeamName() string`
@@ -312,7 +322,22 @@ and a boolean to check if the value has been set.
 
 SetTeamName sets TeamName field to given value.
 
+### HasTeamName
 
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) HasTeamName() bool`
+
+HasTeamName returns a boolean if a field has been set.
+
+### SetTeamNameNil
+
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) SetTeamNameNil(b bool)`
+
+ SetTeamNameNil sets the value for TeamName to be an explicit nil
+
+### UnsetTeamName
+`func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) UnsetTeamName()`
+
+UnsetTeamName ensures that no value is present for TeamName, not even an explicit nil
 ### GetIssuer
 
 `func (o *ListOIDCTrustRelationships200ResponseAllOfResultsInner) GetIssuer() string`
