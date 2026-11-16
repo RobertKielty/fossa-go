@@ -4,17 +4,18 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Scope** | **string** | Release-scoped conclusion | 
+**Scope** | **string** | Global conclusion (FOSSA admins only) | 
 **ProjectLocator** | **string** | The locator of the project | 
 **RevisionLocator** | **string** | The locator of the revision | 
 **ReleaseGroupId** | **int32** | The ID of the release group | 
 **ReleaseId** | **int32** | The ID of the release | 
+**OrganizationId** | **int32** | The ID of the organization | 
 
 ## Methods
 
 ### NewAddLicenseConclusionRequestScope
 
-`func NewAddLicenseConclusionRequestScope(scope string, projectLocator string, revisionLocator string, releaseGroupId int32, releaseId int32, ) *AddLicenseConclusionRequestScope`
+`func NewAddLicenseConclusionRequestScope(scope string, projectLocator string, revisionLocator string, releaseGroupId int32, releaseId int32, organizationId int32, ) *AddLicenseConclusionRequestScope`
 
 NewAddLicenseConclusionRequestScope instantiates a new AddLicenseConclusionRequestScope object
 This constructor will assign default values to properties that have it defined,
@@ -127,6 +128,26 @@ and a boolean to check if the value has been set.
 `func (o *AddLicenseConclusionRequestScope) SetReleaseId(v int32)`
 
 SetReleaseId sets ReleaseId field to given value.
+
+
+### GetOrganizationId
+
+`func (o *AddLicenseConclusionRequestScope) GetOrganizationId() int32`
+
+GetOrganizationId returns the OrganizationId field if non-nil, zero value otherwise.
+
+### GetOrganizationIdOk
+
+`func (o *AddLicenseConclusionRequestScope) GetOrganizationIdOk() (*int32, bool)`
+
+GetOrganizationIdOk returns a tuple with the OrganizationId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOrganizationId
+
+`func (o *AddLicenseConclusionRequestScope) SetOrganizationId(v int32)`
+
+SetOrganizationId sets OrganizationId field to given value.
 
 
 
