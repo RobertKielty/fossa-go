@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Dependencies** | Pointer to [**[]GetProjectDependencies200ResponseDependenciesInner**](GetProjectDependencies200ResponseDependenciesInner.md) |  | [optional] 
-**Count** | Pointer to **int32** |  | [optional] 
+**Total** | Pointer to **int32** | The total number of dependencies matching the filters, across all pages. | [optional] 
 
 ## Methods
 
@@ -51,30 +51,30 @@ SetDependencies sets Dependencies field to given value.
 
 HasDependencies returns a boolean if a field has been set.
 
-### GetCount
+### GetTotal
 
-`func (o *GetProjectDependencies200Response) GetCount() int32`
+`func (o *GetProjectDependencies200Response) GetTotal() int32`
 
-GetCount returns the Count field if non-nil, zero value otherwise.
+GetTotal returns the Total field if non-nil, zero value otherwise.
 
-### GetCountOk
+### GetTotalOk
 
-`func (o *GetProjectDependencies200Response) GetCountOk() (*int32, bool)`
+`func (o *GetProjectDependencies200Response) GetTotalOk() (*int32, bool)`
 
-GetCountOk returns a tuple with the Count field if it's non-nil, zero value otherwise
+GetTotalOk returns a tuple with the Total field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCount
+### SetTotal
 
-`func (o *GetProjectDependencies200Response) SetCount(v int32)`
+`func (o *GetProjectDependencies200Response) SetTotal(v int32)`
 
-SetCount sets Count field to given value.
+SetTotal sets Total field to given value.
 
-### HasCount
+### HasTotal
 
-`func (o *GetProjectDependencies200Response) HasCount() bool`
+`func (o *GetProjectDependencies200Response) HasTotal() bool`
 
-HasCount returns a boolean if a field has been set.
+HasTotal returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
