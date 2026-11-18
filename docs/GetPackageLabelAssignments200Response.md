@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**PackageLabelAssignmentResponse** | Pointer to [**GetPackageLabelAssignments200ResponsePackageLabelAssignmentResponse**](GetPackageLabelAssignments200ResponsePackageLabelAssignmentResponse.md) |  | [optional] 
+**PackageLabelAssignments** | [**[]GetPackageLabelAssignments200ResponsePackageLabelAssignmentsInner**](GetPackageLabelAssignments200ResponsePackageLabelAssignmentsInner.md) | The matching package label assignments, each including the nested label that was assigned. | 
 
 ## Methods
 
 ### NewGetPackageLabelAssignments200Response
 
-`func NewGetPackageLabelAssignments200Response() *GetPackageLabelAssignments200Response`
+`func NewGetPackageLabelAssignments200Response(packageLabelAssignments []GetPackageLabelAssignments200ResponsePackageLabelAssignmentsInner, ) *GetPackageLabelAssignments200Response`
 
 NewGetPackageLabelAssignments200Response instantiates a new GetPackageLabelAssignments200Response object
 This constructor will assign default values to properties that have it defined,
@@ -25,30 +25,25 @@ NewGetPackageLabelAssignments200ResponseWithDefaults instantiates a new GetPacka
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetPackageLabelAssignmentResponse
+### GetPackageLabelAssignments
 
-`func (o *GetPackageLabelAssignments200Response) GetPackageLabelAssignmentResponse() GetPackageLabelAssignments200ResponsePackageLabelAssignmentResponse`
+`func (o *GetPackageLabelAssignments200Response) GetPackageLabelAssignments() []GetPackageLabelAssignments200ResponsePackageLabelAssignmentsInner`
 
-GetPackageLabelAssignmentResponse returns the PackageLabelAssignmentResponse field if non-nil, zero value otherwise.
+GetPackageLabelAssignments returns the PackageLabelAssignments field if non-nil, zero value otherwise.
 
-### GetPackageLabelAssignmentResponseOk
+### GetPackageLabelAssignmentsOk
 
-`func (o *GetPackageLabelAssignments200Response) GetPackageLabelAssignmentResponseOk() (*GetPackageLabelAssignments200ResponsePackageLabelAssignmentResponse, bool)`
+`func (o *GetPackageLabelAssignments200Response) GetPackageLabelAssignmentsOk() (*[]GetPackageLabelAssignments200ResponsePackageLabelAssignmentsInner, bool)`
 
-GetPackageLabelAssignmentResponseOk returns a tuple with the PackageLabelAssignmentResponse field if it's non-nil, zero value otherwise
+GetPackageLabelAssignmentsOk returns a tuple with the PackageLabelAssignments field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetPackageLabelAssignmentResponse
+### SetPackageLabelAssignments
 
-`func (o *GetPackageLabelAssignments200Response) SetPackageLabelAssignmentResponse(v GetPackageLabelAssignments200ResponsePackageLabelAssignmentResponse)`
+`func (o *GetPackageLabelAssignments200Response) SetPackageLabelAssignments(v []GetPackageLabelAssignments200ResponsePackageLabelAssignmentsInner)`
 
-SetPackageLabelAssignmentResponse sets PackageLabelAssignmentResponse field to given value.
+SetPackageLabelAssignments sets PackageLabelAssignments field to given value.
 
-### HasPackageLabelAssignmentResponse
-
-`func (o *GetPackageLabelAssignments200Response) HasPackageLabelAssignmentResponse() bool`
-
-HasPackageLabelAssignmentResponse returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
