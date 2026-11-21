@@ -6,14 +6,14 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Signature** | **string** | License signature or identifier | 
 **Type** | **string** | How the license was identified | 
-**Status** | **string** | Approval status of the license | 
+**Status** | Pointer to **string** | Approval status of the license (optional; absent for licenses with no issue) | [optional] 
 **IssueId** | Pointer to **int32** | ID of the related issue (optional) | [optional] 
 
 ## Methods
 
 ### NewGetSnippets200ResponseResultsInnerLicensesInner
 
-`func NewGetSnippets200ResponseResultsInnerLicensesInner(signature string, type_ string, status string, ) *GetSnippets200ResponseResultsInnerLicensesInner`
+`func NewGetSnippets200ResponseResultsInnerLicensesInner(signature string, type_ string, ) *GetSnippets200ResponseResultsInnerLicensesInner`
 
 NewGetSnippets200ResponseResultsInnerLicensesInner instantiates a new GetSnippets200ResponseResultsInnerLicensesInner object
 This constructor will assign default values to properties that have it defined,
@@ -87,6 +87,11 @@ and a boolean to check if the value has been set.
 
 SetStatus sets Status field to given value.
 
+### HasStatus
+
+`func (o *GetSnippets200ResponseResultsInnerLicensesInner) HasStatus() bool`
+
+HasStatus returns a boolean if a field has been set.
 
 ### GetIssueId
 

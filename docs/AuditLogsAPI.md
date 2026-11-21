@@ -42,7 +42,7 @@ func main() {
 	actions := []string{"Inner_example"} // []string | The actions to filter audit logs to (optional)
 	topics := []string{"Inner_example"} // []string | The topics to filter audit logs to (optional)
 	topicActions := []string{"Inner_example"} // []string | The topic actions to filter audit logs to (optional)
-	startingAfter := time.Now() // time.Time | The id to start after to filter audit logs to (optional)
+	startingAfter := "12345" // string | The audit log row id to start after (exclusive). Used as a cursor for pagination. (optional)
 	endingBefore := "endingBefore_example" // string | The id to end before to filter audit logs to (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -78,7 +78,7 @@ Name | Type | Description  | Notes
  **actions** | **[]string** | The actions to filter audit logs to | 
  **topics** | **[]string** | The topics to filter audit logs to | 
  **topicActions** | **[]string** | The topic actions to filter audit logs to | 
- **startingAfter** | **time.Time** | The id to start after to filter audit logs to | 
+ **startingAfter** | **string** | The audit log row id to start after (exclusive). Used as a cursor for pagination. | 
  **endingBefore** | **string** | The id to end before to filter audit logs to | 
 
 ### Return type
@@ -131,7 +131,7 @@ func main() {
 	actions := []string{"Inner_example"} // []string | The actions to filter audit logs to (optional)
 	topics := []string{"Inner_example"} // []string | The topics to filter audit logs to (optional)
 	topicActions := []string{"Inner_example"} // []string | The topic actions to filter audit logs to (optional)
-	startingAfter := time.Now() // time.Time | The id to start after to filter audit logs to (optional)
+	startingAfter := "12345" // string | The audit log row id to start after (exclusive). Used as a cursor for pagination. (optional)
 	endingBefore := "endingBefore_example" // string | The id to end before to filter audit logs to (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -167,7 +167,7 @@ Name | Type | Description  | Notes
  **actions** | **[]string** | The actions to filter audit logs to | 
  **topics** | **[]string** | The topics to filter audit logs to | 
  **topicActions** | **[]string** | The topic actions to filter audit logs to | 
- **startingAfter** | **time.Time** | The id to start after to filter audit logs to | 
+ **startingAfter** | **string** | The audit log row id to start after (exclusive). Used as a cursor for pagination. | 
  **endingBefore** | **string** | The id to end before to filter audit logs to | 
 
 ### Return type

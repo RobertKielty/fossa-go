@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **DirectDependencies** | Pointer to **bool** |  | [optional] 
 **DeepDependencies** | Pointer to **bool** |  | [optional] 
 **SnippetDependencies** | Pointer to **bool** |  | [optional] 
+**VendoredDependencies** | Pointer to **bool** |  | [optional] 
 **CopyrightList** | Pointer to **bool** |  | [optional] 
 
 ## Methods
@@ -180,6 +181,31 @@ SetSnippetDependencies sets SnippetDependencies field to given value.
 `func (o *UpdateReportOptionByIdRequestOptionsSections) HasSnippetDependencies() bool`
 
 HasSnippetDependencies returns a boolean if a field has been set.
+
+### GetVendoredDependencies
+
+`func (o *UpdateReportOptionByIdRequestOptionsSections) GetVendoredDependencies() bool`
+
+GetVendoredDependencies returns the VendoredDependencies field if non-nil, zero value otherwise.
+
+### GetVendoredDependenciesOk
+
+`func (o *UpdateReportOptionByIdRequestOptionsSections) GetVendoredDependenciesOk() (*bool, bool)`
+
+GetVendoredDependenciesOk returns a tuple with the VendoredDependencies field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVendoredDependencies
+
+`func (o *UpdateReportOptionByIdRequestOptionsSections) SetVendoredDependencies(v bool)`
+
+SetVendoredDependencies sets VendoredDependencies field to given value.
+
+### HasVendoredDependencies
+
+`func (o *UpdateReportOptionByIdRequestOptionsSections) HasVendoredDependencies() bool`
+
+HasVendoredDependencies returns a boolean if a field has been set.
 
 ### GetCopyrightList
 
