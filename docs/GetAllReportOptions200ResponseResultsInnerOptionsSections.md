@@ -6,17 +6,18 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectDeclaredLicenses** | **bool** | Include project declared licenses section | 
 **FirstPartyLicenses** | **bool** | Include first party licenses section | 
-**LicenseList** | **bool** | Include license list section | 
+**LicenseList** | Pointer to **bool** | Deprecated and ignored. Accepted so existing saved presets keep validating. | [optional] 
 **DirectDependencies** | **bool** | Include direct dependencies section | 
 **DeepDependencies** | **bool** | Include deep dependencies section | 
 **SnippetDependencies** | **bool** | Include snippet dependencies section | 
+**VendoredDependencies** | Pointer to **bool** | Include vendored dependencies. When omitted, they are included whenever direct or deep dependencies are. Has no effect unless vendored dependency detection is enabled. | [optional] 
 **CopyrightList** | **bool** | Include copyright list section | 
 
 ## Methods
 
 ### NewGetAllReportOptions200ResponseResultsInnerOptionsSections
 
-`func NewGetAllReportOptions200ResponseResultsInnerOptionsSections(projectDeclaredLicenses bool, firstPartyLicenses bool, licenseList bool, directDependencies bool, deepDependencies bool, snippetDependencies bool, copyrightList bool, ) *GetAllReportOptions200ResponseResultsInnerOptionsSections`
+`func NewGetAllReportOptions200ResponseResultsInnerOptionsSections(projectDeclaredLicenses bool, firstPartyLicenses bool, directDependencies bool, deepDependencies bool, snippetDependencies bool, copyrightList bool, ) *GetAllReportOptions200ResponseResultsInnerOptionsSections`
 
 NewGetAllReportOptions200ResponseResultsInnerOptionsSections instantiates a new GetAllReportOptions200ResponseResultsInnerOptionsSections object
 This constructor will assign default values to properties that have it defined,
@@ -90,6 +91,11 @@ and a boolean to check if the value has been set.
 
 SetLicenseList sets LicenseList field to given value.
 
+### HasLicenseList
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptionsSections) HasLicenseList() bool`
+
+HasLicenseList returns a boolean if a field has been set.
 
 ### GetDirectDependencies
 
@@ -150,6 +156,31 @@ and a boolean to check if the value has been set.
 
 SetSnippetDependencies sets SnippetDependencies field to given value.
 
+
+### GetVendoredDependencies
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptionsSections) GetVendoredDependencies() bool`
+
+GetVendoredDependencies returns the VendoredDependencies field if non-nil, zero value otherwise.
+
+### GetVendoredDependenciesOk
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptionsSections) GetVendoredDependenciesOk() (*bool, bool)`
+
+GetVendoredDependenciesOk returns a tuple with the VendoredDependencies field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVendoredDependencies
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptionsSections) SetVendoredDependencies(v bool)`
+
+SetVendoredDependencies sets VendoredDependencies field to given value.
+
+### HasVendoredDependencies
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptionsSections) HasVendoredDependencies() bool`
+
+HasVendoredDependencies returns a boolean if a field has been set.
 
 ### GetCopyrightList
 
