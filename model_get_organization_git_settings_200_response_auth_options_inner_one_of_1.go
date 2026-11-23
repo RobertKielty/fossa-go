@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.38.21
 Contact: support@fossa.com
 */
 
@@ -13,6 +13,7 @@ package fossa
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the GetOrganizationGitSettings200ResponseAuthOptionsInnerOneOf1 type satisfies the MappedNullable interface at compile time
@@ -31,6 +32,42 @@ type GetOrganizationGitSettings200ResponseAuthOptionsInnerOneOf1 struct {
 	Password *GetOrganizationBowerSettings200ResponseRegistriesInnerUrl `json:"password,omitempty"`
 	// Used when an existing password is obfuscated in the response
 	HasPassword *bool `json:"hasPassword,omitempty"`
+}
+
+func (o *GetOrganizationGitSettings200ResponseAuthOptionsInnerOneOf1) validateStringEnumValues(data []byte) error {
+	var fields struct {
+		Type json.RawMessage `json:"type,omitempty"`
+	}
+	if err := json.Unmarshal(data, &fields); err != nil {
+		return err
+	}
+	if raw := fields.Type; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "type")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "basic" {
+			return fmt.Errorf("invalid value %q for property %s", value, "type")
+		}
+	}
+	return nil
+}
+
+type _GetOrganizationGitSettings200ResponseAuthOptionsInnerOneOf1 GetOrganizationGitSettings200ResponseAuthOptionsInnerOneOf1
+
+func (o *GetOrganizationGitSettings200ResponseAuthOptionsInnerOneOf1) UnmarshalJSON(data []byte) error {
+	if err := o.validateStringEnumValues(data); err != nil {
+		return err
+	}
+	value := _GetOrganizationGitSettings200ResponseAuthOptionsInnerOneOf1(*o)
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = GetOrganizationGitSettings200ResponseAuthOptionsInnerOneOf1(value)
+	return nil
 }
 
 // NewGetOrganizationGitSettings200ResponseAuthOptionsInnerOneOf1 instantiates a new GetOrganizationGitSettings200ResponseAuthOptionsInnerOneOf1 object

@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.38.21
 Contact: support@fossa.com
 */
 
@@ -13,6 +13,7 @@ package fossa
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -48,6 +49,43 @@ type GetIssue200ResponseOneOf struct {
 	References []string `json:"references,omitempty"`
 	Exploitability *string `json:"exploitability,omitempty"`
 	Epss *GetIssue200ResponseOneOfAllOfEpss `json:"epss,omitempty"`
+	CustomRiskScore *GetIssue200ResponseOneOfAllOfCustomRiskScore `json:"customRiskScore,omitempty"`
+}
+
+func (o *GetIssue200ResponseOneOf) validateStringEnumValues(data []byte) error {
+	var fields struct {
+		Exploitability json.RawMessage `json:"exploitability,omitempty"`
+	}
+	if err := json.Unmarshal(data, &fields); err != nil {
+		return err
+	}
+	if raw := fields.Exploitability; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "exploitability")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "UNKNOWN" && value != "POC" && value != "MATURE" {
+			return fmt.Errorf("invalid value %q for property %s", value, "exploitability")
+		}
+	}
+	return nil
+}
+
+type _GetIssue200ResponseOneOf GetIssue200ResponseOneOf
+
+func (o *GetIssue200ResponseOneOf) UnmarshalJSON(data []byte) error {
+	if err := o.validateStringEnumValues(data); err != nil {
+		return err
+	}
+	value := _GetIssue200ResponseOneOf(*o)
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = GetIssue200ResponseOneOf(value)
+	return nil
 }
 
 // NewGetIssue200ResponseOneOf instantiates a new GetIssue200ResponseOneOf object
@@ -899,6 +937,38 @@ func (o *GetIssue200ResponseOneOf) SetEpss(v GetIssue200ResponseOneOfAllOfEpss) 
 	o.Epss = &v
 }
 
+// GetCustomRiskScore returns the CustomRiskScore field value if set, zero value otherwise.
+func (o *GetIssue200ResponseOneOf) GetCustomRiskScore() GetIssue200ResponseOneOfAllOfCustomRiskScore {
+	if o == nil || IsNil(o.CustomRiskScore) {
+		var ret GetIssue200ResponseOneOfAllOfCustomRiskScore
+		return ret
+	}
+	return *o.CustomRiskScore
+}
+
+// GetCustomRiskScoreOk returns a tuple with the CustomRiskScore field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetIssue200ResponseOneOf) GetCustomRiskScoreOk() (*GetIssue200ResponseOneOfAllOfCustomRiskScore, bool) {
+	if o == nil || IsNil(o.CustomRiskScore) {
+		return nil, false
+	}
+	return o.CustomRiskScore, true
+}
+
+// HasCustomRiskScore returns a boolean if a field has been set.
+func (o *GetIssue200ResponseOneOf) HasCustomRiskScore() bool {
+	if o != nil && !IsNil(o.CustomRiskScore) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomRiskScore gets a reference to the given GetIssue200ResponseOneOfAllOfCustomRiskScore and assigns it to the CustomRiskScore field.
+func (o *GetIssue200ResponseOneOf) SetCustomRiskScore(v GetIssue200ResponseOneOfAllOfCustomRiskScore) {
+	o.CustomRiskScore = &v
+}
+
 func (o GetIssue200ResponseOneOf) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -986,6 +1056,9 @@ func (o GetIssue200ResponseOneOf) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Epss) {
 		toSerialize["epss"] = o.Epss
+	}
+	if !IsNil(o.CustomRiskScore) {
+		toSerialize["customRiskScore"] = o.CustomRiskScore
 	}
 	return toSerialize, nil
 }
