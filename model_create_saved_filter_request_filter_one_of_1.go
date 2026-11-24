@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.38.22
 Contact: support@fossa.com
 */
 
@@ -13,6 +13,7 @@ package fossa
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -25,9 +26,8 @@ type CreateSavedFilterRequestFilterOneOf1 struct {
 	HasFix *string `json:"hasFix,omitempty"`
 	UpgradeDistance *string `json:"upgradeDistance,omitempty"`
 	ExploitMaturity *string `json:"exploitMaturity,omitempty"`
-	// Provided reason for ignoring or resolving a security issue. 'Fixed' and 'Under_investigation' map to VEX statuses with the same names. All other values map to the VEX status 'Not Affected'. This value appears in the vulnerabilities.analysis.justification field of CycloneDX SBOM reports. 
+	// Filterable vuln ignore reason. Superset of VulnIgnoreReason that also includes the NotDistributed, NotNetworkAccessible, and LinkingObligationNotTriggered auto-ignore reasons, which can be filtered on but never provided when ignoring or excepting an issue. 
 	IgnoreReason *string `json:"ignoreReason,omitempty"`
-	Reachability *string `json:"reachability,omitempty"`
 	Cwes []string `json:"cwes,omitempty"`
 	PackageManagers []string `json:"packageManagers,omitempty"`
 	ProjectLabels []string `json:"projectLabels,omitempty"`
@@ -36,6 +36,107 @@ type CreateSavedFilterRequestFilterOneOf1 struct {
 	RevisionIds []string `json:"revisionIds,omitempty"`
 	ContainerLayers []string `json:"containerLayers,omitempty"`
 	FoundAfter *time.Time `json:"foundAfter,omitempty"`
+}
+
+func (o *CreateSavedFilterRequestFilterOneOf1) validateStringEnumValues(data []byte) error {
+	var fields struct {
+		Severity json.RawMessage `json:"severity,omitempty"`
+		HasFix json.RawMessage `json:"hasFix,omitempty"`
+		UpgradeDistance json.RawMessage `json:"upgradeDistance,omitempty"`
+		ExploitMaturity json.RawMessage `json:"exploitMaturity,omitempty"`
+		IgnoreReason json.RawMessage `json:"ignoreReason,omitempty"`
+		Ticketed json.RawMessage `json:"ticketed,omitempty"`
+	}
+	if err := json.Unmarshal(data, &fields); err != nil {
+		return err
+	}
+	if raw := fields.Severity; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "severity")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "critical" && value != "high" && value != "medium" && value != "low" && value != "unknown" {
+			return fmt.Errorf("invalid value %q for property %s", value, "severity")
+		}
+	}
+	if raw := fields.HasFix; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "hasFix")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "has_fix" && value != "no_fix" {
+			return fmt.Errorf("invalid value %q for property %s", value, "hasFix")
+		}
+	}
+	if raw := fields.UpgradeDistance; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "upgradeDistance")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "none" && value != "major" && value != "minor" && value != "patch" && value != "unknown" {
+			return fmt.Errorf("invalid value %q for property %s", value, "upgradeDistance")
+		}
+	}
+	if raw := fields.ExploitMaturity; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "exploitMaturity")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "has_known_exploit" && value != "no_known_exploit" {
+			return fmt.Errorf("invalid value %q for property %s", value, "exploitMaturity")
+		}
+	}
+	if raw := fields.IgnoreReason; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "ignoreReason")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "Fixed" && value != "Under_investigation" && value != "Vulnerable_code_not_present" && value != "Vulnerable_code_cannot_be_controlled_by_adversary" && value != "Component_not_present" && value != "Vulnerable_code_not_in_execute_path" && value != "Inline_mitigations_already_exist" && value != "incorrect_data_found" && value != "other" && value != "dependency_not_distributed_auto_ignore" && value != "codebase_not_network_accessible_auto_ignore" && value != "linking_obligation_not_triggered_auto_ignore" {
+			return fmt.Errorf("invalid value %q for property %s", value, "ignoreReason")
+		}
+	}
+	if raw := fields.Ticketed; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "ticketed")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "jira" && value != "custom" && value != "has_ticket" && value != "no_ticket" {
+			return fmt.Errorf("invalid value %q for property %s", value, "ticketed")
+		}
+	}
+	return nil
+}
+
+type _CreateSavedFilterRequestFilterOneOf1 CreateSavedFilterRequestFilterOneOf1
+
+func (o *CreateSavedFilterRequestFilterOneOf1) UnmarshalJSON(data []byte) error {
+	if err := o.validateStringEnumValues(data); err != nil {
+		return err
+	}
+	value := _CreateSavedFilterRequestFilterOneOf1(*o)
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = CreateSavedFilterRequestFilterOneOf1(value)
+	return nil
 }
 
 // NewCreateSavedFilterRequestFilterOneOf1 instantiates a new CreateSavedFilterRequestFilterOneOf1 object
@@ -213,38 +314,6 @@ func (o *CreateSavedFilterRequestFilterOneOf1) HasIgnoreReason() bool {
 // SetIgnoreReason gets a reference to the given string and assigns it to the IgnoreReason field.
 func (o *CreateSavedFilterRequestFilterOneOf1) SetIgnoreReason(v string) {
 	o.IgnoreReason = &v
-}
-
-// GetReachability returns the Reachability field value if set, zero value otherwise.
-func (o *CreateSavedFilterRequestFilterOneOf1) GetReachability() string {
-	if o == nil || IsNil(o.Reachability) {
-		var ret string
-		return ret
-	}
-	return *o.Reachability
-}
-
-// GetReachabilityOk returns a tuple with the Reachability field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *CreateSavedFilterRequestFilterOneOf1) GetReachabilityOk() (*string, bool) {
-	if o == nil || IsNil(o.Reachability) {
-		return nil, false
-	}
-	return o.Reachability, true
-}
-
-// HasReachability returns a boolean if a field has been set.
-func (o *CreateSavedFilterRequestFilterOneOf1) HasReachability() bool {
-	if o != nil && !IsNil(o.Reachability) {
-		return true
-	}
-
-	return false
-}
-
-// SetReachability gets a reference to the given string and assigns it to the Reachability field.
-func (o *CreateSavedFilterRequestFilterOneOf1) SetReachability(v string) {
-	o.Reachability = &v
 }
 
 // GetCwes returns the Cwes field value if set, zero value otherwise.
@@ -527,9 +596,6 @@ func (o CreateSavedFilterRequestFilterOneOf1) ToMap() (map[string]interface{}, e
 	}
 	if !IsNil(o.IgnoreReason) {
 		toSerialize["ignoreReason"] = o.IgnoreReason
-	}
-	if !IsNil(o.Reachability) {
-		toSerialize["reachability"] = o.Reachability
 	}
 	if !IsNil(o.Cwes) {
 		toSerialize["cwes"] = o.Cwes

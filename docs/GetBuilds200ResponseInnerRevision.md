@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Locator** | Pointer to **string** | The revision locator for the build | [optional] 
-**ProjectId** | Pointer to **int32** | The project locator of the project for the build | [optional] 
+**ProjectId** | Pointer to **string** | The project locator of the project for the build | [optional] 
 **Message** | Pointer to **string** | The message for the revision | [optional] 
 
 ## Methods
@@ -54,20 +54,20 @@ HasLocator returns a boolean if a field has been set.
 
 ### GetProjectId
 
-`func (o *GetBuilds200ResponseInnerRevision) GetProjectId() int32`
+`func (o *GetBuilds200ResponseInnerRevision) GetProjectId() string`
 
 GetProjectId returns the ProjectId field if non-nil, zero value otherwise.
 
 ### GetProjectIdOk
 
-`func (o *GetBuilds200ResponseInnerRevision) GetProjectIdOk() (*int32, bool)`
+`func (o *GetBuilds200ResponseInnerRevision) GetProjectIdOk() (*string, bool)`
 
 GetProjectIdOk returns a tuple with the ProjectId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetProjectId
 
-`func (o *GetBuilds200ResponseInnerRevision) SetProjectId(v int32)`
+`func (o *GetBuilds200ResponseInnerRevision) SetProjectId(v string)`
 
 SetProjectId sets ProjectId field to given value.
 
