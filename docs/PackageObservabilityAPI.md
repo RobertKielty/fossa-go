@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## GetPackageIndexExport
 
-> GetPackageIndexExport201Response GetPackageIndexExport(ctx).Fetchers(fetchers).PackageName(packageName).Depth(depth).Labels(labels).ProjectName(projectName).Sources(sources).Visibility(visibility).BlockType(blockType).Cve(cve).Cwes(cwes).Locators(locators).FixTypes(fixTypes).Severities(severities).TeamIds(teamIds).Execute()
+> GetPackageIndexExport201Response GetPackageIndexExport(ctx).Fetchers(fetchers).PackageName(packageName).Depth(depth).Labels(labels).ProjectName(projectName).Sources(sources).Visibility(visibility).BlockTypes(blockTypes).Cve(cve).Cwes(cwes).Locators(locators).FixTypes(fixTypes).Severities(severities).TeamIds(teamIds).Execute()
 
 
 
@@ -40,7 +40,7 @@ func main() {
 	projectName := "projectName_example" // string | Filter packages to only one of your specific projects.  Exact match only. (optional)
 	sources := []string{"Inner_example"} // []string | Filter packages to those belonging to your projects from the specified set of sources (optional)
 	visibility := []string{"Visibility_example"} // []string | Filter results to your projects which are public or private (optional)
-	blockType := "blockType_example" // string | Filter packages to include only packages that do or do not have packages as dependencies which are blocked by your organization (optional)
+	blockTypes := []string{"BlockTypes_example"} // []string | Filter packages to include only packages that do or do not have packages as dependencies which are blocked by your organization (optional)
 	cve := "cve_example" // string | Filter packages to those with vulnerabilities that have specific Common Vulnerabilities and Exposures (CVE) identifiers (optional)
 	cwes := []string{"Inner_example"} // []string | Filter packages to those with vulnerabilities that have specific Common Weakness Enumeration (CWE) identifiers (optional)
 	locators := []string{"Inner_example"} // []string | Filter packages to those with specific package locators (exact match only) (optional)
@@ -50,7 +50,7 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.PackageObservabilityAPI.GetPackageIndexExport(context.Background()).Fetchers(fetchers).PackageName(packageName).Depth(depth).Labels(labels).ProjectName(projectName).Sources(sources).Visibility(visibility).BlockType(blockType).Cve(cve).Cwes(cwes).Locators(locators).FixTypes(fixTypes).Severities(severities).TeamIds(teamIds).Execute()
+	resp, r, err := apiClient.PackageObservabilityAPI.GetPackageIndexExport(context.Background()).Fetchers(fetchers).PackageName(packageName).Depth(depth).Labels(labels).ProjectName(projectName).Sources(sources).Visibility(visibility).BlockTypes(blockTypes).Cve(cve).Cwes(cwes).Locators(locators).FixTypes(fixTypes).Severities(severities).TeamIds(teamIds).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `PackageObservabilityAPI.GetPackageIndexExport``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -78,7 +78,7 @@ Name | Type | Description  | Notes
  **projectName** | **string** | Filter packages to only one of your specific projects.  Exact match only. | 
  **sources** | **[]string** | Filter packages to those belonging to your projects from the specified set of sources | 
  **visibility** | **[]string** | Filter results to your projects which are public or private | 
- **blockType** | **string** | Filter packages to include only packages that do or do not have packages as dependencies which are blocked by your organization | 
+ **blockTypes** | **[]string** | Filter packages to include only packages that do or do not have packages as dependencies which are blocked by your organization | 
  **cve** | **string** | Filter packages to those with vulnerabilities that have specific Common Vulnerabilities and Exposures (CVE) identifiers | 
  **cwes** | **[]string** | Filter packages to those with vulnerabilities that have specific Common Weakness Enumeration (CWE) identifiers | 
  **locators** | **[]string** | Filter packages to those with specific package locators (exact match only) | 
@@ -106,7 +106,7 @@ No authorization required
 
 ## GetPackages
 
-> GetPackageIndexExport201Response GetPackages(ctx).Fetchers(fetchers).PackageName(packageName).Depth(depth).Labels(labels).ProjectName(projectName).Sources(sources).Visibility(visibility).BlockType(blockType).Cve(cve).Cwes(cwes).FixTypes(fixTypes).Severities(severities).TeamIds(teamIds).Locators(locators).Page(page).Count(count).Sort(sort).Execute()
+> GetPackages200Response GetPackages(ctx).Fetchers(fetchers).PackageName(packageName).Depth(depth).Labels(labels).ProjectName(projectName).Sources(sources).Visibility(visibility).BlockTypes(blockTypes).Cve(cve).Cwes(cwes).FixTypes(fixTypes).Severities(severities).TeamIds(teamIds).Locators(locators).Page(page).Count(count).Sort(sort).Execute()
 
 
 
@@ -132,7 +132,7 @@ func main() {
 	projectName := "projectName_example" // string | Filter packages to only one of your specific projects.  Exact match only. (optional)
 	sources := []string{"Inner_example"} // []string | Filter packages to those belonging to your projects from the specified set of sources (optional)
 	visibility := []string{"Visibility_example"} // []string | Filter results to your projects which are public or private (optional)
-	blockType := "blockType_example" // string | Filter packages to include only packages that do or do not have packages as dependencies which are blocked by your organization (optional)
+	blockTypes := []string{"BlockTypes_example"} // []string | Filter packages to include only packages that do or do not have packages as dependencies which are blocked by your organization (optional)
 	cve := "cve_example" // string | Filter packages to those with vulnerabilities that have specific Common Vulnerabilities and Exposures (CVE) identifiers (optional)
 	cwes := []string{"Inner_example"} // []string | Filter packages to those with vulnerabilities that have specific Common Weakness Enumeration (CWE) identifiers (optional)
 	fixTypes := []string{"FixTypes_example"} // []string | Filter packages to those with vulnerabilities that either have or do not have a fix available (optional)
@@ -140,17 +140,17 @@ func main() {
 	teamIds := []float32{float32(123)} // []float32 | Filter packages to just those owned by the specified teams.  Specify the string \"null\" to filter packages that are not owned by any team. (optional)
 	locators := []string{"Inner_example"} // []string | Filter packages by the specified dependency project locators without revision / version data.  Locators are unique identifiers for packages in the FOSSA system. Exact matches only. (optional)
 	page := int32(56) // int32 | The page number to retrieve (optional) (default to 1)
-	count := int32(56) // int32 | The number of results to return per page (optional)
+	count := int32(56) // int32 | The number of results to return per page. Values above the maximum of 50 are silently clamped to 50. (optional)
 	sort := "sort_example" // string | The field to sort by (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.PackageObservabilityAPI.GetPackages(context.Background()).Fetchers(fetchers).PackageName(packageName).Depth(depth).Labels(labels).ProjectName(projectName).Sources(sources).Visibility(visibility).BlockType(blockType).Cve(cve).Cwes(cwes).FixTypes(fixTypes).Severities(severities).TeamIds(teamIds).Locators(locators).Page(page).Count(count).Sort(sort).Execute()
+	resp, r, err := apiClient.PackageObservabilityAPI.GetPackages(context.Background()).Fetchers(fetchers).PackageName(packageName).Depth(depth).Labels(labels).ProjectName(projectName).Sources(sources).Visibility(visibility).BlockTypes(blockTypes).Cve(cve).Cwes(cwes).FixTypes(fixTypes).Severities(severities).TeamIds(teamIds).Locators(locators).Page(page).Count(count).Sort(sort).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `PackageObservabilityAPI.GetPackages``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetPackages`: GetPackageIndexExport201Response
+	// response from `GetPackages`: GetPackages200Response
 	fmt.Fprintf(os.Stdout, "Response from `PackageObservabilityAPI.GetPackages`: %v\n", resp)
 }
 ```
@@ -173,7 +173,7 @@ Name | Type | Description  | Notes
  **projectName** | **string** | Filter packages to only one of your specific projects.  Exact match only. | 
  **sources** | **[]string** | Filter packages to those belonging to your projects from the specified set of sources | 
  **visibility** | **[]string** | Filter results to your projects which are public or private | 
- **blockType** | **string** | Filter packages to include only packages that do or do not have packages as dependencies which are blocked by your organization | 
+ **blockTypes** | **[]string** | Filter packages to include only packages that do or do not have packages as dependencies which are blocked by your organization | 
  **cve** | **string** | Filter packages to those with vulnerabilities that have specific Common Vulnerabilities and Exposures (CVE) identifiers | 
  **cwes** | **[]string** | Filter packages to those with vulnerabilities that have specific Common Weakness Enumeration (CWE) identifiers | 
  **fixTypes** | **[]string** | Filter packages to those with vulnerabilities that either have or do not have a fix available | 
@@ -181,12 +181,12 @@ Name | Type | Description  | Notes
  **teamIds** | **[]float32** | Filter packages to just those owned by the specified teams.  Specify the string \&quot;null\&quot; to filter packages that are not owned by any team. | 
  **locators** | **[]string** | Filter packages by the specified dependency project locators without revision / version data.  Locators are unique identifiers for packages in the FOSSA system. Exact matches only. | 
  **page** | **int32** | The page number to retrieve | [default to 1]
- **count** | **int32** | The number of results to return per page | 
+ **count** | **int32** | The number of results to return per page. Values above the maximum of 50 are silently clamped to 50. | 
  **sort** | **string** | The field to sort by | 
 
 ### Return type
 
-[**GetPackageIndexExport201Response**](GetPackageIndexExport201Response.md)
+[**GetPackages200Response**](GetPackages200Response.md)
 
 ### Authorization
 
@@ -224,7 +224,7 @@ import (
 
 func main() {
 	packageLocator := "packageLocator_example" // string | Filter locators to those partially matching the specified locator.  For example, \"foo\" will match \"foo\", \"foobar\", and \"bazfoobar\". (optional)
-	count := int32(56) // int32 | The number of results to return. (optional)
+	count := int32(56) // int32 | The number of results to return. Values above the maximum of 50 are silently clamped to 50. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -250,7 +250,7 @@ Other parameters are passed through a pointer to a apiGetPackagesPackageLocators
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **packageLocator** | **string** | Filter locators to those partially matching the specified locator.  For example, \&quot;foo\&quot; will match \&quot;foo\&quot;, \&quot;foobar\&quot;, and \&quot;bazfoobar\&quot;. | 
- **count** | **int32** | The number of results to return. | 
+ **count** | **int32** | The number of results to return. Values above the maximum of 50 are silently clamped to 50. | 
 
 ### Return type
 

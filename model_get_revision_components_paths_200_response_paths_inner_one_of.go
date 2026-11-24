@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.38.22
 Contact: support@fossa.com
 */
 
@@ -13,6 +13,7 @@ package fossa
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the GetRevisionComponentsPaths200ResponsePathsInnerOneOf type satisfies the MappedNullable interface at compile time
@@ -28,6 +29,42 @@ type GetRevisionComponentsPaths200ResponsePathsInnerOneOf struct {
 	Path *string `json:"path,omitempty"`
 	// Count of component matches in directory
 	Count *float32 `json:"count,omitempty"`
+}
+
+func (o *GetRevisionComponentsPaths200ResponsePathsInnerOneOf) validateStringEnumValues(data []byte) error {
+	var fields struct {
+		Type json.RawMessage `json:"type,omitempty"`
+	}
+	if err := json.Unmarshal(data, &fields); err != nil {
+		return err
+	}
+	if raw := fields.Type; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "type")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "directory" {
+			return fmt.Errorf("invalid value %q for property %s", value, "type")
+		}
+	}
+	return nil
+}
+
+type _GetRevisionComponentsPaths200ResponsePathsInnerOneOf GetRevisionComponentsPaths200ResponsePathsInnerOneOf
+
+func (o *GetRevisionComponentsPaths200ResponsePathsInnerOneOf) UnmarshalJSON(data []byte) error {
+	if err := o.validateStringEnumValues(data); err != nil {
+		return err
+	}
+	value := _GetRevisionComponentsPaths200ResponsePathsInnerOneOf(*o)
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = GetRevisionComponentsPaths200ResponsePathsInnerOneOf(value)
+	return nil
 }
 
 // NewGetRevisionComponentsPaths200ResponsePathsInnerOneOf instantiates a new GetRevisionComponentsPaths200ResponsePathsInnerOneOf object
