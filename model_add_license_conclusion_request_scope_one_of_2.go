@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.38.23
 Contact: support@fossa.com
 */
 
@@ -15,6 +15,7 @@ import (
 	"encoding/json"
 	"bytes"
 	"fmt"
+	"strings"
 )
 
 // checks if the AddLicenseConclusionRequestScopeOneOf2 type satisfies the MappedNullable interface at compile time
@@ -22,22 +23,41 @@ var _ MappedNullable = &AddLicenseConclusionRequestScopeOneOf2{}
 
 // AddLicenseConclusionRequestScopeOneOf2 struct for AddLicenseConclusionRequestScopeOneOf2
 type AddLicenseConclusionRequestScopeOneOf2 struct {
-	// Release group-scoped conclusion
+	// Global conclusion (FOSSA admins only)
 	Scope string `json:"scope"`
-	// The ID of the release group
-	ReleaseGroupId int32 `json:"releaseGroupId"`
 }
 
 type _AddLicenseConclusionRequestScopeOneOf2 AddLicenseConclusionRequestScopeOneOf2
+
+func (o *AddLicenseConclusionRequestScopeOneOf2) validateStringEnumValues(data []byte) error {
+	var fields struct {
+		Scope json.RawMessage `json:"scope"`
+	}
+	if err := json.Unmarshal(data, &fields); err != nil {
+		return err
+	}
+	if raw := fields.Scope; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "scope")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "global" {
+			return fmt.Errorf("invalid value %q for property %s", value, "scope")
+		}
+	}
+	return nil
+}
 
 // NewAddLicenseConclusionRequestScopeOneOf2 instantiates a new AddLicenseConclusionRequestScopeOneOf2 object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAddLicenseConclusionRequestScopeOneOf2(scope string, releaseGroupId int32) *AddLicenseConclusionRequestScopeOneOf2 {
+func NewAddLicenseConclusionRequestScopeOneOf2(scope string) *AddLicenseConclusionRequestScopeOneOf2 {
 	this := AddLicenseConclusionRequestScopeOneOf2{}
 	this.Scope = scope
-	this.ReleaseGroupId = releaseGroupId
 	return &this
 }
 
@@ -73,30 +93,6 @@ func (o *AddLicenseConclusionRequestScopeOneOf2) SetScope(v string) {
 	o.Scope = v
 }
 
-// GetReleaseGroupId returns the ReleaseGroupId field value
-func (o *AddLicenseConclusionRequestScopeOneOf2) GetReleaseGroupId() int32 {
-	if o == nil {
-		var ret int32
-		return ret
-	}
-
-	return o.ReleaseGroupId
-}
-
-// GetReleaseGroupIdOk returns a tuple with the ReleaseGroupId field value
-// and a boolean to check if the value has been set.
-func (o *AddLicenseConclusionRequestScopeOneOf2) GetReleaseGroupIdOk() (*int32, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.ReleaseGroupId, true
-}
-
-// SetReleaseGroupId sets field value
-func (o *AddLicenseConclusionRequestScopeOneOf2) SetReleaseGroupId(v int32) {
-	o.ReleaseGroupId = v
-}
-
 func (o AddLicenseConclusionRequestScopeOneOf2) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -108,17 +104,18 @@ func (o AddLicenseConclusionRequestScopeOneOf2) MarshalJSON() ([]byte, error) {
 func (o AddLicenseConclusionRequestScopeOneOf2) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["scope"] = o.Scope
-	toSerialize["releaseGroupId"] = o.ReleaseGroupId
 	return toSerialize, nil
 }
 
 func (o *AddLicenseConclusionRequestScopeOneOf2) UnmarshalJSON(data []byte) (err error) {
+	if err := o.validateStringEnumValues(data); err != nil {
+		return err
+	}
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"scope",
-		"releaseGroupId",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -129,8 +126,19 @@ func (o *AddLicenseConclusionRequestScopeOneOf2) UnmarshalJSON(data []byte) (err
 		return err;
 	}
 
+	lookupRequiredProperty := func(requiredProperty string) (interface{}, string, bool) {
+		if value, exists := allProperties[requiredProperty]; exists {
+			return value, requiredProperty, true
+		}
+		for name, value := range allProperties {
+			if strings.EqualFold(name, requiredProperty) {
+				return value, name, true
+			}
+		}
+		return nil, "", false
+	}
 	for _, requiredProperty := range(requiredProperties) {
-		if _, exists := allProperties[requiredProperty]; !exists {
+		if _, _, exists := lookupRequiredProperty(requiredProperty); !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
 	}

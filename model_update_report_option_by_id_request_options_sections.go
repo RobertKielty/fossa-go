@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.38.23
 Contact: support@fossa.com
 */
 
@@ -26,6 +26,7 @@ type UpdateReportOptionByIdRequestOptionsSections struct {
 	DirectDependencies *bool `json:"directDependencies,omitempty"`
 	DeepDependencies *bool `json:"deepDependencies,omitempty"`
 	SnippetDependencies *bool `json:"snippetDependencies,omitempty"`
+	VendoredDependencies *bool `json:"vendoredDependencies,omitempty"`
 	CopyrightList *bool `json:"copyrightList,omitempty"`
 }
 
@@ -238,6 +239,38 @@ func (o *UpdateReportOptionByIdRequestOptionsSections) SetSnippetDependencies(v 
 	o.SnippetDependencies = &v
 }
 
+// GetVendoredDependencies returns the VendoredDependencies field value if set, zero value otherwise.
+func (o *UpdateReportOptionByIdRequestOptionsSections) GetVendoredDependencies() bool {
+	if o == nil || IsNil(o.VendoredDependencies) {
+		var ret bool
+		return ret
+	}
+	return *o.VendoredDependencies
+}
+
+// GetVendoredDependenciesOk returns a tuple with the VendoredDependencies field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateReportOptionByIdRequestOptionsSections) GetVendoredDependenciesOk() (*bool, bool) {
+	if o == nil || IsNil(o.VendoredDependencies) {
+		return nil, false
+	}
+	return o.VendoredDependencies, true
+}
+
+// HasVendoredDependencies returns a boolean if a field has been set.
+func (o *UpdateReportOptionByIdRequestOptionsSections) HasVendoredDependencies() bool {
+	if o != nil && !IsNil(o.VendoredDependencies) {
+		return true
+	}
+
+	return false
+}
+
+// SetVendoredDependencies gets a reference to the given bool and assigns it to the VendoredDependencies field.
+func (o *UpdateReportOptionByIdRequestOptionsSections) SetVendoredDependencies(v bool) {
+	o.VendoredDependencies = &v
+}
+
 // GetCopyrightList returns the CopyrightList field value if set, zero value otherwise.
 func (o *UpdateReportOptionByIdRequestOptionsSections) GetCopyrightList() bool {
 	if o == nil || IsNil(o.CopyrightList) {
@@ -297,6 +330,9 @@ func (o UpdateReportOptionByIdRequestOptionsSections) ToMap() (map[string]interf
 	}
 	if !IsNil(o.SnippetDependencies) {
 		toSerialize["snippetDependencies"] = o.SnippetDependencies
+	}
+	if !IsNil(o.VendoredDependencies) {
+		toSerialize["vendoredDependencies"] = o.VendoredDependencies
 	}
 	if !IsNil(o.CopyrightList) {
 		toSerialize["copyrightList"] = o.CopyrightList

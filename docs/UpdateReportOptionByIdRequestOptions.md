@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **Toggles** | Pointer to [**UpdateReportOptionByIdRequestOptionsToggles**](UpdateReportOptionByIdRequestOptionsToggles.md) |  | [optional] 
 **ExcludeFields** | Pointer to [**UpdateReportOptionByIdRequestOptionsExcludeFields**](UpdateReportOptionByIdRequestOptionsExcludeFields.md) |  | [optional] 
 **DependencyData** | Pointer to [**UpdateReportOptionByIdRequestOptionsDependencyData**](UpdateReportOptionByIdRequestOptionsDependencyData.md) |  | [optional] 
+**ExecutiveVulnerability** | Pointer to [**CreateReportOptionRequestOptionsExecutiveVulnerability**](CreateReportOptionRequestOptionsExecutiveVulnerability.md) |  | [optional] 
 
 ## Methods
 
@@ -127,6 +128,31 @@ SetDependencyData sets DependencyData field to given value.
 `func (o *UpdateReportOptionByIdRequestOptions) HasDependencyData() bool`
 
 HasDependencyData returns a boolean if a field has been set.
+
+### GetExecutiveVulnerability
+
+`func (o *UpdateReportOptionByIdRequestOptions) GetExecutiveVulnerability() CreateReportOptionRequestOptionsExecutiveVulnerability`
+
+GetExecutiveVulnerability returns the ExecutiveVulnerability field if non-nil, zero value otherwise.
+
+### GetExecutiveVulnerabilityOk
+
+`func (o *UpdateReportOptionByIdRequestOptions) GetExecutiveVulnerabilityOk() (*CreateReportOptionRequestOptionsExecutiveVulnerability, bool)`
+
+GetExecutiveVulnerabilityOk returns a tuple with the ExecutiveVulnerability field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExecutiveVulnerability
+
+`func (o *UpdateReportOptionByIdRequestOptions) SetExecutiveVulnerability(v CreateReportOptionRequestOptionsExecutiveVulnerability)`
+
+SetExecutiveVulnerability sets ExecutiveVulnerability field to given value.
+
+### HasExecutiveVulnerability
+
+`func (o *UpdateReportOptionByIdRequestOptions) HasExecutiveVulnerability() bool`
+
+HasExecutiveVulnerability returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
