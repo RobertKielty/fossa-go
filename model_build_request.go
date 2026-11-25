@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.38.23
 Contact: support@fossa.com
 */
 
@@ -22,7 +22,7 @@ var _ MappedNullable = &BuildRequest{}
 type BuildRequest struct {
 	Archives *BuildRequestArchives `json:"archives,omitempty"`
 	SelectedTeams []BuildRequestSelectedTeamsInner `json:"selectedTeams,omitempty"`
-	// Force a rebuild no matter what
+	// Force a rebuild. For a binary upload, its uploaded binary must still be stored.
 	ForceRebuild *bool `json:"forceRebuild,omitempty"`
 }
 

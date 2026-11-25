@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.38.23
 Contact: support@fossa.com
 */
 
@@ -13,6 +13,7 @@ package fossa
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the DeleteIssueExceptionsRequestOneOf1 type satisfies the MappedNullable interface at compile time
@@ -22,6 +23,42 @@ var _ MappedNullable = &DeleteIssueExceptionsRequestOneOf1{}
 type DeleteIssueExceptionsRequestOneOf1 struct {
 	Kind *string `json:"kind,omitempty"`
 	Value []int32 `json:"value,omitempty"`
+}
+
+func (o *DeleteIssueExceptionsRequestOneOf1) validateStringEnumValues(data []byte) error {
+	var fields struct {
+		Kind json.RawMessage `json:"kind,omitempty"`
+	}
+	if err := json.Unmarshal(data, &fields); err != nil {
+		return err
+	}
+	if raw := fields.Kind; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "kind")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "idList" {
+			return fmt.Errorf("invalid value %q for property %s", value, "kind")
+		}
+	}
+	return nil
+}
+
+type _DeleteIssueExceptionsRequestOneOf1 DeleteIssueExceptionsRequestOneOf1
+
+func (o *DeleteIssueExceptionsRequestOneOf1) UnmarshalJSON(data []byte) error {
+	if err := o.validateStringEnumValues(data); err != nil {
+		return err
+	}
+	value := _DeleteIssueExceptionsRequestOneOf1(*o)
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = DeleteIssueExceptionsRequestOneOf1(value)
+	return nil
 }
 
 // NewDeleteIssueExceptionsRequestOneOf1 instantiates a new DeleteIssueExceptionsRequestOneOf1 object

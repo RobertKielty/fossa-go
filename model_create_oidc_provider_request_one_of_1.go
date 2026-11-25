@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.38.23
 Contact: support@fossa.com
 */
 
@@ -15,6 +15,7 @@ import (
 	"encoding/json"
 	"bytes"
 	"fmt"
+	"strings"
 )
 
 // checks if the CreateOIDCProviderRequestOneOf1 type satisfies the MappedNullable interface at compile time
@@ -29,6 +30,28 @@ type CreateOIDCProviderRequestOneOf1 struct {
 }
 
 type _CreateOIDCProviderRequestOneOf1 CreateOIDCProviderRequestOneOf1
+
+func (o *CreateOIDCProviderRequestOneOf1) validateStringEnumValues(data []byte) error {
+	var fields struct {
+		Scope json.RawMessage `json:"scope"`
+	}
+	if err := json.Unmarshal(data, &fields); err != nil {
+		return err
+	}
+	if raw := fields.Scope; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "scope")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "org" {
+			return fmt.Errorf("invalid value %q for property %s", value, "scope")
+		}
+	}
+	return nil
+}
 
 // NewCreateOIDCProviderRequestOneOf1 instantiates a new CreateOIDCProviderRequestOneOf1 object
 // This constructor will assign default values to properties that have it defined,
@@ -113,6 +136,9 @@ func (o CreateOIDCProviderRequestOneOf1) ToMap() (map[string]interface{}, error)
 }
 
 func (o *CreateOIDCProviderRequestOneOf1) UnmarshalJSON(data []byte) (err error) {
+	if err := o.validateStringEnumValues(data); err != nil {
+		return err
+	}
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -129,8 +155,19 @@ func (o *CreateOIDCProviderRequestOneOf1) UnmarshalJSON(data []byte) (err error)
 		return err;
 	}
 
+	lookupRequiredProperty := func(requiredProperty string) (interface{}, string, bool) {
+		if value, exists := allProperties[requiredProperty]; exists {
+			return value, requiredProperty, true
+		}
+		for name, value := range allProperties {
+			if strings.EqualFold(name, requiredProperty) {
+				return value, name, true
+			}
+		}
+		return nil, "", false
+	}
 	for _, requiredProperty := range(requiredProperties) {
-		if _, exists := allProperties[requiredProperty]; !exists {
+		if _, _, exists := lookupRequiredProperty(requiredProperty); !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
 	}

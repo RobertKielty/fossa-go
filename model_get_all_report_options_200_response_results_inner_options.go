@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.38.23
 Contact: support@fossa.com
 */
 
@@ -13,8 +13,6 @@ package fossa
 
 import (
 	"encoding/json"
-	"bytes"
-	"fmt"
 )
 
 // checks if the GetAllReportOptions200ResponseResultsInnerOptions type satisfies the MappedNullable interface at compile time
@@ -22,24 +20,19 @@ var _ MappedNullable = &GetAllReportOptions200ResponseResultsInnerOptions{}
 
 // GetAllReportOptions200ResponseResultsInnerOptions Configuration options for customizing report generation
 type GetAllReportOptions200ResponseResultsInnerOptions struct {
-	Sections GetAllReportOptions200ResponseResultsInnerOptionsSections `json:"sections"`
-	Toggles GetAllReportOptions200ResponseResultsInnerOptionsToggles `json:"toggles"`
-	ExcludeFields GetAllReportOptions200ResponseResultsInnerOptionsExcludeFields `json:"excludeFields"`
-	DependencyData GetAllReportOptions200ResponseResultsInnerOptionsDependencyData `json:"dependencyData"`
+	Sections *GetAllReportOptions200ResponseResultsInnerOptionsSections `json:"sections,omitempty"`
+	Toggles *GetAllReportOptions200ResponseResultsInnerOptionsToggles `json:"toggles,omitempty"`
+	ExcludeFields *GetAllReportOptions200ResponseResultsInnerOptionsExcludeFields `json:"excludeFields,omitempty"`
+	DependencyData *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData `json:"dependencyData,omitempty"`
+	ExecutiveVulnerability *GetAllReportOptions200ResponseResultsInnerOptionsExecutiveVulnerability `json:"executiveVulnerability,omitempty"`
 }
-
-type _GetAllReportOptions200ResponseResultsInnerOptions GetAllReportOptions200ResponseResultsInnerOptions
 
 // NewGetAllReportOptions200ResponseResultsInnerOptions instantiates a new GetAllReportOptions200ResponseResultsInnerOptions object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetAllReportOptions200ResponseResultsInnerOptions(sections GetAllReportOptions200ResponseResultsInnerOptionsSections, toggles GetAllReportOptions200ResponseResultsInnerOptionsToggles, excludeFields GetAllReportOptions200ResponseResultsInnerOptionsExcludeFields, dependencyData GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) *GetAllReportOptions200ResponseResultsInnerOptions {
+func NewGetAllReportOptions200ResponseResultsInnerOptions() *GetAllReportOptions200ResponseResultsInnerOptions {
 	this := GetAllReportOptions200ResponseResultsInnerOptions{}
-	this.Sections = sections
-	this.Toggles = toggles
-	this.ExcludeFields = excludeFields
-	this.DependencyData = dependencyData
 	return &this
 }
 
@@ -51,100 +44,164 @@ func NewGetAllReportOptions200ResponseResultsInnerOptionsWithDefaults() *GetAllR
 	return &this
 }
 
-// GetSections returns the Sections field value
+// GetSections returns the Sections field value if set, zero value otherwise.
 func (o *GetAllReportOptions200ResponseResultsInnerOptions) GetSections() GetAllReportOptions200ResponseResultsInnerOptionsSections {
-	if o == nil {
+	if o == nil || IsNil(o.Sections) {
 		var ret GetAllReportOptions200ResponseResultsInnerOptionsSections
 		return ret
 	}
-
-	return o.Sections
+	return *o.Sections
 }
 
-// GetSectionsOk returns a tuple with the Sections field value
+// GetSectionsOk returns a tuple with the Sections field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetAllReportOptions200ResponseResultsInnerOptions) GetSectionsOk() (*GetAllReportOptions200ResponseResultsInnerOptionsSections, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Sections) {
 		return nil, false
 	}
-	return &o.Sections, true
+	return o.Sections, true
 }
 
-// SetSections sets field value
+// HasSections returns a boolean if a field has been set.
+func (o *GetAllReportOptions200ResponseResultsInnerOptions) HasSections() bool {
+	if o != nil && !IsNil(o.Sections) {
+		return true
+	}
+
+	return false
+}
+
+// SetSections gets a reference to the given GetAllReportOptions200ResponseResultsInnerOptionsSections and assigns it to the Sections field.
 func (o *GetAllReportOptions200ResponseResultsInnerOptions) SetSections(v GetAllReportOptions200ResponseResultsInnerOptionsSections) {
-	o.Sections = v
+	o.Sections = &v
 }
 
-// GetToggles returns the Toggles field value
+// GetToggles returns the Toggles field value if set, zero value otherwise.
 func (o *GetAllReportOptions200ResponseResultsInnerOptions) GetToggles() GetAllReportOptions200ResponseResultsInnerOptionsToggles {
-	if o == nil {
+	if o == nil || IsNil(o.Toggles) {
 		var ret GetAllReportOptions200ResponseResultsInnerOptionsToggles
 		return ret
 	}
-
-	return o.Toggles
+	return *o.Toggles
 }
 
-// GetTogglesOk returns a tuple with the Toggles field value
+// GetTogglesOk returns a tuple with the Toggles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetAllReportOptions200ResponseResultsInnerOptions) GetTogglesOk() (*GetAllReportOptions200ResponseResultsInnerOptionsToggles, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Toggles) {
 		return nil, false
 	}
-	return &o.Toggles, true
+	return o.Toggles, true
 }
 
-// SetToggles sets field value
+// HasToggles returns a boolean if a field has been set.
+func (o *GetAllReportOptions200ResponseResultsInnerOptions) HasToggles() bool {
+	if o != nil && !IsNil(o.Toggles) {
+		return true
+	}
+
+	return false
+}
+
+// SetToggles gets a reference to the given GetAllReportOptions200ResponseResultsInnerOptionsToggles and assigns it to the Toggles field.
 func (o *GetAllReportOptions200ResponseResultsInnerOptions) SetToggles(v GetAllReportOptions200ResponseResultsInnerOptionsToggles) {
-	o.Toggles = v
+	o.Toggles = &v
 }
 
-// GetExcludeFields returns the ExcludeFields field value
+// GetExcludeFields returns the ExcludeFields field value if set, zero value otherwise.
 func (o *GetAllReportOptions200ResponseResultsInnerOptions) GetExcludeFields() GetAllReportOptions200ResponseResultsInnerOptionsExcludeFields {
-	if o == nil {
+	if o == nil || IsNil(o.ExcludeFields) {
 		var ret GetAllReportOptions200ResponseResultsInnerOptionsExcludeFields
 		return ret
 	}
-
-	return o.ExcludeFields
+	return *o.ExcludeFields
 }
 
-// GetExcludeFieldsOk returns a tuple with the ExcludeFields field value
+// GetExcludeFieldsOk returns a tuple with the ExcludeFields field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetAllReportOptions200ResponseResultsInnerOptions) GetExcludeFieldsOk() (*GetAllReportOptions200ResponseResultsInnerOptionsExcludeFields, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ExcludeFields) {
 		return nil, false
 	}
-	return &o.ExcludeFields, true
+	return o.ExcludeFields, true
 }
 
-// SetExcludeFields sets field value
+// HasExcludeFields returns a boolean if a field has been set.
+func (o *GetAllReportOptions200ResponseResultsInnerOptions) HasExcludeFields() bool {
+	if o != nil && !IsNil(o.ExcludeFields) {
+		return true
+	}
+
+	return false
+}
+
+// SetExcludeFields gets a reference to the given GetAllReportOptions200ResponseResultsInnerOptionsExcludeFields and assigns it to the ExcludeFields field.
 func (o *GetAllReportOptions200ResponseResultsInnerOptions) SetExcludeFields(v GetAllReportOptions200ResponseResultsInnerOptionsExcludeFields) {
-	o.ExcludeFields = v
+	o.ExcludeFields = &v
 }
 
-// GetDependencyData returns the DependencyData field value
+// GetDependencyData returns the DependencyData field value if set, zero value otherwise.
 func (o *GetAllReportOptions200ResponseResultsInnerOptions) GetDependencyData() GetAllReportOptions200ResponseResultsInnerOptionsDependencyData {
-	if o == nil {
+	if o == nil || IsNil(o.DependencyData) {
 		var ret GetAllReportOptions200ResponseResultsInnerOptionsDependencyData
 		return ret
 	}
-
-	return o.DependencyData
+	return *o.DependencyData
 }
 
-// GetDependencyDataOk returns a tuple with the DependencyData field value
+// GetDependencyDataOk returns a tuple with the DependencyData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetAllReportOptions200ResponseResultsInnerOptions) GetDependencyDataOk() (*GetAllReportOptions200ResponseResultsInnerOptionsDependencyData, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.DependencyData) {
 		return nil, false
 	}
-	return &o.DependencyData, true
+	return o.DependencyData, true
 }
 
-// SetDependencyData sets field value
+// HasDependencyData returns a boolean if a field has been set.
+func (o *GetAllReportOptions200ResponseResultsInnerOptions) HasDependencyData() bool {
+	if o != nil && !IsNil(o.DependencyData) {
+		return true
+	}
+
+	return false
+}
+
+// SetDependencyData gets a reference to the given GetAllReportOptions200ResponseResultsInnerOptionsDependencyData and assigns it to the DependencyData field.
 func (o *GetAllReportOptions200ResponseResultsInnerOptions) SetDependencyData(v GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) {
-	o.DependencyData = v
+	o.DependencyData = &v
+}
+
+// GetExecutiveVulnerability returns the ExecutiveVulnerability field value if set, zero value otherwise.
+func (o *GetAllReportOptions200ResponseResultsInnerOptions) GetExecutiveVulnerability() GetAllReportOptions200ResponseResultsInnerOptionsExecutiveVulnerability {
+	if o == nil || IsNil(o.ExecutiveVulnerability) {
+		var ret GetAllReportOptions200ResponseResultsInnerOptionsExecutiveVulnerability
+		return ret
+	}
+	return *o.ExecutiveVulnerability
+}
+
+// GetExecutiveVulnerabilityOk returns a tuple with the ExecutiveVulnerability field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetAllReportOptions200ResponseResultsInnerOptions) GetExecutiveVulnerabilityOk() (*GetAllReportOptions200ResponseResultsInnerOptionsExecutiveVulnerability, bool) {
+	if o == nil || IsNil(o.ExecutiveVulnerability) {
+		return nil, false
+	}
+	return o.ExecutiveVulnerability, true
+}
+
+// HasExecutiveVulnerability returns a boolean if a field has been set.
+func (o *GetAllReportOptions200ResponseResultsInnerOptions) HasExecutiveVulnerability() bool {
+	if o != nil && !IsNil(o.ExecutiveVulnerability) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecutiveVulnerability gets a reference to the given GetAllReportOptions200ResponseResultsInnerOptionsExecutiveVulnerability and assigns it to the ExecutiveVulnerability field.
+func (o *GetAllReportOptions200ResponseResultsInnerOptions) SetExecutiveVulnerability(v GetAllReportOptions200ResponseResultsInnerOptionsExecutiveVulnerability) {
+	o.ExecutiveVulnerability = &v
 }
 
 func (o GetAllReportOptions200ResponseResultsInnerOptions) MarshalJSON() ([]byte, error) {
@@ -157,51 +214,22 @@ func (o GetAllReportOptions200ResponseResultsInnerOptions) MarshalJSON() ([]byte
 
 func (o GetAllReportOptions200ResponseResultsInnerOptions) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["sections"] = o.Sections
-	toSerialize["toggles"] = o.Toggles
-	toSerialize["excludeFields"] = o.ExcludeFields
-	toSerialize["dependencyData"] = o.DependencyData
+	if !IsNil(o.Sections) {
+		toSerialize["sections"] = o.Sections
+	}
+	if !IsNil(o.Toggles) {
+		toSerialize["toggles"] = o.Toggles
+	}
+	if !IsNil(o.ExcludeFields) {
+		toSerialize["excludeFields"] = o.ExcludeFields
+	}
+	if !IsNil(o.DependencyData) {
+		toSerialize["dependencyData"] = o.DependencyData
+	}
+	if !IsNil(o.ExecutiveVulnerability) {
+		toSerialize["executiveVulnerability"] = o.ExecutiveVulnerability
+	}
 	return toSerialize, nil
-}
-
-func (o *GetAllReportOptions200ResponseResultsInnerOptions) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"sections",
-		"toggles",
-		"excludeFields",
-		"dependencyData",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err;
-	}
-
-	for _, requiredProperty := range(requiredProperties) {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
-	varGetAllReportOptions200ResponseResultsInnerOptions := _GetAllReportOptions200ResponseResultsInnerOptions{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varGetAllReportOptions200ResponseResultsInnerOptions)
-
-	if err != nil {
-		return err
-	}
-
-	*o = GetAllReportOptions200ResponseResultsInnerOptions(varGetAllReportOptions200ResponseResultsInnerOptions)
-
-	return err
 }
 
 type NullableGetAllReportOptions200ResponseResultsInnerOptions struct {
