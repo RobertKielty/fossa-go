@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.38.26
 Contact: support@fossa.com
 */
 
@@ -13,6 +13,7 @@ package fossa
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -23,6 +24,8 @@ var _ MappedNullable = &CreateSavedFilterRequestFilterOneOf{}
 type CreateSavedFilterRequestFilterOneOf struct {
 	Type *string `json:"type,omitempty"`
 	Identification *string `json:"identification,omitempty"`
+	// Reason a licensing issue was automatically ignored. Licensing issues have no user-selectable ignore reason, so only auto-ignore reasons are filterable. 
+	IgnoreReason *string `json:"ignoreReason,omitempty"`
 	PackageManagers []string `json:"packageManagers,omitempty"`
 	ProjectLabels []string `json:"projectLabels,omitempty"`
 	Search *string `json:"search,omitempty"`
@@ -30,6 +33,81 @@ type CreateSavedFilterRequestFilterOneOf struct {
 	RevisionIds []string `json:"revisionIds,omitempty"`
 	ContainerLayers []string `json:"containerLayers,omitempty"`
 	FoundAfter *time.Time `json:"foundAfter,omitempty"`
+}
+
+func (o *CreateSavedFilterRequestFilterOneOf) validateStringEnumValues(data []byte) error {
+	var fields struct {
+		Type json.RawMessage `json:"type,omitempty"`
+		Identification json.RawMessage `json:"identification,omitempty"`
+		IgnoreReason json.RawMessage `json:"ignoreReason,omitempty"`
+		Ticketed json.RawMessage `json:"ticketed,omitempty"`
+	}
+	if err := json.Unmarshal(data, &fields); err != nil {
+		return err
+	}
+	if raw := fields.Type; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "type")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "policy_conflict" && value != "policy_flag" && value != "unlicensed_dependency" {
+			return fmt.Errorf("invalid value %q for property %s", value, "type")
+		}
+	}
+	if raw := fields.Identification; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "identification")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "declared" && value != "discovered" {
+			return fmt.Errorf("invalid value %q for property %s", value, "identification")
+		}
+	}
+	if raw := fields.IgnoreReason; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "ignoreReason")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "non_concluded_policy_auto_ignore" && value != "dependency_not_distributed_auto_ignore" && value != "codebase_not_network_accessible_auto_ignore" && value != "linking_obligation_not_triggered_auto_ignore" {
+			return fmt.Errorf("invalid value %q for property %s", value, "ignoreReason")
+		}
+	}
+	if raw := fields.Ticketed; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "ticketed")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "jira" && value != "custom" && value != "has_ticket" && value != "no_ticket" {
+			return fmt.Errorf("invalid value %q for property %s", value, "ticketed")
+		}
+	}
+	return nil
+}
+
+type _CreateSavedFilterRequestFilterOneOf CreateSavedFilterRequestFilterOneOf
+
+func (o *CreateSavedFilterRequestFilterOneOf) UnmarshalJSON(data []byte) error {
+	if err := o.validateStringEnumValues(data); err != nil {
+		return err
+	}
+	value := _CreateSavedFilterRequestFilterOneOf(*o)
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = CreateSavedFilterRequestFilterOneOf(value)
+	return nil
 }
 
 // NewCreateSavedFilterRequestFilterOneOf instantiates a new CreateSavedFilterRequestFilterOneOf object
@@ -111,6 +189,38 @@ func (o *CreateSavedFilterRequestFilterOneOf) HasIdentification() bool {
 // SetIdentification gets a reference to the given string and assigns it to the Identification field.
 func (o *CreateSavedFilterRequestFilterOneOf) SetIdentification(v string) {
 	o.Identification = &v
+}
+
+// GetIgnoreReason returns the IgnoreReason field value if set, zero value otherwise.
+func (o *CreateSavedFilterRequestFilterOneOf) GetIgnoreReason() string {
+	if o == nil || IsNil(o.IgnoreReason) {
+		var ret string
+		return ret
+	}
+	return *o.IgnoreReason
+}
+
+// GetIgnoreReasonOk returns a tuple with the IgnoreReason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateSavedFilterRequestFilterOneOf) GetIgnoreReasonOk() (*string, bool) {
+	if o == nil || IsNil(o.IgnoreReason) {
+		return nil, false
+	}
+	return o.IgnoreReason, true
+}
+
+// HasIgnoreReason returns a boolean if a field has been set.
+func (o *CreateSavedFilterRequestFilterOneOf) HasIgnoreReason() bool {
+	if o != nil && !IsNil(o.IgnoreReason) {
+		return true
+	}
+
+	return false
+}
+
+// SetIgnoreReason gets a reference to the given string and assigns it to the IgnoreReason field.
+func (o *CreateSavedFilterRequestFilterOneOf) SetIgnoreReason(v string) {
+	o.IgnoreReason = &v
 }
 
 // GetPackageManagers returns the PackageManagers field value if set, zero value otherwise.
@@ -352,6 +462,9 @@ func (o CreateSavedFilterRequestFilterOneOf) ToMap() (map[string]interface{}, er
 	}
 	if !IsNil(o.Identification) {
 		toSerialize["identification"] = o.Identification
+	}
+	if !IsNil(o.IgnoreReason) {
+		toSerialize["ignoreReason"] = o.IgnoreReason
 	}
 	if !IsNil(o.PackageManagers) {
 		toSerialize["packageManagers"] = o.PackageManagers

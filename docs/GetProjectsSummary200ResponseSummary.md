@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Projects** | Pointer to **int32** |  | [optional] 
 **ReleaseGroups** | Pointer to **int32** |  | [optional] 
+**SharedProjects** | Pointer to **int32** |  | [optional] 
 
 ## Methods
 
@@ -75,6 +76,31 @@ SetReleaseGroups sets ReleaseGroups field to given value.
 `func (o *GetProjectsSummary200ResponseSummary) HasReleaseGroups() bool`
 
 HasReleaseGroups returns a boolean if a field has been set.
+
+### GetSharedProjects
+
+`func (o *GetProjectsSummary200ResponseSummary) GetSharedProjects() int32`
+
+GetSharedProjects returns the SharedProjects field if non-nil, zero value otherwise.
+
+### GetSharedProjectsOk
+
+`func (o *GetProjectsSummary200ResponseSummary) GetSharedProjectsOk() (*int32, bool)`
+
+GetSharedProjectsOk returns a tuple with the SharedProjects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSharedProjects
+
+`func (o *GetProjectsSummary200ResponseSummary) SetSharedProjects(v int32)`
+
+SetSharedProjects sets SharedProjects field to given value.
+
+### HasSharedProjects
+
+`func (o *GetProjectsSummary200ResponseSummary) HasSharedProjects() bool`
+
+HasSharedProjects returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
