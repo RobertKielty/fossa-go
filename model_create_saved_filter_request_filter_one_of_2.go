@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.38.26
 Contact: support@fossa.com
 */
 
@@ -13,6 +13,7 @@ package fossa
 
 import (
 	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -29,6 +30,55 @@ type CreateSavedFilterRequestFilterOneOf2 struct {
 	RevisionIds []string `json:"revisionIds,omitempty"`
 	ContainerLayers []string `json:"containerLayers,omitempty"`
 	FoundAfter *time.Time `json:"foundAfter,omitempty"`
+}
+
+func (o *CreateSavedFilterRequestFilterOneOf2) validateStringEnumValues(data []byte) error {
+	var fields struct {
+		Type json.RawMessage `json:"type,omitempty"`
+		Ticketed json.RawMessage `json:"ticketed,omitempty"`
+	}
+	if err := json.Unmarshal(data, &fields); err != nil {
+		return err
+	}
+	if raw := fields.Type; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "type")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "outdated_dependency" && value != "blacklisted_dependency" && value != "risk_abandonware" && value != "risk_empty_package" && value != "risk_native_code" {
+			return fmt.Errorf("invalid value %q for property %s", value, "type")
+		}
+	}
+	if raw := fields.Ticketed; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "ticketed")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "jira" && value != "custom" && value != "has_ticket" && value != "no_ticket" {
+			return fmt.Errorf("invalid value %q for property %s", value, "ticketed")
+		}
+	}
+	return nil
+}
+
+type _CreateSavedFilterRequestFilterOneOf2 CreateSavedFilterRequestFilterOneOf2
+
+func (o *CreateSavedFilterRequestFilterOneOf2) UnmarshalJSON(data []byte) error {
+	if err := o.validateStringEnumValues(data); err != nil {
+		return err
+	}
+	value := _CreateSavedFilterRequestFilterOneOf2(*o)
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = CreateSavedFilterRequestFilterOneOf2(value)
+	return nil
 }
 
 // NewCreateSavedFilterRequestFilterOneOf2 instantiates a new CreateSavedFilterRequestFilterOneOf2 object

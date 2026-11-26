@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.38.26
 Contact: support@fossa.com
 */
 
@@ -18,12 +18,13 @@ import (
 // checks if the UpdateReportOptionByIdRequestOptions type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &UpdateReportOptionByIdRequestOptions{}
 
-// UpdateReportOptionByIdRequestOptions Partial report configuration. Only provided fields will be updated, with deep merging applied.
+// UpdateReportOptionByIdRequestOptions Partial report configuration. The sent `sections`, `toggles`, `excludeFields` and `dependencyData` replace the stored ones whole. The stored `executiveVulnerability` options are kept unless sent, and sending only `executiveVulnerability` keeps the other four.
 type UpdateReportOptionByIdRequestOptions struct {
 	Sections *UpdateReportOptionByIdRequestOptionsSections `json:"sections,omitempty"`
 	Toggles *UpdateReportOptionByIdRequestOptionsToggles `json:"toggles,omitempty"`
 	ExcludeFields *UpdateReportOptionByIdRequestOptionsExcludeFields `json:"excludeFields,omitempty"`
 	DependencyData *UpdateReportOptionByIdRequestOptionsDependencyData `json:"dependencyData,omitempty"`
+	ExecutiveVulnerability *CreateReportOptionRequestOptionsExecutiveVulnerability `json:"executiveVulnerability,omitempty"`
 }
 
 // NewUpdateReportOptionByIdRequestOptions instantiates a new UpdateReportOptionByIdRequestOptions object
@@ -171,6 +172,38 @@ func (o *UpdateReportOptionByIdRequestOptions) SetDependencyData(v UpdateReportO
 	o.DependencyData = &v
 }
 
+// GetExecutiveVulnerability returns the ExecutiveVulnerability field value if set, zero value otherwise.
+func (o *UpdateReportOptionByIdRequestOptions) GetExecutiveVulnerability() CreateReportOptionRequestOptionsExecutiveVulnerability {
+	if o == nil || IsNil(o.ExecutiveVulnerability) {
+		var ret CreateReportOptionRequestOptionsExecutiveVulnerability
+		return ret
+	}
+	return *o.ExecutiveVulnerability
+}
+
+// GetExecutiveVulnerabilityOk returns a tuple with the ExecutiveVulnerability field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateReportOptionByIdRequestOptions) GetExecutiveVulnerabilityOk() (*CreateReportOptionRequestOptionsExecutiveVulnerability, bool) {
+	if o == nil || IsNil(o.ExecutiveVulnerability) {
+		return nil, false
+	}
+	return o.ExecutiveVulnerability, true
+}
+
+// HasExecutiveVulnerability returns a boolean if a field has been set.
+func (o *UpdateReportOptionByIdRequestOptions) HasExecutiveVulnerability() bool {
+	if o != nil && !IsNil(o.ExecutiveVulnerability) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecutiveVulnerability gets a reference to the given CreateReportOptionRequestOptionsExecutiveVulnerability and assigns it to the ExecutiveVulnerability field.
+func (o *UpdateReportOptionByIdRequestOptions) SetExecutiveVulnerability(v CreateReportOptionRequestOptionsExecutiveVulnerability) {
+	o.ExecutiveVulnerability = &v
+}
+
 func (o UpdateReportOptionByIdRequestOptions) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -192,6 +225,9 @@ func (o UpdateReportOptionByIdRequestOptions) ToMap() (map[string]interface{}, e
 	}
 	if !IsNil(o.DependencyData) {
 		toSerialize["dependencyData"] = o.DependencyData
+	}
+	if !IsNil(o.ExecutiveVulnerability) {
+		toSerialize["executiveVulnerability"] = o.ExecutiveVulnerability
 	}
 	return toSerialize, nil
 }
