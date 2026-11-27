@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.38.26
 Contact: support@fossa.com
 */
 
@@ -13,24 +13,30 @@ package fossa
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the UpdateReportOptionByIdRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &UpdateReportOptionByIdRequest{}
 
-// UpdateReportOptionByIdRequest Request body for updating an existing report option. Supports partial updates with deep merging.
+// UpdateReportOptionByIdRequest Request body for updating an existing report option.
 type UpdateReportOptionByIdRequest struct {
 	// Name of the report option (1-80 characters). Must be unique within the organization.
-	Name *string `json:"name,omitempty"`
-	Options *UpdateReportOptionByIdRequestOptions `json:"options,omitempty"`
+	Name string `json:"name"`
+	Options UpdateReportOptionByIdRequestOptions `json:"options"`
 }
+
+type _UpdateReportOptionByIdRequest UpdateReportOptionByIdRequest
 
 // NewUpdateReportOptionByIdRequest instantiates a new UpdateReportOptionByIdRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUpdateReportOptionByIdRequest() *UpdateReportOptionByIdRequest {
+func NewUpdateReportOptionByIdRequest(name string, options UpdateReportOptionByIdRequestOptions) *UpdateReportOptionByIdRequest {
 	this := UpdateReportOptionByIdRequest{}
+	this.Name = name
+	this.Options = options
 	return &this
 }
 
@@ -42,68 +48,52 @@ func NewUpdateReportOptionByIdRequestWithDefaults() *UpdateReportOptionByIdReque
 	return &this
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *UpdateReportOptionByIdRequest) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *UpdateReportOptionByIdRequest) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *UpdateReportOptionByIdRequest) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *UpdateReportOptionByIdRequest) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
-// GetOptions returns the Options field value if set, zero value otherwise.
+// GetOptions returns the Options field value
 func (o *UpdateReportOptionByIdRequest) GetOptions() UpdateReportOptionByIdRequestOptions {
-	if o == nil || IsNil(o.Options) {
+	if o == nil {
 		var ret UpdateReportOptionByIdRequestOptions
 		return ret
 	}
-	return *o.Options
+
+	return o.Options
 }
 
-// GetOptionsOk returns a tuple with the Options field value if set, nil otherwise
+// GetOptionsOk returns a tuple with the Options field value
 // and a boolean to check if the value has been set.
 func (o *UpdateReportOptionByIdRequest) GetOptionsOk() (*UpdateReportOptionByIdRequestOptions, bool) {
-	if o == nil || IsNil(o.Options) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Options, true
+	return &o.Options, true
 }
 
-// HasOptions returns a boolean if a field has been set.
-func (o *UpdateReportOptionByIdRequest) HasOptions() bool {
-	if o != nil && !IsNil(o.Options) {
-		return true
-	}
-
-	return false
-}
-
-// SetOptions gets a reference to the given UpdateReportOptionByIdRequestOptions and assigns it to the Options field.
+// SetOptions sets field value
 func (o *UpdateReportOptionByIdRequest) SetOptions(v UpdateReportOptionByIdRequestOptions) {
-	o.Options = &v
+	o.Options = v
 }
 
 func (o UpdateReportOptionByIdRequest) MarshalJSON() ([]byte, error) {
@@ -116,13 +106,47 @@ func (o UpdateReportOptionByIdRequest) MarshalJSON() ([]byte, error) {
 
 func (o UpdateReportOptionByIdRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
-	if !IsNil(o.Options) {
-		toSerialize["options"] = o.Options
-	}
+	toSerialize["name"] = o.Name
+	toSerialize["options"] = o.Options
 	return toSerialize, nil
+}
+
+func (o *UpdateReportOptionByIdRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"options",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varUpdateReportOptionByIdRequest := _UpdateReportOptionByIdRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varUpdateReportOptionByIdRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = UpdateReportOptionByIdRequest(varUpdateReportOptionByIdRequest)
+
+	return err
 }
 
 type NullableUpdateReportOptionByIdRequest struct {
