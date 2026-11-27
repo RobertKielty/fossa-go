@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **Package** | **string** | Name of the package containing the snippet | 
 **Version** | **string** | Version of the package | 
 **Kind** | **string** | Type of snippet detection (snippet&#x3D;partial match, file&#x3D;100% match) | 
+**MatchCount** | **int32** | Total number of matches for this snippet | 
 **Matches** | [**[]GetSnippetDetails200ResponseSnippetMatchesInner**](GetSnippetDetails200ResponseSnippetMatchesInner.md) | Array of path matches where this snippet was detected | 
 **HighestMatchPercentage** | **float32** | The highest match percentage across all matches | 
 **ReleaseDate** | Pointer to **time.Time** | Release date of the package (optional) | [optional] 
@@ -19,14 +20,16 @@ Name | Type | Description | Notes
 **Licenses** | [**[]GetSnippets200ResponseResultsInnerLicensesInner**](GetSnippets200ResponseResultsInnerLicensesInner.md) | Array of licenses associated with the snippet | 
 **IssueCounts** | [**GetSnippets200ResponseResultsInnerIssueCounts**](GetSnippets200ResponseResultsInnerIssueCounts.md) |  | 
 **RejectionDetails** | Pointer to [**GetSnippets200ResponseResultsInnerRejectionDetails**](GetSnippets200ResponseResultsInnerRejectionDetails.md) |  | [optional] 
-**Labels** | [**[]GetSnippets200ResponseResultsInnerLabelsInner**](GetSnippets200ResponseResultsInnerLabelsInner.md) | Package labels assigned to this snippet | 
+**Labels** | [**[]GetProjectDependencies200ResponseDependenciesInnerLabelsInner**](GetProjectDependencies200ResponseDependenciesInnerLabelsInner.md) | Package labels assigned to this snippet | 
 **OtherVersions** | Pointer to [**[]GetSnippetDetails200ResponseSnippetOtherVersionsInner**](GetSnippetDetails200ResponseSnippetOtherVersionsInner.md) | Other versions of the package where this snippet was detected | [optional] 
+**IsVendored** | **bool** | Whether the snippet exists as a vendored dependency | 
+**IsConverted** | **bool** | Whether the snippet has been converted to a vendored dependency | 
 
 ## Methods
 
 ### NewGetSnippetDetails200ResponseSnippet
 
-`func NewGetSnippetDetails200ResponseSnippet(id string, packageId string, purl string, locator string, package_ string, version string, kind string, matches []GetSnippetDetails200ResponseSnippetMatchesInner, highestMatchPercentage float32, licenses []GetSnippets200ResponseResultsInnerLicensesInner, issueCounts GetSnippets200ResponseResultsInnerIssueCounts, labels []GetSnippets200ResponseResultsInnerLabelsInner, ) *GetSnippetDetails200ResponseSnippet`
+`func NewGetSnippetDetails200ResponseSnippet(id string, packageId string, purl string, locator string, package_ string, version string, kind string, matchCount int32, matches []GetSnippetDetails200ResponseSnippetMatchesInner, highestMatchPercentage float32, licenses []GetSnippets200ResponseResultsInnerLicensesInner, issueCounts GetSnippets200ResponseResultsInnerIssueCounts, labels []GetProjectDependencies200ResponseDependenciesInnerLabelsInner, isVendored bool, isConverted bool, ) *GetSnippetDetails200ResponseSnippet`
 
 NewGetSnippetDetails200ResponseSnippet instantiates a new GetSnippetDetails200ResponseSnippet object
 This constructor will assign default values to properties that have it defined,
@@ -179,6 +182,26 @@ and a boolean to check if the value has been set.
 `func (o *GetSnippetDetails200ResponseSnippet) SetKind(v string)`
 
 SetKind sets Kind field to given value.
+
+
+### GetMatchCount
+
+`func (o *GetSnippetDetails200ResponseSnippet) GetMatchCount() int32`
+
+GetMatchCount returns the MatchCount field if non-nil, zero value otherwise.
+
+### GetMatchCountOk
+
+`func (o *GetSnippetDetails200ResponseSnippet) GetMatchCountOk() (*int32, bool)`
+
+GetMatchCountOk returns a tuple with the MatchCount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMatchCount
+
+`func (o *GetSnippetDetails200ResponseSnippet) SetMatchCount(v int32)`
+
+SetMatchCount sets MatchCount field to given value.
 
 
 ### GetMatches
@@ -363,20 +386,20 @@ HasRejectionDetails returns a boolean if a field has been set.
 
 ### GetLabels
 
-`func (o *GetSnippetDetails200ResponseSnippet) GetLabels() []GetSnippets200ResponseResultsInnerLabelsInner`
+`func (o *GetSnippetDetails200ResponseSnippet) GetLabels() []GetProjectDependencies200ResponseDependenciesInnerLabelsInner`
 
 GetLabels returns the Labels field if non-nil, zero value otherwise.
 
 ### GetLabelsOk
 
-`func (o *GetSnippetDetails200ResponseSnippet) GetLabelsOk() (*[]GetSnippets200ResponseResultsInnerLabelsInner, bool)`
+`func (o *GetSnippetDetails200ResponseSnippet) GetLabelsOk() (*[]GetProjectDependencies200ResponseDependenciesInnerLabelsInner, bool)`
 
 GetLabelsOk returns a tuple with the Labels field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLabels
 
-`func (o *GetSnippetDetails200ResponseSnippet) SetLabels(v []GetSnippets200ResponseResultsInnerLabelsInner)`
+`func (o *GetSnippetDetails200ResponseSnippet) SetLabels(v []GetProjectDependencies200ResponseDependenciesInnerLabelsInner)`
 
 SetLabels sets Labels field to given value.
 
@@ -405,6 +428,46 @@ SetOtherVersions sets OtherVersions field to given value.
 `func (o *GetSnippetDetails200ResponseSnippet) HasOtherVersions() bool`
 
 HasOtherVersions returns a boolean if a field has been set.
+
+### GetIsVendored
+
+`func (o *GetSnippetDetails200ResponseSnippet) GetIsVendored() bool`
+
+GetIsVendored returns the IsVendored field if non-nil, zero value otherwise.
+
+### GetIsVendoredOk
+
+`func (o *GetSnippetDetails200ResponseSnippet) GetIsVendoredOk() (*bool, bool)`
+
+GetIsVendoredOk returns a tuple with the IsVendored field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsVendored
+
+`func (o *GetSnippetDetails200ResponseSnippet) SetIsVendored(v bool)`
+
+SetIsVendored sets IsVendored field to given value.
+
+
+### GetIsConverted
+
+`func (o *GetSnippetDetails200ResponseSnippet) GetIsConverted() bool`
+
+GetIsConverted returns the IsConverted field if non-nil, zero value otherwise.
+
+### GetIsConvertedOk
+
+`func (o *GetSnippetDetails200ResponseSnippet) GetIsConvertedOk() (*bool, bool)`
+
+GetIsConvertedOk returns a tuple with the IsConverted field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsConverted
+
+`func (o *GetSnippetDetails200ResponseSnippet) SetIsConverted(v bool)`
+
+SetIsConverted sets IsConverted field to given value.
+
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

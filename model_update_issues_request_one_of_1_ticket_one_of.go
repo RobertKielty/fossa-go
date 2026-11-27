@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.38.26
 Contact: support@fossa.com
 */
 
@@ -13,6 +13,7 @@ package fossa
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the UpdateIssuesRequestOneOf1TicketOneOf type satisfies the MappedNullable interface at compile time
@@ -30,6 +31,42 @@ type UpdateIssuesRequestOneOf1TicketOneOf struct {
 	Labels []string `json:"labels,omitempty"`
 	CustomFields []UpdateIssuesRequestOneOf1TicketOneOfCustomFieldsInner `json:"customFields,omitempty"`
 	Components []UpdateIssuesRequestOneOf1TicketOneOfComponentsInner `json:"components,omitempty"`
+}
+
+func (o *UpdateIssuesRequestOneOf1TicketOneOf) validateStringEnumValues(data []byte) error {
+	var fields struct {
+		Type json.RawMessage `json:"type,omitempty"`
+	}
+	if err := json.Unmarshal(data, &fields); err != nil {
+		return err
+	}
+	if raw := fields.Type; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "type")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "jira" {
+			return fmt.Errorf("invalid value %q for property %s", value, "type")
+		}
+	}
+	return nil
+}
+
+type _UpdateIssuesRequestOneOf1TicketOneOf UpdateIssuesRequestOneOf1TicketOneOf
+
+func (o *UpdateIssuesRequestOneOf1TicketOneOf) UnmarshalJSON(data []byte) error {
+	if err := o.validateStringEnumValues(data); err != nil {
+		return err
+	}
+	value := _UpdateIssuesRequestOneOf1TicketOneOf(*o)
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = UpdateIssuesRequestOneOf1TicketOneOf(value)
+	return nil
 }
 
 // NewUpdateIssuesRequestOneOf1TicketOneOf instantiates a new UpdateIssuesRequestOneOf1TicketOneOf object

@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Projects** | **bool** | For release group reports, show which projects the dependency is present in | 
-**Name** | **bool** | The name of the dependency | 
 **Authors** | **bool** | The authors of the dependency | 
 **Description** | **bool** | The description of the dependency | 
 **Homepage** | **bool** | The homepage of the dependency | 
@@ -23,12 +22,13 @@ Name | Type | Description | Notes
 **FilePaths** | **bool** | The paths_to of the dependency (the chain of dependencies that brought it into the project) | 
 **NoticeFiles** | **bool** | Notice files | 
 **FullLicenseText** | **bool** | Full license text | 
+**LicenseTextAppendix** | Pointer to **bool** | Move full license texts out of each dependency and into a single Licenses appendix at the end of the report | [optional] 
 
 ## Methods
 
 ### NewGetAllReportOptions200ResponseResultsInnerOptionsDependencyData
 
-`func NewGetAllReportOptions200ResponseResultsInnerOptionsDependencyData(projects bool, name bool, authors bool, description bool, homepage bool, packageManager bool, downloadUrl bool, concludedLicenses bool, declaredLicenses bool, discoveredLicenses bool, copyrights bool, licenseUrl bool, licenseFileMatches bool, issueResolutionNotes bool, packageLabels bool, dependencyPaths bool, filePaths bool, noticeFiles bool, fullLicenseText bool, ) *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData`
+`func NewGetAllReportOptions200ResponseResultsInnerOptionsDependencyData(projects bool, authors bool, description bool, homepage bool, packageManager bool, downloadUrl bool, concludedLicenses bool, declaredLicenses bool, discoveredLicenses bool, copyrights bool, licenseUrl bool, licenseFileMatches bool, issueResolutionNotes bool, packageLabels bool, dependencyPaths bool, filePaths bool, noticeFiles bool, fullLicenseText bool, ) *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData`
 
 NewGetAllReportOptions200ResponseResultsInnerOptionsDependencyData instantiates a new GetAllReportOptions200ResponseResultsInnerOptionsDependencyData object
 This constructor will assign default values to properties that have it defined,
@@ -61,26 +61,6 @@ and a boolean to check if the value has been set.
 `func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) SetProjects(v bool)`
 
 SetProjects sets Projects field to given value.
-
-
-### GetName
-
-`func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) GetName() bool`
-
-GetName returns the Name field if non-nil, zero value otherwise.
-
-### GetNameOk
-
-`func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) GetNameOk() (*bool, bool)`
-
-GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetName
-
-`func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) SetName(v bool)`
-
-SetName sets Name field to given value.
 
 
 ### GetAuthors
@@ -422,6 +402,31 @@ and a boolean to check if the value has been set.
 
 SetFullLicenseText sets FullLicenseText field to given value.
 
+
+### GetLicenseTextAppendix
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) GetLicenseTextAppendix() bool`
+
+GetLicenseTextAppendix returns the LicenseTextAppendix field if non-nil, zero value otherwise.
+
+### GetLicenseTextAppendixOk
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) GetLicenseTextAppendixOk() (*bool, bool)`
+
+GetLicenseTextAppendixOk returns a tuple with the LicenseTextAppendix field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLicenseTextAppendix
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) SetLicenseTextAppendix(v bool)`
+
+SetLicenseTextAppendix sets LicenseTextAppendix field to given value.
+
+### HasLicenseTextAppendix
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptionsDependencyData) HasLicenseTextAppendix() bool`
+
+HasLicenseTextAppendix returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

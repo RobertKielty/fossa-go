@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | Pointer to **string** | Name of the report option (1-80 characters). Must be unique within the organization. | [optional] 
-**Options** | Pointer to [**UpdateReportOptionByIdRequestOptions**](UpdateReportOptionByIdRequestOptions.md) |  | [optional] 
+**Name** | **string** | Name of the report option (1-80 characters). Must be unique within the organization. | 
+**Options** | [**UpdateReportOptionByIdRequestOptions**](UpdateReportOptionByIdRequestOptions.md) |  | 
 
 ## Methods
 
 ### NewUpdateReportOptionByIdRequest
 
-`func NewUpdateReportOptionByIdRequest() *UpdateReportOptionByIdRequest`
+`func NewUpdateReportOptionByIdRequest(name string, options UpdateReportOptionByIdRequestOptions, ) *UpdateReportOptionByIdRequest`
 
 NewUpdateReportOptionByIdRequest instantiates a new UpdateReportOptionByIdRequest object
 This constructor will assign default values to properties that have it defined,
@@ -45,11 +45,6 @@ and a boolean to check if the value has been set.
 
 SetName sets Name field to given value.
 
-### HasName
-
-`func (o *UpdateReportOptionByIdRequest) HasName() bool`
-
-HasName returns a boolean if a field has been set.
 
 ### GetOptions
 
@@ -70,11 +65,6 @@ and a boolean to check if the value has been set.
 
 SetOptions sets Options field to given value.
 
-### HasOptions
-
-`func (o *UpdateReportOptionByIdRequest) HasOptions() bool`
-
-HasOptions returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

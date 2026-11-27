@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Archives** | Pointer to [**BuildRequestArchives**](BuildRequestArchives.md) |  | [optional] 
 **SelectedTeams** | Pointer to [**[]BuildRequestSelectedTeamsInner**](BuildRequestSelectedTeamsInner.md) |  | [optional] 
-**ForceRebuild** | Pointer to **bool** | Force a rebuild no matter what | [optional] 
+**ForceRebuild** | Pointer to **bool** | Force a rebuild. For a binary upload, its uploaded binary must still be stored. | [optional] 
 
 ## Methods
 

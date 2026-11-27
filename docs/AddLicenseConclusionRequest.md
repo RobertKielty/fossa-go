@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **Scope** | [**AddLicenseConclusionRequestScope**](AddLicenseConclusionRequestScope.md) |  | 
 **LicenseId** | **string** | The license ID to add or remove | 
 **OriginId** | Pointer to **string** | Optional origin revision or release ID to trigger an issue scan | [optional] 
+**ReplaceScope** | Pointer to [**AddLicenseConclusionRequestReplaceScope**](AddLicenseConclusionRequestReplaceScope.md) |  | [optional] 
 
 ## Methods
 
@@ -112,6 +113,31 @@ SetOriginId sets OriginId field to given value.
 `func (o *AddLicenseConclusionRequest) HasOriginId() bool`
 
 HasOriginId returns a boolean if a field has been set.
+
+### GetReplaceScope
+
+`func (o *AddLicenseConclusionRequest) GetReplaceScope() AddLicenseConclusionRequestReplaceScope`
+
+GetReplaceScope returns the ReplaceScope field if non-nil, zero value otherwise.
+
+### GetReplaceScopeOk
+
+`func (o *AddLicenseConclusionRequest) GetReplaceScopeOk() (*AddLicenseConclusionRequestReplaceScope, bool)`
+
+GetReplaceScopeOk returns a tuple with the ReplaceScope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReplaceScope
+
+`func (o *AddLicenseConclusionRequest) SetReplaceScope(v AddLicenseConclusionRequestReplaceScope)`
+
+SetReplaceScope sets ReplaceScope field to given value.
+
+### HasReplaceScope
+
+`func (o *AddLicenseConclusionRequest) HasReplaceScope() bool`
+
+HasReplaceScope returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

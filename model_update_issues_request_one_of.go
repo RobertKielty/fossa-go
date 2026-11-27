@@ -3,7 +3,7 @@ FOSSA API
 
 OpenAPI Specification for public FOSSA APIs
 
-API version: 4.31.29
+API version: 4.38.26
 Contact: support@fossa.com
 */
 
@@ -13,6 +13,7 @@ package fossa
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
 // checks if the UpdateIssuesRequestOneOf type satisfies the MappedNullable interface at compile time
@@ -22,7 +23,57 @@ var _ MappedNullable = &UpdateIssuesRequestOneOf{}
 type UpdateIssuesRequestOneOf struct {
 	Type *string `json:"type,omitempty"`
 	Notes *string `json:"notes,omitempty"`
+	// Provided reason for ignoring or resolving a security issue. 'Fixed' and 'Under_investigation' map to VEX statuses with the same names. All other values map to the VEX status 'Not Affected'. This value appears in the vulnerabilities.analysis.justification field of CycloneDX SBOM reports, unless the report uses the CycloneDX Vuln Analysis State option, which writes the matching CycloneDX justification instead (or leaves the field out when there is none). 
 	Reason *string `json:"reason,omitempty"`
+}
+
+func (o *UpdateIssuesRequestOneOf) validateStringEnumValues(data []byte) error {
+	var fields struct {
+		Type json.RawMessage `json:"type,omitempty"`
+		Reason json.RawMessage `json:"reason,omitempty"`
+	}
+	if err := json.Unmarshal(data, &fields); err != nil {
+		return err
+	}
+	if raw := fields.Type; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "type")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "ignore" {
+			return fmt.Errorf("invalid value %q for property %s", value, "type")
+		}
+	}
+	if raw := fields.Reason; raw != nil {
+		if string(raw) == "null" {
+			return fmt.Errorf("invalid null value for property %s", "reason")
+		}
+		var value string
+		if err := json.Unmarshal(raw, &value); err != nil {
+			return err
+		}
+		if value != "Fixed" && value != "Under_investigation" && value != "Vulnerable_code_not_present" && value != "Vulnerable_code_cannot_be_controlled" && value != "Component_not_present" && value != "Vulnerable_code_not_in_execute_path" && value != "Inline_mitigations_already_exist" && value != "incorrect_data_found" && value != "other" {
+			return fmt.Errorf("invalid value %q for property %s", value, "reason")
+		}
+	}
+	return nil
+}
+
+type _UpdateIssuesRequestOneOf UpdateIssuesRequestOneOf
+
+func (o *UpdateIssuesRequestOneOf) UnmarshalJSON(data []byte) error {
+	if err := o.validateStringEnumValues(data); err != nil {
+		return err
+	}
+	value := _UpdateIssuesRequestOneOf(*o)
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = UpdateIssuesRequestOneOf(value)
+	return nil
 }
 
 // NewUpdateIssuesRequestOneOf instantiates a new UpdateIssuesRequestOneOf object
