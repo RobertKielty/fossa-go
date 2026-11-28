@@ -4,16 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Sections** | [**GetAllReportOptions200ResponseResultsInnerOptionsSections**](GetAllReportOptions200ResponseResultsInnerOptionsSections.md) |  | 
-**Toggles** | [**GetAllReportOptions200ResponseResultsInnerOptionsToggles**](GetAllReportOptions200ResponseResultsInnerOptionsToggles.md) |  | 
-**ExcludeFields** | [**GetAllReportOptions200ResponseResultsInnerOptionsExcludeFields**](GetAllReportOptions200ResponseResultsInnerOptionsExcludeFields.md) |  | 
-**DependencyData** | [**GetAllReportOptions200ResponseResultsInnerOptionsDependencyData**](GetAllReportOptions200ResponseResultsInnerOptionsDependencyData.md) |  | 
+**Sections** | Pointer to [**GetAllReportOptions200ResponseResultsInnerOptionsSections**](GetAllReportOptions200ResponseResultsInnerOptionsSections.md) |  | [optional] 
+**Toggles** | Pointer to [**GetAllReportOptions200ResponseResultsInnerOptionsToggles**](GetAllReportOptions200ResponseResultsInnerOptionsToggles.md) |  | [optional] 
+**ExcludeFields** | Pointer to [**GetAllReportOptions200ResponseResultsInnerOptionsExcludeFields**](GetAllReportOptions200ResponseResultsInnerOptionsExcludeFields.md) |  | [optional] 
+**DependencyData** | Pointer to [**GetAllReportOptions200ResponseResultsInnerOptionsDependencyData**](GetAllReportOptions200ResponseResultsInnerOptionsDependencyData.md) |  | [optional] 
+**ExecutiveVulnerability** | Pointer to [**GetAllReportOptions200ResponseResultsInnerOptionsExecutiveVulnerability**](GetAllReportOptions200ResponseResultsInnerOptionsExecutiveVulnerability.md) |  | [optional] 
 
 ## Methods
 
 ### NewGetAllReportOptions200ResponseResultsInnerOptions
 
-`func NewGetAllReportOptions200ResponseResultsInnerOptions(sections GetAllReportOptions200ResponseResultsInnerOptionsSections, toggles GetAllReportOptions200ResponseResultsInnerOptionsToggles, excludeFields GetAllReportOptions200ResponseResultsInnerOptionsExcludeFields, dependencyData GetAllReportOptions200ResponseResultsInnerOptionsDependencyData, ) *GetAllReportOptions200ResponseResultsInnerOptions`
+`func NewGetAllReportOptions200ResponseResultsInnerOptions() *GetAllReportOptions200ResponseResultsInnerOptions`
 
 NewGetAllReportOptions200ResponseResultsInnerOptions instantiates a new GetAllReportOptions200ResponseResultsInnerOptions object
 This constructor will assign default values to properties that have it defined,
@@ -47,6 +48,11 @@ and a boolean to check if the value has been set.
 
 SetSections sets Sections field to given value.
 
+### HasSections
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptions) HasSections() bool`
+
+HasSections returns a boolean if a field has been set.
 
 ### GetToggles
 
@@ -67,6 +73,11 @@ and a boolean to check if the value has been set.
 
 SetToggles sets Toggles field to given value.
 
+### HasToggles
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptions) HasToggles() bool`
+
+HasToggles returns a boolean if a field has been set.
 
 ### GetExcludeFields
 
@@ -87,6 +98,11 @@ and a boolean to check if the value has been set.
 
 SetExcludeFields sets ExcludeFields field to given value.
 
+### HasExcludeFields
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptions) HasExcludeFields() bool`
+
+HasExcludeFields returns a boolean if a field has been set.
 
 ### GetDependencyData
 
@@ -107,6 +123,36 @@ and a boolean to check if the value has been set.
 
 SetDependencyData sets DependencyData field to given value.
 
+### HasDependencyData
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptions) HasDependencyData() bool`
+
+HasDependencyData returns a boolean if a field has been set.
+
+### GetExecutiveVulnerability
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptions) GetExecutiveVulnerability() GetAllReportOptions200ResponseResultsInnerOptionsExecutiveVulnerability`
+
+GetExecutiveVulnerability returns the ExecutiveVulnerability field if non-nil, zero value otherwise.
+
+### GetExecutiveVulnerabilityOk
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptions) GetExecutiveVulnerabilityOk() (*GetAllReportOptions200ResponseResultsInnerOptionsExecutiveVulnerability, bool)`
+
+GetExecutiveVulnerabilityOk returns a tuple with the ExecutiveVulnerability field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExecutiveVulnerability
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptions) SetExecutiveVulnerability(v GetAllReportOptions200ResponseResultsInnerOptionsExecutiveVulnerability)`
+
+SetExecutiveVulnerability sets ExecutiveVulnerability field to given value.
+
+### HasExecutiveVulnerability
+
+`func (o *GetAllReportOptions200ResponseResultsInnerOptions) HasExecutiveVulnerability() bool`
+
+HasExecutiveVulnerability returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
